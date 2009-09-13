@@ -12,8 +12,10 @@ class Resource(models.Model):
     link = models.URLField(verify_exists=True)
 
 class Question(models.Model):
+    def __unicode__(self):
+        return self.content
     content = models.TextField()
-    resource = models.ManyToManyField(Resource) # Multiple resource records for this Question, resources assigned to >1 question
+    resource = models.ManyToManyField(Resource, blank=True) # Multiple resource records for this Question, resources assigned to >1 question
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)

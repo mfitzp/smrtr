@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 # Externals
 from spenglr.countries.models import Country
 from spenglr.education.models import *
+from spenglr.questions.models import *
 
 
 # Study models store information about user's experience with education
@@ -55,6 +56,18 @@ class UserExam(models.Model):
     # course = models.ForeignKey(UserCourse) # Exams always assigned to specific courses (access via exam>course)
 
 
+# Following models store user relationships with questions and resources
+# Question Queue stores questions that have been presented, and is added to to make sure user always has n available
+# this prevents the user skipping a question. Cross-site locking may also be implemented on this (if we can be bothered)
 
+# User's attempts at questions
+# class UserQuestionAttempt
+
+
+# User's queued questions for locking/skip preventing
+# class UserQuestionQueue
+
+# User's suggested resources (taken from incorrectly answered questions)
+# class UserResource
 
 

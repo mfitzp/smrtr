@@ -16,5 +16,6 @@ urlpatterns = patterns('',
     (r'^login/$', 'spenglr.core.views.loginhandler'),
 
     (r'^education/', include('spenglr.education.urls')),
+    (r'^questions/', include('spenglr.questions.urls')),
 
 )
