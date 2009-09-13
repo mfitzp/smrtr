@@ -1,5 +1,5 @@
 from django.template import RequestContext, loader
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 from spenglr.study.models import UserCourse
 from spenglr.core.models import LoginForm
@@ -54,5 +54,5 @@ def loginhandler(request):
 
 def logouthandler(request):
     # Redirect to a success page.
-    logout(request, user)
+    logout(request)
     return HttpResponseRedirect("/")
