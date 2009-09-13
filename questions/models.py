@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from spenglr.education.models import Module
 
 
 # Question and resource models store information for testing/studying purposes
@@ -16,6 +17,7 @@ class Question(models.Model):
         return self.content
     content = models.TextField()
     resource = models.ManyToManyField(Resource, blank=True) # Multiple resource records for this Question, resources assigned to >1 question
+    modules = models.ManyToManyField(Module, blank=True)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
