@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Externals
-from spenglr.countries.models import Country
+from external.countries.models import Country
 
 # Education models contain educational structure from institution to module exam
 class Institution(models.Model):
@@ -19,7 +19,7 @@ class Institution(models.Model):
         (5, 'Other'),
     )
     stage = models.PositiveSmallIntegerField(choices=STAGE_CHOICES)
-    members = models.ManyToManyField(User, through='study.UserInstitution')
+    #members = models.ManyToManyField(User, through='study.UserInstitution')
 
 # Qualification types available, level is arbitrary comparison
 # Use standardised tables to build this e.g.
@@ -32,7 +32,7 @@ class Qualification(models.Model):
     name = models.CharField(max_length=50)
     level = models.IntegerField(blank = True)
     country = models.ForeignKey(Country, blank = True, null = True)
-    members = models.ManyToManyField(User, through='study.UserQualification')
+    #members = models.ManyToManyField(User, through='study.UserQualification')
 
 class Course(models.Model):
     def __unicode__(self):
@@ -41,7 +41,7 @@ class Course(models.Model):
     name = models.CharField(max_length=50)
     start_date = models.DateField('start date')    
     qualification = models.ForeignKey(Qualification) # Standardised qualification level
-    members = models.ManyToManyField(User, through='study.UserCourse')
+    #members = models.ManyToManyField(User, through='study.UserCourse')
 
 class Module(models.Model):
     def __unicode__(self):
@@ -50,14 +50,14 @@ class Module(models.Model):
     name = models.CharField(max_length=50)
     start_date = models.DateField('start date offset')
     credits = models.IntegerField(default=10)
-    members = models.ManyToManyField(User, through='study.UserModule')
+    #members = models.ManyToManyField(User, through='study.UserModule')
 
 class Exam(models.Model):
     def __unicode__(self):
         return parent.name
     module = models.ForeignKey(Module)
     date = models.DateTimeField('exam date')
-    members = models.ManyToManyField(User, through='study.UserExam')
+    #members = models.ManyToManyField(User, through='study.UserExam')
 
 
 

@@ -79,7 +79,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
 # Externals
-    'spenglr.countries', # http://code.google.com/p/django-countries/   (0.1r3)
+    'external.countries', # http://code.google.com/p/django-countries/   (0.1r3)
 # Spenglr
     'spenglr.core',
     'spenglr.education',
