@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Externals
-from spenglr.countries.models import Country
+from external.countries.models import Country
 from spenglr.education.models import *
 from spenglr.questions.models import *
 

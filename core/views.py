@@ -51,3 +51,8 @@ def loginhandler(request):
         return render_to_response('welcome.html', {
             'form': form,
         })
+
+def logouthandler(request):
+    # Redirect to a success page.
+    logout(request, user)
+    return HttpResponseRedirect("/")
