@@ -8,5 +8,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
+     (r'^m/(?P<object_id>\d+)$', 'django.views.generic.list_detail.object_detail', { 'queryset': Module.objects.all(), 'template_name': 'education/module_questions.html' }  ),
 
 )

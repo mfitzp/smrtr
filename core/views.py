@@ -1,6 +1,7 @@
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
+from spenglr.education.models import Module
 from spenglr.study.models import UserCourse
 from spenglr.core.models import LoginForm
 from django.http import HttpResponseRedirect
@@ -16,10 +17,7 @@ def index(request):
         return render_to_response('dashboard.html', c)
     else:
         # User not logged in, provide login/signup form (no anonymous users)
-        form = LoginForm()
-        return render_to_response('welcome.html', {
-                'form' : form,
-        })
+        return HttpResponseRedirect("/accounts/login/")
 
         
 

@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Externals
-from external.countries.models import Country
+from countries.models import Country
+from forum.models import Forum
 
 # Education models contain educational structure from institution to module exam
 class Institution(models.Model):
@@ -50,6 +51,8 @@ class Module(models.Model):
     name = models.CharField(max_length=50)
     start_date = models.DateField('start date offset')
     credits = models.IntegerField(default=10)
+    forum = models.OneToOneField(Forum)
+
     #members = models.ManyToManyField(User, through='study.UserModule')
 
 class Exam(models.Model):

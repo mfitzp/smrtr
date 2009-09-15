@@ -61,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'spenglr.core.middleware.RequireLoginMiddleware',
 )
 
 ROOT_URLCONF = 'spenglr.urls'
@@ -78,14 +79,17 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.markup',
 # Externals
-    'external.countries', # http://code.google.com/p/django-countries/   (0.1r3)
+    'forum', #http://code.google.com/p/django-forum/
+    'countries', # http://code.google.com/p/django-countries/   (0.1r3)
+    'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
+    'gravatar', #http://code.google.com/p/django-gravatar/
 # Spenglr
     'spenglr.core',
     'spenglr.education',
     'spenglr.study',
     'spenglr.questions',
-    'spenglr.forum',
 )
 
 CACHE_BACKEND = 'dummy:///'
@@ -94,5 +98,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
 )
 
-
+ACCOUNT_ACTIVATION_DAYS = 5
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
 

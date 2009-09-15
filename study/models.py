@@ -43,7 +43,7 @@ class UserModule(models.Model):
         return self.module.name
     user = models.ForeignKey(User)
     module = models.ForeignKey(Module, related_name = 'members')
-    course = models.ForeignKey(UserCourse) # User's course: May differ from 'normal' location in MOMDs
+    user_course = models.ForeignKey(UserCourse) # User's course: May differ from 'normal' location in MOMDs
     sq = models.FloatField(editable = False, null = True)
     focus = models.IntegerField( default = 0,editable = False)
 
@@ -69,5 +69,23 @@ class UserExam(models.Model):
 
 # User's suggested resources (taken from incorrectly answered questions)
 # class UserResource
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

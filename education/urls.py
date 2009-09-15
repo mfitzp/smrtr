@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     (r'^i/$', 'django.views.generic.list_detail.object_list', { 'queryset': Institution.objects.all() }  ),
 
     (r'^i/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Institution.objects.all() }  ),
+    url(r'^m/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Module.objects.all() }, name='module-detail' ),
     (r'^c/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Course.objects.all() }  ),
-    (r'^m/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Module.objects.all() }  ),
 
 )
