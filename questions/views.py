@@ -16,13 +16,12 @@ def questions(request, module_id):
 
 def submit(request, module_id):
 
-    total_correct = 0
-    total_incorrect = 0
-    total_answered = 0
+    totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
     questions = list()
 
     module = get_object_or_404(Module, pk=module_id)
 
+    # Iterate over all POST keys and pull out the question answer question-n fields
     for key in request.POST.keys():
 
         try:
@@ -34,14 +33,14 @@ def submit(request, module_id):
             
             # Find submitted answer id in the list of correct answers
             aid = request.POST.get('questions-' + qid)
-            total_answered = total_answered + 1
+            totals['answered'] = totals['answered'] + 1
 
             try:
                 correct = q.answer_set.get(pk=aid, is_correct=True)
             except:
-                total_incorrect = total_incorrect + 1
+                totals['incorrect'] = totals['incorrect'] + 1
             else:
-                total_correct = total_correct + 1
+                totals['correct'] = totals['correct'] + 1
 
             # Add this question to the question list for review on the summary page
             q.answered = int(aid)
@@ -53,4 +52,6 @@ def submit(request, module_id):
         except:
             pass
 
-    return render_to_response('questions/question_list_answered.html', {'module': module, 'questions': questions })
+    totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
+
+    return render_to_response('questions/question_list_answered.html', {'module': module, 'questions': questions, 'totals': totals })
