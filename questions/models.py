@@ -15,6 +15,8 @@ class Resource(models.Model):
 class Question(models.Model):
     def __unicode__(self):
         return self.content
+    def answers_shuffled(self):
+        return self.answer_set.order_by('?')
     content = models.TextField()
     resource = models.ManyToManyField(Resource, blank=True) # Multiple resource records for this Question, resources assigned to >1 question
     modules = models.ManyToManyField(Module, blank=True)
