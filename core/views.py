@@ -1,8 +1,7 @@
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
-from spenglr.education.models import Module
-from spenglr.study.models import UserCourse
+from spenglr.education.models import Module, UserCourse
 from spenglr.core.models import LoginForm
 from django.http import HttpResponseRedirect
 
@@ -19,38 +18,3 @@ def index(request):
         # User not logged in, provide login/signup form (no anonymous users)
         return HttpResponseRedirect("/accounts/login/")
 
-        
-
-def loginhandler(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = LoginForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    # Redirect to a success page.
-                    login(request, user)
-                    return HttpResponseRedirect("/")
-                else:
-                    # Return a 'disabled account' error message
-                    error = u'account disabled'
-                    return errorHandle(error)
-            else:
-                 # Return an 'invalid login' error message.
-                error = u'invalid login'
-                return errorHandle(error)
-        else:
-            error = u'form is invalid'
-            return errorHandle(error)
-    else:
-        form = LoginForm() # An unbound form
-        return render_to_response('welcome.html', {
-            'form': form,
-        })
-
-def logouthandler(request):
-    # Redirect to a success page.
-    logout(request)
-    return HttpResponseRedirect("/")

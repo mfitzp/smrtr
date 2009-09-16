@@ -33,7 +33,7 @@ class Qualification(models.Model):
     name = models.CharField(max_length=50)
     level = models.IntegerField(blank = True)
     country = models.ForeignKey(Country, blank = True, null = True)
-    #members = models.ManyToManyField(User, through='study.UserQualification')
+    #members = models.ManyToManyField(User, through='UserQualification')
 
 class Course(models.Model):
     def __unicode__(self):
@@ -42,7 +42,7 @@ class Course(models.Model):
     name = models.CharField(max_length=50)
     start_date = models.DateField('start date')    
     qualification = models.ForeignKey(Qualification) # Standardised qualification level
-    #members = models.ManyToManyField(User, through='study.UserCourse')
+    #members = models.ManyToManyField(User, through='UserCourse')
 
 class Module(models.Model):
     def __unicode__(self):
@@ -52,16 +52,62 @@ class Module(models.Model):
     start_date = models.DateField('start date offset')
     credits = models.IntegerField(default=10)
     forum = models.OneToOneField(Forum)
-
-    #members = models.ManyToManyField(User, through='study.UserModule')
+    #members = models.ManyToManyField(User, through='UserModule')
 
 class Exam(models.Model):
     def __unicode__(self):
         return parent.name
     module = models.ForeignKey(Module)
     date = models.DateTimeField('exam date')
-    #members = models.ManyToManyField(User, through='study.UserExam')
+    #members = models.ManyToManyField(User, through='UserExam')
 
 
 
+# Study models store information about user's experience with education
+# Models are ManytoMany through Models (ie they are used as the basis for linking
+# other models together, while appending additional information
+class UserInstitution(models.Model):
+    def __unicode__(self):
+        return self.institution.name
+    user = models.ForeignKey(User)
+    institution = models.ForeignKey(Institution, related_name = 'members')
+    start_date = models.DateField(editable = False, null = True) # Auto calculate from first course start date
+    end_date = models.DateField(editable = False, null = True) # Auto calculate from last course end date
+    year_of_study = models.IntegerField(editable = False, null = True)
 
+class UserCourse(models.Model):
+    def __unicode__(self):
+        return self.course.name
+    user = models.ForeignKey(User)
+    course = models.ForeignKey(Course, related_name = 'members')
+    institution = models.ForeignKey(UserInstitution) # User's institution: As courses can be both offered and owned by institutions this may not match
+    start_date = models.DateField()
+    end_date = models.DateField()
+    year_of_study = models.IntegerField( default = 1)
+    sq = models.FloatField(editable = False, null = True)
+
+class UserQualification(models.Model):
+    def __unicode__(self):
+        return self.qualification.name
+    user = models.ForeignKey(User)
+    qualification = models.ForeignKey(Qualification, related_name = 'members')
+    date = models.DateField()
+    result = models.FloatField() # Store as grade value and provide alternative conversion patterns (70>A, etc.)
+    # course = models.ForeignKey(UserCourse) # Qualifications always assigned to specific courses (access via qualification>course)
+
+class UserModule(models.Model):
+    def __unicode__(self):
+        return self.module.name
+    user = models.ForeignKey(User)
+    module = models.ForeignKey(Module, related_name = 'members')
+    user_course = models.ForeignKey(UserCourse) # User's course: May differ from 'normal' location in MOMDs
+    sq = models.FloatField(editable = False, null = True)
+    focus = models.IntegerField( default = 0,editable = False)
+
+class UserExam(models.Model):
+    def __unicode__(self):
+        return self.exam.name
+    user = models.ForeignKey(User)
+    exam = models.ForeignKey(Exam, related_name = 'members')
+    result = models.IntegerField(blank = True, null = True)
+    # course = models.ForeignKey(UserCourse) # Exams always assigned to specific courses (access via exam>course)

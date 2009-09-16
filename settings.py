@@ -88,8 +88,8 @@ INSTALLED_APPS = (
 # Spenglr
     'spenglr.core',
     'spenglr.education',
-    'spenglr.study',
     'spenglr.questions',
+    'spenglr.resources',
 )
 
 CACHE_BACKEND = 'dummy:///'
