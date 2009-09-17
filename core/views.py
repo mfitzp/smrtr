@@ -9,9 +9,9 @@ from django.http import HttpResponseRedirect
 def index(request):
     if request.user.is_authenticated():
         # User logged in, present the user dashboard
-        user_curriculum = UserCourse.objects.filter(user=request.user)
+        user_courses = UserCourse.objects.filter(user=request.user)
         c = RequestContext(request, {
-            'user_curriculum': user_curriculum,
+            'user_courses': user_courses,
         })
         return render_to_response('dashboard.html', c)
     else:
