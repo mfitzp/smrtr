@@ -14,6 +14,16 @@ def questions(request, module_id):
     return render_to_response('questions/question_list.html', {'module': module, 'questions': questions})
 
 
+def latest_questions_module(request, module_id):
+    
+    module = Module.objects.get(pk=module_id)
+    questions = module.question_set.order_by('last_updated')
+
+    return render_to_response('questions/module_question_archive.html', {'module': module, 'questions': questions})
+
+
+
+
 def submit(request, module_id):
 
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }

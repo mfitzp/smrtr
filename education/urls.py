@@ -8,10 +8,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    (r'^i/$', 'django.views.generic.list_detail.object_list', { 'queryset': Institution.objects.all() }  ),
+    url(r'^c/(?P<course_id>\d+)/$', 'spenglr.education.views.course_detail',  name='course-detail'  ),
+    url(r'^c/(?P<course_id>\d+)/register/$', 'spenglr.education.views.course_register',  name='course-register'  ),
 
-    url(r'^i/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Institution.objects.all() }, name='institution-detail'  ),
-    url(r'^m/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Module.objects.all() }, name='module-detail' ),
-    url(r'^c/(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Course.objects.all() }, name='course-detail'  ),
-
+    url(r'^m/(?P<module_id>\d+)/$', 'spenglr.education.views.module_detail',  name='module-detail'  ),
+ 
 )

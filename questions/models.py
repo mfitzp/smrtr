@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from spenglr.education.models import Module
 from spenglr.resources.models import Resource
 
-
 class Question(models.Model):
     def __unicode__(self):
         return self.content

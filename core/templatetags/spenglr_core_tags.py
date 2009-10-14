@@ -5,14 +5,13 @@ from django.contrib.auth.models import User, Group
 register = template.Library()
 
 @register.simple_tag
-def whichgroups( user, grouplist ):
+def whichgroup( user ):
     """ 
-    Usage: {% whichgroup user Admins|Group1|Group2 %}
-
+    Usage: {% whichgroup user %}
+            Returns a single group the user is a member of - used for 
+            staff 'roles' (onsite cosmetic)
     """
-    for group in grouplist.split("|"):
-        try:
-            if Group.objects.get(name=group) in user.groups.all():
-                return group
-        except:
-            continue
+
+    # Get a single record from this user's group listing, output the name
+    if user.groups.get():
+        return user.groups.get()

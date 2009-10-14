@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     'gravatar', #http://code.google.com/p/django-gravatar/
 # Spenglr
     'spenglr.core',
+    'spenglr.network',
     'spenglr.education',
     'spenglr.questions',
     'spenglr.resources',
