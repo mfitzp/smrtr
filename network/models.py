@@ -25,7 +25,6 @@ class Network(models.Model):
         (2, 'Examination Board'),
         (3, 'Organisation'),
         (4, 'Community'),
-        (5, 'Network'),
     )
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, null = True, blank = True)
     STAGE_CHOICES = (
