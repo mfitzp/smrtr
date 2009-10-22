@@ -19,15 +19,15 @@ urlpatterns = patterns('',
 
     (r'^education/', include('spenglr.education.urls')),
 
-    (r'^network/', include('spenglr.network.urls')),
+    #(r'^network/', include('spenglr.network.urls')),
     
     (r'^accounts/', include('registration.urls')),
 
     # These exist so we can keep a standardised url forum across all 3
     # as the m/i/c is not actually used on the forum code (can't have / in slugs)
-    (r'^discuss/m/', include('forum.urls')),
-    (r'^discuss/i/', include('forum.urls')),
-    (r'^discuss/c/', include('forum.urls')),
+    #(r'^discuss/m/', include('forum.urls')),
+    #(r'^discuss/i/', include('forum.urls')),
+    #(r'^discuss/c/', include('forum.urls')),
 
     (r'^questions/', include('spenglr.questions.urls')),
     #(r'^resources/', include('spenglrcom.resources.urls')),

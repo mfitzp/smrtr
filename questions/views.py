@@ -3,16 +3,21 @@ from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
 from spenglr.questions.models import Question, Answer
-from spenglr.education.models import Module
+from spenglr.education.models import Course, Module
 #from spenglr.study.models import UserQuestions
+from tagging.models import Tag,TaggedItem
+
+def question_detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render_to_response('questions/question_detail.html', {'question': question})
 
 
-def questions(request, module_id):
+def questions(request, course_id, module_id):
+    course = get_object_or_404(Course, pk=course_id)
     module = get_object_or_404(Module, pk=module_id)
     questions = module.question_set.order_by('?')
 
-    return render_to_response('questions/question_list.html', {'module': module, 'questions': questions})
-
+    return render_to_response('questions/question_list.html', {'course': course, 'module': module, 'questions': questions})
 
 def latest_questions_module(request, module_id):
     
@@ -21,14 +26,19 @@ def latest_questions_module(request, module_id):
 
     return render_to_response('questions/module_question_archive.html', {'module': module, 'questions': questions})
 
+def questions_tagged(request,tag_id):
+    tag = Tag.objects.get(pk=tag_id)
+    questions = TaggedItem.objects.get_by_model(Question, tag)
+
+    return render_to_response('questions/question_tag_list.html', {'tag': tag, 'questions': questions})
 
 
-
-def submit(request, module_id):
+def submit(request, course_id, module_id):
 
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
     questions = list()
 
+    course = get_object_or_404(Course, pk=course_id)
     module = get_object_or_404(Module, pk=module_id)
 
     # Iterate over all POST keys and pull out the question answer question-n fields
@@ -64,4 +74,4 @@ def submit(request, module_id):
 
     totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
 
-    return render_to_response('questions/question_list_answered.html', {'module': module, 'questions': questions, 'totals': totals })
+    return render_to_response('questions/question_list_answered.html', {'course': course, 'module': module, 'questions': questions, 'totals': totals })

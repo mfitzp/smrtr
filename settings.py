@@ -81,13 +81,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
 # Externals
-    'forum', #http://code.google.com/p/django-forum/
+    #'forum', #http://code.google.com/p/django-forum/
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
     'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
     'gravatar', #http://code.google.com/p/django-gravatar/
+    'tagging',
 # Spenglr
     'spenglr.core',
-    'spenglr.network',
     'spenglr.education',
     'spenglr.questions',
     'spenglr.resources',
@@ -103,3 +103,4 @@ ACCOUNT_ACTIVATION_DAYS = 5
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
+FORCE_LOWERCASE_TAGS = True

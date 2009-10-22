@@ -2,10 +2,43 @@ from django.db import models
 from django.contrib.auth.models import User
 # Externals
 from countries.models import Country
-from forum.models import Forum
 from datetime import date as _date
-# Spenglr
-from spenglr.network.models import Network
+
+
+# Education models contain educational structure from institution to module exam
+# INSERT INTO education_institution (name,address_1,address_2,city,state,country_id,postcode,telno,stage) SELECT SCHOOL_NAME as name,STREET as address_1, LOCALITY as address_2, TOWN as city, COUNTY as state, 'GB' as country_id, POSTCODE as postcode, CONCAT(0,TEL_STD,' ',TEL_NO) as telno,stage as stage FROM `school_list` WHERE 1
+class Network(models.Model):
+    def __unicode__(self):
+        return self.name
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank = True)
+    address_1 = models.CharField('Address Line 1', max_length=50, blank = True)
+    address_2 = models.CharField('Address Line 1', max_length=50, blank = True)
+    city = models.CharField('City', max_length = 50, blank = True)
+    state = models.CharField('State/Province/Region', max_length = 50, blank = True)
+    postcode = models.CharField('ZIP/Postal Code', max_length = 15, blank = True)
+    country = models.ForeignKey(Country, null = True, blank = True)
+    telno = models.CharField('Telephone', max_length=50, blank = True)
+    TYPE_CHOICES = (
+        (0, 'Other'),
+        (1, 'Educational Institution'),
+        (2, 'Examination Board'),
+        (3, 'Organisation'),
+        (4, 'Community'),
+    )
+    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, null = True, blank = True)
+    STAGE_CHOICES = (
+        (0, 'Other'),
+        (1, 'Preschool'),
+        (2, 'Primary'),
+        (3, 'Middle'),
+        (4, 'Secondary'),
+        (5, 'Tertiary'),
+        (6, 'Vocational'),
+    )
+    stage = models.PositiveSmallIntegerField(choices=STAGE_CHOICES, null = True, blank = True)
+    members = models.ManyToManyField(User, through='UserNetwork', related_name='networks')
+
 
 # Qualification types available, level is arbitrary comparison
 # Use standardised tables to build this e.g.
@@ -41,9 +74,7 @@ class Module(models.Model):
     description = models.TextField(blank = True)
     start_date = models.DateField('start date offset')
     credits = models.IntegerField(default=10)
-    forum = models.OneToOneField(Forum)
     members = models.ManyToManyField(User, through='UserModule', related_name='modules')
-    momd = models.BooleanField(default = False)
 
 class Exam(models.Model):
     def __unicode__(self):
@@ -61,14 +92,26 @@ class Exam(models.Model):
 # Models are ManytoMany through Models (ie they are used as the basis for linking
 # other models together, while appending additional information
 
+
+class UserNetwork(models.Model):
+    def __unicode__(self):
+        return self.network.name
+    user = models.ForeignKey(User)
+    network = models.ForeignKey(Network, related_name='memberships')
+
+    start_date = models.DateField(editable = False, auto_now_add = True) # Join date for the network
+
 class UserCourse(models.Model):
     def __unicode__(self):
         return self.course.name
     def year_of_study(self):
         return ( _date.today().year - self.start_date.year ) + 1
 
+    usernetwork = models.ForeignKey(UserNetwork)
+
     user = models.ForeignKey(User)
     course = models.ForeignKey(Course, related_name='memberships')
+
     start_date = models.DateField(null = True)
     end_date = models.DateField(null = True)
     sq = models.FloatField(editable = False, null = True)
@@ -88,9 +131,11 @@ class UserModule(models.Model):
     def week_of_study(self):
         return ( ( _date.today() - self.start_date  ).days / 7 ) + 1
 
+    usercourse = models.ForeignKey(UserCourse) # For easy group listings
+
     user = models.ForeignKey(User)
     module = models.ForeignKey(Module, related_name='memberships')
-    usercourse = models.ForeignKey(UserCourse) # For easy group listings
+
     start_date = models.DateField(null = True) 
     end_date = models.DateField(null = True) 
     sq = models.FloatField(editable = False, null = True)
