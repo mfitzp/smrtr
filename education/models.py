@@ -10,6 +10,9 @@ from datetime import date as _date
 class Network(models.Model):
     def __unicode__(self):
         return self.name
+    def memberships(self):
+        return UserNetwork.objects.filter(network=self)
+
     name = models.CharField(max_length=200)
     description = models.TextField(blank = True)
     address_1 = models.CharField('Address Line 1', max_length=50, blank = True)
@@ -48,6 +51,7 @@ class Network(models.Model):
 class Qualification(models.Model):
     def __unicode__(self):
         return self.name
+
     name = models.CharField(max_length=50)
     description = models.TextField(blank = True)
     level = models.IntegerField(blank = True)
@@ -57,6 +61,11 @@ class Qualification(models.Model):
 class Course(models.Model):
     def __unicode__(self):
         return self.name
+    def memberships(self):
+        return UserCourse.objects.filter(course=self)
+    def memberships_context(self,network):
+        return UserCourse.objects.filter(network=network,course=self)
+
     network = models.ForeignKey(Network)
     name = models.CharField(max_length=50)
     description = models.TextField(blank = True)
@@ -69,6 +78,11 @@ class Course(models.Model):
 class Module(models.Model):
     def __unicode__(self):
         return self.name
+    def memberships(self):
+        return UserModule.objects.filter(module=self)
+    def memberships_context(self,network,course):
+        return UserModule.objects.filter(network=network,course=course,module=self)
+
     network = models.ForeignKey(Network)
     name = models.CharField(max_length=50)
     description = models.TextField(blank = True)
@@ -97,33 +111,23 @@ class UserNetwork(models.Model):
     def __unicode__(self):
         return self.network.name
     user = models.ForeignKey(User)
-    network = models.ForeignKey(Network, related_name='memberships')
-
+    network = models.ForeignKey(Network)
     start_date = models.DateField(editable = False, auto_now_add = True) # Join date for the network
 
 class UserCourse(models.Model):
     def __unicode__(self):
         return self.course.name
-    def year_of_study(self):
-        return ( _date.today().year - self.start_date.year ) + 1
 
     usernetwork = models.ForeignKey(UserNetwork)
 
     user = models.ForeignKey(User)
-    course = models.ForeignKey(Course, related_name='memberships')
+
+    network = models.ForeignKey(Network)
+    course = models.ForeignKey(Course)
 
     start_date = models.DateField(null = True)
     end_date = models.DateField(null = True)
     sq = models.FloatField(editable = False, null = True)
-
-class UserQualification(models.Model):
-    def __unicode__(self):
-        return self.qualification.name
-    user = models.ForeignKey(User)
-    qualification = models.ForeignKey(Qualification, related_name='memberships')
-    date = models.DateField()
-    result = models.FloatField() # Store as grade value and provide alternative conversion patterns (70>A, etc.)
-    # course = models.ForeignKey(UserCourse) # Qualifications always assigned to specific courses (access via qualification>course)
 
 class UserModule(models.Model):
     def __unicode__(self):
@@ -134,12 +138,25 @@ class UserModule(models.Model):
     usercourse = models.ForeignKey(UserCourse) # For easy group listings
 
     user = models.ForeignKey(User)
-    module = models.ForeignKey(Module, related_name='memberships')
+
+    network = models.ForeignKey(Network)
+    course = models.ForeignKey(Course)
+    module = models.ForeignKey(Module)
 
     start_date = models.DateField(null = True) 
     end_date = models.DateField(null = True) 
     sq = models.FloatField(editable = False, null = True)
     focus = models.IntegerField( default = 0,editable = False)
+
+
+class UserQualification(models.Model):
+    def __unicode__(self):
+        return self.qualification.name
+    user = models.ForeignKey(User)
+    qualification = models.ForeignKey(Qualification, related_name='memberships')
+    date = models.DateField()
+    result = models.FloatField() # Store as grade value and provide alternative conversion patterns (70>A, etc.)
+    # course = models.ForeignKey(UserCourse) # Qualifications always assigned to specific courses (access via qualification>course)
 
 class UserExam(models.Model):
     def __unicode__(self):
