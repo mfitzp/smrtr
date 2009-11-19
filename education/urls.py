@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 
     # Module generic
     url(r'^c(?P<course_id>\d+)/$', 'spenglr.education.views.course_detail',  name='course-detail'  ),
-    #url(r'^c(?P<course_id>\d+)/$', 'spenglr.education.views.course_detail_providers',  name='course-detail-providers'  ),
+    url(r'^c(?P<course_id>\d+)/providers$', 'spenglr.education.views.course_detail_providers',  name='course-detail-providers'  ),
 
     # Module instance
     url(r'^ci(?P<coursei_id>\d+)/$', 'spenglr.education.views.coursei_detail',  name='coursei-detail'  ),

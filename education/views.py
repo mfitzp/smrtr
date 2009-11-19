@@ -75,7 +75,16 @@ def coursei_register(request, coursei_id):
     return render_to_response('education/coursei_register.html', {'network': network, 'course': course })
 
 
+# Get an course id and present a page showing detail
+# if user is registered on the course, provide a additional information
+def course_detail_providers(request, course_id):
 
+    course = get_object_or_404(Course, pk=course_id)
+
+    # usercourses "you are studying this course at..."
+    usercourses = UserCourse.objects.filter(coursei__course=course)
+
+    return render_to_response('education/course_detail.html', {'course': course, 'usercourses': usercourses})
 
 
 

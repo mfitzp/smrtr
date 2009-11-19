@@ -15,28 +15,22 @@ def network_detail(request, network_id):
     network = get_object_or_404(Network, pk=network_id)
     memberships = network.memberships()
 
-    # If the user is registered at this network, pull up their record for custom output (course listings, etc.)
+    # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
     try:
-        usernetwork = memberships.get( user=request.user )
+        usernetwork = network.usernetwork_set.get( user=request.user )
     except:
         usernetwork = list()
-
-    network.courses_filtered = list()
-
-    # Find all courses being offered by this network
-    for course in network.courses_offered.all():
-        if course in request.user.courses.all():
-            pass
-        else:
-            network.courses_filtered.append( course )
-
-    # Find all courses owned by this network
-    for course in network.course_set.all():
-        if course in request.user.courses.all():
-            pass
-        else:
-            network.courses_filtered.append( course )
-
+    else:
+        # Generate filter list of modules with associated user data
+        # If user registered attach usermodule linker and prepend (top list)
+        # else append (bottom list)
+        network.coursei_filtered = list()
+    
+        for coursei in network.courseinstance_set.all():
+            if coursei in request.user.courses.all():
+                pass
+            else:
+                network.coursei_filtered.append(coursei)
 
     return render_to_response('network/network_detail.html', {'network': network, 'usernetwork': usernetwork, 'memberships': memberships})
 

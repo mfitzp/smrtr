@@ -23,7 +23,7 @@ class Course(models.Model):
     start_date = models.DateField('start date')    
     qualification = models.ForeignKey('Qualification', blank = True, null = True) # Standardised qualification level
     modules = models.ManyToManyField('Module', related_name='courses', through='ModuleInstance')
-    offered_by = models.ManyToManyField(Network, related_name='courses_offered', through='CourseInstance')
+    provided_by = models.ManyToManyField(Network, related_name='courses_provided', through='CourseInstance')
 
 # NOTE: This linker model may be unnnecessary
 # Course as offered by a specific network
