@@ -6,6 +6,7 @@ from spenglr.education.models import *
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+# COURSE VIEWS
 
 # Get an course id and present a page showing detail
 # if user is registered on the course, provide a additional information
@@ -88,24 +89,22 @@ def course_detail_providers(request, course_id):
 
 
 
+
+
+
+
+# MODULE VIEWS
+
 # Get an module id and present a page showing detail
 # if user is registered on the module, provide a tailored page
 def module_detail(request, module_id):
 
-    network = get_object_or_404(Network, pk=network_id)
-    course = get_object_or_404(Course, pk=course_id)
     module = get_object_or_404(Module, pk=module_id)
 
-    memberships = module.memberships_context( network, course )
+    # usermodules "you are studying this module on these courses..."
+    usermodules = UserModule.objects.filter(modulei__module=module)
 
-    # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
-    try:
-        usermodule = memberships.get( user=request.user )
-    except:
-        usermodule = list()
-
-
-    return render_to_response('education/module_detail.html', {'network': network, 'course': course, 'module': module, 'usermodule': usermodule, 'memberships': memberships})
+    return render_to_response('education/module_detail.html', {'module': module, 'usermodules': usermodules})
 
 # Get an module instance id and present a page showing detail
 # if user is registered on the module, provide a tailored page
