@@ -3,7 +3,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
 from spenglr.questions.models import Question, Answer
-from spenglr.education.models import Network, Course, Module
+from spenglr.education.models import Module, ModuleInstance
 #from spenglr.study.models import UserQuestions
 from tagging.models import Tag,TaggedItem
 
@@ -15,17 +15,31 @@ def question_detail(request, question_id):
 def questions(request, modulei_id):
 
     modulei = get_object_or_404(ModuleInstance, pk=modulei_id)
+    module = modulei.module # Prefetch
 
-    questions = modulei.module.question_set.order_by('?')
+    # If the user is registered on this module pull record
+    try:
+        usermodule = modulei.usermodule_set.get( user=request.user )
+    except:
+        usermodule = list()
 
-    return render_to_response('questions/question_list.html', {'module': module, 'questions': questions})
+    questions = module.question_set.order_by('?')
+
+    return render_to_response('questions/question_list.html', {'module': module, 'modulei':modulei, 'usermodule':usermodule, 'questions': questions})
 
 def submit(request, modulei_id):
 
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
     questions = list()
 
-    modulei = get_object_or_404(ModuleInstance, pk=module_id)
+    modulei = get_object_or_404(ModuleInstance, pk=modulei_id)
+    module = modulei.module # Prefetch
+
+    # If the user is registered on this module pull record
+    try:
+        usermodule = modulei.usermodule_set.get( user=request.user )
+    except:
+        usermodule = list()
 
     # Iterate over all POST keys and pull out the question answer question-n fields
     for key in request.POST.keys():
@@ -60,7 +74,7 @@ def submit(request, modulei_id):
 
     totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
 
-    return render_to_response('questions/question_list_answered.html', {'modulei': modulei, 'questions': questions, 'totals': totals })
+    return render_to_response('questions/question_list_answered.html', {'module': module, 'modulei': modulei, 'usermodule':usermodule, 'questions': questions, 'totals': totals })
 
 
 def latest_questions_module(request, module_id):
