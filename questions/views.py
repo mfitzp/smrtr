@@ -79,13 +79,11 @@ def submit(request, modulei_id):
 
 def latest_questions_module(request, module_id):
     
-    network = get_object_or_404(Network, pk=network_id)
-    course = get_object_or_404(Course, pk=course_id)
     module = get_object_or_404(Module, pk=module_id)
 
     questions = module.question_set.order_by('last_updated')
 
-    return render_to_response('questions/module_question_archive.html', {'network':network, 'module': module, 'questions': questions})
+    return render_to_response('questions/module_question_archive.html', {'module': module, 'questions': questions})
 
 def questions_tagged(request,tag_id):
     tag = Tag.objects.get(pk=tag_id)
