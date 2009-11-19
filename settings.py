@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'tagging',
 # Spenglr
     'spenglr.core',
+    'spenglr.network',
     'spenglr.education',
     'spenglr.questions',
     'spenglr.resources',

@@ -12,24 +12,20 @@ def question_detail(request, question_id):
     return render_to_response('questions/question_detail.html', {'question': question})
 
 
-def questions(request, network_id, course_id, module_id):
+def questions(request, modulei_id):
 
-    network = get_object_or_404(Network, pk=network_id)
-    course = get_object_or_404(Course, pk=course_id)
-    module = get_object_or_404(Module, pk=module_id)
+    modulei = get_object_or_404(ModuleInstance, pk=modulei_id)
 
-    questions = module.question_set.order_by('?')
+    questions = modulei.module.question_set.order_by('?')
 
-    return render_to_response('questions/question_list.html', {'network':network, 'course': course, 'module': module, 'questions': questions})
+    return render_to_response('questions/question_list.html', {'module': module, 'questions': questions})
 
-def submit(request, network_id, course_id, module_id):
+def submit(request, modulei_id):
 
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
     questions = list()
 
-    network = get_object_or_404(Network, pk=network_id)
-    course = get_object_or_404(Course, pk=course_id)
-    module = get_object_or_404(Module, pk=module_id)
+    modulei = get_object_or_404(ModuleInstance, pk=module_id)
 
     # Iterate over all POST keys and pull out the question answer question-n fields
     for key in request.POST.keys():
@@ -64,10 +60,10 @@ def submit(request, network_id, course_id, module_id):
 
     totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
 
-    return render_to_response('questions/question_list_answered.html', {'network':network, 'course': course, 'module': module, 'questions': questions, 'totals': totals })
+    return render_to_response('questions/question_list_answered.html', {'modulei': modulei, 'questions': questions, 'totals': totals })
 
 
-def latest_questions_module(request, network_id, course_id, module_id):
+def latest_questions_module(request, module_id):
     
     network = get_object_or_404(Network, pk=network_id)
     course = get_object_or_404(Course, pk=course_id)

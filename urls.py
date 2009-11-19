@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 
     (r'^education/', include('spenglr.education.urls')),
 
-    #(r'^network/', include('spenglr.network.urls')),
+    (r'^network/', include('spenglr.network.urls')),
     
     (r'^accounts/', include('registration.urls')),
 

@@ -7,104 +7,52 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
-
-# Get an insititution id and present a page showing detail
-# if user is registered at the network, provide a tailored page
-def network_detail(request, network_id):
-
-    network = get_object_or_404(Network, pk=network_id)
-    memberships = network.memberships()
-
-    # If the user is registered at this network, pull up their record for custom output (course listings, etc.)
-    try:
-        usernetwork = memberships.get( user=request.user )
-    except:
-        usernetwork = list()
-
-    network.courses_filtered = list()
-
-    # Find all courses being offered by this network
-    for course in network.courses_offered.all():
-        if course in request.user.courses.all():
-            pass
-        else:
-            network.courses_filtered.append( course )
-
-    # Find all courses owned by this network
-    for course in network.course_set.all():
-        if course in request.user.courses.all():
-            pass
-        else:
-            network.courses_filtered.append( course )
-
-
-    return render_to_response('education/network_detail.html', {'network': network, 'usernetwork': usernetwork, 'memberships': memberships})
-
-
-
-# Get an insititution id and present a page showing detail
-# if user is registered at the network, provide a tailored page
-def network_register(request, network_id):
-
-    network = get_object_or_404(Network, pk=network_id)
-
-    if request.POST:
-        un = UserNetwork()
-        un.user = request.user
-        
-        try:
-            un.network = network
-            
-        except:
-            # Error when saving data, will need to redisplay form: error notifications here
-            assert False, un
-            pass
-
-        else:
-            # Write to database 
-            un.save()
-            return HttpResponseRedirect(reverse('spenglr.core.views.index'))
-
-    return render_to_response('education/network_register.html', {'network': network })
-
-
-
-
-
 # Get an course id and present a page showing detail
-# if user is registered on the course, provide a tailored page
-def course_detail(request, network_id, course_id):
+# if user is registered on the course, provide a additional information
+def course_detail(request, course_id):
 
-    network = get_object_or_404(Network, pk=network_id)
     course = get_object_or_404(Course, pk=course_id)
 
-    memberships = course.memberships_context( network=network )
+    # usercourses "you are studying this course at..."
+    usercourses = UserCourse.objects.filter(coursei__course=course)
+
+    return render_to_response('education/course_detail.html', {'course': course, 'usercourses': usercourses})
+
+
+# Get a course instance object and present as a page showing the detail
+# if user is registered on the course, provide additional information
+def coursei_detail(request, coursei_id):
+
+    coursei = get_object_or_404(CourseInstance, pk=coursei_id)
+    course = coursei.course # Shortcut
 
     # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
     try:
-        usercourse = memberships.get( user=request.user )
+        usercourse = coursei.usercourse_set.get( user=request.user )
     except:
         usercourse = list()
+    else:
+        # Generate filter list of modules with associated user data
+        # If user registered attach usermodule linker and prepend (top list)
+        # else append (bottom list)
+        course.modulei_filtered = list()
+    
+        for modulei in course.moduleinstance_set.all():
+            if modulei in request.user.modules.all():
+                pass
+            else:
+                course.modulei_filtered.append(modulei)
+                    
 
-    course.modules_filtered = list()
-
-    for module in course.modules.all():
-        if module in request.user.modules.all():
-            pass
-        else:   
-            course.modules_filtered.append( module )
-
-
-    return render_to_response('education/course_detail.html', {'network': network, 'course': course, 'usercourse': usercourse, 'memberships': memberships})
-
+    return render_to_response('education/coursei_detail.html', {'course': course, 'coursei': coursei, 'usercourse': usercourse})
 
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the course, provide a tailored page
-def course_register(request, network_id, course_id):
+def coursei_register(request, coursei_id):
 
     network = get_object_or_404(Network, pk=network_id)
-    course = get_object_or_404(Course, pk=course_id)
+    coursei = get_object_or_404(CourseInstance, pk=course_id)
 
     if request.POST:
         uc = UserCourse()
@@ -124,13 +72,16 @@ def course_register(request, network_id, course_id):
             un.save()
             return HttpResponseRedirect(reverse('spenglr.core.views.index'))
 
-    return render_to_response('education/course_register.html', {'network': network, 'course': course })
+    return render_to_response('education/coursei_register.html', {'network': network, 'course': course })
+
+
+
 
 
 
 # Get an module id and present a page showing detail
 # if user is registered on the module, provide a tailored page
-def module_detail(request, network_id, course_id, module_id):
+def module_detail(request, module_id):
 
     network = get_object_or_404(Network, pk=network_id)
     course = get_object_or_404(Course, pk=course_id)
@@ -147,10 +98,27 @@ def module_detail(request, network_id, course_id, module_id):
 
     return render_to_response('education/module_detail.html', {'network': network, 'course': course, 'module': module, 'usermodule': usermodule, 'memberships': memberships})
 
+# Get an module instance id and present a page showing detail
+# if user is registered on the module, provide a tailored page
+def modulei_detail(request, modulei_id):
+
+    # ModuleInstance gives us course/module information
+    modulei = get_object_or_404(ModuleInstance, pk=modulei_id)
+    module = modulei.module # Shortcut
+
+    # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
+    try:
+        usermodule = modulei.usermodule_set.get( user=request.user )
+    except:
+        usermodule = list()
+
+    return render_to_response('education/modulei_detail.html', {'modulei': modulei, 'module': module, 'usermodule': usermodule})
+
+
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the course, provide a tailored page
-def module_register(request, network_id,  course_id, module_id):
+def modulei_register(request, modulei_id):
 
     network = get_object_or_404(Network, pk=network_id)
     course = get_object_or_404(Course, pk=course_id)
@@ -178,6 +146,6 @@ def module_register(request, network_id,  course_id, module_id):
             un.save()
             return HttpResponseRedirect(reverse('spenglr.core.views.index'))
 
-    return render_to_response('education/module_register.html', {'network': network, 'course': course, 'module': module })
+    return render_to_response('education/modulei_register.html', {'network': network, 'course': course, 'module': module })
 
 

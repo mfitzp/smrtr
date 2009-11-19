@@ -9,11 +9,11 @@ from django.http import HttpResponseRedirect
 def index(request):
     if request.user.is_authenticated():
         # User logged in, present the user dashboard
-        user_networks = request.user.usernetwork_set.all()
-        user_courses = request.user.usercourse_set.all()
+        usernetworks = request.user.usernetwork_set.all()
+        usercourses = request.user.usercourse_set.all()
         i = RequestContext(request, {
-            'user_networks': user_networks,
-            'user_courses': user_courses,
+            'usernetworks': usernetworks,
+            'usercourses': usercourses,
         })
         return render_to_response('dashboard.html', i)
     else:
