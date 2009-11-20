@@ -18,12 +18,13 @@ class Course(models.Model):
         return self.name
 
     network = models.ForeignKey(Network)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=75)
     description = models.TextField(blank = True)
     start_date = models.DateField('start date')    
     qualification = models.ForeignKey('Qualification', blank = True, null = True) # Standardised qualification level
     modules = models.ManyToManyField('Module', related_name='courses', through='ModuleInstance')
     provided_by = models.ManyToManyField(Network, related_name='courses_provided', through='CourseInstance')
+    url = models.URLField(verify_exists = True, null = True, blank = True) # External website for additional course information (e.g. provider site)
 
 # NOTE: This linker model may be unnnecessary
 # Course as offered by a specific network
@@ -41,9 +42,9 @@ class Module(models.Model):
         return self.name
 
     network = models.ForeignKey(Network)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=75)
+    code = models.CharField(max_length=10,blank = True)
     description = models.TextField(blank = True)
-    start_date = models.DateField('start date offset')
     credits = models.IntegerField(default=10)
 
 # Module as used by a specific course
@@ -52,6 +53,7 @@ class ModuleInstance(models.Model):
         return self.module.name
     def memberships(self):
         return UserModule.objects.filter(modulei=self)
+    start_week = models.IntegerField(default = 1)
     members = models.ManyToManyField(User, through='UserModule', related_name='modules')
     course = models.ForeignKey(Course)
     module = models.ForeignKey(Module)

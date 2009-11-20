@@ -23,7 +23,7 @@ def questions(request, modulei_id):
     except:
         usermodule = list()
 
-    questions = module.question_set.order_by('?')
+    questions = module.question_set.order_by('?')[:10] # Returns 10 random questions
 
     return render_to_response('questions/question_list.html', {'module': module, 'modulei':modulei, 'usermodule':usermodule, 'questions': questions})
 
