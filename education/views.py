@@ -3,6 +3,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
 from spenglr.education.models import *
+from spenglr.network.models import *
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -53,28 +54,34 @@ def coursei_detail(request, coursei_id):
 # if user is registered at the course, provide a tailored page
 def coursei_register(request, coursei_id):
 
-    network = get_object_or_404(Network, pk=network_id)
-    coursei = get_object_or_404(CourseInstance, pk=course_id)
+    coursei = get_object_or_404(CourseInstance, pk=coursei_id)
+    course = coursei.course # Shortcut
 
     if request.POST:
         uc = UserCourse()
         uc.user = request.user
+        
+        # Find user record for parent network, must be registered on the network to register for course
+        try:
+            usernetwork = request.user.usernetwork_set.get(network = coursei.network)
+        except:
+            assert False, coursei
 
         try:
-            uc.network = network
-            uc.course = course
+            uc.coursei = coursei
             uc.start_date = request.POST['start_date']
         except:
             # Error when saving data, will need to redisplay form: error notifications here
-            assert False, un
+            assert False, uc
             pass
 
         else:
             # Write to database 
-            un.save()
+            uc.usernetwork = usernetwork
+            uc.save()
             return HttpResponseRedirect(reverse('spenglr.core.views.index'))
 
-    return render_to_response('education/coursei_register.html', {'network': network, 'course': course })
+    return render_to_response('education/coursei_register.html', {'coursei': coursei, 'course': course })
 
 
 # Get an course id and present a page showing detail
@@ -125,36 +132,39 @@ def modulei_detail(request, modulei_id):
 
 
 
-# Get an insititution id and present a page showing detail
-# if user is registered at the course, provide a tailored page
-def modulei_register(request, modulei_id):
+# Register for this module
+# pass in courseinstance for context to pull of usercourse record (specific)
+def modulei_register(request, modulei_id, coursei_id ):
 
-    network = get_object_or_404(Network, pk=network_id)
-    course = get_object_or_404(Course, pk=course_id)
-    module = get_object_or_404(Module, pk=module_id)
-    
+    modulei = get_object_or_404(ModuleInstance, pk=modulei_id)
+    module = modulei.module # Shortcut
+
+    coursei = get_object_or_404(CourseInstance, pk=coursei_id)
+
     if request.POST:
         um = UserModule()
         um.user = request.user
         
-        usercourse = course.memberships.get( user=request.user )
-        um.usercourse = usercourse
-        
+        # Find user record for parent course, must be registered on the course to register for module
         try:
-            um.network = network
-            um.course = course
-            um.module = module
+            usercourse = coursei.usercourse_set.get(user=request.user)
+        except:
+            assert False, coursei_id
+
+        try:
+            um.modulei = modulei
             um.start_date = request.POST['start_date']
         except:
             # Error when saving data, will need to redisplay form: error notifications here
-            assert False, un
+            assert False, um
             pass
 
         else:
             # Write to database 
-            un.save()
+            um.usercourse = usercourse
+            um.save()
             return HttpResponseRedirect(reverse('spenglr.core.views.index'))
 
-    return render_to_response('education/modulei_register.html', {'network': network, 'course': course, 'module': module })
+    return render_to_response('education/modulei_register.html', {'modulei':modulei, 'module': module, 'coursei': coursei })
 
 

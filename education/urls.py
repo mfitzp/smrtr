@@ -21,6 +21,6 @@ urlpatterns = patterns('',
 
     # Module instance 
     url(r'^mi(?P<modulei_id>\d+)/$', 'spenglr.education.views.modulei_detail',  name='modulei-detail'  ),
-    url(r'^mi(?P<modulei_id>\d+)/register/$', 'spenglr.education.views.modulei_register',  name='modulei-register'  ),
+    url(r'^mi(?P<modulei_id>\d+)/register/ci(?P<coursei_id>\d+)/$', 'spenglr.education.views.modulei_register',  name='modulei-register'  ),
 
 )
