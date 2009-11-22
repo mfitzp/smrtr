@@ -83,6 +83,8 @@ class UserCourse(models.Model):
     # Additional information
     def year_of_study(self):
         return ( ( _date.today() - self.start_date  ).days / 365 )+1
+    def is_active(self):
+        return ( self.end_date == None ) or ( self.end_date > _date.today() )
 
     user = models.ForeignKey(User)
     usernetwork = models.ForeignKey(UserNetwork) # Up tree
@@ -108,6 +110,8 @@ class UserModule(models.Model):
     # Additional information
     def week_of_study(self):
         return ( ( _date.today() - self.start_date  ).days / 7 ) + 1
+    def is_active(self):
+        return ( self.end_date == None ) or ( self.end_date > _date.today() )
 
     user = models.ForeignKey(User)
     usercourse = models.ForeignKey(UserCourse) # Up tree
