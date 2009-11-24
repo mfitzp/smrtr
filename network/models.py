@@ -22,7 +22,7 @@ class Network(models.Model):
     postcode = models.CharField('ZIP/Postal Code', max_length = 15, blank = True)
     country = models.ForeignKey(Country, null = True, blank = True)
     telno = models.CharField('Telephone', max_length=50, blank = True)
-    url = models.URLField(verify_exists = True, null = True, blank = True)
+    url = models.URLField(verify_exists = True, blank = True)
     TYPE_CHOICES = (
         (0, 'Other'),
         (1, 'Educational Institution'),

@@ -33,14 +33,14 @@ def coursei_detail(request, coursei_id):
         usercourse = coursei.usercourse_set.get( user=request.user )
     except:
         usercourse = list()
-        course.moduleinstance_filtered = course.moduleinstance_set.all()
+        course.moduleinstance_filtered = course.moduleinstance_set.all().order_by('module__name')
     else:
         # Generate filter list of modules with associated user data
         # If user registered attach usermodule linker and prepend (top list)
         # else append (bottom list)
         course.moduleinstance_filtered = list()
     
-        for modulei in course.moduleinstance_set.all():
+        for modulei in course.moduleinstance_set.all().order_by('module__name'):
             if modulei in request.user.modules.all():
                 pass
             else:

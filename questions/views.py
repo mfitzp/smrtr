@@ -2,7 +2,7 @@ from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
-from spenglr.questions.models import Question, Answer
+from spenglr.questions.models import Question, Answer, UserQuestionAttempt
 from spenglr.education.models import Module, ModuleInstance
 #from spenglr.study.models import UserQuestions
 from tagging.models import Tag,TaggedItem
@@ -55,20 +55,30 @@ def submit(request, modulei_id):
             aid = request.POST.get('questions-' + qid)
             totals['answered'] = totals['answered'] + 1
 
+            # Preparer UserQuestionAttempt to save success/failure to db
+            uqa = UserQuestionAttempt()
+            uqa.question = q
+            uqa.user = request.user
+
             try:
                 correct = q.answer_set.get(pk=aid, is_correct=True)
             except:
                 totals['incorrect'] = totals['incorrect'] + 1
+                uqa.is_correct = False
             else:
                 totals['correct'] = totals['correct'] + 1
+                uqa.is_correct = True
 
             # Add this question to the question list for review on the summary page
             q.answered = int(aid)
             questions.append(q)
 
-            # Remove this question from the user's question queue
-            
+            # Save success/failure to the db
+            uqa.save()
 
+            # Remove this question from the user's question queue (NOTE: If implemented?)
+            
+           
         except:
             pass
 

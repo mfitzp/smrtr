@@ -20,14 +20,14 @@ def network_detail(request, network_id):
         usernetwork = network.usernetwork_set.get( user=request.user )
     except:
         usernetwork = list()
-        network.coursei_filtered = network.courseinstance_set.all()
+        network.coursei_filtered = network.courseinstance_set.all().order_by('course__name')
     else:
         # Generate filter list of modules with associated user data
         # If user registered attach usermodule linker and prepend (top list)
         # else append (bottom list)
         network.coursei_filtered = list()
     
-        for coursei in network.courseinstance_set.all():
+        for coursei in network.courseinstance_set.all().order_by('course__name'):
             if coursei in request.user.courses.all():
                 pass
             else:

@@ -24,7 +24,7 @@ class Course(models.Model):
     qualification = models.ForeignKey('Qualification', blank = True, null = True) # Standardised qualification level
     modules = models.ManyToManyField('Module', related_name='courses', through='ModuleInstance')
     provided_by = models.ManyToManyField(Network, related_name='courses_provided', through='CourseInstance')
-    url = models.URLField(verify_exists = True, null = True, blank = True) # External website for additional course information (e.g. provider site)
+    url = models.URLField(verify_exists = True, blank = True) # External website for additional course information (e.g. provider site)
 
 # NOTE: This linker model may be unnnecessary
 # Course as offered by a specific network
@@ -32,7 +32,8 @@ class CourseInstance(models.Model):
     def __unicode__(self):
         return self.course.name
     def memberships(self):
-        return UserCourse.objects.filter(coursei=self)
+        return self.usercourse_set.all()
+
     members = models.ManyToManyField(User, through='UserCourse', related_name='courses')
     network = models.ForeignKey(Network)
     course = models.ForeignKey(Course)

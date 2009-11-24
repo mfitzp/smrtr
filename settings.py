@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'spenglr.education',
     'spenglr.questions',
     'spenglr.resources',
+    'spenglr.sq',
 )
 
 CACHE_BACKEND = 'dummy:///'
@@ -105,3 +106,14 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
 FORCE_LOWERCASE_TAGS = True
+
+# Spenglr constants
+
+SQ_FAIR_RANGE = 10
+
+SQ_UPPER_LIMIT = 200
+SQ_LOWER_LIMIT = 0
+
+SQ_READOFF_MARK = 50
+
+SQ_PINNING_WEIGHT = 0.1
