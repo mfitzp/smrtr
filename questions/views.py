@@ -64,10 +64,10 @@ def submit(request, modulei_id):
                 correct = q.answer_set.get(pk=aid, is_correct=True)
             except:
                 totals['incorrect'] = totals['incorrect'] + 1
-                uqa.is_correct = False
+                uqa.percent_correct = 0
             else:
                 totals['correct'] = totals['correct'] + 1
-                uqa.is_correct = True
+                uqa.percent_correct = 100
 
             # Add this question to the question list for review on the summary page
             q.answered = int(aid)

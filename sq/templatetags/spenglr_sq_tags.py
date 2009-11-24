@@ -33,12 +33,16 @@ def sqdifficulty( usersq, diffsq ):
 
     if usersq is None or diffsq is None:
         difficulty = 'unknown'
-    elif usersq > diffsq + settings.SQ_FAIR_RANGE:
+    elif usersq > diffsq + ( settings.SQ_FAIR_RANGE * 2 ):
         difficulty = 'easy'
-    elif usersq < diffsq - settings.SQ_FAIR_RANGE:
-        difficulty = 'tricky'
-    else:
+    elif usersq > diffsq + settings.SQ_FAIR_RANGE:
+        difficulty = 'simple'
+    elif usersq > diffsq - settings.SQ_FAIR_RANGE:
         difficulty = 'fair'     
+    elif usersq > diffsq - ( settings.SQ_FAIR_RANGE * 2):
+        difficulty = 'tricky'     
+    else:
+        difficulty = 'hard'
 
     return '<span class="sq %s">%s</span>' % (difficulty, difficulty.capitalize())
 

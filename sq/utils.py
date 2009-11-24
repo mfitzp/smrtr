@@ -66,6 +66,7 @@ def sq_calculate( data, direction = 'asc' ):
     xx = 0
     xy = 0
 
+    # Process summary values for each variable
     # COUNT(*) as n, SUM(x) AS sumx, SUM(y) AS sumy, SUM(POWER(x,2)) AS sumxx, SUM(x*y) AS sumxy FROM (' .
     for e in data:
         n  = n  + e['n']
@@ -76,7 +77,9 @@ def sq_calculate( data, direction = 'asc' ):
 
     # Increase pin as numbers increase (x0.1 e.g.)
     # +1 so is pinned before data is added
-    pin = ( 1 + e['n'] ) * settings.SQ_PINNING_WEIGHT
+    pin = 1+ ( e['n'] * settings.SQ_PINNING_WEIGHT )
+
+    # NOTE: (x) SQ range 0-200, (y) Correct range 0-100
 
     if direction == 'asc': # Line goes bottom-left, to top right (e.g. qSQ)
         x  = x  + ( 200   * pin )

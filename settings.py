@@ -109,7 +109,8 @@ FORCE_LOWERCASE_TAGS = True
 
 # Spenglr constants
 
-SQ_FAIR_RANGE = 10
+# +/1 Range between levels of difficulty
+SQ_FAIR_RANGE = 20
 
 SQ_UPPER_LIMIT = 200
 SQ_LOWER_LIMIT = 0
