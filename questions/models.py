@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 # Spenglr
-from spenglr.education.models import Module
 from spenglr.resources.models import Resource
+from spenglr.education.models import Module
 from spenglr.sq.utils import * 
 # Externals
 from tagging.fields import TagField
@@ -26,6 +26,7 @@ class Question(models.Model):
         return Tag.objects.get_for_object(self)     
 
     def update_sq(self):
+        # Get all user's attempts at this question
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
         data = self.userquestionattempt_set.values('usq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('usq'))
         self.sq = sq_calculate(data, 'asc') # Ascending data set
@@ -33,7 +34,7 @@ class Question(models.Model):
 
     content = models.TextField()
     resource = models.ManyToManyField(Resource, blank=True) # Multiple resource records for this Question, resources assigned to >1 question
-    modules = models.ManyToManyField(Module, blank=True)
+    modules = models.ManyToManyField('Module', blank=True)
     created = models.DateTimeField(auto_now_add = True)
     last_updated = models.DateTimeField(auto_now = True)
     tags = TagField()
@@ -50,7 +51,7 @@ class Answer(models.Model):
 # Following models store user relationships with questions and resources
 # User's attempts at questions
 class UserQuestionAttempt(models.Model):
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey('Question')
     user = models.ForeignKey(User)
     percent_correct = models.IntegerField() # Percent correct (will be 0 or 100 until implement multi-part answers)
     usq = models.IntegerField() # User's SQ at time of answering

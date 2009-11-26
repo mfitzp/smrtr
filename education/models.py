@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 # Externals
 from spenglr.network.models import Network,UserNetwork
+from spenglr.sq.utils import * 
+# External
 from countries.models import Country
 from datetime import date as _date
 
@@ -41,6 +43,12 @@ class CourseInstance(models.Model):
 class Module(models.Model):
     def __unicode__(self):
         return self.name
+    def update_sq(self):
+        # update
+        # save
+        data = self.question_set #.aggregate(Avg('qsq'))
+        assert False, data
+        return 
 
     network = models.ForeignKey(Network)
     name = models.CharField(max_length=75)
@@ -71,7 +79,6 @@ class ModuleInstance(models.Model):
 # Study models store information about user's experience with education
 # Models are ManytoMany through Models (ie they are used as the basis for linking
 # other models together, while appending additional information
-
 
 class UserCourse(models.Model):
     def __unicode__(self):
@@ -113,6 +120,26 @@ class UserModule(models.Model):
         return ( ( _date.today() - self.start_date  ).days / 7 ) + 1
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
+    # Update user's SQ value on this module
+    def update_sq(self):
+        """
+        SELECT uid, qSQ AS x, AVG( correctYN ) * 100 AS y FROM {spenglr_questions} " .
+        "INNER JOIN {spenglr_attempts} ON {spenglr_questions}.nid = {spenglr_attempts}.nid " .
+        "INNER JOIN {term_node} ON {spenglr_questions}.nid = {term_node}.nid " .
+        """
+        # Get user's attempts on this module's questions 
+        # group by x
+        # x = qSQ (question's SQ)
+        # y = percent_correct
+        # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
+        # .values('qsq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('qsq'))
+        # questions = self.modulei.module.question_set.all()
+        # assert False, questions
+        # data = questions.values('qsq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('qsq'))
+        # assert False, data
+        # self.sq = sq_calculate(data, 'desc') # Ascending data set
+        # return self.sq
+        #self.save()
 
     user = models.ForeignKey(User)
     usercourse = models.ForeignKey(UserCourse) # Up tree
