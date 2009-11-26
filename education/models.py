@@ -97,6 +97,9 @@ class UserCourse(models.Model):
         return ( ( _date.today() - self.start_date  ).days / 365 )+1
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
+    def update_sq(self):
+        self.sq = self.usermodule_set.aggregate(Avg('sq'))['sq__avg']
+        self.save()
 
     user = models.ForeignKey(User)
     usernetwork = models.ForeignKey(UserNetwork) # Up tree
@@ -126,24 +129,14 @@ class UserModule(models.Model):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
     # Update user's SQ value on this module
     def update_sq(self):
-        """
-        SELECT uid, qSQ AS x, AVG( correctYN ) * 100 AS y FROM {spenglr_questions} " .
-        "INNER JOIN {spenglr_attempts} ON {spenglr_questions}.nid = {spenglr_attempts}.nid " .
-        "INNER JOIN {term_node} ON {spenglr_questions}.nid = {term_node}.nid " .
-        """
         # Get user's attempts on this module's questions 
         # group by x
         # x = qSQ (question's SQ)
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        # .values('qsq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('qsq'))
-        # questions = self.modulei.module.question_set.all()
-        # assert False, questions
-        # data = questions.values('qsq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('qsq'))
-        # assert False, data
-        # self.sq = sq_calculate(data, 'desc') # Ascending data set
-        # return self.sq
-        #self.save()
+        data = self.modulei.module.question_set.all().filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        self.sq = sq_calculate(data, 'desc') # Descending data set  
+        self.save()
 
     user = models.ForeignKey(User)
     usercourse = models.ForeignKey(UserCourse) # Up tree

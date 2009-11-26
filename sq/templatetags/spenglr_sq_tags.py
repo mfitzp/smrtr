@@ -13,7 +13,7 @@ def sqchange( prevsq, sq ):
             Returns up down nochange
     """   
     if prevsq is None or sq is None:
-        return '<span class="sq unknown">Unknown</span>'
+        return '<span class="sq nochange">tbc</span>'
 
     if sq > prevsq:
         change = 'up'
@@ -68,7 +68,6 @@ def sqdescriptive( sq ):
     sq = min( max( sq , 69  ) , 149 )
     # Convert to 14-6
     dn = int( math.floor( sq / 10) )
-    cn = int( math.floor( sq / 20) )
 
     descriptive = {
         14: "Genius",

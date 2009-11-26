@@ -15,6 +15,7 @@ def sq_lobf( n, x, y, xx, xy ):
     # Line of best fit: y = mx + b 5
     # See: http://people.hofstra.edu/stefan_waner/realworld/calctopic1/regression.html
     denominator = ( n * xx ) - ( math.pow( x, 2 ) )
+    
 
     # Prevent divide by zero
     if denominator == 0:
@@ -37,7 +38,6 @@ def sq_lobf( n, x, y, xx, xy ):
         return settings.SQ_UPPER_LIMIT
 
     sq = ( settings.SQ_READOFF_MARK - b ) / m
-    
     # SQ Boundary Limits for realism.
     # @xxx: These should not be reached in reality (or *rarely*). CHECK!
     sq = max( sq, settings.SQ_LOWER_LIMIT );
@@ -65,11 +65,10 @@ def sq_calculate( data, direction = 'asc' ):
     y = 0
     xx = 0
     xy = 0
-
     # Process summary values for each variable
     # COUNT(*) as n, SUM(x) AS sumx, SUM(y) AS sumy, SUM(POWER(x,2)) AS sumxx, SUM(x*y) AS sumxy FROM (' .
     for e in data:
-        n  = n  + e['n']
+        n  = n  + 1 #e['n']
         x  = x  + e['x']
         y  = y  + e['y']
         xx = xx + math.pow(e['x'],2)
