@@ -2,9 +2,10 @@ from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
-from spenglr.education.models import *
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+# Spenglr
+from education.models import *
 
 
 
@@ -58,7 +59,7 @@ def network_register(request, network_id):
         else:
             # Write to database 
             un.save()
-            return HttpResponseRedirect(reverse('spenglr.core.views.index'))
+            return HttpResponseRedirect(reverse('core.views.index'))
 
     return render_to_response('network/network_register.html', {'network': network })
 

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from spenglr.questions.models import *
+# Spenglr
+from questions.models import *
 
 
 class AnswerInline(admin.TabularInline):

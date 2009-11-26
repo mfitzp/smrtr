@@ -2,9 +2,10 @@ from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
-from spenglr.questions.models import Question, Answer, UserQuestionAttempt
-from spenglr.education.models import Module, ModuleInstance
-#from spenglr.study.models import UserQuestions
+# Spenglr
+from questions.models import Question, Answer, UserQuestionAttempt
+from education.models import Module, ModuleInstance
+# External
 from tagging.models import Tag,TaggedItem
 
 def question_detail(request, question_id):

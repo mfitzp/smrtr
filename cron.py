@@ -2,8 +2,8 @@ from django.core.management import setup_environ
 import settings
 setup_environ(settings)
 # Spenglr
-from spenglr.questions.utils import *
-from spenglr.education.utils import *
+from questions.utils import *
+from education.utils import *
 
 def cron():
     batch_question_update_sq()

@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Externals
-from spenglr.network.models import Network,UserNetwork
-from spenglr.sq.utils import * 
+# Spenglr
+from network.models import Network,UserNetwork
+from sq.utils import * 
 # External
 from countries.models import Country
 from datetime import date as _date

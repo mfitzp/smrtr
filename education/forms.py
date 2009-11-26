@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.admin import widgets                                       
-from spenglr.education.models import UserCourse
+# Spenglr
+from education.models import UserCourse
 
 class UserCourseRegisterForm(forms.ModelForm):
     class Meta:

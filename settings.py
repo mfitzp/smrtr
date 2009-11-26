@@ -61,10 +61,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'spenglr.core.middleware.RequireLoginMiddleware',
+    'core.middleware.RequireLoginMiddleware',
 )
 
-ROOT_URLCONF = 'spenglr.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -87,12 +87,13 @@ INSTALLED_APPS = (
     'gravatar', #http://code.google.com/p/django-gravatar/
     'tagging',
 # Spenglr
-    'spenglr.core',
-    'spenglr.network',
-    'spenglr.education',
-    'spenglr.questions',
-    'spenglr.resources',
-    'spenglr.sq',
+    'core',
+    'profile',
+    'network',
+    'education',
+    'questions',
+    'resources',
+    'sq',
 )
 
 CACHE_BACKEND = 'dummy:///'
@@ -100,6 +101,8 @@ CACHE_BACKEND = 'dummy:///'
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
 )
+
+AUTH_PROFILE_MODULE = "profile.profile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
 LOGIN_URL = '/accounts/login/'

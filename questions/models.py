@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 # Spenglr
-from spenglr.resources.models import Resource
-from spenglr.education.models import Module
-from spenglr.sq.utils import * 
+from resources.models import Resource
+from education.models import Module
+from sq.utils import * 
 # Externals
 from tagging.fields import TagField
 from tagging.models import Tag

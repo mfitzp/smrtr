@@ -1,9 +1,10 @@
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
-from spenglr.questions.models import Question
-from spenglr.education.models import Module
-#from spenglr.study.models import UserQuestions
+# Spenglr
+from questions.models import Question
+from education.models import Module
+
 
 
 def questions(request, module_id):

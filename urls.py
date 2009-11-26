@@ -12,15 +12,17 @@ urlpatterns = patterns('',
     (r'^admin/jsi18n', i18n_javascript),
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
-    (r'^$', 'spenglr.core.views.index'),
+    (r'^$', 'core.views.index'),
     #(r'^login/$', 'spenglr.core.views.loginhandler'),
     #(r'^logout/$', 'spenglr.core.views.logouthandler'),
 
-    (r'^education/', include('spenglr.education.urls')),
+    (r'^education/', include('education.urls')),
 
-    (r'^network/', include('spenglr.network.urls')),
+    (r'^network/', include('network.urls')),
     
     (r'^accounts/', include('registration.urls')),
+
+    (r'^profile/', include('profile.urls')),
 
     # These exist so we can keep a standardised url forum across all 3
     # as the m/i/c is not actually used on the forum code (can't have / in slugs)
@@ -28,7 +30,7 @@ urlpatterns = patterns('',
     #(r'^discuss/i/', include('forum.urls')),
     #(r'^discuss/c/', include('forum.urls')),
 
-    (r'^questions/', include('spenglr.questions.urls')),
+    (r'^questions/', include('questions.urls')),
     #(r'^resources/', include('spenglrcom.resources.urls')),
 
 

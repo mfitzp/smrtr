@@ -1,9 +1,10 @@
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
-from spenglr.education.models import Module, UserCourse
-from spenglr.core.models import LoginForm
 from django.http import HttpResponseRedirect
+# Spenglr
+from education.models import Module, UserCourse
+from core.models import LoginForm
 
 
 def index(request):

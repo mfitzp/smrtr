@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db.models import Avg, Max, Min, Count
-from spenglr.questions.models import Question
+# Spenglr
+from questions.models import Question
 # Python standard
 import math
 from datetime import date as _date

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from spenglr.education.models import *
+# Spenglr
+from education.models import *
 
 
 admin.site.register(Network)

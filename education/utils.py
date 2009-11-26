@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db.models import Avg, Max, Min, Count
-from spenglr.education.models import Module,Course,UserCourse,UserModule
 # Python standard
 import math
 from datetime import date as _date
-
+# Spenglr
+from education.models import Module,Course,UserCourse,UserModule
 
 
 # Calculate mSQ for the oldest records
