@@ -12,6 +12,10 @@ class Network(models.Model):
         return self.name
     def memberships(self):
         return UserNetwork.objects.filter(network=self)
+    def update_sq(self):
+        # update
+        # self.sq = self.members.aggregate(sq=Avg('member__profile__sq'))['sq']
+        self.save()
 
     name = models.CharField(max_length=200)
     description = models.TextField(blank = True)
@@ -42,6 +46,8 @@ class Network(models.Model):
     )
     stage = models.PositiveSmallIntegerField(choices=STAGE_CHOICES, null = True, blank = True)
     members = models.ManyToManyField(User, through='UserNetwork', related_name='networks')
+    # SQ average of members, rates network intelligence 
+    sq = models.IntegerField(blank = True, null = True, editable = False)
 
 class UserNetwork(models.Model):
     def __unicode__(self):

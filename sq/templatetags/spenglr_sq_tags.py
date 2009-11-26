@@ -13,8 +13,9 @@ def sqchange( prevsq, sq ):
             Returns up down nochange
     """   
     if prevsq is None or sq is None:
-        difficulty = 'unknown'
-    elif sq > prevsq:
+        return '<span class="sq unknown">Unknown</span>'
+
+    if sq > prevsq:
         change = 'up'
     elif sq < prevsq:
         change = 'down'
@@ -66,7 +67,8 @@ def sqdescriptive( sq ):
     # Limit SQ to the range 149-69
     sq = min( max( sq , 69  ) , 149 )
     # Convert to 14-6
-    sq = int( math.floor( sq / 10) )
+    dn = int( math.floor( sq / 10) )
+    cn = int( math.floor( sq / 20) )
 
     descriptive = {
         14: "Genius",
@@ -78,6 +80,6 @@ def sqdescriptive( sq ):
         8 : "Low Average",
         7 : "Very Low",
         6 : "Extremely Low",
-    }[sq]
+    }[dn]
 
-    return descriptive
+    return '<span class="sq sqdescriptive">%s</span>' % (descriptive)
