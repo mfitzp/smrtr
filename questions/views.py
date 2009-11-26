@@ -59,6 +59,7 @@ def submit(request, modulei_id):
             uqa = UserQuestionAttempt()
             uqa.question = q
             uqa.user = request.user
+            uqa.usq = 100 #request.user.sq
 
             try:
                 correct = q.answer_set.get(pk=aid, is_correct=True)
@@ -77,12 +78,16 @@ def submit(request, modulei_id):
             uqa.save()
 
             # Remove this question from the user's question queue (NOTE: If implemented?)
-            
            
         except:
             pass
 
     totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
+
+    # Recalculate SQ values for this module/usermodule_set  
+    # NOTE: May need to remove this is load too great?
+    usermodule.update_sq()
+    module.update_sq()
 
     return render_to_response('questions/question_list_answered.html', {'module': module, 'modulei': modulei, 'usermodule':usermodule, 'questions': questions, 'totals': totals })
 

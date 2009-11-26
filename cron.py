@@ -7,8 +7,11 @@ from spenglr.education.utils import *
 
 def cron():
     batch_question_update_sq()
+    
     batch_course_update_sq()    
     batch_module_update_sq()
 
+    batch_usercourse_update_sq()
+    batch_usermodule_update_sq()
 
 cron()

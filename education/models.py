@@ -134,7 +134,7 @@ class UserModule(models.Model):
         # x = qSQ (question's SQ)
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.modulei.module.question_set.all().filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        data = self.modulei.module.question_set.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
 
