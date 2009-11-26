@@ -14,5 +14,4 @@ def batch_question_update_sq():
     questions = Question.objects.filter(userquestionattempt__created__isnull=False).order_by('userquestionattempt__created')[:20]
 
     for q in questions:
-        print q.id
         q.update_sq() # Call SQ recalculation for this question

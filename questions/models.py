@@ -34,7 +34,7 @@ class Question(models.Model):
 
     content = models.TextField()
     resource = models.ManyToManyField(Resource, blank=True) # Multiple resource records for this Question, resources assigned to >1 question
-    modules = models.ManyToManyField('Module', blank=True)
+    modules = models.ManyToManyField(Module, blank=True)
     created = models.DateTimeField(auto_now_add = True)
     last_updated = models.DateTimeField(auto_now = True)
     tags = TagField()

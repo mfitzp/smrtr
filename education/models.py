@@ -18,6 +18,10 @@ from datetime import date as _date
 class Course(models.Model):
     def __unicode__(self):
         return self.name
+    def update_sq(self):
+        # update
+        self.sq = self.modules.aggregate(Avg('sq'))['sq__avg']
+        self.save()
 
     network = models.ForeignKey(Network)
     name = models.CharField(max_length=75)
@@ -27,6 +31,7 @@ class Course(models.Model):
     modules = models.ManyToManyField('Module', related_name='courses', through='ModuleInstance')
     provided_by = models.ManyToManyField(Network, related_name='courses_provided', through='CourseInstance')
     url = models.URLField(verify_exists = True, blank = True) # External website for additional course information (e.g. provider site)
+    sq = models.IntegerField(editable = False, null = True)
 
 # NOTE: This linker model may be unnnecessary
 # Course as offered by a specific network
@@ -45,16 +50,15 @@ class Module(models.Model):
         return self.name
     def update_sq(self):
         # update
-        # save
-        data = self.question_set #.aggregate(Avg('qsq'))
-        assert False, data
-        return 
+        self.sq = self.question_set.aggregate(Avg('sq'))['sq__avg']
+        self.save()
 
     network = models.ForeignKey(Network)
     name = models.CharField(max_length=75)
     code = models.CharField(max_length=10,blank = True)
     description = models.TextField(blank = True)
     credits = models.IntegerField(default=10)
+    sq = models.IntegerField(editable = False, null = True)
 
 # Module as used by a specific course
 class ModuleInstance(models.Model):
@@ -103,7 +107,7 @@ class UserCourse(models.Model):
     start_date = models.DateField(null = True)
     end_date = models.DateField(null = True)
 
-    sq = models.FloatField(editable = False, null = True)
+    sq = models.IntegerField(editable = False, null = True)
 
 class UserModule(models.Model):
     def __unicode__(self):
@@ -150,7 +154,7 @@ class UserModule(models.Model):
     start_date = models.DateField(null = True) 
     end_date = models.DateField(null = True) 
 
-    sq = models.FloatField(editable = False, null = True)
+    sq = models.IntegerField(editable = False, null = True)
     focus = models.IntegerField( default = 0,editable = False)
 
 
