@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Avg, Max, Min, Count
 # Externals
 from countries.models import Country
 from datetime import date as _date
@@ -14,7 +15,7 @@ class Network(models.Model):
         return UserNetwork.objects.filter(network=self)
     def update_sq(self):
         # update
-        # self.sq = self.members.aggregate(sq=Avg('member__profile__sq'))['sq']
+        self.sq = self.members.aggregate(sq=Avg('userprofile__sq'))['sq']
         self.save()
 
     name = models.CharField(max_length=200)

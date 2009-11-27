@@ -3,4 +3,4 @@ from django.contrib import admin
 from profile.models import *
 
 
-admin.site.register(Profile)
+admin.site.register(UserProfile)

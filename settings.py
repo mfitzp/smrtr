@@ -102,7 +102,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
 )
 
-AUTH_PROFILE_MODULE = "profile.profile"
+AUTH_PROFILE_MODULE = "profile.userprofile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
 LOGIN_URL = '/accounts/login/'
