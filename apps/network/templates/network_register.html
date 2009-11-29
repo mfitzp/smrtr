@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% cycle 'odd' 'even' as zebra %}
+
+{% block extrahead %}
+    {{ block.super }}
+<script type="text/javascript" src="/media/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/media/admin/js/getElementsBySelector.js"></script>
+
+<script type="text/javascript" src="/media/admin/js/actions.js"></script>
+<script type="text/javascript" src="/media/admin/js/calendar.js"></script>
+<script type="text/javascript" src="/media/admin/js/admin/DateTimeShortcuts.js"></script>
+
+
+{% endblock %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ network }}
+{% endblock %}
+
+{% block content %}
+
+    {% if network %}
+    
+        <h1>{{ network.name }}</h1>
+        <table>
+        {% if network.city %}
+        <tr><th>Location</th>
+        <td><a href="http://maps.google.com/maps?q={{ network.postcode|urlencode }}" target="_blank">
+               {{ network.city }}, {{ network.country }}
+        </a></td></tr>
+        {% endif %}
+        {% if network.stage %}
+        <tr><th>Stage</th><td>{{ network.get_stage_display }}</td></tr>
+        {% endif %}
+        </table>
+        <blockquote>{{ network.description }}</blockquote>
+
+        <h3>Registration</h3>
+        <p>Join this network for access to courses and other members.</p>
+        <!-- Registration form -->
+        <form action="{% url network-register network_id=network.id %}" method="post">
+        <input type="hidden" name="submit" value="1" />
+        &nbsp;<input type="submit" value="Register &raquo;" />
+        </form>
+
+
+    {% endif %}
+
+{% endblock %}

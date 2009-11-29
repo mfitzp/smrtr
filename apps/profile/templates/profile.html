@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+{% load gravatar %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ profile }}
+{% endblock %}
+
+{% block content %}
+
+    {% if user %}
+    
+        <h1>{{ profile }}</h1>
+
+        <table>
+        <tr>
+        <th rowspan="3">{% gravatar user 48 %}</th></tr>
+        
+        {% if profile.city %}
+            <tr>
+            <th>Location</th>
+            <td><a href="http://maps.google.com/maps?q={{ profile.postcode|urlencode }}&amp;t=h" target="_blank">
+                {{ profile.city }}, {{ profile.country }}
+            </a></td></tr>
+        {% endif %}
+        
+        <tr><th>SQ</th><td>{% sqchange 0 profile.sq %}</td></tr>
+        </table>
+
+        <blockquote>{{ profile.about }}</blockquote>
+
+  
+
+    {% else %}
+        <p>No profile available.</p>
+    {% endif %}
+
+{% endblock %}

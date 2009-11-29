@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url latest-questions %}">Questions</a>
+    &raquo; {{ tag }}
+{% endblock %}
+
+
+{% block content %}
+
+        {% if questions %}
+            {% for question in questions %}
+            <blockquote>
+                <a href="{% url question-detail question_id=question.id %}">{{ question.content }}</a>
+            </blockquote>
+            {% endfor %}
+            </table>
+        {% else %}
+            <p>No questions available.</p>
+        {% endif %}
+
+{% endblock %}

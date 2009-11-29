@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% cycle 'odd' 'even' as zebra %}
+
+{% block extrahead %}
+    {{ block.super }}
+<script type="text/javascript" src="/media/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/media/admin/js/getElementsBySelector.js"></script>
+
+<script type="text/javascript" src="/media/admin/js/actions.js"></script>
+<script type="text/javascript" src="/media/admin/js/calendar.js"></script>
+<script type="text/javascript" src="/media/admin/js/admin/DateTimeShortcuts.js"></script>
+
+
+{% endblock %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url network-detail network_id=coursei.network.id %}">{{ coursei.network }}</a>
+    &raquo; {{ course }}
+{% endblock %}
+
+{% block content %}
+
+    {% if coursei %}
+    
+        <h1>{{ course.name }}</h1>
+        <table>
+        {% if course.city %}
+        <tr><th>Location</th>
+        <td><a href="http://maps.google.com/maps?q={{ course.postcode|urlencode }}" target="_blank">
+               {{ course.city }}, {{ course.country }}
+        </a></td></tr>
+        {% endif %}
+        {% if course.stage %}
+        <tr><th>Stage</th><td>{{ course.get_stage_display }}</td></tr>
+        {% endif %}
+        </table>
+        <blockquote>{{ course.description }}</blockquote>
+
+        <h3>Registration</h3>
+        <p>Join this course for access to modules and other members.</p>
+        <!-- Registration form -->
+        <form action="{% url coursei-register coursei_id=coursei.id %}" method="post">
+        <input id="start_date" type="text" class="vDateField" name="start_date">
+        &nbsp;<input type="submit" value="Register &raquo;" />
+        </form>
+
+
+    {% endif %}
+
+{% endblock %}

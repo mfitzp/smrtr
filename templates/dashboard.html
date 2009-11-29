@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% cycle 'odd' 'even' as zebra %}
+{% load spenglr_sq_tags %}
+
+{% block content %}
+
+    <div id="dashboard" style="width:100%">
+
+    <div id="dashboard-left" style="width:58%;">
+
+    {% if usercourses %}
+        
+        {% for usercourse in usercourses %}
+        <table>
+                <caption><a href="{% url coursei-detail coursei_id=usercourse.coursei.id %}">{{ usercourse }}</a> (<a href="{% url network-detail network_id=usercourse.coursei.network.id %}">{{ usercourse.coursei.network }}</a>) </caption>
+                {% for usermodule in usercourse.usermodule_set.all %}
+                <tr class="{% cycle zebra %}">
+                    <td><a href="" class="focus_{{ usermodule.focus }}link">&nbsp;</a></td>
+                    <td class="dbcurriculummodule"><a href="{% url modulei-detail modulei_id=usermodule.modulei.id %}">{{ usermodule }}</a></td>
+                    <td style="text-align:right">{% sqchange 100 usermodule.sq %}</td>
+                    <td><a href="{% url question-modulei-exam modulei_id=usermodule.modulei.id %}" class="questionlink">Questions</a></td>
+                    <td><a href="resources/m/{{ user_module.module.id }}" class="resourcelink">Study</a></td>
+                    <td><a href="progress/m/{{ user_module.module.id }}" class="progresslink">Progress</a></td>
+                    <td>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="{% cycle zebra %}"><td>No active modules on this course.</td></tr>    
+                {% endfor %}
+
+        </table>
+        {% endfor %}
+
+    {% else %}
+        <p>No curriculum information available. Join a network and then find your course <a href="/education/c/">here</a>.</p>
+    {% endif %}
+    <br />
+    <p style="clear:left;"><a href="/education/c/" class="register">Start new course &raquo;</a></p>
+
+    
+    {% if usernetworks %}
+        <div >
+        {% for user_network in usernetworks.all %}
+            <span class="stack"><a href="{% url network-detail network_id=user_network.network.id %}" class="network network{{ user_network.network.type }}">{{ user_network }}</a></span>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>Join networks to learn with others at school, online or in your workplace.</p>
+    {% endif %}
+    <br style="clear:both;" />
+    <p style="margin-top:1em;"><a href="{% url network-list %}" class="register">Join new network &raquo;</a></p>
+
+
+
+    </div>
+
+    <div id="dashboard-right" style="width:38%; left:60%; top: 0px; position:absolute;">
+
+
+
+
+
+
+    </div>
+
+    </div>
+
+{% endblock %}

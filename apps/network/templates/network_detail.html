@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ network }}
+{% endblock %}
+
+{% block content %}
+
+    {% if network %}
+    
+        <h1>{{ network.name }}</h1>
+
+        <table>
+        {% if network.city %}
+            <tr><th>Location</th>
+            <td><a href="http://maps.google.com/maps?q={{ network.postcode|urlencode }}&amp;t=h" target="_blank">
+                {{ network.city }}, {{ network.country }}
+            </a></td></tr>
+        {% endif %}
+        <tr><th>Type</th><td>
+            {% if network.type %}{{ network.get_type_display }}{% endif %}
+            {% if network.stage %}({{ network.get_stage_display }}){% endif %}
+        </td></tr>
+        {% if usernetwork %}
+            <tr><th>Start Date</th><td>{{ usernetwork.start_date }} (Year {{usernetwork.year_of_study}})</td></tr>
+        {% endif %}
+        <tr><th>SQ</th><td>{% sqchange 0 network.sq %} {% sqdescriptive network.sq %}</td></tr>
+        </table>
+
+        <blockquote>{{ network.description }}</blockquote>
+
+        {% if usernetwork %}
+        {% else %}
+            <p><a href="{% url network-register network_id=network.id %}" class="inactive">Register</a> with this network to sign up for courses</p>
+        {% endif %}
+
+
+        {% if network.course_set %}
+        <table>
+        <tr><th scope="column">Courses</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
+            {% if usernetwork %}
+                {% for usercourse in usernetwork.usercourse_set.all %}
+                    <tr class="{% cycle zebra %}">
+                        <td><a href="{% url coursei-detail coursei_id=usercourse.coursei.id %}">{{ usercourse.coursei }}</a></td>
+                        <td>{{ usercourse.start_date }} - {{ usercourse.end_date }}</td>
+                        {% if usercourse.is_active %}
+                            <td><a href="#" class="active">Active</a></td>
+                        {% else %}
+                            <td><span class="complete">Complete</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            {% if network.coursei_filtered %}
+                {% for coursei in network.coursei_filtered %}
+                    <tr class="{% cycle zebra %}">
+                        <td colspan="2"><a href="{% url coursei-detail coursei_id=coursei.id %}">{{ coursei }}</a></td><td><a href="{% url network-detail network_id=coursei.course.network.id %}" class="network network{{ coursei.course.network.type }}">{{ coursei.course.network }}</a>
+                        <td><a href="{% url coursei-register coursei_id=coursei.id %}" class="inactive">Register</a></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        {% endif %}
+
+        {% include "_memberships.html" %}
+
+    {% else %}
+        <p>No network information available.</p>
+    {% endif %}
+
+{% endblock %}

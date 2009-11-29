@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url latest-questions %}">Questions</a>
+    &raquo; {{ question.id }}
+{% endblock %}
+
+{% block content %}
+
+    {% if question %}
+        <blockquote>
+            {{ question.content }}
+        </blockquote>
+            <ul>
+            {% for answer in question.answer_set.all %}
+                <li class="question_answer {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
+                    {{ answer.content }}
+                </li>
+            {% endfor %}
+            </ul>
+        </form>
+
+        <div>{% for tag in question.get_tags %}<span class="stack"><a class="tag" href="{% url questions-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
+        
+        <p style="clear:both"><small>Question rated as {% sqdifficulty 100 question.sq %}. Latest revision by <a href="#">{{ question.author }}</a></small></p>
+    {% else %}
+        <p>Question does not exist.</p>
+    {% endif %}
+
+{% endblock %}
+
+

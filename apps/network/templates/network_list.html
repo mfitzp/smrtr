@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Networks</h1>
+
+    <p>A full list of networks available on the site are listed below, if your network is not listed <a href="#">you can request it</a>.
+
+    {% if object_list %}
+        <table>
+        <tr><th>Name</th><th>Stage</th><th>Location</th></tr>
+        {% for network in object_list %}
+            <tr>
+                <th><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></th>
+                <td>{{ network.get_type_display }}</td>
+                <td>{{ network.get_stage_display }}</td>
+                <td>{{ network.city }}</td>
+                <td>{{ network.country }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No networks available.</p>
+    {% endif %}
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

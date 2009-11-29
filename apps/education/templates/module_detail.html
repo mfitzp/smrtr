@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
+    &raquo; {{ module }}
+{% endblock %}
+
+{% block content %}
+
+    {% if module %}
+    
+        <h1>{{ module.name }}</h1>
+
+        <table>
+            <tr><th>Difficulty</th><td>{% sqdifficulty 100 module.sq %}</td></tr>
+        </table>
+
+        {% if usermodules %}
+            <p>
+                You are studying this module as part of 
+                {% for usermodules in usermodules %}
+                    <a href="{% url coursei-detail coursei_id=usermodules.usercourse.coursei.id %}" class="course">{{ usermodules.usercourse.coursei }}</a></a>
+                {% endfor %}
+            </p>
+        {% endif %}
+
+
+        <blockquote>{{ module.description }} ({% sqdifficulty 100 module.sq %})</blockquote>
+
+    {% else %}
+        <p>No curriculum information available.</p>
+    {% endif %}
+
+{% endblock %}

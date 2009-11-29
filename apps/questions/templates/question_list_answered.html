@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    {% if usermodule %}
+        &raquo; <a href="{% url coursei-detail coursei_id=usermodule.usercourse.coursei.id %}">{{ modulei.course }}</a>
+    {% else %}
+        &raquo; <a href="{% url course-detail course_id=modulei.course.id %}">{{ modulei.course }}</a>
+    {% endif %}
+    &raquo; {{ module }}
+    &raquo; Questions Answered
+{% endblock %}
+
+
+{% block content %}
+
+    {% if module %}
+        <h1>{{ module }}</h1>
+        <p>You answered {{totals.correct}} out of {{totals.answered}} ( {{totals.percent}}% ) questions correctly.</p>
+        {% if questions %}
+            {% for question in questions %}
+            <blockquote>
+                {{ question.content }}
+            </blockquote>
+                <ul>
+                {% for answer in question.answer_set.all %}
+                    <li class="question_answer {% ifequal question.answered answer.id %}question_answered{% endifequal %} {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
+                        {{ answer.content }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+            </table>
+        {% else %}
+            <p>No questions available.</p>
+        {% endif %}
+
+    {% else %}
+        <p>Module does not exist.</p>
+    {% endif %}
+
+{% endblock %}
