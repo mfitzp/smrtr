@@ -121,3 +121,10 @@ SQ_LOWER_LIMIT = 0
 SQ_READOFF_MARK = 50
 
 SQ_PINNING_WEIGHT = 0.1
+
+# local_settings.py can be used to override environment-specific settings
+# like database and email that differ between development and production.
+try:
+    from local_settings import *
+except ImportError:
+    pass
