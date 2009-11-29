@@ -101,6 +101,8 @@ class UserCourse(models.Model):
     def update_sq(self):
         self.sq = self.usermodule_set.aggregate(Avg('sq'))['sq__avg']
         self.save()
+    def members_global(self):
+        return User.objects.filter(usercourse__coursei__course=self.coursei.course)
 
     user = models.ForeignKey(User)
     usernetwork = models.ForeignKey(UserNetwork) # Up tree
@@ -138,7 +140,13 @@ class UserModule(models.Model):
         data = self.modulei.module.question_set.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
-
+    def members_class(self):
+        return User.objects.filter(usermodule__modulei__module=self.modulei.module)
+    def members_network(self):
+        return User.objects.filter(usermodule__modulei__module=self.modulei.module)
+    def members_global(self):
+        return User.objects.filter(usermodule__modulei__module=self.modulei.module)
+    
     user = models.ForeignKey(User)
     usercourse = models.ForeignKey(UserCourse) # Up tree
 

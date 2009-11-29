@@ -14,7 +14,6 @@ from education.models import *
 def network_detail(request, network_id):
 
     network = get_object_or_404(Network, pk=network_id)
-    memberships = network.memberships()
 
     # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
     try:
@@ -34,7 +33,7 @@ def network_detail(request, network_id):
             else:
                 network.coursei_filtered.append(coursei)
 
-    return render_to_response('network/network_detail.html', {'network': network, 'usernetwork': usernetwork, 'memberships': memberships})
+    return render_to_response('network/network_detail.html', {'network': network, 'usernetwork': usernetwork, 'members': network.members.all()})
 
 
 

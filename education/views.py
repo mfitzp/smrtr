@@ -34,8 +34,10 @@ def coursei_detail(request, coursei_id):
         usercourse = coursei.usercourse_set.get( user=request.user )
     except:
         usercourse = list()
-        course.moduleinstance_filtered = course.moduleinstance_set.all().order_by('module__name')
+        course.moduleinstance_filtered = course.moduleinstance_set.all().order_by('module__name')   
+        members = list()
     else:
+        members = usercourse.members_global()
         # Generate filter list of modules with associated user data
         # If user registered attach usermodule linker and prepend (top list)
         # else append (bottom list)
@@ -48,7 +50,7 @@ def coursei_detail(request, coursei_id):
                 course.moduleinstance_filtered.append(modulei)
                     
 
-    return render_to_response('education/coursei_detail.html', {'course': course, 'coursei': coursei, 'usercourse': usercourse})
+    return render_to_response('education/coursei_detail.html', {'course': course, 'coursei': coursei, 'usercourse': usercourse, 'members':members})
 
 
 # Get an insititution id and present a page showing detail
@@ -112,8 +114,9 @@ def module_detail(request, module_id):
 
     # usermodules "you are studying this module on these courses..."
     usermodules = UserModule.objects.filter(modulei__module=module)
+    #members=module.#User.objects.filter(usermodule__modulei__module=module)
 
-    return render_to_response('education/module_detail.html', {'module': module, 'usermodules': usermodules})
+    return render_to_response('education/module_detail.html', {'module': module, 'usermodules': usermodules, 'members':members})
 
 # Get an module instance id and present a page showing detail
 # if user is registered on the module, provide a tailored page
@@ -128,8 +131,11 @@ def modulei_detail(request, modulei_id):
         usermodule = modulei.usermodule_set.get( user=request.user )
     except:
         usermodule = list()
-
-    return render_to_response('education/modulei_detail.html', {'modulei': modulei, 'module': module, 'usermodule': usermodule})
+        members = list()
+    else:
+        members = usermodule.members_global()
+    
+    return render_to_response('education/modulei_detail.html', {'modulei': modulei, 'module': module, 'usermodule': usermodule, 'members':members})
 
 
 
