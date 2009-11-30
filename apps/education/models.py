@@ -101,6 +101,17 @@ class UserCourse(models.Model):
     def update_sq(self):
         self.sq = self.usermodule_set.aggregate(Avg('sq'))['sq__avg']
         self.save()
+    # Users on this module in this specific context (network:course)
+    def members_class(self):
+        return User.objects.filter( usercourse__coursei__course=self.course(), 
+                                    usernetwork__network=self.network()
+                                    ).distinct()
+    # Users on this course on any of this user's networks (user(*):course
+    def members_network(self):
+        return User.objects.filter( usercourse__coursei__course=self.course(), 
+                                    usernetwork__network__usernetwork__user=self.user
+                                    ).distinct()
+    # Users on this course in any context (*:course)
     def members_global(self):
         return User.objects.filter(usercourse__coursei__course=self.coursei.course)
 
@@ -142,13 +153,18 @@ class UserModule(models.Model):
         self.save()
     # Users on this module in this specific context (network:course:module)
     def members_class(self):
-        return User.objects.filter(usermodule__modulei__module=self.modulei.module)
+        return User.objects.filter( usermodule__modulei__module=self.module(), 
+                                    usercourse__coursei__course=self.course(), 
+                                    usernetwork__network=self.network()
+                                    ).distinct()
     # Users on this module on any of this user's networks (user(*):course:module
     def members_network(self):
-        return User.objects.filter(usermodule__modulei__module=self.modulei.module)
+        return User.objects.filter( usermodule__modulei__module=self.module(), 
+                                    usernetwork__network__usernetwork__user=self.user
+                                    ).distinct()
     # Users on this module in any context (*:*:module)
     def members_global(self):
-        return User.objects.filter(usermodule__modulei__module=self.modulei.module)
+        return User.objects.filter( usermodule__modulei__module=self.module() )
     
     user = models.ForeignKey(User)
     usercourse = models.ForeignKey(UserCourse) # Up tree
