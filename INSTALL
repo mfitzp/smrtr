@@ -1,0 +1,53 @@
+Installing Spenglr
+==================
+
+Pull latest git trunk repository from:
+git://github.com/spenglr/spenglr.git
+
+...to a local directory (suggested: ~/spenglr/spenglr)
+
+Create a file named spenglr.wsgi as below (modify paths to your local system needs):
+"
+import os
+import sys
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
+sys.path.append('/home/martin/spenglr/spenglr')
+sys.path.append('/home/martin/spenglr/spenglr/apps')
+sys.path.append('/home/martin/spenglr/external')
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
+"
+
+Save this file somewhere in your web server area e.g. /var/www/spenglr/ or /srv/www/spenglr/
+
+Setup an apache install with wsgi (+Django) support as follows (Debian/Ubuntu):
+
+<VirtualHost *:80>
+    ServerName spenglr
+    ServerAlias spenglrcom.dyndns.org
+
+    WSGIScriptAlias / /var/www/spenglr/spenglr.wsgi
+
+    DocumentRoot /var/www/spenglr
+
+    <Directory /var/www/spenglr/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+    
+    HostnameLookups Off
+    UseCanonicalName Off
+    ServerSignature On
+
+    Alias /media/admin/ /usr/share/pyshared/django/contrib/admin/media/
+    Alias /media/ /home/martin/spenglr/spenglr/media/
+
+</VirtualHost>
+
+Activate the about virtualhost definition. 
+Add spenglr 127.0.0.1 to your /etc/hosts file, restart your server and voila.

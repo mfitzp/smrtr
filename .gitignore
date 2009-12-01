@@ -1,2 +1,8 @@
+# Local settings file for local overrides of settings
 local_settings.py
+
+# Ignore compiled python files
 *.pyc
+
+# Hide external apps pulled in
+external/
