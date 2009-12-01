@@ -4,7 +4,7 @@ Installing Spenglr
 Pull latest git trunk repository from:
 git://github.com/spenglr/spenglr.git
 
-...to a local directory (suggested: ~/spenglr/spenglr)
+...to a local directory (suggested: ~/spenglr)
 
 Create a file named spenglr.wsgi as below (modify paths to your local system needs):
 "
@@ -13,8 +13,8 @@ import sys
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-sys.path.append('/home/martin/spenglr/spenglr')
-sys.path.append('/home/martin/spenglr/spenglr/apps')
+sys.path.append('/home/martin/spenglr/')
+sys.path.append('/home/martin/spenglr/apps')
 sys.path.append('/home/martin/spenglr/external')
 
 import django.core.handlers.wsgi
@@ -45,7 +45,7 @@ Setup an apache install with wsgi (+Django) support as follows (Debian/Ubuntu):
     ServerSignature On
 
     Alias /media/admin/ /usr/share/pyshared/django/contrib/admin/media/
-    Alias /media/ /home/martin/spenglr/spenglr/media/
+    Alias /media/ /home/martin/spenglr/media/
 
 </VirtualHost>
 
