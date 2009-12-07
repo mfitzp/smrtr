@@ -3,9 +3,3 @@ local_settings.py
 
 # Ignore compiled python files
 *.pyc
-
-# Hide external apps pulled in
-external/
-
-# Hide local media
-media/avatar/
