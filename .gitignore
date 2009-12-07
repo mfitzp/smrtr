@@ -6,3 +6,6 @@ local_settings.py
 
 # Hide external apps pulled in
 external/
+
+# Hide local media
+media/avatar/

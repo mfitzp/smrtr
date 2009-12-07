@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% cycle 'odd' 'even' as zebra %}
 {% load spenglr_sq_tags %}
+{% load avatar_tags %}
 
 {% block content %}
 
@@ -55,8 +56,17 @@
     </div>
 
     <div id="dashboard-right" style="width:38%; left:60%; top: 0px; position:absolute;">
-
-
+    {% if notices %}
+    <table class='notices_table'>
+    {% for notice in notices %}
+    <tr class="{% cycle zebra %}"> <td rowspan="2"> {% avatar notice.user 32 %} </td>
+        <td> {{ notice.message|safe }} </td></tr>
+    <tr><td>{{ notice.added|timesince }} ago</td>   </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+    <p>There are no notices.</p>
+    {% endif %}
 
 
     </div>

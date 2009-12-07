@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+
+{% block content %}
+<h1>Notices</h1>
+{% if notices %}
+<table class='notices_table'>
+  <th> <tr><td>Type</td><td>Message</td><td>Time</td></tr></th>
+  {% for notice in notices %}
+<tr> <td> {% avatar notice.user 32 %} </td>
+     <td> {{ notice.message|safe }} <br/> {{ notice.added|timesince }} ago</td>   </tr>
+  {% endfor %}
+{% else %}
+  There are no notices
+{% endif %}
+{% endblock %}
+
+<!--
+<h3> Debug notice_settings </h3>
+{{notice_settings }}
+-->
