@@ -19,7 +19,7 @@ def course_detail(request, course_id):
     # usercourses "you are studying this course at..."
     usercourses = UserCourse.objects.filter(coursei__course=course)
 
-    return render_to_response('course_detail.html', {'course': course, 'usercourses': usercourses})
+    return render_to_response('course_detail.html', {'course': course, 'usercourses': usercourses}, context_instance=RequestContext(request) )
 
 
 # Get a course instance object and present as a page showing the detail
@@ -50,7 +50,7 @@ def coursei_detail(request, coursei_id):
                 course.moduleinstance_filtered.append(modulei)
                     
 
-    return render_to_response('coursei_detail.html', {'course': course, 'coursei': coursei, 'usercourse': usercourse, 'members':members})
+    return render_to_response('coursei_detail.html', {'course': course, 'coursei': coursei, 'usercourse': usercourse, 'members':members}, context_instance=RequestContext(request))
 
 
 # Get an insititution id and present a page showing detail
@@ -84,7 +84,7 @@ def coursei_register(request, coursei_id):
             uc.save()
             return HttpResponseRedirect(reverse('spenglr.core.views.index'))
 
-    return render_to_response('coursei_register.html', {'coursei': coursei, 'course': course })
+    return render_to_response('coursei_register.html', {'coursei': coursei, 'course': course }, context_instance=RequestContext(request))
 
 
 # Get an course id and present a page showing detail
@@ -96,7 +96,7 @@ def course_detail_providers(request, course_id):
     # usercourses "you are studying this course at..."
     usercourses = UserCourse.objects.filter(coursei__course=course)
 
-    return render_to_response('course_detail.html', {'course': course, 'usercourses': usercourses})
+    return render_to_response('course_detail.html', {'course': course, 'usercourses': usercourses}, context_instance=RequestContext(request))
 
 
 
@@ -116,7 +116,7 @@ def module_detail(request, module_id):
     usermodules = UserModule.objects.filter(modulei__module=module)
     #members=module.#User.objects.filter(usermodule__modulei__module=module)
 
-    return render_to_response('module_detail.html', {'module': module, 'usermodules': usermodules, 'members':members})
+    return render_to_response('module_detail.html', {'module': module, 'usermodules': usermodules, 'members':members}, context_instance=RequestContext(request))
 
 # Get an module instance id and present a page showing detail
 # if user is registered on the module, provide a tailored page
@@ -135,7 +135,7 @@ def modulei_detail(request, modulei_id):
     else:
         members = usermodule.members_global()
     
-    return render_to_response('modulei_detail.html', {'modulei': modulei, 'module': module, 'usermodule': usermodule, 'members':members})
+    return render_to_response('modulei_detail.html', {'modulei': modulei, 'module': module, 'usermodule': usermodule, 'members':members}, context_instance=RequestContext(request))
 
 
 
@@ -172,6 +172,6 @@ def modulei_register(request, modulei_id, coursei_id ):
             um.save()
             return HttpResponseRedirect(reverse('core.views.index'))
 
-    return render_to_response('modulei_register.html', {'modulei':modulei, 'module': module, 'coursei': coursei })
+    return render_to_response('modulei_register.html', {'modulei':modulei, 'module': module, 'coursei': coursei }, context_instance=RequestContext(request))
 
 

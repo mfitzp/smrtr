@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load spenglr_sq_tags %}
-{% load gravatar %}
+{% load avatar_tags %}
 
 {% cycle 'odd' 'even' as zebra %}
 
@@ -17,7 +17,7 @@
 
         <table>
         <tr>
-        <th rowspan="3">{% gravatar user 48 %}</th></tr>
+        <th rowspan="3">{% avatar user 48 %}</th></tr>
         
         {% if profile.city %}
             <tr>
@@ -31,7 +31,8 @@
         </table>
 
         <blockquote>{{ profile.about }}</blockquote>
-
+    
+        <a href="{% url avatar_change %}">Change your avatar</a>
   
 
     {% else %}

@@ -12,5 +12,5 @@ def questions(request, module_id):
     module = Module.objects.get(pk=module_id)
     questions = module.question_set.order_by('?')
 
-    return render_to_response('question_list.html', {'module': module, 'questions': questions})
+    return render_to_response('question_list.html', {'module': module, 'questions': questions}, context_instance=RequestContext(request))
 

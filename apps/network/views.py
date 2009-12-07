@@ -33,7 +33,7 @@ def network_detail(request, network_id):
             else:
                 network.coursei_filtered.append(coursei)
 
-    return render_to_response('network_detail.html', {'network': network, 'usernetwork': usernetwork, 'members': network.members.all()})
+    return render_to_response('network_detail.html', {'network': network, 'usernetwork': usernetwork, 'members': network.members.all()}, context_instance=RequestContext(request))
 
 
 
@@ -60,6 +60,6 @@ def network_register(request, network_id):
             un.save()
             return HttpResponseRedirect(reverse('core.views.index'))
 
-    return render_to_response('network_register.html', {'network': network })
+    return render_to_response('network_register.html', {'network': network }, context_instance=RequestContext(request))
 
 

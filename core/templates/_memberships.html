@@ -1,11 +1,11 @@
-{% load gravatar %}
+{% load avatar_tags %}
 {% load spenglr_core_tags %}
 
     <table>
     <tr><th scope="column">Members</th></tr>
     {% for user in members %}
         <tr class="{% cycle 'odd' 'even' %}">
-            <td>{% gravatar user 48 %}</td>
+            <td>{% avatar user 48 %}</td>
             <td>
                 <strong><a href="{% url user-profile user_id=user.id %}">{{user}}</a></strong>
             </td>

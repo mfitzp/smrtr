@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load spenglr_sq_tags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
@@ -23,7 +24,6 @@
 
 <!-- Container -->
 <div id="container">
-
     {% if not is_popup %}
     <!-- Header -->
     <div id="header">
@@ -33,7 +33,8 @@
         {% if user.is_authenticated %}
         <div id="user-tools">
             {% trans 'Welcome,' %}
-            <strong><a href="{% url user-profile user_id=user.id %}">{% firstof user.first_name user.username %}</a></strong>.
+            <strong><a href="{% url user-profile user_id=user.id %}">{% firstof user.first_name user.username %}</a></strong>
+            {% sqchange 100 user.get_profile.sq %} 
             {% block userlinks %}
                 {% url django-admindocs-docroot as docsroot %}
                 {% if docsroot %}

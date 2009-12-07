@@ -1,10 +1,13 @@
+import os.path 
+
 # Django settings for spenglr project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+     ('Martin Fitzpatrick', 'mfitzp@spenglr.com'),
+     ('Cael Kay-Jackson', 'caelj@spenglr.com'),
 )
 
 MANAGERS = ADMINS
@@ -35,12 +38,12 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -66,7 +69,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'urls'
 
-import os.path 
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -86,8 +88,12 @@ INSTALLED_APPS = (
     #'forum', #http://code.google.com/p/django-forum/
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
     'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
-    'gravatar', #http://code.google.com/p/django-gravatar/
+    #'gravatar', #http://code.google.com/p/django-gravatar/
+    'avatar', #http://github.com/ericflo/django-avatar
     'tagging',
+    'atomformat',
+    'notification', #http://github.com/jtauber/django-notification
+    #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
 # Spenglr
     'core',
     'profile',
@@ -123,6 +129,10 @@ SQ_LOWER_LIMIT = 0
 SQ_READOFF_MARK = 50
 
 SQ_PINNING_WEIGHT = 0.1
+
+# External avatar app setting (storage under /media/avatar)
+AVATAR_STORAGE_DIR = "avatar"
+
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

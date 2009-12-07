@@ -9,4 +9,4 @@ def profile(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     profile = user.get_profile()
 
-    return render_to_response('profile.html', {'user': user, 'profile': profile})
+    return render_to_response('profile.html', {'user': user, 'profile': profile}, context_instance=RequestContext(request))

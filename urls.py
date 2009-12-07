@@ -13,26 +13,21 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     (r'^$', 'core.views.index'),
+
     #(r'^login/$', 'spenglr.core.views.loginhandler'),
     #(r'^logout/$', 'spenglr.core.views.logouthandler'),
 
     (r'^education/', include('education.urls')),
-
     (r'^network/', include('network.urls')),
-    
     (r'^accounts/', include('registration.urls')),
-
     (r'^profile/', include('profile.urls')),
-
-    # These exist so we can keep a standardised url forum across all 3
-    # as the m/i/c is not actually used on the forum code (can't have / in slugs)
-    #(r'^discuss/m/', include('forum.urls')),
-    #(r'^discuss/i/', include('forum.urls')),
-    #(r'^discuss/c/', include('forum.urls')),
 
     (r'^questions/', include('questions.urls')),
     #(r'^resources/', include('spenglrcom.resources.urls')),
 
+    (r'^notification/', include('notification.urls')),
 
+
+    (r'^avatar/', include('avatar.urls')),
 )
 
