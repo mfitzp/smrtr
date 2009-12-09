@@ -1,0 +1,5 @@
+{% load i18n %}
+{% load spenglr_sq_tags %}
+{{ user.get_profile.fullname }}'s SQ has changed {% sqchange 100 user.get_profile.sq %}
+
+

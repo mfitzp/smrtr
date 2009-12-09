@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Externals
 from countries.models import Country
 from datetime import date as _date
+from notification import models as notification
 # Spenglr
 from sq.utils import * 
 
@@ -21,6 +22,8 @@ class UserProfile(models.Model):
     def update_sq(self):
         data = self.user.userquestionattempt_set.values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set
+        # Send notification to the user that their SQ has changed
+        notification.send([self.user], "user_sq_updated", {"user": self.user})
         self.save()
 
     # This is the only required field
