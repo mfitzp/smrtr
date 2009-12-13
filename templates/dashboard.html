@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% cycle 'odd' 'even' as zebra %}
 {% load spenglr_sq_tags %}
+{% load i18n %}
+{% load uni_form_tags %}
 {% load avatar_tags %}
 
-{% block content %}
-
-    <div id="dashboard" style="width:100%">
-
-    <div id="dashboard-left" style="width:58%;">
+    {% block content_left %}
 
     {% if usercourses %}
-        
+        <div id="dashboard">
         {% for usercourse in usercourses %}
         <table>
                 <caption><a href="{% url coursei-detail coursei_id=usercourse.coursei.id %}">{{ usercourse }}</a> (<a href="{% url network-detail network_id=usercourse.coursei.network.id %}">{{ usercourse.coursei.network }}</a>) </caption>
@@ -31,7 +29,7 @@
 
         </table>
         {% endfor %}
-
+        </div>
     {% else %}
         <p>No curriculum information available. Join a network and then find your course <a href="/education/c/">here</a>.</p>
     {% endif %}
@@ -53,24 +51,8 @@
 
 
 
-    </div>
+    {% endblock %}
 
-    <div id="dashboard-right" style="width:38%; left:60%; top: 0px; position:absolute;">
-    {% if notices %}
-    <table class='notices_table'>
-    {% for notice in notices %}
-    <tr class="{% cycle zebra %}"> <td rowspan="2"> {% avatar notice.user 32 %} </td>
-        <td> {{ notice.message|safe }} </td></tr>
-    <tr><td>{{ notice.added|timesince }} ago</td>   </tr>
-    {% endfor %}
-    </table>
-    {% else %}
-    <p>There are no notices.</p>
-    {% endif %}
-
-
-    </div>
-
-    </div>
-
-{% endblock %}
+    {% block content_right %}
+    {% include "_wall.html" %}  
+    {% endblock %}

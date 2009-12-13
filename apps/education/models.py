@@ -7,7 +7,7 @@ from sq.utils import *
 # External
 from countries.models import Country
 from datetime import date as _date
-
+from wall.models import Wall
 
 # Definitions of courses available and associated modules
 # Courses and Modules are both tied to 'home' networks (providers) however they
@@ -33,6 +33,8 @@ class Course(models.Model):
     provided_by = models.ManyToManyField(Network, related_name='courses_provided', through='CourseInstance')
     url = models.URLField(verify_exists = True, blank = True) # External website for additional course information (e.g. provider site)
     sq = models.IntegerField(editable = False, null = True)
+    # Optional wall for this object
+    wall = models.OneToOneField(Wall, editable = False, null = True)
 
 # NOTE: This linker model may be unnnecessary
 # Course as offered by a specific network
@@ -60,6 +62,8 @@ class Module(models.Model):
     description = models.TextField(blank = True)
     credits = models.IntegerField(default=10)
     sq = models.IntegerField(editable = False, null = True)
+    # Optional wall for this object
+    wall = models.OneToOneField(Wall, editable = False, null = True)
 
 # Module as used by a specific course
 class ModuleInstance(models.Model):

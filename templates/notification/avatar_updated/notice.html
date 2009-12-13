@@ -1,2 +1,9 @@
+{% extends "notification/base_notice.html" %}
 {% load i18n %}
-<a href="{% url profile avatar.user}">{{ avatar.user }}</a> has changed their profile picture.
+{% load avatar_tags %}
+
+{% block notice_image %}{% avatar avatar.user 48 %}{% endblock %}
+
+{% block notice %}Your profile picture has been updated.{% endblock %}
+
+

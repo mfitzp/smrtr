@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load spenglr_sq_tags %}
+{% load i18n %}
 
 {% cycle 'odd' 'even' as zebra %}
 
@@ -8,10 +9,9 @@
     &raquo; {{ network }}
 {% endblock %}
 
-{% block content %}
+{% block content_left %}
 
     {% if network %}
-    
         <h1>{{ network.name }}</h1>
 
         <table>
@@ -68,8 +68,12 @@
 
         {% include "_memberships.html" %}
 
-    {% else %}
-        <p>No network information available.</p>
-    {% endif %}
+        {% else %}
+            <p>No network information available.</p>
+        {% endif %}
 
-{% endblock %}
+        {% endblock %}
+
+        {% block content_right %}
+        {% include "_wall.html" %}
+        {% endblock %}

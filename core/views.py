@@ -10,6 +10,9 @@ from notification.models import Notice
 
 
 def index(request):
+    # External
+    from wall.forms import WallItemForm
+
     if request.user.is_authenticated():
         # User logged in, present the user dashboard
         usernetworks = request.user.usernetwork_set.all()
@@ -20,7 +23,9 @@ def index(request):
         i = RequestContext(request, {
             'usernetworks': usernetworks,
             'usercourses': usercourses,
-            "notices": notices,
+            "notices": notices[:20],
+            "wall": request.user.get_profile().wall,
+            "wallform": WallItemForm()
         })
         
         return render_to_response('dashboard.html', i, context_instance=RequestContext(request))

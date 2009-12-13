@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from countries.models import Country
 from datetime import date as _date
 from notification import models as notification
+from wall.models import Wall
 # Spenglr
 from sq.utils import * 
 
@@ -22,9 +23,9 @@ class UserProfile(models.Model):
     def update_sq(self):
         data = self.user.userquestionattempt_set.values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set
-        # Send notification to the user that their SQ has changed
-        notification.send([self.user], "user_sq_updated", {"user": self.user})
         self.save()
+        # Send notification to the user that their SQ has changed
+        notification.send([self.user], "user_sq_updated", {"user": self.user})        
 
     # This is the only required field
     user = models.ForeignKey(User, unique=True)
@@ -41,6 +42,8 @@ class UserProfile(models.Model):
     # IM shit in here
     url = models.URLField(verify_exists = True, blank = True)
     sq = models.IntegerField(blank = True, null = True, editable = False)
+    # Optional wall for this object
+    wall = models.OneToOneField(Wall, editable = False, null = True)
 
 def create_profile(sender, **kw):
     user = kw["instance"]

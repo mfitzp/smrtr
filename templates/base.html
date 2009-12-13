@@ -72,8 +72,20 @@
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
         {% block content %}
+
         {% block object-tools %}{% endblock %}
+
+        <div id="content-left">
+            {% block content_left %}
+            {% endblock %}
+        </div>
+        <div id="content-right">
+            {% block content_right %}
+            {% endblock %}
+        </div>
+    
         {{ content }}
+
         {% endblock %}
         {% block sidebar %}{% endblock %}
         <br class="clear" />

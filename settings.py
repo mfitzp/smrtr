@@ -84,15 +84,16 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
-# Externals
-    #'forum', #http://code.google.com/p/django-forum/
+# External Helpers
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
-    'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
-    #'gravatar', #http://code.google.com/p/django-gravatar/
-    'avatar', #http://github.com/ericflo/django-avatar
-    'tagging',
     'atomformat',
+    'uni_form',
+# Externals
+    'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
+    'avatar', #http://github.com/ericflo/django-avatar #'gravatar', #http://code.google.com/p/django-gravatar/
+    'tagging',
     'notification', #http://github.com/jtauber/django-notification
+    'wall',  #http://github.com/jtauber/django-wall
     #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
 # Spenglr
     'core',

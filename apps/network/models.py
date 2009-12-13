@@ -4,6 +4,7 @@ from django.db.models import Avg, Max, Min, Count
 # Externals
 from countries.models import Country
 from datetime import date as _date
+from wall.models import Wall
 
 
 # Education models contain educational structure from institution to module exam
@@ -49,6 +50,8 @@ class Network(models.Model):
     members = models.ManyToManyField(User, through='UserNetwork', related_name='networks')
     # SQ average of members, rates network intelligence 
     sq = models.IntegerField(blank = True, null = True, editable = False)
+    # Optional wall for this object
+    wall = models.OneToOneField(Wall, editable = False, null = True)
 
 class UserNetwork(models.Model):
     def __unicode__(self):

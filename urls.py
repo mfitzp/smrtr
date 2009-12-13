@@ -27,6 +27,7 @@ urlpatterns = patterns('',
 
     (r'^notification/', include('notification.urls')),
 
+    (r'^wall/', include('wall.urls')),
 
     (r'^avatar/', include('avatar.urls')),
 )

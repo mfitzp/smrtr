@@ -8,10 +8,11 @@ from django.core.urlresolvers import reverse
 from education.models import *
 
 
-
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
 def network_detail(request, network_id):
+    # External
+    from wall.forms import WallItemForm
 
     network = get_object_or_404(Network, pk=network_id)
 
@@ -33,7 +34,14 @@ def network_detail(request, network_id):
             else:
                 network.coursei_filtered.append(coursei)
 
-    return render_to_response('network_detail.html', {'network': network, 'usernetwork': usernetwork, 'members': network.members.all()}, context_instance=RequestContext(request))
+    context = { 'network': network, 
+                'usernetwork': usernetwork, 
+                'members': network.members.all(),
+                "wall": network.wall,
+                "wallform": WallItemForm()
+              }
+
+    return render_to_response('network_detail.html', context, context_instance=RequestContext(request))
 
 
 

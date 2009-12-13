@@ -9,7 +9,7 @@
     &raquo; {{ profile }}
 {% endblock %}
 
-{% block content %}
+{% block content_left %}
 
     {% if user %}
     
@@ -39,4 +39,8 @@
         <p>No profile available.</p>
     {% endif %}
 
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
 {% endblock %}

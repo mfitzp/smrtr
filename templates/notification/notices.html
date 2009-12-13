@@ -1,18 +1,27 @@
 {% extends "base.html" %}
 {% load avatar_tags %}
 
+{% block breadcrumbs %}
+    {{ block.super }}
+    &raquo; Notifications
+{% endblock %}
+
 {% block content %}
 <h1>Notices</h1>
-{% if notices %}
-<table class='notices_table'>
-  <th> <tr><td>Type</td><td>Message</td><td>Time</td></tr></th>
-  {% for notice in notices %}
-<tr> <td> {% avatar notice.user 32 %} </td>
-     <td> {{ notice.message|safe }} <br/> {{ notice.added|timesince }} ago</td>   </tr>
-  {% endfor %}
-{% else %}
-  There are no notices
-{% endif %}
+
+    {% if notices %}
+    
+    {% for notice in notices %}
+    <div class="notice">
+        {{ notice.message|safe }}
+        <div class="notice-meta">{{ notice.added|timesince }} ago &#183; <a href="">Comment</a> &#183; <a href="">Like</a></div>
+    </div>
+    {% endfor %}
+    
+    {% else %}
+    <p>There are no notifications for you yet.</p>
+    {% endif %}
+
 {% endblock %}
 
 <!--
