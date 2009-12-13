@@ -6,13 +6,13 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 # Spenglr
 from education.models import *
-
+# External
+from wall.forms import WallItemForm
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
 def network_detail(request, network_id):
-    # External
-    from wall.forms import WallItemForm
+
 
     network = get_object_or_404(Network, pk=network_id)
 
@@ -38,6 +38,7 @@ def network_detail(request, network_id):
                 'usernetwork': usernetwork, 
                 'members': network.members.all(),
                 "wall": network.wall,
+                "wallitems": network.wall.wallitem_set.select_related(),
                 "wallform": WallItemForm()
               }
 

@@ -19,6 +19,13 @@ from wall.models import Wall
 class Course(models.Model):
     def __unicode__(self):
         return self.name
+    # Auto-add a new wall object when creating new Course
+    def save(self, force_insert=False, force_update=False):
+        if self.id is None: #is new
+            super(Course, self).save(force_insert, force_update)
+            self.wall = Wall.objects.create(slug='c'+str(self.id),name=self.name)
+        super(Course, self).save(force_insert, force_update)
+
     def update_sq(self):
         # update
         self.sq = self.modules.aggregate(Avg('sq'))['sq__avg']
@@ -51,6 +58,13 @@ class CourseInstance(models.Model):
 class Module(models.Model):
     def __unicode__(self):
         return self.name
+    # Auto-add a new wall object when creating new Module
+    def save(self, force_insert=False, force_update=False):
+        if self.id is None: #is new
+            super(Module, self).save(force_insert, force_update)
+            self.wall = Wall.objects.create(slug='m'+str(self.id),name=self.name)
+        super(Module, self).save(force_insert, force_update)
+
     def update_sq(self):
         # update
         self.sq = self.question_set.aggregate(Avg('sq'))['sq__avg']

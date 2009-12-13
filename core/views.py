@@ -23,9 +23,12 @@ def index(request):
         i = RequestContext(request, {
             'usernetworks': usernetworks,
             'usercourses': usercourses,
-            "notices": notices[:20],
-            "wall": request.user.get_profile().wall,
-            "wallform": WallItemForm()
+            # Wall objects
+            # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
+            # -wallitems should be combination of all user's available walls
+            'wall': request.user.get_profile().wall,
+            'wallitems': request.user.get_profile().wall.wallitem_set.select_related(),
+            'wallform': WallItemForm()
         })
         
         return render_to_response('dashboard.html', i, context_instance=RequestContext(request))

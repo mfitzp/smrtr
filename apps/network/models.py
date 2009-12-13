@@ -12,6 +12,14 @@ from wall.models import Wall
 class Network(models.Model):
     def __unicode__(self):
         return self.name
+    # Auto-add a new wall object when saving Network
+    def save(self, force_insert=False, force_update=False):
+        if self.id is None: #is new
+            # Need to save the parent object first to guarantee unique slug
+            super(Network, self).save(force_insert, force_update)
+            self.wall = Wall.objects.create(slug='n'+str(self.id),name=self.name)
+        super(Network, self).save(force_insert, force_update)
+
     def memberships(self):
         return UserNetwork.objects.filter(network=self)
     def update_sq(self):

@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse
 # Spenglr
 from education.models import *
 from network.models import *
+# External
+from wall.forms import WallItemForm
 
 # COURSE VIEWS
 
@@ -19,7 +21,15 @@ def course_detail(request, course_id):
     # usercourses "you are studying this course at..."
     usercourses = UserCourse.objects.filter(coursei__course=course)
 
-    return render_to_response('course_detail.html', {'course': course, 'usercourses': usercourses}, context_instance=RequestContext(request) )
+    context = { 'course': course, 
+                'usercourses': usercourses,
+                # Wall items
+                "wall": course.wall,
+                "wallitems": course.wall.wallitem_set.select_related(),
+                "wallform": WallItemForm()
+              }
+
+    return render_to_response('course_detail.html', context, context_instance=RequestContext(request) )
 
 
 # Get a course instance object and present as a page showing the detail
@@ -48,9 +58,18 @@ def coursei_detail(request, coursei_id):
                 pass
             else:
                 course.moduleinstance_filtered.append(modulei)
-                    
 
-    return render_to_response('coursei_detail.html', {'course': course, 'coursei': coursei, 'usercourse': usercourse, 'members':members}, context_instance=RequestContext(request))
+    context = { 'course': course, 
+                'coursei': coursei,
+                'usercourse': usercourse, 
+                'members':members,
+                # Wall items
+                'wall': course.wall,
+                'wallitems': course.wall.wallitem_set.select_related(),
+                'wallform': WallItemForm()
+            }
+
+    return render_to_response('coursei_detail.html', context, context_instance=RequestContext(request))
 
 
 # Get an insititution id and present a page showing detail
@@ -116,7 +135,16 @@ def module_detail(request, module_id):
     usermodules = UserModule.objects.filter(modulei__module=module)
     #members=module.#User.objects.filter(usermodule__modulei__module=module)
 
-    return render_to_response('module_detail.html', {'module': module, 'usermodules': usermodules, 'members':members}, context_instance=RequestContext(request))
+    context = { 'module': module, 
+                'usermodules': usermodules, 
+                'members':members,
+                # Wall items
+                'wall': module.wall,
+                'wallitems': module.wall.wallitem_set.select_related(),
+                'wallform': WallItemForm()
+            }
+
+    return render_to_response('module_detail.html', context, context_instance=RequestContext(request))
 
 # Get an module instance id and present a page showing detail
 # if user is registered on the module, provide a tailored page
@@ -134,8 +162,19 @@ def modulei_detail(request, modulei_id):
         members = list()
     else:
         members = usermodule.members_global()
+
+    context = {
+            'modulei': modulei, 
+            'module': module, 
+            'usermodule': usermodule,
+            'members':members,
+            # Wall items
+            'wall': module.wall,
+            'wallitems': module.wall.wallitem_set.select_related(),
+            'wallform': WallItemForm()
+        }
     
-    return render_to_response('modulei_detail.html', {'modulei': modulei, 'module': module, 'usermodule': usermodule, 'members':members}, context_instance=RequestContext(request))
+    return render_to_response('modulei_detail.html', context, context_instance=RequestContext(request))
 
 
 
