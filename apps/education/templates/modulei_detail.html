@@ -13,7 +13,7 @@
 
 {% endblock %}
 
-{% block content %}
+{% block content_left %}
 
     {% if modulei %}
         <h1>{{ module }}</h1>
@@ -40,4 +40,8 @@
         <p>No curriculum information available.</p>
     {% endif %}
 
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
 {% endblock %}
