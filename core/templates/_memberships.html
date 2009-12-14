@@ -7,7 +7,7 @@
         <tr class="{% cycle 'odd' 'even' %}">
             <td>{% avatar user 48 %}</td>
             <td>
-                <strong><a href="{% url user-profile user_id=user.id %}">{{user}}</a></strong>
+                <strong><a href="{% url user-profile user_id=user.id %}">{{ user.get_profile.fullname }}</a></strong>
             </td>
         </tr>
     {% empty %}
