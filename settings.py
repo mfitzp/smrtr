@@ -90,7 +90,8 @@ INSTALLED_APPS = (
     'uni_form',
 # Externals
     'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
-    'avatar', #http://github.com/ericflo/django-avatar #'gravatar', #http://code.google.com/p/django-gravatar/
+    'avatar', #http://github.com/rhec/django-avatar/ This version supports overriding the default gravatar
+              #Original at: switch on fix #http://github.com/ericflo/django-avatar #'gravatar', #http://code.google.com/p/django-gravatar/
     'tagging',
     'notification', #http://github.com/jtauber/django-notification
     'wall',  #http://github.com/jtauber/django-wall
@@ -134,7 +135,8 @@ SQ_PINNING_WEIGHT = 0.1
 
 # External avatar app setting (storage under /media/avatar)
 AVATAR_STORAGE_DIR = "avatar"
-
+AVATAR_DEFAULT_URL = "/media/img/default_avatar.png"
+AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://www.spenglr.com/media/img/default_avatar.png"
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
