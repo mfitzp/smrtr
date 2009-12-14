@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load uni_form_tags %}
+{% load avatar_tags %}
+
+{% block head_title %}{{ block.super }}: {{ wall.name }}{% endblock %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ wall.network }}
+{% endblock %}
+
+{% block content %}
+
+<h2 align="center">{{ wall.name }}</h2>
+
+<div class="form-toggle">    
+    <p><span id="post-to-wall-toggle">{% trans "Post to the wall" %}</span></p>
+    <div id="post-to-wall">
+        <form method="POST" class="uniForm" action="{% url add_wall_item wall.slug %}">
+            {{ form|as_uni_form }}
+            <input type="submit" value="{% trans 'Submit' %}" />
+        </form>
+    </div>
+    
+</div>
+
+<hr/>
+{% if wall.allow_html %}
+{% autoescape off %}
+{% for item in wall.wallitem_set.select_related %}
+
+    <div class="wallitem">
+        <div class="wallitem-image">{% avatar item.author 48 %}</div>
+        <div class="wallitem-body">{{ item.body }}</div>
+        <div class="wallitem-meta">{{ item.created_at|timesince }} ago &#183; {% ifequal item.author request.user %}<a href="{% url edit_wall_item item.id %}">Edit</a> &#183;{% endifequal %} <a href="">Comment</a> &#183; <a href="">Like</a></div>
+    </div>
+
+{% endfor %}
+{% endautoescape %}
+{% else %}
+{% for item in wall.wallitem_set.select_related %}
+    <div class="wallitem">
+        <div class="wallitem-image">{% avatar item.author 48 %}</div>
+        <div class="wallitem-body">{{ item.body|striptags }}</div>
+        <div class="wallitem-meta">{{ item.created_at|timesince }} ago &#183; {% ifequal item.author request.user %}<a href="{% url edit_wall_item item.id %}">Edit</a> &#183;{% endifequal %} <a href="">Comment</a> &#183; <a href="">Like</a></div>
+    </div>
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}
+
+
+{% block extra_body %}
+
+
+    <script type="text/javascript">
+    
+        $(document).ready(function() {
+            
+            $('#post-to-wall').hide();
+            $('#post-to-wall-toggle').click(function() {
+                $('#post-to-wall').toggle();
+                $('#post-to-wall').autoscroll();
+                $('#id_posting').focus();
+                return false;
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %}{{ block.super }}: {{ wall.name }}{% endblock %}
+
+{% block content %}
+
+<p>
+<form action="." method="post">
+<table>
+{{ form.as_table }}
+</table>
+<input type="hidden" name="success_url" value="{{ request.GET.success_url }}" />
+<p><input type="submit" value="{% trans 'Submit' %}" /></p>
+</form>
+</p>
+{% endblock %}

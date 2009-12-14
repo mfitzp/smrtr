@@ -17,7 +17,7 @@
         <table>
         {% if network.city %}
             <tr><th>Location</th>
-            <td><a href="http://maps.google.com/maps?q={{ network.postcode|urlencode }}&amp;t=h" target="_blank">
+            <td><a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
                 {{ network.city }}, {{ network.country }}
             </a></td></tr>
         {% endif %}

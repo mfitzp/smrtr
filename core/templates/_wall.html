@@ -1,0 +1,26 @@
+{% load uni_form_tags %}
+{% load avatar_tags %}
+{% load i18n %}
+
+        {% if wall %}
+        <div class="form-toggle">    
+            <div id="post-to-wall">
+                <form method="post" class="uniForm" action="{% url add_wall_item wall.slug %}">
+                    <input type="hidden" name="success_url" value="{{ request.META.REQUEST_URI }}" />
+                    {{ wallform|as_uni_form }}
+                    <p><input type="submit" value="{% trans 'Submit' %}" /></p>
+                </form>
+            </div>
+            
+        </div>
+        {% endif %}
+        
+        {% for item in wallitems %}
+            <div class="wallitem">
+                <div class="wallitem-image">{% avatar item.author 48 %}</div>
+                <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
+                <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
+                <div class="wallitem-actions">{% ifequal item.author user %}<a href="{% url edit_wall_item item.id %}?success_url={{ request.META.REQUEST_URI|urlencode }}">Edit</a> &#183;{% endifequal %} <a href="">Comment</a> &#183; <a href="">Like</a></div>
+            </div>
+        {% endfor %}
+<br class="clear" />

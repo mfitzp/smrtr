@@ -30,6 +30,12 @@ class UserProfile(models.Model):
         else:
             return "%s %s" % (self.user.first_name, self.user.last_name)
 
+    def locationquery(self):
+        if self.postcode:
+            return self.postcode
+        else:
+            return self.city + ', ' + self.country.printable_name
+
     def update_sq(self):
         data = self.user.userquestionattempt_set.values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set

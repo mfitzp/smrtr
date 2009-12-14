@@ -20,6 +20,12 @@ class Network(models.Model):
             self.wall = Wall.objects.create(slug='n'+str(self.id),name=self.name)
         super(Network, self).save(force_insert, force_update)
 
+    def locationquery(self):
+        if self.postcode:
+            return self.postcode
+        else:
+            return self.city + ', ' + self.country.printable_name
+
     def memberships(self):
         return UserNetwork.objects.filter(network=self)
     def update_sq(self):

@@ -22,7 +22,7 @@
         {% if profile.city %}
             <tr>
             <th>Location</th>
-            <td><a href="http://maps.google.com/maps?q={{ profile.postcode|urlencode }}&amp;t=h" target="_blank">
+            <td><a href="http://maps.google.com/maps?q={{ profile.locationquery|urlencode }}&amp;t=h" target="_blank">
                 {{ profile.city }}, {{ profile.country }}
             </a></td></tr>
         {% endif %}

@@ -1,0 +1,6 @@
+{% load i18n %}
+{% load spenglr_sq_tags %}
+{% load avatar_tags %}
+
+<div class="notice-image">{% block notice_image %}{% avatar user 48 %}{% endblock %}</div>   
+<div class="notice-body">{% block notice %}Notice text in here{% endblock %}</div>
