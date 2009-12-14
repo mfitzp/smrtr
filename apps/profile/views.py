@@ -8,14 +8,21 @@ from wall.forms import WallItemForm
 
 def profile(request, user_id):
 
-    user = get_object_or_404(User, pk=user_id)
-    profile = user.get_profile()
+    puser = get_object_or_404(User, pk=user_id)
+    profile = puser.get_profile()
+
+    try:
+        wall = profile.wall
+        wallitems = profile.wall.wallitem_set.select_related()
+    except:
+        wall = None
+        wallitems = None
 
     context = {
-        'user': user, 
+        'puser': puser, 
         'profile': profile,
-        "wall": profile.wall,
-        "wallitems": profile.wall.wallitem_set.select_related(),
+        "wall": wall,
+        "wallitems": wallitems,
         "wallform": WallItemForm()
     }
 

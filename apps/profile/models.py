@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from countries.models import Country
 from datetime import date as _date
 from notification import models as notification
-from wall.models import Wall
+from wall.models import Wall, WallItem
 # Spenglr
 from sq.utils import * 
 
@@ -18,6 +18,10 @@ class UserProfile(models.Model):
         if self.id is None: #is new
             super(UserProfile, self).save(force_insert, force_update)
             self.wall = Wall.objects.create(slug='u'+str(self.user.id),name=self.fullname())
+            # Add welcome message to the wall (as this is a new user)
+            # Will want to move this out into a helper app with canned messages for output (similar to notifications)
+            WallItem.save(WallItem,wall=self.wall,author_id=0,body='Welcome to Spenglr!')
+
         super(UserProfile, self).save(force_insert, force_update)
 
     def fullname(self):

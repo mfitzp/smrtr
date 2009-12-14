@@ -11,13 +11,13 @@
 
 {% block content_left %}
 
-    {% if user %}
+    {% if puser %}
     
         <h1>{{ profile }}</h1>
 
         <table>
         <tr>
-        <th rowspan="3">{% avatar user 48 %}</th></tr>
+        <th rowspan="3">{% avatar puser 48 %}</th></tr>
         
         {% if profile.city %}
             <tr>
