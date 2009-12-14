@@ -27,7 +27,9 @@ urlpatterns = patterns('',
 
     (r'^notification/', include('notification.urls')),
 
-    (r'^wall/', include('wall.urls')),
+    #(r'^wall/', include('wall.urls')),
+    url(r'^wall/add/(?P<slug>[-\w]+)/$', 'core.views.wall_add', name="add_wall_item"),
+    url(r'^wall/edit/(?P<id>\d+)/$', 'core.views.wall_edit', name="edit_wall_item"),
 
     (r'^avatar/', include('avatar.urls')),
 )

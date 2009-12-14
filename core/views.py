@@ -7,6 +7,7 @@ from education.models import Module, UserCourse
 from core.models import LoginForm
 # External
 from notification.models import Notice
+from wall.views import *
 
 
 def index(request):
@@ -35,4 +36,22 @@ def index(request):
     else:
         # User not logged in, provide login/signup form (no anonymous users)
         return HttpResponseRedirect("/accounts/login/")
+
+
+
+def wall_add( request, slug ):
+    if request.POST:
+        success_url = request.POST['success_url']
+    else:
+        success_url = False
+    return add( request, slug, success_url=success_url)
+        
+
+def wall_edit( request, id ):
+
+    if request.POST:
+        success_url = request.POST['success_url']
+    else:
+        success_url = False
+    return edit( request, id, success_url=success_url)
 
