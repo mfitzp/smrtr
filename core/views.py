@@ -2,6 +2,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 from django.http import HttpResponsePermanentRedirect
+from django.db.models import Q
 # Spenglr
 from education.models import Module, UserCourse
 from core.models import LoginForm
@@ -21,22 +22,28 @@ def index(request):
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
-        # Front page wallitems combine the user's accessible wall posts from 
+        # Front page wallitems (wi) combine the user's accessible wall posts from 
         # user profile, networks, courses and modules (& friends later)
         
         # Posts to user's personal wall (profile)
-        wallitems = request.user.get_profile().wall.wallitem_set.select_related()
+        wi = request.user.get_profile().wall.wallitem_set.select_related()
         # Posts on user's networks, courses, modules
         for un in usernetworks:
-            wallitems = wallitems | un.network.wall.wallitem_set.select_related()
+            wi = wi | un.network.wall.wallitem_set.select_related()
         for uc in usercourses:
-            wallitems = wallitems | uc.coursei.course.wall.wallitem_set.select_related()        
+            wi = wi | uc.coursei.course.wall.wallitem_set.select_related()        
             for um in uc.usermodule_set.all():
-                wallitems = wallitems | um.modulei.module.wall.wallitem_set.select_related()        
+                wi = wi | um.modulei.module.wall.wallitem_set.select_related()        
+
+        # Filter out to show only *other* users - may not want this as comments/etc. on user's 
+        # own posts will be missed? Depends on the profile/dashboard interaction - future
+        # No __ne filter here?! Use combination of lt, gt for result
+        # wi = wi.filter(Q(author__id__lt=request.user.id) | Q(author__id__gt=request.user.id))
 
         # TODO: Resulting queryset must be filtered to only show those users actually on
         # the user's own networks (option configuration switching here)
-        # wallitems = wallitems.filter(author=request.user)
+        # wi = wi.filter(author=request.user)
+        wi = wi.filter(author__usernetwork__network__usernetwork__user=request.user).distinct()
 
         i = RequestContext(request, {
             'usernetworks': usernetworks,
@@ -45,7 +52,7 @@ def index(request):
             # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
             # -wallitems should be combination of all user's available walls
             'wall': request.user.get_profile().wall,
-            'wallitems': wallitems,#.select_related(),
+            'wallitems': wi,
             'wallform': WallItemForm()
         })
         
