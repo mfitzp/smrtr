@@ -1,15 +1,91 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core import serializers
-import urllib
+import urllib, json, re
 from xml.dom.minidom import parse, parseString
+# Spenglr
 from resources import isbn
-from resources import fields
+# External
+from picklefield.fields import PickledObjectField, PickledObject
 
 # Question and resource models store information for testing/studying purposes
 class Resource(models.Model):
     def __unicode__(self):
         return self.title
+
+    def __init__(self, *args, **kwargs):
+        self.meta=dict()
+        super(Resource, self).__init__(*args, **kwargs) 
+
+    # Autopopulate fields from the url/uri via webservices or direct request
+    def autopopulate(self):
+        # HTTP/etc. have no 'namespace' value set, therefore no lookup
+        if self.namespace == '': #http/https/ftp/etc.
+            # Open the URL, read 10k (arbitraty) for metadata off media files/etc.
+            f = urllib.urlopen(self.uri)
+            data = f.read(102400) #100K
+            f.close()
+            self.mimetype = f.info().gettype()
+
+            if self.mimetype == 'text/html':
+                # HTML in data, extract title field with regexp
+                s = re.search('<title(.*)>(?P<title>.*)</title>', data)
+                self.title = s.group('title')
+                # For description we should either try and pull content (by id #content, etc.) or use meta description fields (rarely used)
+
+            # Suggest following are handled with hachoir-metadata (bitbucket)
+            elif self.mimetype.startswith('image'):
+                pass
+
+            elif self.mimetype.startswith('audio'):
+                pass
+
+            elif self.mimetype.startswith('video'):
+                pass
+
+        # URN based URIs
+        if self.namespace == 'isbn':  
+            # Convert to ISBN-13 to prevent duplicates in db
+            self.uri=isbn.toI13(self.uri)
+            # Get metadata from ISBN database: isbn in self.uri
+            # Alternate API available at http://isbndb.com/docs/api/ provides additional information such as page numbers, language etc.
+            # however misses description fields etc. A double-request may be optimal here
+            f = urllib.urlopen("http://books.google.com/books/feeds/volumes?q=isbn:" + self.uri)
+            # Build DOM for requested data
+            dom = parse(f)
+            f.close()
+            # Iterate over available fields and pull them into our model
+            for tag,field in {'dc:title':'title','dc:description':'description','dc:creator':'author','dc:publisher':'dc:publisher','dc:date':'published'}.items():
+                if dom.getElementsByTagName(tag):
+                    self.__setattr__( field, dom.getElementsByTagName(tag)[0].childNodes[0].data )
+
+            # Date format is incorrect, fix before save
+            # Google passes either YYYY, YYYY-MM, YYYY-MM-DD formats
+            if self.published:
+                d = self.published.split('-')
+                for n in range(len(d), 3):
+                    d.append('1') # 1st January
+                self.published = '-'.join(d)
+
+        # URN based URIs
+        if self.namespace == 'issn':    
+            # Strip dashes to prevent duplicates in DB
+            self.uri=self.uri.replace('-','')
+            # Get metadata from ISSN service
+            # Service only provides a name for the resource, no other information: must do better
+            f = urllib.urlopen("http://tictoclookup.appspot.com/" + self.uri)
+            # Extract JSON request response to variables
+            metadata = json.load(f)['records']
+            f.close()
+            if len(metadata)>0:
+                # Iterate over available fields and pull them into our model
+                for tag,field in {'title':'title'}.items():
+                    if metadata[tag]:
+                        self.__setattr__( field, metadata[tag] )
+
+        # WorldCat would probably be 'better' but not seemingly possible
+        # http://xissn.worldcat.org/webservices/xid/issn/0036-8075?method=getHistory&format=xml&ai=spenglr&fl=form
+
     # Process submitted URL/URIs for metadata
     def save(self, force_insert=False, force_update=False):
         # If URL provided pull and get metadata
@@ -17,33 +93,18 @@ class Resource(models.Model):
         # Use URN to query databases and build complete metadata entries
 
         if self.uri:
-            uri = self.uri.split(':') # split off isbn: > isbn
-            # URL based URIs
-            
-            # URN based URIs
-            if uri[0] == 'isbn':    
-                # Convert to ISBN-13 to prevent duplicates in db
-                uri[1]=isbn.toI13(uri[1])
-                # Get metadata from ISBN database: isbn in urn[1]
-                f = urllib.urlopen("http://books.google.com/books/feeds/volumes?q=isbn:" + uri[1])
-                # Build DOM for requested data
-                metadata = parse(f)
-                f.close()
-                # Iterate over available fields and pull them into our model
-                for tag,field in {'title':'title','description':'description','creator':'author','publisher':'publisher','date':'published'}.items():
-                    if metadata.getElementsByTagName('dc:' + tag):
-                        self.__setattr__( field, metadata.getElementsByTagName('dc:' + tag)[0].childNodes[0].data )
+            if self.uri.find(':'): # split off isbn: > isbn
+                uri = self.uri.split(':',1)
+                # Other URNspaces would be preferable but require services providing lookup 
+                if uri[0] in ('isbn','issn'):
+                    self.namespace=uri[0]
+                    self.uri = uri[1]
+                elif uri[0] in ('http','https','ftp'):
+                    # Non-namespaced (includes http://)
+                    self.namespace=''
 
-                # Date format is incorrect, fix before save
-                # Google passes either YYYY, YYYY-MM, YYYY-MM-DD formats
-                if self.published:
-                    d = self.published.split(':')
-                    for n in range(len(d), 2):
-                        d.append('1') # 1st January
-                    self.published = '-'.join(d)
-
-                self.uri = 'isbn:' + uri[1]
-
+        self.autopopulate()
+    
         super(Resource, self).save(force_insert, force_update)
 
     title = models.CharField(max_length=200, blank=True)
@@ -62,13 +123,9 @@ class Resource(models.Model):
     publisher = models.CharField(max_length=50, blank=True) 
     published = models.DateField(max_length=50, blank=True, null=True) 
     # Metadata
-    meta = fields.MetaDataField(editable=False,blank=True)
+    meta = PickledObjectField(editable=False,blank=True, null=True)
     # Positional information of particular bookmarks is stored on use of resource
     # therefore single resource instance for multiple bookmarks (chapters, z-time)
 
 # User's suggested resources (taken from incorrectly answered questions)
 # class UserResource
-
-
-
-
