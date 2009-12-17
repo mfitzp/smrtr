@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 # Spenglr
 from questions.models import Question, Answer, UserQuestionAttempt
 from education.models import Module, ModuleInstance
+from resources.models import Resource, UserResource
 # External
 from tagging.models import Tag,TaggedItem
 
@@ -52,8 +53,12 @@ def submit(request, modulei_id):
             # Load question object
             q = Question.objects.get(pk=qid)
             
-            # Find submitted answer id in the list of correct answers
-            aid = request.POST.get('questions-' + qid)
+        except:
+            # Ignore errors and proceed to next POST key
+            pass
+
+        else:
+            # We have a valid set of answer data, save to db
             totals['answered'] = totals['answered'] + 1
 
             # Preparer UserQuestionAttempt to save success/failure to db
@@ -62,6 +67,8 @@ def submit(request, modulei_id):
             uqa.user = request.user
             uqa.usq = 100 #request.user.sq
 
+            # Find submitted answer id in the list of correct answers
+            aid = request.POST.get('questions-' + qid)
             try:
                 correct = q.answer_set.get(pk=aid, is_correct=True)
             except:
@@ -79,9 +86,18 @@ def submit(request, modulei_id):
             uqa.save()
 
             # Remove this question from the user's question queue (NOTE: If implemented?)
-           
-        except:
-            pass
+
+            # Add resources to the user's queue
+            resources = q.resources.all()
+            for resource in resources:
+                ur = UserResource()
+                ur.user = request.user
+                ur.resource = resource
+                try:
+                    ur.save()
+                except:
+                    pass
+
 
     totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
 

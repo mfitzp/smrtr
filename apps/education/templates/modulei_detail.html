@@ -31,7 +31,7 @@
 
         <h5>Actions</h5>
         <a href="{% url question-modulei-exam modulei_id=modulei.id %}" class="buttonlink questionbutton">Questions</a>
-        <a href="{{ modulei.module.id }}" class="buttonlink resourcebutton">Study</a>
+        <a href="{% url resource-modulei-userresources modulei_id=modulei.id %}" class="buttonlink resourcebutton">Study</a>
         <a href="{{ modulei.module.id }}" class="buttonlink progressbutton">Progress</a>
 
         {% include "_memberships.html" %}

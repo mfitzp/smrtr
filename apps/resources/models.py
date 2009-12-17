@@ -146,5 +146,8 @@ class Resource(models.Model):
 
 # User's suggested resources (taken from incorrectly answered questions)
 class UserResource(models.Model):
+    class Meta:
+        unique_together= (('user','resource'),)
+
     user = models.ForeignKey(User)
     resource = models.ForeignKey(Resource)
