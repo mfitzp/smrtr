@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Questions
+{% endblock %}
+
+{% block content %}
+
+    {% if latest %}
+        <table>
+        <caption>Latest Questions</caption>
+        <tr><th scope="column">Question Name</th><th scope="column">Posted</th></tr>
+        {% for question in latest %}
+            <tr>
+                <td><a href="/questions/{{ question.id }}">{{ question|truncatewords:15 }}</a></td>
+                <td>{{ question.created|timesince }} ago</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No questions available.</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    {% if usermodule %}
+        &raquo; <a href="{% url coursei-detail coursei_id=usermodule.usercourse.coursei.id %}">{{ modulei.course }}</a>
+    {% else %}
+        &raquo; <a href="{% url course-detail course_id=modulei.course.id %}">{{ modulei.course }}</a>
+    {% endif %}
+    &raquo; <a href="{% url modulei-detail modulei_id=modulei.id %}">{{ modulei }}</a>
+    &raquo; Resources
+{% endblock %}
+
+
+{% block content %}
+
+    {% if module %}
+        <h1>{{ module }}</h1>
+
+        {% if resources %}
+                <ul>
+            {% for resource in resources %}
+                        <li><a href="{{ resource.url }}">{{ resource.title }}</a> {{ resource.description }}</li>
+            {% endfor %}
+                </ul>
+        {% else %}
+            <p>No resources available.</p>
+        {% endif %}
+
+    {% else %}
+        <p>Module does not exist.</p>
+    {% endif %}
+
+{% endblock %}

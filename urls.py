@@ -17,13 +17,14 @@ urlpatterns = patterns('',
     #(r'^login/$', 'spenglr.core.views.loginhandler'),
     #(r'^logout/$', 'spenglr.core.views.logouthandler'),
 
-    (r'^education/', include('education.urls')),
     (r'^network/', include('network.urls')),
+    (r'^education/', include('education.urls')),
+    (r'^resources/', include('resources.urls')),
+
     (r'^accounts/', include('registration.urls')),
     (r'^profile/', include('profile.urls')),
 
     (r'^questions/', include('questions.urls')),
-    #(r'^resources/', include('spenglrcom.resources.urls')),
 
     (r'^notification/', include('notification.urls')),
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# Serialisation
 from django.core import serializers
 import urllib, json, re
 from xml.dom.minidom import parse, parseString
@@ -7,6 +8,7 @@ from xml.dom.minidom import parse, parseString
 from resources import isbn
 # External
 from picklefield.fields import PickledObjectField, PickledObject
+
 
 # Question and resource models store information for testing/studying purposes
 class Resource(models.Model):
@@ -16,6 +18,17 @@ class Resource(models.Model):
     def __init__(self, *args, **kwargs):
         self.meta=dict()
         super(Resource, self).__init__(*args, **kwargs) 
+
+    # Generate an URL for this resource object - these are standard resource
+    # urls (not amazon/etc. which are handled by the template)
+    def url(self):
+        if self.namespace=='':
+            return self.uri
+        elif self.namespace == 'isbn':
+            return "http://books.google.com/books?as_isbn=%s" % self.uri
+        elif self.namespace == 'issn':
+            return "http://books.google.com/books?as_issn=%s" % self.uri
+
 
     # Autopopulate fields from the url/uri via webservices or direct request
     def autopopulate(self):
@@ -73,15 +86,15 @@ class Resource(models.Model):
             self.uri=self.uri.replace('-','')
             # Get metadata from ISSN service
             # Service only provides a name for the resource, no other information: must do better
-            f = urllib.urlopen("http://tictoclookup.appspot.com/" + self.uri)
-            # Extract JSON request response to variables
-            metadata = json.load(f)['records']
+            # f = urllib.urlopen("http://tictoclookup.appspot.com/" + self.uri)
+            f = urllib.urlopen("http://books.google.com/books/feeds/volumes?q=issn:" + self.uri)
+            # Build DOM for requested data
+            dom = parse(f)
             f.close()
-            if len(metadata)>0:
-                # Iterate over available fields and pull them into our model
-                for tag,field in {'title':'title'}.items():
-                    if metadata[tag]:
-                        self.__setattr__( field, metadata[tag] )
+            # Iterate over available fields and pull them into our model
+            for tag,field in {'dc:title':'title'}.items():
+                if dom.getElementsByTagName(tag):
+                    self.__setattr__( field, dom.getElementsByTagName(tag)[0].childNodes[0].data )
 
         # WorldCat would probably be 'better' but not seemingly possible
         # http://xissn.worldcat.org/webservices/xid/issn/0036-8075?method=getHistory&format=xml&ai=spenglr&fl=form
@@ -126,6 +139,12 @@ class Resource(models.Model):
     meta = PickledObjectField(editable=False,blank=True, null=True)
     # Positional information of particular bookmarks is stored on use of resource
     # therefore single resource instance for multiple bookmarks (chapters, z-time)
+    created = models.DateField(auto_now_add=True)
+    # Assignments of the resource to a particular user
+    users = models.ManyToManyField(User, through='UserResource')
+
 
 # User's suggested resources (taken from incorrectly answered questions)
-# class UserResource
+class UserResource(models.Model):
+    user = models.ForeignKey(User)
+    resource = models.ForeignKey(Resource)

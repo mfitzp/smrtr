@@ -25,6 +25,18 @@
         <div>{% for tag in question.get_tags %}<span class="stack"><a class="tag" href="{% url questions-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
         
         <p style="clear:both"><small>Question rated as {% sqdifficulty 100 question.sq %}. Latest revision by <a href="#">{{ question.author }}</a></small></p>
+
+
+        {% if question.resources %}
+        <h5>Resources</h5>
+            <ul>
+                {% for resource in question.resources.all %}
+                    <li><a href="{{ resource.url }}">{{ resource.title }}</a> {{ resource.description }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
     {% else %}
         <p>Question does not exist.</p>
     {% endif %}

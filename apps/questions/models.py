@@ -33,7 +33,8 @@ class Question(models.Model):
         self.save()
 
     content = models.TextField()
-    resource = models.ManyToManyField(Resource, blank=True) # Multiple resource records for this Question, resources assigned to >1 question
+    # Multiple resource records for this Question, resources assigned to >1 question
+    resources = models.ManyToManyField(Resource, blank=True, through='QuestionResource') 
     modules = models.ManyToManyField(Module, blank=True)
     created = models.DateTimeField(auto_now_add = True)
     last_updated = models.DateTimeField(auto_now = True)
@@ -46,7 +47,16 @@ class Answer(models.Model):
     content = models.CharField(max_length=200)
     is_correct = models.BooleanField()
 
-    
+
+# Resource attached to specific question
+# Use this module to specify question-specific bookmarks in the resource, for example 
+# page numbers, chapters, timestamp, #anchors etc.
+class QuestionResource(models.Model):
+    def __unicode__(self):
+        return self.title
+
+    resource = models.ForeignKey(Resource)
+    question = models.ForeignKey(Question)    
 
 # Following models store user relationships with questions and resources
 # User's attempts at questions

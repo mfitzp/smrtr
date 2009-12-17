@@ -18,7 +18,7 @@
                     <td class="dbcurriculummodule"><a href="{% url modulei-detail modulei_id=usermodule.modulei.id %}">{{ usermodule }}</a></td>
                     <td style="text-align:right">{% sqchange 100 usermodule.sq %}</td>
                     <td><a href="{% url question-modulei-exam modulei_id=usermodule.modulei.id %}" class="questionlink">Questions</a></td>
-                    <td><a href="resources/m/{{ user_module.module.id }}" class="resourcelink">Study</a></td>
+                    <td><a href="{% url resource-modulei-userresources modulei_id=usermodule.modulei.id %}" class="resourcelink">Study</a></td>
                     <td><a href="progress/m/{{ user_module.module.id }}" class="progresslink">Progress</a></td>
                     <td>
                     </td>
