@@ -8,6 +8,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    url(r'^(?P<user_id>\d+)/$', 'profile.views.profile', name='user-profile' ),
+    url(r'^(?P<user_id>\d+)/$', 'profiles.views.profile', name='user-profile' ),
 
 )
