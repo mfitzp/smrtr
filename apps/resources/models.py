@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Serialisation
 from django.core import serializers
-import urllib, json, re
+import urllib, re
 from xml.dom.minidom import parse, parseString
 # Spenglr
 from resources import isbn
@@ -127,7 +127,7 @@ class Resource(models.Model):
     # If URN provided use that, otherwise use URL
     # when saving, attempt to generate an URN for any URL (e.g. amazon>ISBN)
     namespace = models.CharField(max_length=5, blank=True)
-    uri = models.CharField(max_length=50, unique=True)
+    uri = models.CharField(max_length=200, unique=True)
     # Content descriptors
     mimetype = models.CharField(editable=False,max_length=50)    
     language = models.CharField(max_length=10, blank=True)
