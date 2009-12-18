@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     (r'^resources/', include('resources.urls')),
 
     (r'^accounts/', include('registration.urls')),
-    (r'^profile/', include('profile.urls')),
+    (r'^profile/', include('profiles.urls')),
 
     (r'^questions/', include('questions.urls')),
 
