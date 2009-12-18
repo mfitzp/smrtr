@@ -1,6 +1,6 @@
 from django.contrib import admin
 #Spenglr
-from profile.models import *
+from profiles.models import *
 
 
 admin.site.register(UserProfile)
