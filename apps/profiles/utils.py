@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 import math
 from datetime import date as _date
 # Spenglr
-from profile.models import UserProfile
+from profiles.models import UserProfile
 
 # Calculate mSQ for the oldest records
 def batch_user_update_sq():

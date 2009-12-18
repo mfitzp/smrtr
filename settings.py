@@ -99,7 +99,7 @@ INSTALLED_APPS = (
     #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
 # Spenglr
     'core',
-    'profile',
+    'profiles',
     'network',
     'education',
     'questions',
@@ -114,7 +114,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request'
 )
 
-AUTH_PROFILE_MODULE = "profile.userprofile"
+AUTH_PROFILE_MODULE = "profiles.userprofile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
 LOGIN_URL = '/accounts/login/'
