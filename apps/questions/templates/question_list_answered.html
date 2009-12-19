@@ -7,7 +7,7 @@
     {% else %}
         &raquo; <a href="{% url course-detail course_id=modulei.course.id %}">{{ modulei.course }}</a>
     {% endif %}
-    &raquo; {{ module }}
+    &raquo; <a href="{% url modulei-detail modulei_id=modulei.id %}">{{ modulei }}</a>
     &raquo; Questions Answered
 {% endblock %}
 
