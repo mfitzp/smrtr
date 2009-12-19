@@ -137,7 +137,7 @@ def module_detail(request, module_id):
 
     context = { 'module': module, 
                 'usermodules': usermodules, 
-                'members':members,
+                #'members':members,
                 # Wall items
                 'wall': module.wall,
                 'wallitems': module.wall.wallitem_set.select_related(),
