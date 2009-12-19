@@ -1,4 +1,3 @@
-{% load uni_form_tags %}
 {% load avatar_tags %}
 {% load i18n %}
 {% load comments %}
@@ -8,7 +7,7 @@
             <div id="post-to-wall">
                 <form method="post" class="uniForm" action="{% url add_wall_item wall.slug %}">
                     <input type="hidden" name="success_url" value="{{ request.META.REQUEST_URI }}" />
-                    {{ wallform|as_uni_form }}
+                    {{ wallform.posting }}
                     <p><input type="submit" value="{% trans 'Submit' %}" /></p>
                 </form>
             </div>

@@ -88,7 +88,6 @@ INSTALLED_APPS = (
 # External Helpers
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
     'atomformat',
-    'uni_form',
 # Externals
     'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
     'avatar', #http://github.com/rhec/django-avatar/ This version supports overriding the default gravatar
