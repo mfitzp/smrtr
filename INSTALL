@@ -6,6 +6,11 @@ git://github.com/spenglr/spenglr.git
 
 ...to a local directory (suggested: ~/spenglr)
 
+Add a symlink (or your systems equivalent)
+
+FROM:   ~/spenglr/templates/admin
+TO:     %PYTHONSHARED%/django/contrib/admin/templates/admin
+
 Create a file named spenglr.wsgi as below (modify paths to your local system needs):
 "
 import os
