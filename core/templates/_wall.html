@@ -7,8 +7,8 @@
             <div id="post-to-wall">
                 <form method="post" class="uniForm" action="{% url add_wall_item wall.slug %}">
                     <input type="hidden" name="success_url" value="{{ request.META.REQUEST_URI }}" />
-                    {{ wallform.posting }}
-                    <p><input type="submit" value="{% trans 'Submit' %}" /></p>
+                    <textarea id="id_posting" rows="1" cols="50" name="posting" style="width:98%"></textarea>
+                    <div style="text-align:right"><input type="submit" value="{% trans 'Submit' %}" /></div>
                 </form>
             </div>
             
