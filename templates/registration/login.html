@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
-{% block content_title %}<h1>Login</h1>{% endblock %}
+{% block content_title %}<h1>Demo Site Login</h1>{% endblock %}
 
 {% block content %}
+<p>Welcome to the demo site of <a href="http://www.spenglr.com">spenglr</a> an open-source open-access web knowledge and learning system.</p>
 
+<p>Login in with username/pass <strong>demo/demo</strong>
+to see the site in action. Source hosting available at <a href="http://github.com/spenglr/" target="_blank">github.com</a>.</p>
 <p>
 <form action="/accounts/login/" method="post">
 {{ form.as_p }}

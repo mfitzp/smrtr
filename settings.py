@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
+    'django.contrib.comments',
 # External Helpers
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
     'atomformat',

@@ -1,6 +1,7 @@
 {% load uni_form_tags %}
 {% load avatar_tags %}
 {% load i18n %}
+{% load comments %}
 
         {% if wall %}
         <div class="form-toggle">    
@@ -21,6 +22,32 @@
                 <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
                 <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
                 <div class="wallitem-actions">{% ifequal item.author user %}<a href="{% url edit_wall_item item.id %}?success_url={{ request.META.REQUEST_URI|urlencode }}">Edit</a> &#183;{% endifequal %} <a href="">Comment</a> &#183; <a href="">Like</a></div>
+                {% get_comment_list for item as comment_list %}
+                {% if comment_list %}
+                <div class="wallitem-comments">
+                    {% for comment in comment_list %}
+                        <div class="comment">
+                            <div class="comment-image">{% avatar comment.user 32 %}</div>
+                            <div class="comment-body"><a href="{% url user-profile user_id=comment.user.id %}" class="wallitem-author">{{ comment.user.get_profile.fullname }}</a>
+                            {{ comment.comment }}</div>
+                            <div class="comment-meta">{{ comment.submit_date|timesince }} ago</div>
+                        </div>
+                    {% endfor %}
+                    <!-- 
+                    <div class="comment">
+                        {% get_comment_form for item as form %}
+                        <form action="{% comment_form_target %}" method="POST">
+                        {{ form.object_pk }}
+                        {{ form.content_type }}
+                        {{ form.timestamp }}
+                        {{ form.security_hash }}
+                        <textarea style="width:98%" id="id_comment" rows="1" cols="40" name="comment"></textarea>
+                        <div style="text-align:right"><input type="submit" name="preview" class="submit-post" value="Preview"></div>
+                        </form>
+                    </div>
+                    -->
+                </div>
+                {% endif %}
             </div>
         {% endfor %}
 <br class="clear" />

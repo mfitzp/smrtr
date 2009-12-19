@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^$', 'core.views.index'),
 
+    (r'^comments/', include('django.contrib.comments.urls')),
+
     #(r'^login/$', 'spenglr.core.views.loginhandler'),
     #(r'^logout/$', 'spenglr.core.views.logouthandler'),
 
