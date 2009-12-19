@@ -11,6 +11,9 @@ Add a symlink (or your systems equivalent)
 FROM:   ~/spenglr/templates/admin
 TO:     %PYTHONSHARED%/django/contrib/admin/templates/admin
 
+You also need to download all of the external apps (see the settings.py file for a list of links for correct versions) and put them in ~spenglr/external/
+You don't need to use the install/setup functions on any of the apps - just copy the main app folder into 'external' and it should be picked up.
+
 Create a file named spenglr.wsgi as below (modify paths to your local system needs):
 "
 import os
