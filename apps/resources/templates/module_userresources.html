@@ -18,11 +18,18 @@
         <h1>{{ module }}</h1>
 
         {% if resources %}
-                <ul>
+                <table>
             {% for resource in resources %}
-                    <li><a href="{{ resource.uri }}">{{ resource.title }}</a> {{ resource.description }} [<a href="{% url resource-detail resource.id %}">More</a>]</li>
+                    <tr>
+                    {% ifequal resource.namespace 'isbn' %}
+                        <td><img src="http://covers.openlibrary.org/b/isbn/{{ resource.uri }}-M.jpg"></td>
+                    {% endifequal %}
+                    <th><a href="{{ resource.uri }}">{{ resource.title }}</a></th>
+                    <td>{{ resource.description|truncatewords:15 }}</td>
+                    <td><a href="{% url resource-detail resource.id %}">Details</a></td>
+                    </tr>
             {% endfor %}
-                </ul>
+                </table>
         {% else %}
             <p>No resources available.</p>
         {% endif %}

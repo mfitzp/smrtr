@@ -24,7 +24,9 @@
             </td></tr>
 
         </table>
-
+        {% ifequal resource.namespace 'isbn' %}
+            <img src="http://covers.openlibrary.org/b/isbn/{{ resource.uri }}-M.jpg">
+        {% endifequal %}
         <blockquote>
             {{ resource.description }}
         </blockquote>

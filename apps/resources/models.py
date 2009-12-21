@@ -41,7 +41,7 @@ class Resource(models.Model):
             return "http://books.google.com/books?as_isbn=%s" % self.uri
 
         elif self.url:
-            return self.url
+            return self.uri
 
 
     # Autopopulate fields from the url/uri via webservices or direct request
@@ -88,7 +88,9 @@ class Resource(models.Model):
         # No doi available, attempt lookup of information via ISBN if provided
         elif self.namespace == 'isbn':
             # Convert to ISBN-13 to prevent duplicates in db
-            self.uri=isbn.toI13(self.uri)
+            # Removed as changing this breaks some services - keep in format as shown on book itself
+            # self.uri=isbn.toI13(self.uri)
+            self.uri = isbn.isbn_strip(self.uri)
             # Get metadata from ISBN database: isbn in self.uri
             # Alternate API available at http://isbndb.com/docs/api/ provides additional information such as page numbers, language etc.
             # however misses description fields etc. A double-request may be optimal here

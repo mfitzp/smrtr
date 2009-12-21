@@ -10,11 +10,17 @@
     {% if latest %}
         <table>
         <caption>Latest Resources</caption>
-        <tr><th scope="column">Resource Name</th><th scope="column">Added</th></tr>
+        <tr><th></th><th scope="column">Resource Name</th><th scope="column">Added</th></tr>
         {% for resource in latest %}
             <tr>
-                <td><a href="/resources/{{ resource.id }}">{{ resource|truncatewords:15 }}</a></td>
-                <td>{{ resource.created|timesince }} ago</td>
+            <td>
+            {% ifequal resource.namespace 'isbn' %}
+                <img src="http://covers.openlibrary.org/b/isbn/{{ resource.uri }}-S.jpg">
+            {% endifequal %}
+            </td>
+            <td><a href="{{ resource.url }}"><strong>{{ resource.title }}</strong></a><br />{{ resource.description|truncatewords:25 }}</td>
+            <td>{{ resource.created|timesince }}</a></td>
+            <td><a href="{% url resource-detail resource.id %}">Details</a></td>
             </tr>
         {% endfor %}
         </table>
