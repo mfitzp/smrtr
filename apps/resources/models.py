@@ -27,6 +27,9 @@ class Resource(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        unique_together= (('namespace','uri'),)
+
     # Generate an URL for this resource object - these are standard resource
     # urls (not amazon/etc. which are handled by the template)
     # Preference is given to doi, then urn, then direct links
@@ -160,7 +163,7 @@ class Resource(models.Model):
         ('doi', 'DOI: Digital Object Identifier'),
     )
     namespace = models.CharField(max_length=4,choices=NAMESPACE_CHOICES, null = True, blank = True)
-    uri = models.CharField(max_length=200, blank=True, null=True)
+    uri = models.CharField(max_length=200, unique=True)
     # Content descriptors
     mimetype = models.CharField(editable=False,max_length=50)    
     language = models.CharField(max_length=10, blank=True)
