@@ -20,8 +20,7 @@
         {% if resources %}
                 <ul>
             {% for resource in resources %}
-                    <script src="http://books.google.com/books?jscmd=viewapi&amp;bibkeys=ISBN:{{ resource.uri }}&amp;callback=ProcessGBSBookInfo"></script>
-                    <li><a href="{{ resource.url }}">{{ resource.title }}</a> {{ resource.description }}</li>
+                    <li><a href="{{ resource.uri }}">{{ resource.title }}</a> {{ resource.description }} [<a href="{% url resource-detail resource.id %}">More</a>]</li>
             {% endfor %}
                 </ul>
         {% else %}
