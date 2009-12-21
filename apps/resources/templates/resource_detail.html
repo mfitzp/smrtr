@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url latest-resources %}">Resources</a>
+    &raquo; {{ resource.id }}
+{% endblock %}
+
+{% block content %}
+
+    {% if resource %}
+        <h1>
+            {{ resource.title }}
+        </h1>
+        <table>
+            {% if resource.author %}<tr><th>Author</th><td>{{ resource.author }}</td></tr>{% endif %}
+            {% if resource.publisher %}<tr><th>Publisher</th><td>{{ resource.publisher }}</td></tr>{% endif %}
+            {% if resource.published %}<tr><th>Published</th><td>{{ resource.published }}</td></tr>{% endif %}
+        </table>
+
+        <blockquote>
+            {{ resource.description }}
+        </blockquote>
+
+        <div>{% for tag in resource.get_tags %}<span class="stack"><a class="tag" href="{% url resources-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
+        <br style="clear:both;">
+        {% if resource.meta %}
+        <h5>Metadata</h5>
+        <table>
+            {% for key,value in resource.meta.items %}
+                <tr><th>{{ key|capfirst }}</th><td>{{ value }}</td></tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        
+
+    {% else %}
+        <p>Question does not exist.</p>
+    {% endif %}
+
+{% endblock %}
+
+

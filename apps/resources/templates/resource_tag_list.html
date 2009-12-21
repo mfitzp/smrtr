@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url latest-resources %}">Resources</a>
+    &raquo; {{ tag }}
+{% endblock %}
+
+
+{% block content %}
+
+        {% if resources %}
+            {% for resource in resources %}
+            <blockquote>
+                <a href="{% url resource-detail resource_id=resource.id %}">{{ resource.title }}</a>
+            </blockquote>
+            {% endfor %}
+            </table>
+        {% else %}
+            <p>No resources available.</p>
+        {% endif %}
+
+{% endblock %}
