@@ -17,6 +17,12 @@
             {% if resource.author %}<tr><th>Author</th><td>{{ resource.author }}</td></tr>{% endif %}
             {% if resource.publisher %}<tr><th>Publisher</th><td>{{ resource.publisher }}</td></tr>{% endif %}
             {% if resource.published %}<tr><th>Published</th><td>{{ resource.published }}</td></tr>{% endif %}
+            <tr><th>Locate</th><td>
+            {% ifequal resource.namespace 'doi' %}<a href="{{ resource.url }}" target="_blank">doi:{{ resource.uri }}</a>{% endifequal %}
+            {% ifequal resource.namespace 'isbn' %}<a href="{{ resource.url }}" target="_blank">isbn:{{ resource.uri }}</a>{% endifequal %}
+            {% ifequal resource.namespace None %}<a href="{{ resource.url }}" target="_blank">{{ resource.uri }}</a>{% endifequal %}
+            </td></tr>
+
         </table>
 
         <blockquote>

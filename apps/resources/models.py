@@ -34,15 +34,11 @@ class Resource(models.Model):
     # urls (not amazon/etc. which are handled by the template)
     # Preference is given to doi, then urn, then direct links
     def url(self):
-        if self.doi:
-            return "http://dx.doi.org/" + self.doi
+        if self.namespace == 'doi':
+            return "http://dx.doi.org/" + self.uri
 
-        elif self.urn:
-            urn = self.uri.split(':',1)
-            if self.urn[0] == 'isbn':
-                return "http://books.google.com/books?as_isbn=%s" % self.urn[1]
-            if self.urn[0] == 'issn':
-                return "http://books.google.com/books?as_issn=%s" % self.urn[1]
+        elif self.namespace == 'isbn':
+            return "http://books.google.com/books?as_isbn=%s" % self.uri
 
         elif self.url:
             return self.url
