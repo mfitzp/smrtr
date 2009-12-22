@@ -20,10 +20,10 @@
                 <div class="wallitem-image">{% avatar item.author 48 %}</div>
                 <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
                 <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
-                <div class="wallitem-actions">{% ifequal item.author user %}<a href="{% url edit_wall_item item.id %}?success_url={{ request.META.REQUEST_URI|urlencode }}">Edit</a> &#183;{% endifequal %} <a href="">Comment</a> &#183; <a href="">Like</a></div>
+                <div class="wallitem-actions">{% ifequal item.author user %}<a href="{% url edit_wall_item item.id %}?success_url={{ request.META.REQUEST_URI|urlencode }}">Edit</a> &#183;{% endifequal %} <a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a> &#183; <a href="">Like</a></div>
                 {% get_comment_list for item as comment_list %}
+                <div id="wallitem-comments-{{ item.id }}" class="wallitem-comments" {% if comment_list %}{% else %}style="display:none"{% endif %}>
                 {% if comment_list %}
-                <div class="wallitem-comments">
                     {% for comment in comment_list %}
                         <div class="comment">
                             <div class="comment-image">{% avatar comment.user 32 %}</div>
@@ -32,21 +32,21 @@
                             <div class="comment-meta">{{ comment.submit_date|timesince }} ago</div>
                         </div>
                     {% endfor %}
-                    <!-- 
-                    <div class="comment">
-                        {% get_comment_form for item as form %}
-                        <form action="{% comment_form_target %}" method="POST">
-                        {{ form.object_pk }}
-                        {{ form.content_type }}
-                        {{ form.timestamp }}
-                        {{ form.security_hash }}
-                        <textarea style="width:98%" id="id_comment" rows="1" cols="40" name="comment"></textarea>
-                        <div style="text-align:right"><input type="submit" name="preview" class="submit-post" value="Preview"></div>
-                        </form>
-                    </div>
-                    -->
-                </div>
                 {% endif %}
+                <div class="comment">
+                    {% get_comment_form for item as form %}
+                    <form action="{% comment_form_target %}" method="POST">
+                    {{ form.object_pk }}
+                    {{ form.content_type }}
+                    {{ form.timestamp }}
+                    {{ form.security_hash }}
+                    <input type="hidden" name="next" value="{{ request.META.REQUEST_URI }}">
+                    <textarea style="width:98%" id="id_comment" rows="1" cols="40" name="comment" autocomplete="off"></textarea>
+                    <div style="text-align:right"><input type="submit" name="submit" class="submit-post" value="Post" /></div>
+                    </form>
+                </div>
+                </div>
+
             </div>
         {% endfor %}
 <br class="clear" />
