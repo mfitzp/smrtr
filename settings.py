@@ -142,6 +142,11 @@ AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://www.spenglr.com/media/img/default_avata
 
 # Flowplayer (audio/video output)
 FLOWPLAYER_URL = "/media/flowplayer/flowplayer-3.1.5.swf"
+FLOWPLAYER_CONFIG = {
+                        'default' : 
+                            { 'clip' : { 'autoPlay':'false' }, },
+                    }
+
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

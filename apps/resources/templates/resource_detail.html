@@ -30,8 +30,7 @@
         {% endifequal %}
         <blockquote>
             {{ resource.description }}
-        </blockquote>
-
+        </blockquote>   
         {% ifequal resource.mimemajor 'audio' %}
             <!-- audio player -->
             {% flowplayer resource.url audio %}
@@ -41,7 +40,6 @@
             <!-- video player -->
             {% flowplayer resource.url %}
         {% endifequal %}
-
 
         <div>{% for tag in resource.get_tags %}<span class="stack"><a class="tag" href="{% url resources-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
         <br style="clear:both;">
