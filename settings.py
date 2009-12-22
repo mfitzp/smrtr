@@ -97,6 +97,7 @@ INSTALLED_APPS = (
     'wall',  #http://github.com/jtauber/django-wall
     'picklefield',  #http://github.com/shrubberysoft/django-picklefield
     #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
+    'flowplayer', #http://github.com/mfitzp/django-flowplayer
 # Spenglr
     'core',
     'profiles',
@@ -138,6 +139,9 @@ SQ_PINNING_WEIGHT = 0.1
 AVATAR_STORAGE_DIR = "avatar"
 AVATAR_DEFAULT_URL = "/media/img/default_avatar.png"
 AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://www.spenglr.com/media/img/default_avatar.png"
+
+# Flowplayer (audio/video output)
+FLOWPLAYER_URL = "/media/flowplayer/flowplayer-3.1.5.swf"
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

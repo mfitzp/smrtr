@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load spenglr_sq_tags %}
+{% load flowplayer_tags %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
@@ -30,6 +31,17 @@
         <blockquote>
             {{ resource.description }}
         </blockquote>
+
+        {% ifequal resource.mimemajor 'audio' %}
+            <!-- audio player -->
+            {% flowplayer resource.url audio %}
+        {% endifequal %}
+
+        {% ifequal resource.mimemajor 'video' %}
+            <!-- video player -->
+            {% flowplayer resource.url %}
+        {% endifequal %}
+
 
         <div>{% for tag in resource.get_tags %}<span class="stack"><a class="tag" href="{% url resources-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
         <br style="clear:both;">

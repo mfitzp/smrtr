@@ -148,6 +148,12 @@ class Resource(models.Model):
     
         super(Resource, self).save(force_insert, force_update)
 
+    def mimemajor(self):
+        if self.mimetype.find('/'):
+            return self.mimetype.split('/')[0]
+        else:
+            return False
+
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
     def get_tags(self):
