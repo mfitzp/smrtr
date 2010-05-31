@@ -1,0 +1,2041 @@
+2009-11-29 22:15:45     INFO: Bootstrapping "project" in "/home/martin/spenglr/spenglr"
+2009-11-29 22:15:45    DEBUG: bzr not found as new-style vcs, trying as monolithic
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git init-db
+2009-11-29 22:15:45    DEBUG: Executing  git init-db ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: Extracting 'martin.fitzpatrick@spenglr.org-20090912221318-tjha55ty24vjx0p5' out of 'file:///home/martin/spenglr/bzr/' in '/home/martin/spenglr/spenglr'...
+2009-11-29 22:15:45    DEBUG: Adjusting the state accordingly to journal
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./settings.py ./urls.py ./manage.py ./__init__.py ./.directory
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./settings.py ./urls.py ./manage.py ./__init__.py ./.directory ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./questions/admin.py ./questions/__init__.py ./questions/models.py ./questions/views.py ./questions/tests.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./questions/admin.py ./questions/__init__.py ./questions/models.py ./questions/views.py ./questions/tests.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./education/urls.py ./education/admin.py ./education/__init__.py ./education/models.py ./education/views.py ./education/tests.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./education/urls.py ./education/admin.py ./education/__init__.py ./education/models.py ./education/views.py ./education/tests.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./forum/__init__.py ./forum/models.py ./forum/views.py ./forum/tests.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./forum/__init__.py ./forum/models.py ./forum/views.py ./forum/tests.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./countries/__init__.py ./countries/models.py ./countries/.directory
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./countries/__init__.py ./countries/models.py ./countries/.directory ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./countries/utils/__init__.py ./countries/utils/isoflag.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./countries/utils/__init__.py ./countries/utils/isoflag.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./countries/templatetags/__init__.py ./countries/templatetags/countries_tags.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./countries/templatetags/__init__.py ./countries/templatetags/countries_tags.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./countries/fixtures/initial_data.xml ./countries/fixtures/UPDATED.txt
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./countries/fixtures/initial_data.xml ./countries/fixtures/UPDATED.txt ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./core/__init__.py ./core/models.py ./core/views.py ./core/tests.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./core/__init__.py ./core/models.py ./core/views.py ./core/tests.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-index --add ./study/admin.py ./study/__init__.py ./study/models.py ./study/views.py ./study/tests.py
+2009-11-29 22:15:45    DEBUG: Executing  git update-index --add ./study/admin.py ./study/__init__.py ./study/models.py ./study/views.py ./study/tests.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:45    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:45    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:45    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:45    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45  WARNING: [Status 128]
+2009-11-29 22:15:45     INFO: Doing initial commit
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git commit-tree f73952ae5fb8d37205f72a4fa753a9ec381b1726
+2009-11-29 22:15:45    DEBUG: Executing  git commit-tree f73952ae5fb8d37205f72a4fa753a9ec381b1726 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD c65b5d3a719d132dbed4f0affc09312a739ecb22
+2009-11-29 22:15:45    DEBUG: Executing  git update-ref HEAD c65b5d3a719d132dbed4f0affc09312a739ecb22 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:45     INFO: [Ok]
+2009-11-29 22:15:45     INFO: Bootstrap completed
+2009-11-29 22:15:45     INFO: Updating "project" in "/home/martin/spenglr/spenglr"
+2009-11-29 22:15:46     INFO: Collecting 41 missing changesets
+2009-11-29 22:15:46     INFO: Fetching concrete changesets
+2009-11-29 22:15:46     INFO: Cached information about 41 pending changesets
+2009-11-29 22:15:46     INFO: Applying pending upstream changesets
+2009-11-29 22:15:46     INFO: Changeset #1
+2009-11-29 22:15:46     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090913010752-357k1b5wt8axtytm" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-13 02:07:52.761000+01:00
+2009-11-29 22:15:46     INFO: Log message: Url changes for question listing.
+2009-11-29 22:15:46    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090913010752-357k1b5wt8axtytm
+Date: 2009-09-13 02:07:52.761000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/models.py(UPD)
+	 study/models.py(UPD)
+	 urls.py(UPD)
+Log: Url changes for question listing.
+
+2009-11-29 22:15:46     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090913010752-357k1b5wt8axtytm', applied 1 changesets
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-index questions/models.py study/models.py urls.py
+2009-11-29 22:15:46    DEBUG: Executing  git update-index questions/models.py study/models.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:46    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:46    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:46    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:46    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git commit-tree 072b5a7b65c78016f927e122bdf7e097ee996ae3 -p c65b5d3a719d132dbed4f0affc09312a739ecb22
+2009-11-29 22:15:46    DEBUG: Executing  git commit-tree 072b5a7b65c78016f927e122bdf7e097ee996ae3 -p c65b5d3a719d132dbed4f0affc09312a739ecb22 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 6e9d91d0253fd67f05e94cb71311bf77ec1071bc c65b5d3a719d132dbed4f0affc09312a739ecb22
+2009-11-29 22:15:46    DEBUG: Executing  git update-ref HEAD 6e9d91d0253fd67f05e94cb71311bf77ec1071bc c65b5d3a719d132dbed4f0affc09312a739ecb22 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:46     INFO: Changeset #2
+2009-11-29 22:15:46     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090913023938-7z44rjlr0cjgie0n" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-13 03:39:38.232000+01:00
+2009-11-29 22:15:46     INFO: Log message: Module specific questions, via link on dashboard (first step to user's questions thing).
+2009-11-29 22:15:46    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090913023938-7z44rjlr0cjgie0n
+Date: 2009-09-13 03:39:38.232000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: study/urls.py(ADD)
+	 questions/models.py(UPD)
+	 urls.py(UPD)
+Log: Module specific questions, via link on dashboard (first step to user's questions thing).
+
+2009-11-29 22:15:46     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090913023938-7z44rjlr0cjgie0n', applied 1 changesets
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-index --add study/urls.py
+2009-11-29 22:15:46    DEBUG: Executing  git update-index --add study/urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-index questions/models.py urls.py
+2009-11-29 22:15:46    DEBUG: Executing  git update-index questions/models.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:46    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:46    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:46    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:46    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git commit-tree d481ca50580db9f819388927b564313c03b1c785 -p 6e9d91d0253fd67f05e94cb71311bf77ec1071bc
+2009-11-29 22:15:46    DEBUG: Executing  git commit-tree d481ca50580db9f819388927b564313c03b1c785 -p 6e9d91d0253fd67f05e94cb71311bf77ec1071bc ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 2cae311c2b413f3e73623eb67c3c6f653110e8b2 6e9d91d0253fd67f05e94cb71311bf77ec1071bc
+2009-11-29 22:15:46    DEBUG: Executing  git update-ref HEAD 2cae311c2b413f3e73623eb67c3c6f653110e8b2 6e9d91d0253fd67f05e94cb71311bf77ec1071bc ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:46     INFO: Changeset #3
+2009-11-29 22:15:46     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090913050602-uyl7kp3rvb238j40" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-13 06:06:02.278000+01:00
+2009-11-29 22:15:46     INFO: Log message: Moved external models out to ../external  Add this to PYTHONPATH and it can be included using external.<appname> format.
+2009-11-29 22:15:46    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090913050602-uyl7kp3rvb238j40
+Date: 2009-09-13 06:06:02.278000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: countries/.directory(DEL)
+	 countries/__init__.py(DEL)
+	 countries/fixtures/UPDATED.txt(DEL)
+	 countries/fixtures/initial_data.xml(DEL)
+	 countries/fixtures[DIR](DEL)
+	 countries/models.py(DEL)
+	 countries/templatetags/__init__.py(DEL)
+	 countries/templatetags/countries_tags.py(DEL)
+	 countries/templatetags[DIR](DEL)
+	 countries/utils/__init__.py(DEL)
+	 countries/utils/isoflag.py(DEL)
+	 countries/utils[DIR](DEL)
+	 countries[DIR](DEL)
+	 education/models.py(UPD)
+	 settings.py(UPD)
+	 study/models.py(UPD)
+Log: Moved external models out to ../external  Add this to PYTHONPATH and it can be included using external.<appname> format.
+
+2009-11-29 22:15:46     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090913050602-uyl7kp3rvb238j40', applied 1 changesets
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/.directory'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/__init__.py'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/fixtures/UPDATED.txt'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/fixtures/initial_data.xml'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/fixtures'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/models.py'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/templatetags/__init__.py'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/templatetags/countries_tags.py'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/templatetags'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/utils/__init__.py'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/utils/isoflag.py'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries/utils'
+2009-11-29 22:15:46  WARNING: Ignoring deletion of non existing 'countries'
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py settings.py study/models.py
+2009-11-29 22:15:46    DEBUG: Executing  git update-index education/models.py settings.py study/models.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:46    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:46    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:46    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:46    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git commit-tree b4990b62c4628a0eff78e916478f6916d4687ada -p 2cae311c2b413f3e73623eb67c3c6f653110e8b2
+2009-11-29 22:15:46    DEBUG: Executing  git commit-tree b4990b62c4628a0eff78e916478f6916d4687ada -p 2cae311c2b413f3e73623eb67c3c6f653110e8b2 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD c12ce8a119d26258768655adeab9b8b3378c3142 2cae311c2b413f3e73623eb67c3c6f653110e8b2
+2009-11-29 22:15:46    DEBUG: Executing  git update-ref HEAD c12ce8a119d26258768655adeab9b8b3378c3142 2cae311c2b413f3e73623eb67c3c6f653110e8b2 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:46     INFO: Changeset #4
+2009-11-29 22:15:46     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090913051047-kx8qx6satr123qqu" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-13 06:10:47.649000+01:00
+2009-11-29 22:15:46     INFO: Log message: .
+2009-11-29 22:15:46    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090913051047-kx8qx6satr123qqu
+Date: 2009-09-13 06:10:47.649000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/views.py(UPD)
+	 study/models.py(UPD)
+	 urls.py(UPD)
+Log: .
+
+2009-11-29 22:15:46     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090913051047-kx8qx6satr123qqu', applied 1 changesets
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git update-index core/views.py study/models.py urls.py
+2009-11-29 22:15:46    DEBUG: Executing  git update-index core/views.py study/models.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:46    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:46    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:46     INFO: [Ok]
+2009-11-29 22:15:46     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:46    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree 10c3ee624ea3fc25576bcc15fef4fd4704c55ef4 -p c12ce8a119d26258768655adeab9b8b3378c3142
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree 10c3ee624ea3fc25576bcc15fef4fd4704c55ef4 -p c12ce8a119d26258768655adeab9b8b3378c3142 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 1191b633fc4e6541a5a660caba92ff99c49b89f9 c12ce8a119d26258768655adeab9b8b3378c3142
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD 1191b633fc4e6541a5a660caba92ff99c49b89f9 c12ce8a119d26258768655adeab9b8b3378c3142 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #5
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090913051528-rfndxfn3ujfxoh4d" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-13 06:15:28.778000+01:00
+2009-11-29 22:15:47     INFO: Log message: Non-admin logout link and processing via view.
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090913051528-rfndxfn3ujfxoh4d
+Date: 2009-09-13 06:15:28.778000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/views.py(UPD)
+Log: Non-admin logout link and processing via view.
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090913051528-rfndxfn3ujfxoh4d', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index core/views.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index core/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree 94ab63fb38641f10f450556dc2b83103f83152ce -p 1191b633fc4e6541a5a660caba92ff99c49b89f9
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree 94ab63fb38641f10f450556dc2b83103f83152ce -p 1191b633fc4e6541a5a660caba92ff99c49b89f9 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD fd6743a129f7359af9375d548840dd713f7d029a 1191b633fc4e6541a5a660caba92ff99c49b89f9
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD fd6743a129f7359af9375d548840dd713f7d029a 1191b633fc4e6541a5a660caba92ff99c49b89f9 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #6
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090915230310-xr8al6dvib0r8nbt" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 00:03:10.778000+01:00
+2009-11-29 22:15:47     INFO: Log message: Implementation of forums (module only currently, but other models can be easily extended). Uses external django-forum module for the engine.
+TODO:
+Module/Institution/Course object creation needs to trigger the creation of a forum object and assignment. Slug will need to be generated, suggest format of <object_id>-<object_type_char e.g. m/c/i>.
+Implement for more than just modules (easy, just add to that model definition)
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090915230310-xr8al6dvib0r8nbt
+Date: 2009-09-16 00:03:10.778000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/middleware.py(ADD)
+	 questions/urls.py(ADD)
+	 forum/__init__.py(DEL)
+	 forum/models.py(DEL)
+	 forum/tests.py(DEL)
+	 forum/views.py(DEL)
+	 forum[DIR](DEL)
+	 .directory(UPD)
+	 core/views.py(UPD)
+	 education/models.py(UPD)
+	 education/urls.py(UPD)
+	 questions/views.py(UPD)
+	 settings.py(UPD)
+	 study/models.py(UPD)
+	 study/urls.py(UPD)
+	 urls.py(UPD)
+Log: Implementation of forums (module only currently, but other models can be easily extended). Uses external django-forum module for the engine.
+TODO:
+Module/Institution/Course object creation needs to trigger the creation of a forum object and assignment. Slug will need to be generated, suggest format of <object_id>-<object_type_char e.g. m/c/i>.
+Implement for more than just modules (easy, just add to that model definition)
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090915230310-xr8al6dvib0r8nbt', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index --add core/middleware.py questions/urls.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index --add core/middleware.py questions/urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'forum/__init__.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'forum/models.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'forum/tests.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'forum/views.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'forum'
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index .directory core/views.py education/models.py education/urls.py questions/views.py settings.py study/models.py study/urls.py urls.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index .directory core/views.py education/models.py education/urls.py questions/views.py settings.py study/models.py study/urls.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree 8aec0be74924412db942c3c0079539a49540ba86 -p fd6743a129f7359af9375d548840dd713f7d029a
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree 8aec0be74924412db942c3c0079539a49540ba86 -p fd6743a129f7359af9375d548840dd713f7d029a ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 0f60ad1c5d7845ccd2edb4803c0c99cbfde5c7ad fd6743a129f7359af9375d548840dd713f7d029a
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD 0f60ad1c5d7845ccd2edb4803c0c99cbfde5c7ad fd6743a129f7359af9375d548840dd713f7d029a ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #7
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090915233231-onj314xfiwusczsr" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 00:32:31.654000+01:00
+2009-11-29 22:15:47     INFO: Log message: Change to questions template location.
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090915233231-onj314xfiwusczsr
+Date: 2009-09-16 00:32:31.654000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/urls.py(UPD)
+Log: Change to questions template location.
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090915233231-onj314xfiwusczsr', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index questions/urls.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index questions/urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree 136491985f321ded92647778321db8b1f91e87a4 -p 0f60ad1c5d7845ccd2edb4803c0c99cbfde5c7ad
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree 136491985f321ded92647778321db8b1f91e87a4 -p 0f60ad1c5d7845ccd2edb4803c0c99cbfde5c7ad ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 194a84b4559449f0b0e3e9cc9e7026392822c0af 0f60ad1c5d7845ccd2edb4803c0c99cbfde5c7ad
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD 194a84b4559449f0b0e3e9cc9e7026392822c0af 0f60ad1c5d7845ccd2edb4803c0c99cbfde5c7ad ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #8
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090916010046-ftsk7rd5eahmoqib" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 02:00:46.344000+01:00
+2009-11-29 22:15:47     INFO: Log message: Added a template tag to allow us to differentiate between Admin/Tutors/Students on the site.
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090916010046-ftsk7rd5eahmoqib
+Date: 2009-09-16 02:00:46.344000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/templatetags[DIR](ADD)
+	 core/templatetags/__init__.py(ADD)
+	 core/templatetags/spenglr_core_tags.py(ADD)
+Log: Added a template tag to allow us to differentiate between Admin/Tutors/Students on the site.
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090916010046-ftsk7rd5eahmoqib', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index --add core/templatetags/__init__.py core/templatetags/spenglr_core_tags.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index --add core/templatetags/__init__.py core/templatetags/spenglr_core_tags.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree de021474e7b93602018d495a64b46079672850b0 -p 194a84b4559449f0b0e3e9cc9e7026392822c0af
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree de021474e7b93602018d495a64b46079672850b0 -p 194a84b4559449f0b0e3e9cc9e7026392822c0af ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD d80d0e12e0870572d91df7cc375fa98875ec8f72 194a84b4559449f0b0e3e9cc9e7026392822c0af
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD d80d0e12e0870572d91df7cc375fa98875ec8f72 194a84b4559449f0b0e3e9cc9e7026392822c0af ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #9
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090916013421-x14f8lmvavsgnqp3" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 02:34:21.155000+01:00
+2009-11-29 22:15:47     INFO: Log message: Random question ordering (start of the question set view).
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090916013421-x14f8lmvavsgnqp3
+Date: 2009-09-16 02:34:21.155000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/urls.py(UPD)
+	 questions/views.py(UPD)
+Log: Random question ordering (start of the question set view).
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090916013421-x14f8lmvavsgnqp3', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index questions/urls.py questions/views.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index questions/urls.py questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree 39796ca6d395559f3001a573f13b4ac38fe01837 -p d80d0e12e0870572d91df7cc375fa98875ec8f72
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree 39796ca6d395559f3001a573f13b4ac38fe01837 -p d80d0e12e0870572d91df7cc375fa98875ec8f72 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD b3b8aee0c7ebcc1154060f185be974046c0d1705 d80d0e12e0870572d91df7cc375fa98875ec8f72
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD b3b8aee0c7ebcc1154060f185be974046c0d1705 d80d0e12e0870572d91df7cc375fa98875ec8f72 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #10
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090916015819-a6g1zn7gp79uunsr" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 02:58:19.561000+01:00
+2009-11-29 22:15:47     INFO: Log message: Added answers_shuffled method to the Question model allowing answer order to be randomised as needed.
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090916015819-a6g1zn7gp79uunsr
+Date: 2009-09-16 02:58:19.561000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/models.py(UPD)
+Log: Added answers_shuffled method to the Question model allowing answer order to be randomised as needed.
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090916015819-a6g1zn7gp79uunsr', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index questions/models.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index questions/models.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree b3990b9af4175b3edc95e46b3d86606b96835240 -p b3b8aee0c7ebcc1154060f185be974046c0d1705
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree b3990b9af4175b3edc95e46b3d86606b96835240 -p b3b8aee0c7ebcc1154060f185be974046c0d1705 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 549dfd53039e6b2268087ca79e391479a48d40de b3b8aee0c7ebcc1154060f185be974046c0d1705
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD 549dfd53039e6b2268087ca79e391479a48d40de b3b8aee0c7ebcc1154060f185be974046c0d1705 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #11
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090916090305-up0g1zsoqmxkf520" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 10:03:05.422000+01:00
+2009-11-29 22:15:47     INFO: Log message: Rearrangment to start work on two-site system, splitting url definitions out into spenglrcom and spenglrorg folders.
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090916090305-up0g1zsoqmxkf520
+Date: 2009-09-16 10:03:05.422000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: resources[DIR](ADD)
+	 resources/__init__.py(ADD)
+	 resources/admin.py(ADD)
+	 resources/models.py(ADD)
+	 resources/tests.py(ADD)
+	 resources/urls.py(ADD)
+	 resources/views.py(ADD)
+	 study/__init__.py(DEL)
+	 study/admin.py(DEL)
+	 study/models.py(DEL)
+	 study/tests.py(DEL)
+	 study/urls.py(DEL)
+	 study/views.py(DEL)
+	 study[DIR](DEL)
+	 urls.py(DEL)
+	 core/views.py(UPD)
+	 education/models.py(UPD)
+	 questions/admin.py(UPD)
+	 questions/models.py(UPD)
+	 questions/urls.py(UPD)
+	 settings.py(UPD)
+Log: Rearrangment to start work on two-site system, splitting url definitions out into spenglrcom and spenglrorg folders. 
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090916090305-up0g1zsoqmxkf520', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index --add resources/__init__.py resources/admin.py resources/models.py resources/tests.py resources/urls.py resources/views.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index --add resources/__init__.py resources/admin.py resources/models.py resources/tests.py resources/urls.py resources/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study/__init__.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study/admin.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study/models.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study/tests.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study/urls.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study/views.py'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'study'
+2009-11-29 22:15:47  WARNING: Ignoring deletion of non existing 'urls.py'
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index core/views.py education/models.py questions/admin.py questions/models.py questions/urls.py settings.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index core/views.py education/models.py questions/admin.py questions/models.py questions/urls.py settings.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree 80fc629cf3992eee11f6f1071a113dc0335e68d7 -p 549dfd53039e6b2268087ca79e391479a48d40de
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree 80fc629cf3992eee11f6f1071a113dc0335e68d7 -p 549dfd53039e6b2268087ca79e391479a48d40de ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 4d94c281663317aaaa48bccd7d170bd8e7050b32 549dfd53039e6b2268087ca79e391479a48d40de
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD 4d94c281663317aaaa48bccd7d170bd8e7050b32 549dfd53039e6b2268087ca79e391479a48d40de ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #12
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090916201901-pvobdrpe615i71bw" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 21:19:01.217000+01:00
+2009-11-29 22:15:47     INFO: Log message: .
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090916201901-pvobdrpe615i71bw
+Date: 2009-09-16 21:19:01.217000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/urls.py(UPD)
+	 questions/views.py(UPD)
+Log: .
+
+2009-11-29 22:15:47     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090916201901-pvobdrpe615i71bw', applied 1 changesets
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-index education/urls.py questions/views.py
+2009-11-29 22:15:47    DEBUG: Executing  git update-index education/urls.py questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:47    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:47    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:47    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:47    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git commit-tree b825b9f0ea6d9c35a3a9c51317b46a522a1274b1 -p 4d94c281663317aaaa48bccd7d170bd8e7050b32
+2009-11-29 22:15:47    DEBUG: Executing  git commit-tree b825b9f0ea6d9c35a3a9c51317b46a522a1274b1 -p 4d94c281663317aaaa48bccd7d170bd8e7050b32 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD e17893faaca9b134723e350d64a811c43c56036b 4d94c281663317aaaa48bccd7d170bd8e7050b32
+2009-11-29 22:15:47    DEBUG: Executing  git update-ref HEAD e17893faaca9b134723e350d64a811c43c56036b 4d94c281663317aaaa48bccd7d170bd8e7050b32 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:47     INFO: [Ok]
+2009-11-29 22:15:47     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:47     INFO: Changeset #13
+2009-11-29 22:15:47     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090916203940-niqsteqlsez4fwk1" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-16 21:39:40.306000+01:00
+2009-11-29 22:15:47     INFO: Log message: Can now answer questions (previous commit) and gives a summary output of performance (this commit).
+2009-11-29 22:15:47    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090916203940-niqsteqlsez4fwk1
+Date: 2009-09-16 21:39:40.306000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/views.py(UPD)
+Log: Can now answer questions (previous commit) and gives a summary output of performance (this commit).
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090916203940-niqsteqlsez4fwk1', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index questions/views.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree 634b7809c19c4a869dda255251ed3e42c60273ac -p e17893faaca9b134723e350d64a811c43c56036b
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree 634b7809c19c4a869dda255251ed3e42c60273ac -p e17893faaca9b134723e350d64a811c43c56036b ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 0f583ff0f175d386ceb0fae856702fdb63511dca e17893faaca9b134723e350d64a811c43c56036b
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD 0f583ff0f175d386ceb0fae856702fdb63511dca e17893faaca9b134723e350d64a811c43c56036b ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #14
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090917204938-vgwgdurwnn9sn6ip" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-17 21:49:38.288000+01:00
+2009-11-29 22:15:48     INFO: Log message: .
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090917204938-vgwgdurwnn9sn6ip
+Date: 2009-09-17 21:49:38.288000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/views.py(UPD)
+	 education/admin.py(UPD)
+	 education/models.py(UPD)
+	 settings.py(UPD)
+Log: .
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090917204938-vgwgdurwnn9sn6ip', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index core/views.py education/admin.py education/models.py settings.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index core/views.py education/admin.py education/models.py settings.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree 1d9fb65a862f3eab32644cf1abaae6033f69e429 -p 0f583ff0f175d386ceb0fae856702fdb63511dca
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree 1d9fb65a862f3eab32644cf1abaae6033f69e429 -p 0f583ff0f175d386ceb0fae856702fdb63511dca ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 8226c6aca750b21ad744336b2d5408e9ba5f08cd 0f583ff0f175d386ceb0fae856702fdb63511dca
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD 8226c6aca750b21ad744336b2d5408e9ba5f08cd 0f583ff0f175d386ceb0fae856702fdb63511dca ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #15
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20090917204950-wod7s3yl3dv9u61r" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-09-17 21:49:50.589000+01:00
+2009-11-29 22:15:48     INFO: Log message: Notification feed system, based on django-threadedcomments using django comments model backen.
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20090917204950-wod7s3yl3dv9u61r
+Date: 2009-09-17 21:49:50.589000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: notify[DIR](ADD)
+	 notify/__init__.py(ADD)
+	 notify/fixtures[DIR](ADD)
+	 notify/fixtures/simple_tree.json(ADD)
+	 notify/forms.py(ADD)
+	 notify/models.py(ADD)
+	 notify/templates[DIR](ADD)
+	 notify/templates/sample_tree.html(ADD)
+	 notify/templatetags[DIR](ADD)
+	 notify/templatetags/__init__.py(ADD)
+	 notify/templatetags/threadedcomments_tags.py(ADD)
+	 notify/tests.py(ADD)
+	 notify/util.py(ADD)
+Log: Notification feed system, based on django-threadedcomments using django comments model backen.
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20090917204950-wod7s3yl3dv9u61r', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index --add notify/__init__.py notify/fixtures/simple_tree.json notify/forms.py notify/models.py notify/templates/sample_tree.html notify/templatetags/__init__.py notify/templatetags/threadedcomments_tags.py notify/tests.py notify/util.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index --add notify/__init__.py notify/fixtures/simple_tree.json notify/forms.py notify/models.py notify/templates/sample_tree.html notify/templatetags/__init__.py notify/templatetags/threadedcomments_tags.py notify/tests.py notify/util.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree fe4623610c18340243f26766bf5056464b910ec2 -p 8226c6aca750b21ad744336b2d5408e9ba5f08cd
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree fe4623610c18340243f26766bf5056464b910ec2 -p 8226c6aca750b21ad744336b2d5408e9ba5f08cd ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 1129878da26d48203dedfd178048126996cf012e 8226c6aca750b21ad744336b2d5408e9ba5f08cd
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD 1129878da26d48203dedfd178048126996cf012e 8226c6aca750b21ad744336b2d5408e9ba5f08cd ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #16
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091014000026-ru30lj5snw52uzcd" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-10-14 01:00:26.294000+01:00
+2009-11-29 22:15:48     INFO: Log message: Recombination of org/com.
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091014000026-ru30lj5snw52uzcd
+Date: 2009-10-14 01:00:26.294000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: .bzrignore(ADD)
+	 core/templatetags/spenglr_core_tags.py(UPD)
+	 core/views.py(UPD)
+	 education/admin.py(UPD)
+	 education/models.py(UPD)
+	 education/urls.py(UPD)
+	 education/views.py(UPD)
+	 questions/models.py(UPD)
+	 questions/urls.py(UPD)
+	 questions/views.py(UPD)
+	 settings.py(UPD)
+Log: Recombination of org/com.
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091014000026-ru30lj5snw52uzcd', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index --add .bzrignore
+2009-11-29 22:15:48    DEBUG: Executing  git update-index --add .bzrignore ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index core/templatetags/spenglr_core_tags.py core/views.py education/admin.py education/models.py education/urls.py education/views.py questions/models.py questions/urls.py questions/views.py settings.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index core/templatetags/spenglr_core_tags.py core/views.py education/admin.py education/models.py education/urls.py education/views.py questions/models.py questions/urls.py questions/views.py settings.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree 6a4ca5fe7a29da023fe36243d79dd4b068c1285a -p 1129878da26d48203dedfd178048126996cf012e
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree 6a4ca5fe7a29da023fe36243d79dd4b068c1285a -p 1129878da26d48203dedfd178048126996cf012e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 0e8d601a0271c70b77f4eaf9c617b6e820f6935d 1129878da26d48203dedfd178048126996cf012e
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD 0e8d601a0271c70b77f4eaf9c617b6e820f6935d 1129878da26d48203dedfd178048126996cf012e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #17
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091014000042-j0lyo1j9uns9mfq4" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-10-14 01:00:42.352000+01:00
+2009-11-29 22:15:48     INFO: Log message: Institutions are now 'networks' to be more general purpose.
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091014000042-j0lyo1j9uns9mfq4
+Date: 2009-10-14 01:00:42.352000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/forms.py(ADD)
+	 network[DIR](ADD)
+	 network/__init__.py(ADD)
+	 network/admin.py(ADD)
+	 network/forms.py(ADD)
+	 network/models.py(ADD)
+	 network/urls.py(ADD)
+	 network/views.py(ADD)
+	 urls.py(ADD)
+Log: Institutions are now 'networks' to be more general purpose.
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091014000042-j0lyo1j9uns9mfq4', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index --add education/forms.py network/__init__.py network/admin.py network/forms.py network/models.py network/urls.py network/views.py urls.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index --add education/forms.py network/__init__.py network/admin.py network/forms.py network/models.py network/urls.py network/views.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree 5a497e8c9408518ed5add25dfc7502beb489a1d3 -p 0e8d601a0271c70b77f4eaf9c617b6e820f6935d
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree 5a497e8c9408518ed5add25dfc7502beb489a1d3 -p 0e8d601a0271c70b77f4eaf9c617b6e820f6935d ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 56e1781ba41685f67e04f8761e3e787fb1612a6f 0e8d601a0271c70b77f4eaf9c617b6e820f6935d
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD 56e1781ba41685f67e04f8761e3e787fb1612a6f 0e8d601a0271c70b77f4eaf9c617b6e820f6935d ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #18
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091014191352-21j9l8n5kpg0xdsb" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-10-14 20:13:52.636000+01:00
+2009-11-29 22:15:48     INFO: Log message: .
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091014191352-21j9l8n5kpg0xdsb
+Date: 2009-10-14 20:13:52.636000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: network/models.py(UPD)
+Log: .
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091014191352-21j9l8n5kpg0xdsb', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index network/models.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index network/models.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree df82b5f5e3e97fcd4a8525b85bfe61789be3a351 -p 56e1781ba41685f67e04f8761e3e787fb1612a6f
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree df82b5f5e3e97fcd4a8525b85bfe61789be3a351 -p 56e1781ba41685f67e04f8761e3e787fb1612a6f ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 1041cfd6448310d54ab88a45e5dffd2211df4134 56e1781ba41685f67e04f8761e3e787fb1612a6f
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD 1041cfd6448310d54ab88a45e5dffd2211df4134 56e1781ba41685f67e04f8761e3e787fb1612a6f ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #19
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091022181258-gfb6mre3k1gwtugk" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-10-22 19:12:58.541000+01:00
+2009-11-29 22:15:48     INFO: Log message: Refactoring 'network' back into the education tree as it makes a bit more sense there. 
+Structure finalised allowing for contextual posting of messages (to be implemented).
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091022181258-gfb6mre3k1gwtugk
+Date: 2009-10-22 19:12:58.541000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: network/__init__.py(DEL)
+	 network/admin.py(DEL)
+	 network/forms.py(DEL)
+	 network/models.py(DEL)
+	 network/urls.py(DEL)
+	 network/views.py(DEL)
+	 network[DIR](DEL)
+	 .directory(UPD)
+	 education/admin.py(UPD)
+	 education/forms.py(UPD)
+	 education/models.py(UPD)
+	 education/urls.py(UPD)
+	 education/views.py(UPD)
+	 questions/models.py(UPD)
+	 questions/urls.py(UPD)
+	 questions/views.py(UPD)
+	 settings.py(UPD)
+	 urls.py(UPD)
+Log: Refactoring 'network' back into the education tree as it makes a bit more sense there. 
+Structure finalised allowing for contextual posting of messages (to be implemented).
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091022181258-gfb6mre3k1gwtugk', applied 1 changesets
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network/__init__.py'
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network/admin.py'
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network/forms.py'
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network/models.py'
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network/urls.py'
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network/views.py'
+2009-11-29 22:15:48  WARNING: Ignoring deletion of non existing 'network'
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index .directory education/admin.py education/forms.py education/models.py education/urls.py education/views.py questions/models.py questions/urls.py questions/views.py settings.py urls.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index .directory education/admin.py education/forms.py education/models.py education/urls.py education/views.py questions/models.py questions/urls.py questions/views.py settings.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree a036df184f31f0c6d48fe219a92a1af782c74e14 -p 1041cfd6448310d54ab88a45e5dffd2211df4134
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree a036df184f31f0c6d48fe219a92a1af782c74e14 -p 1041cfd6448310d54ab88a45e5dffd2211df4134 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD bec91770b8c77f8bfe17831582b90f0d964c2214 1041cfd6448310d54ab88a45e5dffd2211df4134
+2009-11-29 22:15:48    DEBUG: Executing  git update-ref HEAD bec91770b8c77f8bfe17831582b90f0d964c2214 1041cfd6448310d54ab88a45e5dffd2211df4134 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:48     INFO: Changeset #20
+2009-11-29 22:15:48     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091024003306-mqhayazbculernrj" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-10-24 01:33:06.735000+01:00
+2009-11-29 22:15:48     INFO: Log message: .
+2009-11-29 22:15:48    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091024003306-mqhayazbculernrj
+Date: 2009-10-24 01:33:06.735000+01:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/models.py(UPD)
+	 education/urls.py(UPD)
+	 education/views.py(UPD)
+	 questions/urls.py(UPD)
+	 questions/views.py(UPD)
+Log: .
+
+2009-11-29 22:15:48     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091024003306-mqhayazbculernrj', applied 1 changesets
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py education/urls.py education/views.py questions/urls.py questions/views.py
+2009-11-29 22:15:48    DEBUG: Executing  git update-index education/models.py education/urls.py education/views.py questions/urls.py questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:48    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:48    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:48    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:48    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:48     INFO: [Ok]
+2009-11-29 22:15:48     INFO: /home/martin/spenglr/spenglr $ git commit-tree dd4d1e2f5f5042b18dba2cd3b3d176e1511ad935 -p bec91770b8c77f8bfe17831582b90f0d964c2214
+2009-11-29 22:15:48    DEBUG: Executing  git commit-tree dd4d1e2f5f5042b18dba2cd3b3d176e1511ad935 -p bec91770b8c77f8bfe17831582b90f0d964c2214 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 7058263dbbb99662fb1ba4ddf8f7e2e20883803d bec91770b8c77f8bfe17831582b90f0d964c2214
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD 7058263dbbb99662fb1ba4ddf8f7e2e20883803d bec91770b8c77f8bfe17831582b90f0d964c2214 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #21
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091119015329-fagdkq43h4fqqe0p" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-19 01:53:29.767000+00:00
+2009-11-29 22:15:49     INFO: Log message: Restructuring to 'instance' arrangement.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091119015329-fagdkq43h4fqqe0p
+Date: 2009-11-19 01:53:29.767000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/views.py(UPD)
+	 education/admin.py(UPD)
+	 education/forms.py(UPD)
+	 education/models.py(UPD)
+	 education/urls.py(UPD)
+	 education/views.py(UPD)
+	 questions/urls.py(UPD)
+	 questions/views.py(UPD)
+	 settings.py(UPD)
+	 urls.py(UPD)
+Log: Restructuring to 'instance' arrangement.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091119015329-fagdkq43h4fqqe0p', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index core/views.py education/admin.py education/forms.py education/models.py education/urls.py education/views.py questions/urls.py questions/views.py settings.py urls.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index core/views.py education/admin.py education/forms.py education/models.py education/urls.py education/views.py questions/urls.py questions/views.py settings.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree 07f1c5191bafad340fb7f85d7985dd03377102a2 -p 7058263dbbb99662fb1ba4ddf8f7e2e20883803d
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree 07f1c5191bafad340fb7f85d7985dd03377102a2 -p 7058263dbbb99662fb1ba4ddf8f7e2e20883803d ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD ab8df949961bb6ea48218b4e87abfbdcdba9c654 7058263dbbb99662fb1ba4ddf8f7e2e20883803d
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD ab8df949961bb6ea48218b4e87abfbdcdba9c654 7058263dbbb99662fb1ba4ddf8f7e2e20883803d ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #22
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091119015353-6maz68481d5ge5xc" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-19 01:53:53.274000+00:00
+2009-11-29 22:15:49     INFO: Log message: Network moved back out (yawn) to keep it tidy/logical and make the paths nicer.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091119015353-6maz68481d5ge5xc
+Date: 2009-11-19 01:53:53.274000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: network[DIR](ADD)
+	 network/__init__.py(ADD)
+	 network/admin.py(ADD)
+	 network/forms.py(ADD)
+	 network/models.py(ADD)
+	 network/tests.py(ADD)
+	 network/urls.py(ADD)
+	 network/views.py(ADD)
+Log: Network moved back out (yawn) to keep it tidy/logical and make the paths nicer.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091119015353-6maz68481d5ge5xc', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index --add network/__init__.py network/admin.py network/forms.py network/models.py network/tests.py network/urls.py network/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index --add network/__init__.py network/admin.py network/forms.py network/models.py network/tests.py network/urls.py network/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree c9d3ca82e67cf00851b08623de9ffe86f86dfe43 -p ab8df949961bb6ea48218b4e87abfbdcdba9c654
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree c9d3ca82e67cf00851b08623de9ffe86f86dfe43 -p ab8df949961bb6ea48218b4e87abfbdcdba9c654 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 62a0c2f6fd236c9eef6c4b4a99bdde28a93521e2 ab8df949961bb6ea48218b4e87abfbdcdba9c654
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD 62a0c2f6fd236c9eef6c4b4a99bdde28a93521e2 ab8df949961bb6ea48218b4e87abfbdcdba9c654 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #23
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091119194910-ymi24o8pm0kax2ro" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-19 19:49:10.728000+00:00
+2009-11-29 22:15:49     INFO: Log message: Fixes of education/network system to new structures, nearly all working.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091119194910-ymi24o8pm0kax2ro
+Date: 2009-11-19 19:49:10.728000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/models.py(UPD)
+	 education/urls.py(UPD)
+	 education/views.py(UPD)
+	 network/views.py(UPD)
+Log: Fixes of education/network system to new structures, nearly all working.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091119194910-ymi24o8pm0kax2ro', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py education/urls.py education/views.py network/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index education/models.py education/urls.py education/views.py network/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree 76e8740a3f2160ca07983b27cd41d744828e2aff -p 62a0c2f6fd236c9eef6c4b4a99bdde28a93521e2
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree 76e8740a3f2160ca07983b27cd41d744828e2aff -p 62a0c2f6fd236c9eef6c4b4a99bdde28a93521e2 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD a46e7937283fe8fc2d61894c9e4e7290cab6305f 62a0c2f6fd236c9eef6c4b4a99bdde28a93521e2
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD a46e7937283fe8fc2d61894c9e4e7290cab6305f 62a0c2f6fd236c9eef6c4b4a99bdde28a93521e2 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #24
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091119224917-o2yq1cogvmv10cr1" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-19 22:49:17.227000+00:00
+2009-11-29 22:15:49     INFO: Log message: Fixes to education,module (non instanced) view.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091119224917-o2yq1cogvmv10cr1
+Date: 2009-11-19 22:49:17.227000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/views.py(UPD)
+Log: Fixes to education,module (non instanced) view.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091119224917-o2yq1cogvmv10cr1', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index education/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index education/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree cd6229ed19e1a24298654a2ca91cbfcdb135b1fd -p a46e7937283fe8fc2d61894c9e4e7290cab6305f
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree cd6229ed19e1a24298654a2ca91cbfcdb135b1fd -p a46e7937283fe8fc2d61894c9e4e7290cab6305f ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD f175802a6ef7189f9a9b5ebcd6871fadb0695828 a46e7937283fe8fc2d61894c9e4e7290cab6305f
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD f175802a6ef7189f9a9b5ebcd6871fadb0695828 a46e7937283fe8fc2d61894c9e4e7290cab6305f ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #25
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091119232204-bnuso66nla615dtz" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-19 23:22:04.539000+00:00
+2009-11-29 22:15:49     INFO: Log message: Fixed question viewing/answering.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091119232204-bnuso66nla615dtz
+Date: 2009-11-19 23:22:04.539000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/urls.py(UPD)
+	 questions/views.py(UPD)
+Log: Fixed question viewing/answering.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091119232204-bnuso66nla615dtz', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index questions/urls.py questions/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index questions/urls.py questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree 7a13a5703bb74a3ee3680f1c12d09c88bd9123af -p f175802a6ef7189f9a9b5ebcd6871fadb0695828
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree 7a13a5703bb74a3ee3680f1c12d09c88bd9123af -p f175802a6ef7189f9a9b5ebcd6871fadb0695828 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 3d32d6dcdf7ecaace07726c75169c09ed444b7cb f175802a6ef7189f9a9b5ebcd6871fadb0695828
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD 3d32d6dcdf7ecaace07726c75169c09ed444b7cb f175802a6ef7189f9a9b5ebcd6871fadb0695828 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #26
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091119232458-7tob2nbmpwnowonx" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-19 23:24:58.006000+00:00
+2009-11-29 22:15:49     INFO: Log message: Final fixes, module latest question view listing.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091119232458-7tob2nbmpwnowonx
+Date: 2009-11-19 23:24:58.006000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: questions/views.py(UPD)
+Log: Final fixes, module latest question view listing.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091119232458-7tob2nbmpwnowonx', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index questions/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree 550f2e07fef19ff4331117d105e457df6ba27069 -p 3d32d6dcdf7ecaace07726c75169c09ed444b7cb
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree 550f2e07fef19ff4331117d105e457df6ba27069 -p 3d32d6dcdf7ecaace07726c75169c09ed444b7cb ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 8ef66f1f835eb2d3a1ec06b428c92d1923728955 3d32d6dcdf7ecaace07726c75169c09ed444b7cb
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD 8ef66f1f835eb2d3a1ec06b428c92d1923728955 3d32d6dcdf7ecaace07726c75169c09ed444b7cb ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #27
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091120220219-kyk4cc1iissp3ims" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-20 22:02:19.348000+00:00
+2009-11-29 22:15:49     INFO: Log message: Small modifications to suit incoming data.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091120220219-kyk4cc1iissp3ims
+Date: 2009-11-20 22:02:19.348000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/models.py(UPD)
+	 education/views.py(UPD)
+	 network/models.py(UPD)
+	 network/views.py(UPD)
+	 questions/views.py(UPD)
+Log: Small modifications to suit incoming data.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091120220219-kyk4cc1iissp3ims', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py education/views.py network/models.py network/views.py questions/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index education/models.py education/views.py network/models.py network/views.py questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree 8eaa4457210c10ed738710d9a2f3b4191d6c23fd -p 8ef66f1f835eb2d3a1ec06b428c92d1923728955
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree 8eaa4457210c10ed738710d9a2f3b4191d6c23fd -p 8ef66f1f835eb2d3a1ec06b428c92d1923728955 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD a7804ff5fdfd596424419caf007db41d03775d0e 8ef66f1f835eb2d3a1ec06b428c92d1923728955
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD a7804ff5fdfd596424419caf007db41d03775d0e 8ef66f1f835eb2d3a1ec06b428c92d1923728955 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #28
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091122013000-wz2ae5qjjg9y6la7" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-22 01:30:00.669000+00:00
+2009-11-29 22:15:49     INFO: Log message: Fix registration.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091122013000-wz2ae5qjjg9y6la7
+Date: 2009-11-22 01:30:00.669000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/urls.py(UPD)
+	 education/views.py(UPD)
+Log: Fix registration.
+
+2009-11-29 22:15:49     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091122013000-wz2ae5qjjg9y6la7', applied 1 changesets
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-index education/urls.py education/views.py
+2009-11-29 22:15:49    DEBUG: Executing  git update-index education/urls.py education/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:49    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:49    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:49    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:49    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git commit-tree 9156cded40a12ab28c08ce89adf83de6e177c367 -p a7804ff5fdfd596424419caf007db41d03775d0e
+2009-11-29 22:15:49    DEBUG: Executing  git commit-tree 9156cded40a12ab28c08ce89adf83de6e177c367 -p a7804ff5fdfd596424419caf007db41d03775d0e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 47092e322173424c3f28d6170b2ae0fa70ab33e7 a7804ff5fdfd596424419caf007db41d03775d0e
+2009-11-29 22:15:49    DEBUG: Executing  git update-ref HEAD 47092e322173424c3f28d6170b2ae0fa70ab33e7 a7804ff5fdfd596424419caf007db41d03775d0e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:49     INFO: [Ok]
+2009-11-29 22:15:49     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:49     INFO: Changeset #29
+2009-11-29 22:15:49     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091122021831-3q8pf2v6v0n7clh4" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-22 02:18:31.425000+00:00
+2009-11-29 22:15:49     INFO: Log message: Course/module active status fix.
+2009-11-29 22:15:49    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091122021831-3q8pf2v6v0n7clh4
+Date: 2009-11-22 02:18:31.425000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/models.py(UPD)
+Log: Course/module active status fix.
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091122021831-3q8pf2v6v0n7clh4', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index education/models.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree cf6d36fa94835305a0e8e99590f7d7e375b3edbc -p 47092e322173424c3f28d6170b2ae0fa70ab33e7
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree cf6d36fa94835305a0e8e99590f7d7e375b3edbc -p 47092e322173424c3f28d6170b2ae0fa70ab33e7 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 942416bf103ca53c07487ebee1688d91018c5525 47092e322173424c3f28d6170b2ae0fa70ab33e7
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD 942416bf103ca53c07487ebee1688d91018c5525 47092e322173424c3f28d6170b2ae0fa70ab33e7 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #30
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091124013951-558ho0tufyk1upki" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-24 01:39:51.612000+00:00
+2009-11-29 22:15:50     INFO: Log message: SQ implementation (conversion of previous code php > python)
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091124013951-558ho0tufyk1upki
+Date: 2009-11-24 01:39:51.612000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: sq[DIR](ADD)
+	 sq/__init__.py(ADD)
+	 sq/templatetags[DIR](ADD)
+	 sq/templatetags/__init__.py(ADD)
+	 sq/templatetags/spenglr_sq_tags.py(ADD)
+	 sq/utils.py(ADD)
+	 education/models.py(UPD)
+	 education/views.py(UPD)
+	 network/models.py(UPD)
+	 network/views.py(UPD)
+	 questions/models.py(UPD)
+	 questions/views.py(UPD)
+	 settings.py(UPD)
+	 urls.py(UPD)
+Log: SQ implementation (conversion of previous code php > python)
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091124013951-558ho0tufyk1upki', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index --add sq/__init__.py sq/templatetags/__init__.py sq/templatetags/spenglr_sq_tags.py sq/utils.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index --add sq/__init__.py sq/templatetags/__init__.py sq/templatetags/spenglr_sq_tags.py sq/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py education/views.py network/models.py network/views.py questions/models.py questions/views.py settings.py urls.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index education/models.py education/views.py network/models.py network/views.py questions/models.py questions/views.py settings.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree 14502326d481d90064490dfd5608976ceb3baa43 -p 942416bf103ca53c07487ebee1688d91018c5525
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree 14502326d481d90064490dfd5608976ceb3baa43 -p 942416bf103ca53c07487ebee1688d91018c5525 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 6aee9a0819644557d6a31dcbdf2d5e3a16cd8bf2 942416bf103ca53c07487ebee1688d91018c5525
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD 6aee9a0819644557d6a31dcbdf2d5e3a16cd8bf2 942416bf103ca53c07487ebee1688d91018c5525 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #31
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091124155720-uwu46nktnaf8y1dj" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-24 15:57:20.790000+00:00
+2009-11-29 22:15:50     INFO: Log message: Cron implementation, call from command line 'python cron.py' to trigger it. Currently recalculates the SQ values for 20 recently answered questions (via SQ app).
+Updates to questions models for difficulty ratings etc.
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091124155720-uwu46nktnaf8y1dj
+Date: 2009-11-24 15:57:20.790000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: cron.py(ADD)
+	 questions/utils.py(ADD)
+	 questions/models.py(UPD)
+	 questions/views.py(UPD)
+	 settings.py(UPD)
+	 sq/templatetags/spenglr_sq_tags.py(UPD)
+	 sq/utils.py(UPD)
+Log: Cron implementation, call from command line 'python cron.py' to trigger it. Currently recalculates the SQ values for 20 recently answered questions (via SQ app).
+Updates to questions models for difficulty ratings etc.
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091124155720-uwu46nktnaf8y1dj', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index --add cron.py questions/utils.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index --add cron.py questions/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index questions/models.py questions/views.py settings.py sq/templatetags/spenglr_sq_tags.py sq/utils.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index questions/models.py questions/views.py settings.py sq/templatetags/spenglr_sq_tags.py sq/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree f3f2aa855eb9a4405567d385e187447a98e5573a -p 6aee9a0819644557d6a31dcbdf2d5e3a16cd8bf2
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree f3f2aa855eb9a4405567d385e187447a98e5573a -p 6aee9a0819644557d6a31dcbdf2d5e3a16cd8bf2 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 032442b55098aff694c661dab27ad3edeecf9b9e 6aee9a0819644557d6a31dcbdf2d5e3a16cd8bf2
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD 032442b55098aff694c661dab27ad3edeecf9b9e 6aee9a0819644557d6a31dcbdf2d5e3a16cd8bf2 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #32
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126001957-06i1xmcb8miiehog" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 00:19:57.241000+00:00
+2009-11-29 22:15:50     INFO: Log message: SQ calculation
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126001957-06i1xmcb8miiehog
+Date: 2009-11-26 00:19:57.241000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/models.py(UPD)
+	 questions/models.py(UPD)
+Log: SQ calculation
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126001957-06i1xmcb8miiehog', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py questions/models.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index education/models.py questions/models.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree d109342ea44597073104b383f744c0a2856b9991 -p 032442b55098aff694c661dab27ad3edeecf9b9e
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree d109342ea44597073104b383f744c0a2856b9991 -p 032442b55098aff694c661dab27ad3edeecf9b9e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 159f66cc69f2973fa48e1bd0069ded571959351e 032442b55098aff694c661dab27ad3edeecf9b9e
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD 159f66cc69f2973fa48e1bd0069ded571959351e 032442b55098aff694c661dab27ad3edeecf9b9e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #33
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126004333-a836h3n78u4a5rni" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 00:43:33.912000+00:00
+2009-11-29 22:15:50     INFO: Log message: Course & module SQ values (calculated from question averages, simple). Cron updates 100 random, needs fixing to flag,timestamp for updating.
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126004333-a836h3n78u4a5rni
+Date: 2009-11-26 00:43:33.912000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: cron.py(UPD)
+	 education/models.py(UPD)
+	 questions/models.py(UPD)
+	 questions/utils.py(UPD)
+Log: Course & module SQ values (calculated from question averages, simple). Cron updates 100 random, needs fixing to flag,timestamp for updating.
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126004333-a836h3n78u4a5rni', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index cron.py education/models.py questions/models.py questions/utils.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index cron.py education/models.py questions/models.py questions/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree df72a66cfed2eb03b8b07db8d9448d69719361e4 -p 159f66cc69f2973fa48e1bd0069ded571959351e
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree df72a66cfed2eb03b8b07db8d9448d69719361e4 -p 159f66cc69f2973fa48e1bd0069ded571959351e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 1548395cba41f48a4018e2152438aac91fa78f0f 159f66cc69f2973fa48e1bd0069ded571959351e
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD 1548395cba41f48a4018e2152438aac91fa78f0f 159f66cc69f2973fa48e1bd0069ded571959351e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #34
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126011842-c36uk26y424rrb1t" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 01:18:42.634000+00:00
+2009-11-29 22:15:50     INFO: Log message: Network sq values, needs user profile to calculate.
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126011842-c36uk26y424rrb1t
+Date: 2009-11-26 01:18:42.634000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: network/models.py(UPD)
+	 sq/templatetags/spenglr_sq_tags.py(UPD)
+Log: Network sq values, needs user profile to calculate.
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126011842-c36uk26y424rrb1t', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index network/models.py sq/templatetags/spenglr_sq_tags.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index network/models.py sq/templatetags/spenglr_sq_tags.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree 49a31c4671fe7d86dd4b9a5008dfa2aa1403e3fe -p 1548395cba41f48a4018e2152438aac91fa78f0f
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree 49a31c4671fe7d86dd4b9a5008dfa2aa1403e3fe -p 1548395cba41f48a4018e2152438aac91fa78f0f ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD fdb9467de03aa5ae80b6c979d89345a0c2194766 1548395cba41f48a4018e2152438aac91fa78f0f
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD fdb9467de03aa5ae80b6c979d89345a0c2194766 1548395cba41f48a4018e2152438aac91fa78f0f ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #35
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126121709-oeya1ax3jnakqvtz" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 12:17:09.862000+00:00
+2009-11-29 22:15:50     INFO: Log message: Additional SQ calculations - now works for usercourse, usermodule, course, module models (user/profile remainining).
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126121709-oeya1ax3jnakqvtz
+Date: 2009-11-26 12:17:09.862000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/utils.py(ADD)
+	 education/models.py(UPD)
+	 sq/templatetags/spenglr_sq_tags.py(UPD)
+	 sq/utils.py(UPD)
+Log: Additional SQ calculations - now works for usercourse, usermodule, course, module models (user/profile remainining).
+
+2009-11-29 22:15:50     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126121709-oeya1ax3jnakqvtz', applied 1 changesets
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index --add education/utils.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index --add education/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py sq/templatetags/spenglr_sq_tags.py sq/utils.py
+2009-11-29 22:15:50    DEBUG: Executing  git update-index education/models.py sq/templatetags/spenglr_sq_tags.py sq/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:50    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:50    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:50    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:50    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git commit-tree 07b2d3783de98e2dc9c43b53b07dea9ff4553d85 -p fdb9467de03aa5ae80b6c979d89345a0c2194766
+2009-11-29 22:15:50    DEBUG: Executing  git commit-tree 07b2d3783de98e2dc9c43b53b07dea9ff4553d85 -p fdb9467de03aa5ae80b6c979d89345a0c2194766 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 15d1a85e7d09928c2afce61f197a4a7c2dcf1153 fdb9467de03aa5ae80b6c979d89345a0c2194766
+2009-11-29 22:15:50    DEBUG: Executing  git update-ref HEAD 15d1a85e7d09928c2afce61f197a4a7c2dcf1153 fdb9467de03aa5ae80b6c979d89345a0c2194766 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:50     INFO: [Ok]
+2009-11-29 22:15:50     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:50     INFO: Changeset #36
+2009-11-29 22:15:50     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126134305-gu7hnyrkf4v3fecm" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 13:43:05.172000+00:00
+2009-11-29 22:15:50     INFO: Log message: Updating usercourse/usermodule SQ values on completing questions (needs user.profile.sq to finish).
+2009-11-29 22:15:50    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126134305-gu7hnyrkf4v3fecm
+Date: 2009-11-26 13:43:05.172000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: cron.py(UPD)
+	 education/models.py(UPD)
+	 education/utils.py(UPD)
+	 questions/views.py(UPD)
+Log: Updating usercourse/usermodule SQ values on completing questions (needs user.profile.sq to finish).
+
+2009-11-29 22:15:51     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126134305-gu7hnyrkf4v3fecm', applied 1 changesets
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-index cron.py education/models.py education/utils.py questions/views.py
+2009-11-29 22:15:51    DEBUG: Executing  git update-index cron.py education/models.py education/utils.py questions/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:51    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:51    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:51    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:51    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git commit-tree 0bfa9e7c083be4a3a1e5b72aa0887a91bf5ae902 -p 15d1a85e7d09928c2afce61f197a4a7c2dcf1153
+2009-11-29 22:15:51    DEBUG: Executing  git commit-tree 0bfa9e7c083be4a3a1e5b72aa0887a91bf5ae902 -p 15d1a85e7d09928c2afce61f197a4a7c2dcf1153 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD c17e228981ffb10bb387744eb72800af5c7a2a8e 15d1a85e7d09928c2afce61f197a4a7c2dcf1153
+2009-11-29 22:15:51    DEBUG: Executing  git update-ref HEAD c17e228981ffb10bb387744eb72800af5c7a2a8e 15d1a85e7d09928c2afce61f197a4a7c2dcf1153 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:51     INFO: Changeset #37
+2009-11-29 22:15:51     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126235245-sisez1oepau3nv2l" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 23:52:45.210000+00:00
+2009-11-29 22:15:51     INFO: Log message: Altering paths to move spenglr up to root of app paths, i.e. spenglr.education.views now is education.views - required for the profile code.
+2009-11-29 22:15:51    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126235245-sisez1oepau3nv2l
+Date: 2009-11-26 23:52:45.210000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: core/views.py(UPD)
+	 cron.py(UPD)
+	 education/admin.py(UPD)
+	 education/forms.py(UPD)
+	 education/models.py(UPD)
+	 education/urls.py(UPD)
+	 education/utils.py(UPD)
+	 education/views.py(UPD)
+	 network/admin.py(UPD)
+	 network/forms.py(UPD)
+	 network/urls.py(UPD)
+	 network/views.py(UPD)
+	 questions/admin.py(UPD)
+	 questions/models.py(UPD)
+	 questions/urls.py(UPD)
+	 questions/utils.py(UPD)
+	 questions/views.py(UPD)
+	 resources/admin.py(UPD)
+	 resources/urls.py(UPD)
+	 resources/views.py(UPD)
+	 settings.py(UPD)
+	 urls.py(UPD)
+Log: Altering paths to move spenglr up to root of app paths, i.e. spenglr.education.views now is education.views - required for the profile code.
+
+2009-11-29 22:15:51     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126235245-sisez1oepau3nv2l', applied 1 changesets
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-index core/views.py cron.py education/admin.py education/forms.py education/models.py education/urls.py education/utils.py education/views.py network/admin.py network/forms.py network/urls.py network/views.py questions/admin.py questions/models.py questions/urls.py questions/utils.py questions/views.py resources/admin.py resources/urls.py resources/views.py settings.py urls.py
+2009-11-29 22:15:51    DEBUG: Executing  git update-index core/views.py cron.py education/admin.py education/forms.py education/models.py education/urls.py education/utils.py education/views.py network/admin.py network/forms.py network/urls.py network/views.py questions/admin.py questions/models.py questions/urls.py questions/utils.py questions/views.py resources/admin.py resources/urls.py resources/views.py settings.py urls.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:51    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:51    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:51    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:51    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git commit-tree 3e1ca5ca1d106c218b27d60e9ff54ab4a07f9827 -p c17e228981ffb10bb387744eb72800af5c7a2a8e
+2009-11-29 22:15:51    DEBUG: Executing  git commit-tree 3e1ca5ca1d106c218b27d60e9ff54ab4a07f9827 -p c17e228981ffb10bb387744eb72800af5c7a2a8e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 62bafb80c4714d07894359ee32c79a8fe22947a5 c17e228981ffb10bb387744eb72800af5c7a2a8e
+2009-11-29 22:15:51    DEBUG: Executing  git update-ref HEAD 62bafb80c4714d07894359ee32c79a8fe22947a5 c17e228981ffb10bb387744eb72800af5c7a2a8e ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:51     INFO: Changeset #38
+2009-11-29 22:15:51     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091126235318-puv4vuozf89roj9o" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-26 23:53:18.219000+00:00
+2009-11-29 22:15:51     INFO: Log message: First implementation of the profile code.
+2009-11-29 22:15:51    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091126235318-puv4vuozf89roj9o
+Date: 2009-11-26 23:53:18.219000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: profile[DIR](ADD)
+	 profile/__init__.py(ADD)
+	 profile/admin.py(ADD)
+	 profile/forms.py(ADD)
+	 profile/models.py(ADD)
+	 profile/tests.py(ADD)
+	 profile/urls.py(ADD)
+	 profile/views.py(ADD)
+Log: First implementation of the profile code.
+
+2009-11-29 22:15:51     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091126235318-puv4vuozf89roj9o', applied 1 changesets
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-index --add profile/__init__.py profile/admin.py profile/forms.py profile/models.py profile/tests.py profile/urls.py profile/views.py
+2009-11-29 22:15:51    DEBUG: Executing  git update-index --add profile/__init__.py profile/admin.py profile/forms.py profile/models.py profile/tests.py profile/urls.py profile/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:51    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:51    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:51    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:51    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git commit-tree 005a4a483fe55a18f55278480347253aeff05de6 -p 62bafb80c4714d07894359ee32c79a8fe22947a5
+2009-11-29 22:15:51    DEBUG: Executing  git commit-tree 005a4a483fe55a18f55278480347253aeff05de6 -p 62bafb80c4714d07894359ee32c79a8fe22947a5 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 601c17c2ecc6c31c5fb641f9bab7e8e1c70714d4 62bafb80c4714d07894359ee32c79a8fe22947a5
+2009-11-29 22:15:51    DEBUG: Executing  git update-ref HEAD 601c17c2ecc6c31c5fb641f9bab7e8e1c70714d4 62bafb80c4714d07894359ee32c79a8fe22947a5 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:51     INFO: Changeset #39
+2009-11-29 22:15:51     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091127013527-e3nwoicwhh3l6bwc" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-27 01:35:27.944000+00:00
+2009-11-29 22:15:51     INFO: Log message: Profile implementation completed, now adds profiles for newly created users.
+2009-11-29 22:15:51    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091127013527-e3nwoicwhh3l6bwc
+Date: 2009-11-27 01:35:27.944000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: network/utils.py(ADD)
+	 profile/utils.py(ADD)
+	 cron.py(UPD)
+	 education/models.py(UPD)
+	 network/models.py(UPD)
+	 profile/admin.py(UPD)
+	 profile/models.py(UPD)
+	 settings.py(UPD)
+Log: Profile implementation completed, now adds profiles for newly created users.
+
+2009-11-29 22:15:51     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091127013527-e3nwoicwhh3l6bwc', applied 1 changesets
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-index --add network/utils.py profile/utils.py
+2009-11-29 22:15:51    DEBUG: Executing  git update-index --add network/utils.py profile/utils.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-index cron.py education/models.py network/models.py profile/admin.py profile/models.py settings.py
+2009-11-29 22:15:51    DEBUG: Executing  git update-index cron.py education/models.py network/models.py profile/admin.py profile/models.py settings.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:51    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:51    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:51    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:51    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git commit-tree 92823000b0021b7e05416e857fae5bd344c557c0 -p 601c17c2ecc6c31c5fb641f9bab7e8e1c70714d4
+2009-11-29 22:15:51    DEBUG: Executing  git commit-tree 92823000b0021b7e05416e857fae5bd344c557c0 -p 601c17c2ecc6c31c5fb641f9bab7e8e1c70714d4 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD f0df99c81b8b2dae499a59b0b03c9e08f7c4cf2b 601c17c2ecc6c31c5fb641f9bab7e8e1c70714d4
+2009-11-29 22:15:51    DEBUG: Executing  git update-ref HEAD f0df99c81b8b2dae499a59b0b03c9e08f7c4cf2b 601c17c2ecc6c31c5fb641f9bab7e8e1c70714d4 ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:51     INFO: Changeset #40
+2009-11-29 22:15:51     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091129024237-k5du2d7ckoiwohkk" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-29 02:42:37.036000+00:00
+2009-11-29 22:15:51     INFO: Log message: Member listings fixes (global only, no context)
+----------- This line and the following will be ignored --------------
+
+modified:
+  education/models.py
+  education/views.py
+  network/views.py
+2009-11-29 22:15:51    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091129024237-k5du2d7ckoiwohkk
+Date: 2009-11-29 02:42:37.036000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: education/models.py(UPD)
+	 education/views.py(UPD)
+	 network/views.py(UPD)
+Log: Member listings fixes (global only, no context)
+----------- This line and the following will be ignored --------------
+
+modified:
+  education/models.py
+  education/views.py
+  network/views.py
+
+2009-11-29 22:15:51     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091129024237-k5du2d7ckoiwohkk', applied 1 changesets
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-index education/models.py education/views.py network/views.py
+2009-11-29 22:15:51    DEBUG: Executing  git update-index education/models.py education/views.py network/views.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:51    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:51    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:51    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:51    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git commit-tree 930502aae74d250b678a18379be8bffd1a34782f -p f0df99c81b8b2dae499a59b0b03c9e08f7c4cf2b
+2009-11-29 22:15:51    DEBUG: Executing  git commit-tree 930502aae74d250b678a18379be8bffd1a34782f -p f0df99c81b8b2dae499a59b0b03c9e08f7c4cf2b ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD 42172121e9c62cc9ed955bc6c9ba4294d79b2b9b f0df99c81b8b2dae499a59b0b03c9e08f7c4cf2b
+2009-11-29 22:15:51    DEBUG: Executing  git update-ref HEAD 42172121e9c62cc9ed955bc6c9ba4294d79b2b9b f0df99c81b8b2dae499a59b0b03c9e08f7c4cf2b ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:51     INFO: [Ok]
+2009-11-29 22:15:51     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:51     INFO: Changeset #41
+2009-11-29 22:15:51     INFO: Upstream revision "martin.fitzpatrick@spenglr.org-20091129221032-lty4p6oaaw3a6jga" by Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>, 2009-11-29 22:10:32.644000+00:00
+2009-11-29 22:15:51     INFO: Log message: Combining branches to single trunk.
+2009-11-29 22:15:51    DEBUG: Going to apply changeset:
+Revision: martin.fitzpatrick@spenglr.org-20091129221032-lty4p6oaaw3a6jga
+Date: 2009-11-29 22:10:32.644000+00:00
+Author: Martin Fitzpatrick <martin.fitzpatrick@spenglr.org>
+Entries: apps[DIR](ADD)
+	 apps/.directory(ADD)
+	 apps/education[DIR](ADD)
+	 apps/education/.directory(ADD)
+	 apps/education/__init__.py(ADD)
+	 apps/education/admin.py(ADD)
+	 apps/education/forms.py(ADD)
+	 apps/education/models.py(ADD)
+	 apps/education/templates[DIR](ADD)
+	 apps/education/templates/course_detail.html(ADD)
+	 apps/education/templates/coursei_detail.html(ADD)
+	 apps/education/templates/coursei_register.html(ADD)
+	 apps/education/templates/module_detail.html(ADD)
+	 apps/education/templates/modulei_detail.html(ADD)
+	 apps/education/templates/modulei_register.html(ADD)
+	 apps/education/tests.py(ADD)
+	 apps/education/urls.py(ADD)
+	 apps/education/utils.py(ADD)
+	 apps/education/views.py(ADD)
+	 apps/network[DIR](ADD)
+	 apps/network/__init__.py(ADD)
+	 apps/network/admin.py(ADD)
+	 apps/network/forms.py(ADD)
+	 apps/network/models.py(ADD)
+	 apps/network/templates[DIR](ADD)
+	 apps/network/templates/network_detail.html(ADD)
+	 apps/network/templates/network_list.html(ADD)
+	 apps/network/templates/network_register.html(ADD)
+	 apps/network/tests.py(ADD)
+	 apps/network/urls.py(ADD)
+	 apps/network/utils.py(ADD)
+	 apps/network/views.py(ADD)
+	 apps/notify[DIR](ADD)
+	 apps/notify/__init__.py(ADD)
+	 apps/notify/fixtures[DIR](ADD)
+	 apps/notify/fixtures/simple_tree.json(ADD)
+	 apps/notify/forms.py(ADD)
+	 apps/notify/models.py(ADD)
+	 apps/notify/templates[DIR](ADD)
+	 apps/notify/templates/sample_tree.html(ADD)
+	 apps/notify/templatetags[DIR](ADD)
+	 apps/notify/templatetags/__init__.py(ADD)
+	 apps/notify/templatetags/threadedcomments_tags.py(ADD)
+	 apps/notify/tests.py(ADD)
+	 apps/notify/util.py(ADD)
+	 apps/profile[DIR](ADD)
+	 apps/profile/__init__.py(ADD)
+	 apps/profile/admin.py(ADD)
+	 apps/profile/forms.py(ADD)
+	 apps/profile/models.py(ADD)
+	 apps/profile/templates[DIR](ADD)
+	 apps/profile/templates/profile.html(ADD)
+	 apps/profile/tests.py(ADD)
+	 apps/profile/urls.py(ADD)
+	 apps/profile/utils.py(ADD)
+	 apps/profile/views.py(ADD)
+	 apps/questions[DIR](ADD)
+	 apps/questions/__init__.py(ADD)
+	 apps/questions/admin.py(ADD)
+	 apps/questions/models.py(ADD)
+	 apps/questions/templates[DIR](ADD)
+	 apps/questions/templates/module_question_archive.html(ADD)
+	 apps/questions/templates/question_archive.html(ADD)
+	 apps/questions/templates/question_detail.html(ADD)
+	 apps/questions/templates/question_list.html(ADD)
+	 apps/questions/templates/question_list_answered.html(ADD)
+	 apps/questions/templates/question_tag_list.html(ADD)
+	 apps/questions/tests.py(ADD)
+	 apps/questions/urls.py(ADD)
+	 apps/questions/utils.py(ADD)
+	 apps/questions/views.py(ADD)
+	 apps/resources[DIR](ADD)
+	 apps/resources/__init__.py(ADD)
+	 apps/resources/admin.py(ADD)
+	 apps/resources/models.py(ADD)
+	 apps/resources/tests.py(ADD)
+	 apps/resources/urls.py(ADD)
+	 apps/resources/views.py(ADD)
+	 apps/sq[DIR](ADD)
+	 apps/sq/__init__.py(ADD)
+	 apps/sq/templatetags[DIR](ADD)
+	 apps/sq/templatetags/__init__.py(ADD)
+	 apps/sq/templatetags/spenglr_sq_tags.py(ADD)
+	 apps/sq/utils.py(ADD)
+	 core/templates[DIR](ADD)
+	 core/templates/_memberships.html(ADD)
+	 media[DIR](ADD)
+	 media/css[DIR](ADD)
+	 media/css/base.css(ADD)
+	 media/img[DIR](ADD)
+	 media/img/bg-groupbreadcrumbs.png(ADD)
+	 media/img/default_avatar.png(ADD)
+	 media/img/default_user_picture.png(ADD)
+	 media/img/dot.gif(ADD)
+	 media/img/dox-tab-active-left.png(ADD)
+	 media/img/emblem_active.gif(ADD)
+	 media/img/emblem_complete.gif(ADD)
+	 media/img/emblem_deactivate.gif(ADD)
+	 media/img/emblem_inactive.gif(ADD)
+	 media/img/emblem_momd.png(ADD)
+	 media/img/favicon.ico(ADD)
+	 media/img/feed-bubble-arrow.gif(ADD)
+	 media/img/feed.png(ADD)
+	 media/img/gradient-inner.png(ADD)
+	 media/img/group-owner-overlay.png(ADD)
+	 media/img/icon_discuss.png(ADD)
+	 media/img/icon_focus_0.gif(ADD)
+	 media/img/icon_focus_1.gif(ADD)
+	 media/img/icon_focus_2.gif(ADD)
+	 media/img/icon_focus_3.gif(ADD)
+	 media/img/icon_focus_4.gif(ADD)
+	 media/img/icon_focus_5.gif(ADD)
+	 media/img/icons[DIR](ADD)
+	 media/img/icons/.directory(ADD)
+	 media/img/icons/correct.png(ADD)
+	 media/img/icons/down.gif(ADD)
+	 media/img/icons/easy.png(ADD)
+	 media/img/icons/error.png(ADD)
+	 media/img/icons/fair.png(ADD)
+	 media/img/icons/favorite.png(ADD)
+	 media/img/icons/group-owner-overlay.png(ADD)
+	 media/img/icons/hard.png(ADD)
+	 media/img/icons/images.png(ADD)
+	 media/img/icons/incorrect.png(ADD)
+	 media/img/icons/info.png(ADD)
+	 media/img/icons/media.png(ADD)
+	 media/img/icons/members-add.png(ADD)
+	 media/img/icons/members-remove.png(ADD)
+	 media/img/icons/members.png(ADD)
+	 media/img/icons/nochange.gif(ADD)
+	 media/img/icons/notice.png(ADD)
+	 media/img/icons/progress.png(ADD)
+	 media/img/icons/questions.png(ADD)
+	 media/img/icons/random.png(ADD)
+	 media/img/icons/recommend.png(ADD)
+	 media/img/icons/resource.png(ADD)
+	 media/img/icons/simple.png(ADD)
+	 media/img/icons/sm_error.png(ADD)
+	 media/img/icons/sm_info.png(ADD)
+	 media/img/icons/sm_progress.png(ADD)
+	 media/img/icons/sm_questions.png(ADD)
+	 media/img/icons/sm_resource.png(ADD)
+	 media/img/icons/stack.png(ADD)
+	 media/img/icons/sub.png(ADD)
+	 media/img/icons/suggest.png(ADD)
+	 media/img/icons/tag.png(ADD)
+	 media/img/icons/trash.png(ADD)
+	 media/img/icons/tricky.png(ADD)
+	 media/img/icons/unknown.png(ADD)
+	 media/img/icons/up.gif(ADD)
+	 media/img/icons/update.png(ADD)
+	 media/img/menu-collapsed-rtl.gif(ADD)
+	 media/img/menu-collapsed.gif(ADD)
+	 media/img/menu-expanded.gif(ADD)
+	 media/img/menu-leaf.gif(ADD)
+	 media/img/sm_progress.png(ADD)
+	 media/img/sm_questions.png(ADD)
+	 media/img/sm_resource.png(ADD)
+	 media/img/speech-arrow-up-3465a4.gif(ADD)
+	 media/img/spenglr.png(ADD)
+	 media/img/toggle-inactive.gif(ADD)
+	 media/js[DIR](ADD)
+	 templates[DIR](ADD)
+	 templates/.directory(ADD)
+	 templates/admin[DIR](ADD)
+	 templates/admin/.directory(ADD)
+	 templates/admin/404.html(ADD)
+	 templates/admin/500.html(ADD)
+	 templates/admin/actions.html(ADD)
+	 templates/admin/app_index.html(ADD)
+	 templates/admin/auth[DIR](ADD)
+	 templates/admin/auth/user[DIR](ADD)
+	 templates/admin/auth/user/add_form.html(ADD)
+	 templates/admin/auth/user/change_password.html(ADD)
+	 templates/admin/base.html(ADD)
+	 templates/admin/base_site.html(ADD)
+	 templates/admin/change_form.html(ADD)
+	 templates/admin/change_list.html(ADD)
+	 templates/admin/change_list_results.html(ADD)
+	 templates/admin/date_hierarchy.html(ADD)
+	 templates/admin/delete_confirmation.html(ADD)
+	 templates/admin/delete_selected_confirmation.html(ADD)
+	 templates/admin/edit_inline[DIR](ADD)
+	 templates/admin/edit_inline/stacked.html(ADD)
+	 templates/admin/edit_inline/tabular.html(ADD)
+	 templates/admin/filter.html(ADD)
+	 templates/admin/includes[DIR](ADD)
+	 templates/admin/includes/fieldset.html(ADD)
+	 templates/admin/index.html(ADD)
+	 templates/admin/invalid_setup.html(ADD)
+	 templates/admin/login.html(ADD)
+	 templates/admin/object_history.html(ADD)
+	 templates/admin/pagination.html(ADD)
+	 templates/admin/prepopulated_fields_js.html(ADD)
+	 templates/admin/search_form.html(ADD)
+	 templates/admin/submit_line.html(ADD)
+	 templates/admin/template_validator.html(ADD)
+	 templates/base.html(ADD)
+	 templates/dashboard.html(ADD)
+	 templates/registration[DIR](ADD)
+	 templates/registration/login.html(ADD)
+	 templates/registration/logout.html(ADD)
+	 templates/registration/password_change_done.html(ADD)
+	 templates/registration/password_change_form.html(ADD)
+	 templates/registration/password_reset_complete.html(ADD)
+	 templates/registration/password_reset_confirm.html(ADD)
+	 templates/registration/password_reset_done.html(ADD)
+	 templates/registration/password_reset_email.html(ADD)
+	 templates/registration/password_reset_form.html(ADD)
+	 .bzrignore(DEL)
+	 .directory(DEL)
+	 education/__init__.py(DEL)
+	 education/admin.py(DEL)
+	 education/forms.py(DEL)
+	 education/models.py(DEL)
+	 education/tests.py(DEL)
+	 education/urls.py(DEL)
+	 education/utils.py(DEL)
+	 education/views.py(DEL)
+	 education[DIR](DEL)
+	 network/__init__.py(DEL)
+	 network/admin.py(DEL)
+	 network/forms.py(DEL)
+	 network/models.py(DEL)
+	 network/tests.py(DEL)
+	 network/urls.py(DEL)
+	 network/utils.py(DEL)
+	 network/views.py(DEL)
+	 network[DIR](DEL)
+	 notify/__init__.py(DEL)
+	 notify/fixtures/simple_tree.json(DEL)
+	 notify/fixtures[DIR](DEL)
+	 notify/forms.py(DEL)
+	 notify/models.py(DEL)
+	 notify/templates/sample_tree.html(DEL)
+	 notify/templates[DIR](DEL)
+	 notify/templatetags/__init__.py(DEL)
+	 notify/templatetags/threadedcomments_tags.py(DEL)
+	 notify/templatetags[DIR](DEL)
+	 notify/tests.py(DEL)
+	 notify/util.py(DEL)
+	 notify[DIR](DEL)
+	 profile/__init__.py(DEL)
+	 profile/admin.py(DEL)
+	 profile/forms.py(DEL)
+	 profile/models.py(DEL)
+	 profile/tests.py(DEL)
+	 profile/urls.py(DEL)
+	 profile/utils.py(DEL)
+	 profile/views.py(DEL)
+	 profile[DIR](DEL)
+	 questions/__init__.py(DEL)
+	 questions/admin.py(DEL)
+	 questions/models.py(DEL)
+	 questions/tests.py(DEL)
+	 questions/urls.py(DEL)
+	 questions/utils.py(DEL)
+	 questions/views.py(DEL)
+	 questions[DIR](DEL)
+	 resources/__init__.py(DEL)
+	 resources/admin.py(DEL)
+	 resources/models.py(DEL)
+	 resources/tests.py(DEL)
+	 resources/urls.py(DEL)
+	 resources/views.py(DEL)
+	 resources[DIR](DEL)
+	 sq/__init__.py(DEL)
+	 sq/templatetags/__init__.py(DEL)
+	 sq/templatetags/spenglr_sq_tags.py(DEL)
+	 sq/templatetags[DIR](DEL)
+	 sq/utils.py(DEL)
+	 sq[DIR](DEL)
+	 settings.py(UPD)
+Log: Combining branches to single trunk.
+
+2009-11-29 22:15:52     INFO: Updated to 'martin.fitzpatrick@spenglr.org-20091129221032-lty4p6oaaw3a6jga', applied 1 changesets
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git update-index --add apps/.directory apps/education/.directory apps/education/__init__.py apps/education/admin.py apps/education/forms.py apps/education/models.py apps/education/templates/course_detail.html apps/education/templates/coursei_detail.html apps/education/templates/coursei_register.html apps/education/templates/module_detail.html apps/education/templates/modulei_detail.html apps/education/templates/modulei_register.html apps/education/tests.py apps/education/urls.py apps/education/utils.py apps/education/views.py apps/network/__init__.py apps/network/admin.py apps/network/forms.py apps/network/models.py apps/network/templates/network_detail.html apps/network/templates/network_list.html apps/network/templates/network_register.html apps/network/tests.py apps/network/urls.py apps/network/utils.py apps/network/views.py apps/notify/__init__.py apps/notify/fixtures/simple_tree.json apps/notify/forms.py apps/notify/models.py apps/notify/templates/sample_tree.html apps/notify/templatetags/__init__.py apps/notify/templatetags/threadedcomments_tags.py apps/notify/tests.py apps/notify/util.py apps/profile/__init__.py apps/profile/admin.py apps/profile/forms.py apps/profile/models.py apps/profile/templates/profile.html apps/profile/tests.py apps/profile/urls.py apps/profile/utils.py apps/profile/views.py apps/questions/__init__.py apps/questions/admin.py apps/questions/models.py apps/questions/templates/module_question_archive.html apps/questions/templates/question_archive.html apps/questions/templates/question_detail.html apps/questions/templates/question_list.html apps/questions/templates/question_list_answered.html apps/questions/templates/question_tag_list.html apps/questions/tests.py apps/questions/urls.py apps/questions/utils.py apps/questions/views.py apps/resources/__init__.py apps/resources/admin.py apps/resources/models.py apps/resources/tests.py apps/resources/urls.py apps/resources/views.py apps/sq/__init__.py apps/sq/templatetags/__init__.py apps/sq/templatetags/spenglr_sq_tags.py apps/sq/utils.py core/templates/_memberships.html media/css/base.css media/img/bg-groupbreadcrumbs.png media/img/default_avatar.png media/img/default_user_picture.png media/img/dot.gif media/img/dox-tab-active-left.png media/img/emblem_active.gif media/img/emblem_complete.gif media/img/emblem_deactivate.gif media/img/emblem_inactive.gif media/img/emblem_momd.png media/img/favicon.ico media/img/feed-bubble-arrow.gif media/img/feed.png media/img/gradient-inner.png media/img/group-owner-overlay.png media/img/icon_discuss.png media/img/icon_focus_0.gif media/img/icon_focus_1.gif media/img/icon_focus_2.gif media/img/icon_focus_3.gif media/img/icon_focus_4.gif media/img/icon_focus_5.gif media/img/icons/.directory media/img/icons/correct.png media/img/icons/down.gif media/img/icons/easy.png media/img/icons/error.png media/img/icons/fair.png media/img/icons/favorite.png media/img/icons/group-owner-overlay.png media/img/icons/hard.png media/img/icons/images.png media/img/icons/incorrect.png media/img/icons/info.png media/img/icons/media.png media/img/icons/members-add.png media/img/icons/members-remove.png media/img/icons/members.png media/img/icons/nochange.gif media/img/icons/notice.png media/img/icons/progress.png media/img/icons/questions.png media/img/icons/random.png media/img/icons/recommend.png media/img/icons/resource.png media/img/icons/simple.png media/img/icons/sm_error.png media/img/icons/sm_info.png media/img/icons/sm_progress.png media/img/icons/sm_questions.png media/img/icons/sm_resource.png media/img/icons/stack.png media/img/icons/sub.png media/img/icons/suggest.png media/img/icons/tag.png media/img/icons/trash.png media/img/icons/tricky.png media/img/icons/unknown.png media/img/icons/up.gif media/img/icons/update.png media/img/menu-collapsed-rtl.gif media/img/menu-collapsed.gif media/img/menu-expanded.gif media/img/menu-leaf.gif media/img/sm_progress.png media/img/sm_questions.png media/img/sm_resource.png media/img/speech-arrow-up-3465a4.gif media/img/spenglr.png media/img/toggle-inactive.gif templates/.directory templates/admin/.directory templates/admin/404.html templates/admin/500.html templates/admin/actions.html templates/admin/app_index.html templates/admin/auth/user/add_form.html templates/admin/auth/user/change_password.html templates/admin/base.html templates/admin/base_site.html templates/admin/change_form.html templates/admin/change_list.html templates/admin/change_list_results.html templates/admin/date_hierarchy.html templates/admin/delete_confirmation.html templates/admin/delete_selected_confirmation.html templates/admin/edit_inline/stacked.html templates/admin/edit_inline/tabular.html templates/admin/filter.html templates/admin/includes/fieldset.html templates/admin/index.html templates/admin/invalid_setup.html templates/admin/login.html templates/admin/object_history.html templates/admin/pagination.html templates/admin/prepopulated_fields_js.html templates/admin/search_form.html templates/admin/submit_line.html templates/admin/template_validator.html templates/base.html templates/dashboard.html templates/registration/login.html templates/registration/logout.html templates/registration/password_change_done.html templates/registration/password_change_form.html templates/registration/password_reset_complete.html templates/registration/password_reset_confirm.html templates/registration/password_reset_done.html templates/registration/password_reset_email.html templates/registration/password_reset_form.html
+2009-11-29 22:15:52    DEBUG: Executing  git update-index --add apps/.directory apps/education/.directory apps/education/__init__.py apps/education/admin.py apps/education/forms.py apps/education/models.py apps/education/templates/course_detail.html apps/education/templates/coursei_detail.html apps/education/templates/coursei_register.html apps/education/templates/module_detail.html apps/education/templates/modulei_detail.html apps/education/templates/modulei_register.html apps/education/tests.py apps/education/urls.py apps/education/utils.py apps/education/views.py apps/network/__init__.py apps/network/admin.py apps/network/forms.py apps/network/models.py apps/network/templates/network_detail.html apps/network/templates/network_list.html apps/network/templates/network_register.html apps/network/tests.py apps/network/urls.py apps/network/utils.py apps/network/views.py apps/notify/__init__.py apps/notify/fixtures/simple_tree.json apps/notify/forms.py apps/notify/models.py apps/notify/templates/sample_tree.html apps/notify/templatetags/__init__.py apps/notify/templatetags/threadedcomments_tags.py apps/notify/tests.py apps/notify/util.py apps/profile/__init__.py apps/profile/admin.py apps/profile/forms.py apps/profile/models.py apps/profile/templates/profile.html apps/profile/tests.py apps/profile/urls.py apps/profile/utils.py apps/profile/views.py apps/questions/__init__.py apps/questions/admin.py apps/questions/models.py apps/questions/templates/module_question_archive.html apps/questions/templates/question_archive.html apps/questions/templates/question_detail.html apps/questions/templates/question_list.html apps/questions/templates/question_list_answered.html apps/questions/templates/question_tag_list.html apps/questions/tests.py apps/questions/urls.py apps/questions/utils.py apps/questions/views.py apps/resources/__init__.py apps/resources/admin.py apps/resources/models.py apps/resources/tests.py apps/resources/urls.py apps/resources/views.py apps/sq/__init__.py apps/sq/templatetags/__init__.py apps/sq/templatetags/spenglr_sq_tags.py apps/sq/utils.py core/templates/_memberships.html media/css/base.css media/img/bg-groupbreadcrumbs.png media/img/default_avatar.png media/img/default_user_picture.png media/img/dot.gif media/img/dox-tab-active-left.png media/img/emblem_active.gif media/img/emblem_complete.gif media/img/emblem_deactivate.gif media/img/emblem_inactive.gif media/img/emblem_momd.png media/img/favicon.ico media/img/feed-bubble-arrow.gif media/img/feed.png media/img/gradient-inner.png media/img/group-owner-overlay.png media/img/icon_discuss.png media/img/icon_focus_0.gif media/img/icon_focus_1.gif media/img/icon_focus_2.gif media/img/icon_focus_3.gif media/img/icon_focus_4.gif media/img/icon_focus_5.gif media/img/icons/.directory media/img/icons/correct.png media/img/icons/down.gif media/img/icons/easy.png media/img/icons/error.png media/img/icons/fair.png media/img/icons/favorite.png media/img/icons/group-owner-overlay.png media/img/icons/hard.png media/img/icons/images.png media/img/icons/incorrect.png media/img/icons/info.png media/img/icons/media.png media/img/icons/members-add.png media/img/icons/members-remove.png media/img/icons/members.png media/img/icons/nochange.gif media/img/icons/notice.png media/img/icons/progress.png media/img/icons/questions.png media/img/icons/random.png media/img/icons/recommend.png media/img/icons/resource.png media/img/icons/simple.png media/img/icons/sm_error.png media/img/icons/sm_info.png media/img/icons/sm_progress.png media/img/icons/sm_questions.png media/img/icons/sm_resource.png media/img/icons/stack.png media/img/icons/sub.png media/img/icons/suggest.png media/img/icons/tag.png media/img/icons/trash.png media/img/icons/tricky.png media/img/icons/unknown.png media/img/icons/up.gif media/img/icons/update.png media/img/menu-collapsed-rtl.gif media/img/menu-collapsed.gif media/img/menu-expanded.gif media/img/menu-leaf.gif media/img/sm_progress.png media/img/sm_questions.png media/img/sm_resource.png media/img/speech-arrow-up-3465a4.gif media/img/spenglr.png media/img/toggle-inactive.gif templates/.directory templates/admin/.directory templates/admin/404.html templates/admin/500.html templates/admin/actions.html templates/admin/app_index.html templates/admin/auth/user/add_form.html templates/admin/auth/user/change_password.html templates/admin/base.html templates/admin/base_site.html templates/admin/change_form.html templates/admin/change_list.html templates/admin/change_list_results.html templates/admin/date_hierarchy.html templates/admin/delete_confirmation.html templates/admin/delete_selected_confirmation.html templates/admin/edit_inline/stacked.html templates/admin/edit_inline/tabular.html templates/admin/filter.html templates/admin/includes/fieldset.html templates/admin/index.html templates/admin/invalid_setup.html templates/admin/login.html templates/admin/object_history.html templates/admin/pagination.html templates/admin/prepopulated_fields_js.html templates/admin/search_form.html templates/admin/submit_line.html templates/admin/template_validator.html templates/base.html templates/dashboard.html templates/registration/login.html templates/registration/logout.html templates/registration/password_change_done.html templates/registration/password_change_form.html templates/registration/password_reset_complete.html templates/registration/password_reset_confirm.html templates/registration/password_reset_done.html templates/registration/password_reset_email.html templates/registration/password_reset_form.html ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing '.bzrignore'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing '.directory'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/admin.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/forms.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/models.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/tests.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/urls.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/utils.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education/views.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'education'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/admin.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/forms.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/models.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/tests.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/urls.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/utils.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network/views.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'network'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/fixtures/simple_tree.json'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/fixtures'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/forms.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/models.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/templates/sample_tree.html'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/templates'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/templatetags/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/templatetags/threadedcomments_tags.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/templatetags'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/tests.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify/util.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'notify'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/admin.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/forms.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/models.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/tests.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/urls.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/utils.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile/views.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'profile'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/admin.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/models.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/tests.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/urls.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/utils.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions/views.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'questions'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources/admin.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources/models.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources/tests.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources/urls.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources/views.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'resources'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'sq/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'sq/templatetags/__init__.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'sq/templatetags/spenglr_sq_tags.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'sq/templatetags'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'sq/utils.py'
+2009-11-29 22:15:52  WARNING: Ignoring deletion of non existing 'sq'
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git update-index settings.py
+2009-11-29 22:15:52    DEBUG: Executing  git update-index settings.py ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git status
+2009-11-29 22:15:52    DEBUG: Executing  git status ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git add -u
+2009-11-29 22:15:52    DEBUG: Executing  git add -u ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git write-tree
+2009-11-29 22:15:52    DEBUG: Executing  git write-tree ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git rev-parse HEAD 2>&1
+2009-11-29 22:15:52    DEBUG: Executing  git rev-parse HEAD ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git commit-tree 91e59d4fe5a7d283c84e657a1f3148c3df6f77a4 -p 42172121e9c62cc9ed955bc6c9ba4294d79b2b9b
+2009-11-29 22:15:52    DEBUG: Executing  git commit-tree 91e59d4fe5a7d283c84e657a1f3148c3df6f77a4 -p 42172121e9c62cc9ed955bc6c9ba4294d79b2b9b ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: /home/martin/spenglr/spenglr $ git update-ref HEAD a58d235bef38b6304c6552bc66d3b2ee29a0f70c 42172121e9c62cc9ed955bc6c9ba4294d79b2b9b
+2009-11-29 22:15:52    DEBUG: Executing  git update-ref HEAD a58d235bef38b6304c6552bc66d3b2ee29a0f70c 42172121e9c62cc9ed955bc6c9ba4294d79b2b9b ('/home/martin/spenglr/spenglr')
+2009-11-29 22:15:52     INFO: [Ok]
+2009-11-29 22:15:52     INFO: -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+2009-11-29 22:15:52    DEBUG: Adjusting the state accordingly to journal
+2009-11-29 22:15:52     INFO: 0 pending changesets in state file
+2009-11-29 22:15:52     INFO: Update completed, now at revision "martin.fitzpatrick@spenglr.org-20091129221032-lty4p6oaaw3a6jga"

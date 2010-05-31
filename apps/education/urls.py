@@ -26,8 +26,8 @@ urlpatterns = patterns('',
     url(r'^c(?P<concept_id>\d+)/register/$', 'education.views.concept_register',  name='concept-register'  ),
 
     # User specific pass module instance data
-    url(r'^c(?P<concept_id>\d+)/exam/$', 'education.views.concept_exam', name='concept-exam' ),
-    url(r'^c(?P<concept_id>\d+)/exam/submit$', 'education.views.concept_exam_submit', name='concept-exam-submit'),
+    # url(r'^c(?P<concept_id>\d+)/exam/$', 'education.views.concept_exam', name='concept-exam' ),
+    # url(r'^c(?P<concept_id>\d+)/exam/submit$', 'education.views.concept_exam_submit', name='concept-exam-submit'),
     
     url(r'^c(?P<concept_id>\d+)/resources$', 'education.views.concept_resources', name='concept-resources' ),
     # url(r'^mi(?P<modulei_id>\d+)$', 'resources.views.module_userresources', name='resource-modulei-userresources' ),

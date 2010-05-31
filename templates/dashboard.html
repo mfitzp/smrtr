@@ -21,8 +21,8 @@
         <tr><th>Progress</th><td><div class="progress" style="width:{% widthratio 3 5 100 %}px;"></div></td></tr>
         </table>
         <p style="text-align:right">
-            <a href="{% url concept-exam concept_id=conceptfocus.concept.id %}" class="questionlink">Questions &raquo;</a>
-            <a href="{% url concept-resources concept_id=conceptfocus.concept.id %}" class="resourcelink">Study &raquo;</a>
+            <a href="{ % url concept-exam concept_id=conceptfocus.concept.id % }" class="questionlink">Questions &raquo;</a>
+            <a href="{ % url concept-resources concept_id=conceptfocus.concept.id % }" class="resourcelink">Study &raquo;</a>
         </p>
         </div>
         {% endif %}
@@ -34,8 +34,8 @@
                 <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
                 <td class="dbcurriculumconcept"><a href="{% url concept-detail concept_id=userconcept.concept.id %}">{{ userconcept }}</a></td>
                 <td style="text-align:right">{% sqchange 100 userconcept.sq %}</td>
-                <td><a href="{% url concept-exam concept_id=userconcept.concept.id %}" class="questionlink">Questions</a></td>
-                <td><a href="{% url concept-resources concept_id=userconcept.concept.id %}" class="resourcelink">Study</a></td>
+                <td><a href="{ % url concept-exam concept_id=userconcept.concept.id % }" class="questionlink">Questions</a></td>
+                <td><a href="{ % url concept-resources concept_id=userconcept.concept.id % }" class="resourcelink">Study</a></td>
                 <td><a href="progress/m/{{ user_concept.concept.id }}" class="progresslink">Progress</a></td>
                 <td>
                 </td>
