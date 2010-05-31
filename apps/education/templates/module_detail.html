@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% load spenglr_sq_tags %}
 
+{% cycle 'odd' 'even' as zebra %}
+
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
     &raquo; {{ module }}
 {% endblock %}
+
 
 {% block content_left %}
 
@@ -14,20 +17,59 @@
         <h1>{{ module.name }}</h1>
 
         <table>
-            <tr><th>Difficulty</th><td>{% sqdifficulty 100 module.sq %}</td></tr>
+            <tr><th>Network</th><td><a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>
+                {% ifnotequal module.networks.count 1 %}
+                    and <a href="{% url module-detail-providers module_id=module.id %}">{{ module.networks.count|add:"-1" }} other network{{ module.networks.count|pluralize }}</a></td></tr>   
+                {% endifnotequal %}
+            <tr><th>SQ</th><td>
+                {% if usermodule %}{% sqchange 100 usermodule.sq %}{% endif %}
+                {% sqdifficulty module.sq request.user.get_profile.sq %}
+            </td></tr>
         </table>
 
-        {% if usermodules %}
-            <p>
-                You are studying this module as part of 
-                {% for usermodules in usermodules %}
-                    <a href="{% url coursei-detail coursei_id=usermodules.usercourse.coursei.id %}" class="course">{{ usermodules.usercourse.coursei }}</a></a>
+        <blockquote>{{ module.description }}</blockquote>
+
+        {% if usermodule %}
+            
+        {% else %}
+            <h4>Registration</h4>
+            <p>Join this module for access to concepts and other members.</p>
+            <!-- Registration form -->
+            <form action="{% url module-register module_id=module.id %}" method="post">
+            <input type="hidden" name="submit" value="1" />
+            &nbsp;<input type="submit" value="Register &raquo;" />
+            </form>
+        {% endif %}
+
+        {% if module.concepts %}
+        <table>
+        <tr><th scope="column">Concept</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
+            {% if module.concepts_filtered %}
+                {% for concept in module.concepts_filtered %}
+                    <tr class="{% cycle zebra %}">
+                        <td colspan="2"><a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a></td>
+                        <td>
+                        </td>
+                    
+                        {% if concept.userconcept %}
+                            {% if concept.userconcept.is_active %}
+                                <td><a href="#" class="active">Active</a></td>
+                            {% else %}
+                                <td><span class="complete">Completed</span></td>
+                            {% endif %}
+                            
+                        {% else %}
+                            <td><a href="{% url concept-register concept_id=concept.id %}" class="inactive">Register</a></td>
+                        {% endif %}
+                    </tr>
                 {% endfor %}
-            </p>
+            {% endif %}
+
+        </table>
         {% endif %}
 
 
-        <blockquote>{{ module.description }}</blockquote>
+        {% include "_memberships.html" %}
 
     {% else %}
         <p>No curriculum information available.</p>

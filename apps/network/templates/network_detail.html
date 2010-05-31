@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load spenglr_sq_tags %}
+{% load countries_tags %}
 {% load i18n %}
 
 {% cycle 'odd' 'even' as zebra %}
@@ -13,56 +14,82 @@
 
     {% if network %}
         <h1>{{ network.name }}</h1>
-
         <table>
-        {% if network.city %}
-            <tr><th>Location</th>
-            <td><a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
-                {{ network.city }}, {{ network.country }}
-            </a></td></tr>
-        {% endif %}
-        <tr><th>Type</th><td>
-            {% if network.type %}{{ network.get_type_display }}{% endif %}
-            {% if network.stage %}({{ network.get_stage_display }}){% endif %}
-        </td></tr>
+            {% if network.location_is_set %}
+                <tr><th>Location</th>
+                <td><a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
+                    {% if network.city %} {{ network.city }}{% endif %}
+                    {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }} </span> {% endif %}
+                </a></td></tr>
+            {% endif %}
+        <tr><th>Type</th>
+        <td>
+            {% if network.parent %}<a href="{% url network-detail network_id=network.parent.id %}" class="network network{{ network.parent.type }}">{{ network.parent }}</a>{% endif %}
+            <span class="network network{{ network.type }}">{% if network.type %}{{ network.get_type_display }}{% endif %}</span>
+            {% if network.stage %}({{ network.get_stage_display }}){% endif %}</td>
+        </tr>
         {% if usernetwork %}
-            <tr><th>Start Date</th><td>{{ usernetwork.start_date }} (Year {{usernetwork.year_of_study}})</td></tr>
+            <tr><th>Start Date</th><td>{{ usernetwork.start_date|date }} ({{usernetwork.start_date|timesince}} ago)</td></tr>
         {% endif %}
-        <tr><th>SQ</th><td>{% sqchange 0 network.sq %} {% sqdescriptive network.sq %}</td></tr>
+        <tr><th>Network SQ</th><td>{% sqchange 0 network.sq %} {% sqdescriptive network.sq %}</td></tr>
         </table>
 
         <blockquote>{{ network.description }}</blockquote>
 
         {% if usernetwork %}
-        {% else %}
-            <p><a href="{% url network-register network_id=network.id %}" class="inactive">Register</a> with this network to sign up for courses</p>
+            
+        {% if network.modules_filtered %}
+            <h4>Modules</h4>
+            <table>
+            <tr><th scope="column">Name</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
+            {% for module in network.modules_filtered %}
+                <tr class="{% cycle zebra %}">
+                    <td colspan="2"><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></td>
+                    <td>
+                    {% ifnotequal module.network network %}
+                        <a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>
+                    {% endifnotequal %}
+                    </td>
+                
+                    {% if module.usermodule %}
+                        {% if module.usermodule.is_active %}
+                            <td><a href="#" class="active">Active</a></td>
+                        {% else %}
+                            <td><span class="complete">Completed</span></td>
+                        {% endif %}
+                        
+                    {% else %}
+                        <td><a href="{% url module-register module_id=module.id %}" class="inactive">Register</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </table>
         {% endif %}
 
 
-        {% if network.course_set %}
+        {% else %}
+            <h3>Registration</h3>
+            <p>Join this network for access to courses and other members.</p>
+            <!-- Registration form -->
+            <form action="{% url network-register network_id=network.id %}" method="post">
+            <input type="hidden" name="submit" value="1" />
+            &nbsp;<input type="submit" value="Register &raquo;" />
+            </form>
+        {% endif %}
+
+
+        {% if network.network_set %}
+        <h4>Community Networks</h4>
         <table>
-        <tr><th scope="column">Courses</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
-            {% if usernetwork %}
-                {% for usercourse in usernetwork.usercourse_set.all %}
-                    <tr class="{% cycle zebra %}">
-                        <td><a href="{% url coursei-detail coursei_id=usercourse.coursei.id %}">{{ usercourse.coursei }}</a></td>
-                        <td>{{ usercourse.start_date }} - {{ usercourse.end_date }}</td>
-                        {% if usercourse.is_active %}
-                            <td><a href="#" class="active">Active</a></td>
-                        {% else %}
-                            <td><span class="complete">Complete</span></td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            {% endif %}
-            {% if network.coursei_filtered %}
-                {% for coursei in network.coursei_filtered %}
-                    <tr class="{% cycle zebra %}">
-                        <td colspan="2"><a href="{% url coursei-detail coursei_id=coursei.id %}">{{ coursei }}</a></td><td><a href="{% url network-detail network_id=coursei.course.network.id %}" class="network network{{ coursei.course.network.type }}">{{ coursei.course.network }}</a>
-                        <td><a href="{% url coursei-register coursei_id=coursei.id %}" class="inactive">Register</a></td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
+            {% for subnetwork in network.network_set.all %}
+                <tr class="{% cycle zebra %}">
+                    <td><a href="{% url network-detail network_id=subnetwork.id %}">{{ subnetwork }}</a></td>
+                    <td>
+                        <span class="network network{{ subnetwork.type }}">{% if subnetwork.type %}{{ subnetwork.get_type_display }}{% endif %}</span>
+                        {% if subnetwork.stage %}({{ subnetwork.get_stage_display }}){% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
         {% endif %}
 

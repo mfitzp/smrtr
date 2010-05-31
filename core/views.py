@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponsePermanentRedirect
 from django.db.models import Q
 # Spenglr
-from education.models import Module, UserCourse
+from education.models import Module, UserModule, Concept
 from core.models import LoginForm
 # External
 from notification.models import Notice
@@ -18,23 +18,45 @@ def index(request):
     if request.user.is_authenticated():
         # User logged in, present the user dashboard
         usernetworks = request.user.usernetwork_set.all()
-        usercourses = request.user.usercourse_set.all()
+        usermodules = request.user.usermodule_set.all()
+        userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
+
+        conceptfocus = userconcepts.order_by('-focus')[0]
+        userconcepts = userconcepts[1:]
+
+        # Get next activated concepts (available by modules reverse SQ), retrieving 5
+        # Gets all concepts that are available (on user's modules) but not active
+        # Later limit by 'dependencies on individual entries'
+        suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
         # Front page wallitems (wi) combine the user's accessible wall posts from 
         # user profile, networks, courses and modules (& friends later)
         
-        # Posts to user's personal wall (profile)
+        # Posts to user's personal wall (profile) *ALWAYS* appear
         wi = request.user.get_profile().wall.wallitem_set.select_related()
+        
+        # TODO: All the following need some mechanism to filter, reduce the number shown
+        # Like +1, Comment +1 or +2
+        # Personal rating/comment more weight than others (*2) e.g 
+        
+        # NOTE: Can  weight each network, module, concept by limiting
+        # the max number of posts got from each at this point,
+        # e.g. pull 5 from each concept, 10 from each network will *2 favour network posts
+        
         # Posts on user's networks, courses, modules
         for un in usernetworks:
             wi = wi | un.network.wall.wallitem_set.select_related()
-        for uc in usercourses:
-            wi = wi | uc.coursei.course.wall.wallitem_set.select_related()        
-            for um in uc.usermodule_set.all():
-                wi = wi | um.modulei.module.wall.wallitem_set.select_related()        
-
+            
+        # These need to be limited to active only
+        for um in usermodules:
+            wi = wi | um.module.wall.wallitem_set.select_related()        
+                      
+        for uc in userconcepts:
+            wi = wi | uc.concept.wall.wallitem_set.select_related()        
+                    
+                    
         # Filter out to show only *other* users - may not want this as comments/etc. on user's 
         # own posts will be missed? Depends on the profile/dashboard interaction - future
         # No __ne filter here?! Use combination of lt, gt for result
@@ -43,16 +65,22 @@ def index(request):
         # TODO: Resulting queryset must be filtered to only show those users actually on
         # the user's own networks (option configuration switching here)
         # wi = wi.filter(author=request.user)
-        wi = wi.filter(author__usernetwork__network__usernetwork__user=request.user).distinct()
+        #wi = wi.filter(author__usernetwork__network__usernetwork__user=request.user).distinct()
 
         i = RequestContext(request, {
             'usernetworks': usernetworks,
-            'usercourses': usercourses,
+            'usermodules': usermodules,
+            'userconcepts': userconcepts,
+            # Focus / Suggest
+            'conceptfocus' : conceptfocus,
+            'suggestconcepts' : suggestconcepts,
+            
+            
             # Wall objects
             # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
             # -wallitems should be combination of all user's available walls
             'wall': request.user.get_profile().wall,
-            'wallitems': wi,
+            'wallitems': wi[0:10],
             'wallform': WallItemForm()
         })
         
@@ -70,13 +98,6 @@ def wall_home( request, slug ):
     try:
         wall.network
         return HttpResponseRedirect(reverse('network-detail', kwargs={'network_id':wall.network.id}))
-    except:
-        pass
-
-    try:
-        wall.course
-        # Need to implement coursei cover here
-        return HttpResponseRedirect(reverse('course-detail', kwargs={'course_id':wall.course.id}))
     except:
         pass
 

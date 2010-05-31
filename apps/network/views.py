@@ -21,18 +21,20 @@ def network_detail(request, network_id):
         usernetwork = network.usernetwork_set.get( user=request.user )
     except:
         usernetwork = list()
-        network.coursei_filtered = network.courseinstance_set.all().order_by('course__name')
+        network.modules_filtered = network.modules.all().order_by('name')
     else:
         # Generate filter list of modules with associated user data
         # If user registered attach usermodule linker and prepend (top list)
         # else append (bottom list)
-        network.coursei_filtered = list()
-    
-        for coursei in network.courseinstance_set.all().order_by('course__name'):
-            if coursei in request.user.courses.all():
-                pass
+        network.modules_filtered = list()
+        
+        for module in network.modules.all().order_by('name'):
+            if module in request.user.modules.all():
+                module.usermodule = request.user.usermodule_set.get( module = module )
             else:
-                network.coursei_filtered.append(coursei)
+                pass
+            network.modules_filtered.append(module)
+             
 
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
@@ -67,7 +69,10 @@ def network_register(request, network_id):
         else:
             # Write to database 
             un.save()
-            return HttpResponseRedirect(reverse('core.views.index'))
+            if 'success_url' in request.POST:
+                return HttpResponseRedirect(request.POST['success_url'])
+            else:
+                return network_detail(request, network_id)
 
     return render_to_response('network_register.html', {'network': network }, context_instance=RequestContext(request))
 

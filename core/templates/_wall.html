@@ -20,7 +20,7 @@
                 <div class="wallitem-image">{% avatar item.author 48 %}</div>
                 <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
                 <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
-                <div class="wallitem-actions">{% ifequal item.author user %}<a href="{% url edit_wall_item item.id %}?success_url={{ request.META.REQUEST_URI|urlencode }}">Edit</a> &#183;{% endifequal %} <a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a> &#183; <a href="">Like</a></div>
+                <div class="wallitem-actions"><a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a> &#183; <a href="">Like</a></div>
                 {% get_comment_list for item as comment_list %}
                 <div id="wallitem-comments-{{ item.id }}" class="wallitem-comments" {% if comment_list %}{% else %}style="display:none"{% endif %}>
                 {% if comment_list %}

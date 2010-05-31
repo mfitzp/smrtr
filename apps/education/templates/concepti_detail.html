@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+
+    {% if usermodule %}
+        &raquo; <a href="{% url coursei-detail coursei_id=usermodule.usercourse.coursei.id %}">{{ modulei.course }}</a>
+    {% else %}
+        &raquo; <a href="{% url course-detail course_id=modulei.course.id %}">{{ modulei.course }}</a>
+    {% endif %}
+    &raquo; {{ module }}
+
+{% endblock %}
+
+{% block content_left %}
+
+    {% if modulei %}
+        <h1>{{ module }}</h1>
+        <table>
+        {% if usermodule %}
+            <tr><th>Start Date</th><td>{{ usermodule.start_date }} (Week {{usermodule.week_of_study}})</td></tr>
+            <tr><th>SQ</th><td>{% sqchange 0 usermodule.sq %} {% sqdifficulty usermodule.sq module.sq %}</td></tr>
+        {% else %}
+            <tr><th>Difficulty</th><td>{% sqdifficulty 100 module.sq %}</td></tr>
+        {% endif %}
+        </td></tr>
+        </table>
+
+        <blockquote>{{ module.description }} </blockquote>
+
+        <h5>Actions</h5>
+        <a href="{% url question-modulei-exam modulei_id=modulei.id %}" class="buttonlink questionbutton">Questions</a>
+        <a href="{% url resource-modulei-userresources modulei_id=modulei.id %}" class="buttonlink resourcebutton">Study</a>
+        <a href="{{ modulei.module.id }}" class="buttonlink progressbutton">Progress</a>
+
+        {% include "_memberships.html" %}
+
+    {% else %}
+        <p>No curriculum information available.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+{% endblock %}

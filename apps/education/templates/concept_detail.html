@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url network-detail network_id=concept.network.id %}">{{ concept.network }}</a>
+    &raquo; {{ concept }}
+{% endblock %}
+
+{% block content_left %}
+
+    {% if concept %}
+    
+        <h1>{{ concept.name }}</h1>
+
+        <table>
+            <tr><th>SQ</th><td>
+                {% if userconcept %}
+                    {% sqchange 100 userconcept.sq %}
+                {% endif %}
+                
+                {% sqdifficulty concept.sq request.user.get_profile.sq %}
+            </td></tr>
+        </table>
+
+        <blockquote>{{ concept.description }}</blockquote>
+
+        {% if userconcept %}
+
+        {% else %}
+
+            <h3>Registration</h3>
+            <p>Join this module for access to learning materials and to study for exams.</p>
+            <!-- Registration form -->
+            <form action="{% url concept-register concept_id=concept.id concept_id=concept.id%}" method="post">
+            <input type="hidden" name="submit" value="1" />
+            &nbsp;<input type="submit" value="Register &raquo;" />
+            </form>
+
+        {% endif %}
+
+        <p>
+            <a href="{% url concept-exam concept_id=concept.id %}" class="questionlink">Questions</a>
+            <a href="{% url concept-resources concept_id=concept.id %}" class="resourcelink">Study</a>
+        </p>
+
+        <p>
+            <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Add Questions</a>
+        </p>
+
+    {% else %}
+        <p>No curriculum information available.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+{% endblock %}

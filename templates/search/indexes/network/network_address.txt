@@ -1,0 +1,4 @@
+{{ object.city }}
+{{ object.state }}
+{{ object.postcode }}
+{{ object.country.printable_name }}

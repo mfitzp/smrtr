@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load spenglr_sq_tags %}
 {% load avatar_tags %}
+{% load countries_tags %}
 
 {% cycle 'odd' 'even' as zebra %}
 
@@ -23,7 +25,7 @@
             <tr>
             <th>Location</th>
             <td><a href="http://maps.google.com/maps?q={{ profile.locationquery|urlencode }}&amp;t=h" target="_blank">
-                {{ profile.city }}, {{ profile.country }}
+                {{ profile.city }}, <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span>
             </a></td></tr>
         {% endif %}
         
@@ -32,8 +34,25 @@
 
         <blockquote>{{ profile.about }}</blockquote>
     
-        <a href="{% url avatar_change %}">Change your profile picture</a>
-  
+        {% ifequal puser user %}
+            <a href="{% url avatar_change %}">Change your profile picture</a><br />
+            
+            {% url admin:password_change as password_change_url %}
+            {% if password_change_url %}
+                <a href="{{ password_change_url }}">
+            {% else %}
+                <a href="{{ root_path }}password_change/">
+            {% endif %}
+            {% trans 'Change password' %}</a>
+
+        {% else %}
+
+            <a href="{% url messages_compose_to recipient=puser.username %}">Send me a private message</a>
+
+
+        {% endifequal %}
+
+
 
     {% else %}
         <p>No profile available.</p>

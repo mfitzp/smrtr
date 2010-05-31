@@ -1,0 +1,9 @@
+{{ object.content }}
+
+{% for answer in object.answer_set.all %}
+    {{ answer.content }}
+{% endfor %}
+
+{% for tag in object.get_tags %}
+    {{ tag }}
+{% endfor %}

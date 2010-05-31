@@ -3,121 +3,109 @@ from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 # Spenglr
 from network.models import Network,UserNetwork
+from resources.models import Resource
 from sq.utils import * 
 # External
 from countries.models import Country
 from datetime import date as _date
 from wall.models import Wall
 
-# Definitions of courses available and associated modules
-# Courses and Modules are both tied to 'home' networks (providers) however they
-# are then assembled into combinations - allowing modules to be used on
-# multiple courses for example. This hierarchy is managed through Instances
-# NOTE: This is not navigable upstream i.e. moduleinstance > course (not courseinstance)
-# navigation upstream in this manner is handled through UserCourse/UserModule trees
+# Network = Course now e.g. 'Network' for AQA Biology
+# Below this modules are the basis of study on that modules may have a home network, be tied to a specific network, or freely open
+# Below modules 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
-class Course(models.Model):
+# Definitions of courses available and their constituent concepts
+# Subjects are tied to a home network
+class Module(models.Model):
     def __unicode__(self):
         return self.name
     # Auto-add a new wall object when creating new Course
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
-            super(Course, self).save(force_insert, force_update)
+            super(Module, self).save(force_insert, force_update)
             self.wall = Wall.objects.create(slug='c'+str(self.id),name=self.name)
-        super(Course, self).save(force_insert, force_update)
+        super(Module, self).save(force_insert, force_update)
 
     def update_sq(self):
         # update
-        self.sq = self.modules.aggregate(Avg('sq'))['sq__avg']
+        self.sq = self.concepts.aggregate(Avg('sq'))['sq__avg']
         self.save()
 
-    network = models.ForeignKey(Network)
+    # Home network for e.g. company-specific subjects
+    network = models.ForeignKey(Network, blank = True, null = True) 
+    # Networks offering this module
+    networks = models.ManyToManyField(Network, related_name='modules')
+    
+    # Users
+    users = models.ManyToManyField(User, through='UserModule', related_name='modules')
+    
     name = models.CharField(max_length=75)
+
     description = models.TextField(blank = True)
-    start_date = models.DateField('start date')    
-    qualification = models.ForeignKey('Qualification', blank = True, null = True) # Standardised qualification level
-    modules = models.ManyToManyField('Module', related_name='courses', through='ModuleInstance')
-    provided_by = models.ManyToManyField(Network, related_name='courses_provided', through='CourseInstance')
-    url = models.URLField(verify_exists = True, blank = True) # External website for additional course information (e.g. provider site)
+
     sq = models.IntegerField(editable = False, null = True)
     # Optional wall for this object
     wall = models.OneToOneField(Wall, editable = False, null = True)
 
-# NOTE: This linker model may be unnnecessary
-# Course as offered by a specific network
-class CourseInstance(models.Model):
-    def __unicode__(self):
-        return self.course.name
-    def memberships(self):
-        return self.usercourse_set.all()
+# Concepts for this module
+    concepts = models.ManyToManyField('Concept')
+    
+    
+    
 
-    members = models.ManyToManyField(User, through='UserCourse', related_name='courses')
-    network = models.ForeignKey(Network)
-    course = models.ForeignKey(Course)
-
-class Module(models.Model):
+# Element is a defining part of a course 
+# Elements are always tied to a specific subject?? Or freely available
+# If an individual concept is self-contained area of study e.g. 'thermodynamics' (that's possibly a bit big)
+# may be allocated widely, module components?
+class Concept(models.Model):
     def __unicode__(self):
         return self.name
-    # Auto-add a new wall object when creating new Module
+    # Auto-add a new wall object when creating new Concept
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
-            super(Module, self).save(force_insert, force_update)
+            super(Concept, self).save(force_insert, force_update)
             self.wall = Wall.objects.create(slug='m'+str(self.id),name=self.name)
-        super(Module, self).save(force_insert, force_update)
+        super(Concept, self).save(force_insert, force_update)
 
     def update_sq(self):
         # update
         self.sq = self.question_set.aggregate(Avg('sq'))['sq__avg']
         self.save()
 
-    network = models.ForeignKey(Network)
+    # Home network for e.g. company-specific concepts
+    network = models.ForeignKey(Network, blank = True, null = True) 
     name = models.CharField(max_length=75)
-    code = models.CharField(max_length=10,blank = True)
     description = models.TextField(blank = True)
-    credits = models.IntegerField(default=10)
+    
+    # Users
+    users = models.ManyToManyField(User, through='UserConcept', related_name='concepts')
+
     sq = models.IntegerField(editable = False, null = True)
     # Optional wall for this object
     wall = models.OneToOneField(Wall, editable = False, null = True)
-
-# Module as used by a specific course
-class ModuleInstance(models.Model):
-    def __unicode__(self):
-        return self.module.name
-    def memberships(self):
-        return UserModule.objects.filter(modulei=self)
-    start_week = models.IntegerField(default = 1)
-    members = models.ManyToManyField(User, through='UserModule', related_name='modules')
-    course = models.ForeignKey(Course)
-    module = models.ForeignKey(Module)
-
-# NOTE: The CourseInstance/ModuleInstance models do not allow a through-route from a module to it's hosted network
-# as it directs through the generic model, not the instance (moduleinstance->course not moduleinstance->courseinstance)
-# because this would require massive duplication of trees. If this traversal is required, it is possible through the
-# user tree instead (which is incidentally the only time it would be needed, woop woop)
-
-
-
-
+    
+    # Resources (through conceptresource for bookmarks)
+    resource = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
 
 # Study models store information about user's experience with education
 # Models are ManytoMany through Models (ie they are used as the basis for linking
 # other models together, while appending additional information
 
-class UserCourse(models.Model):
+class UserModule(models.Model):
     def __unicode__(self):
-        return self.coursei.course.name
+        return self.module.name
     # Shortcuts through tree
     def network(self):
         return self.coursei.network
-    def course(self):
-        return self.coursei.course
+    def subject(self):
+        return self.subjecti.subject
     # Additional information
     def year_of_study(self):
         return ( ( _date.today() - self.start_date  ).days / 365 )+1
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
     def update_sq(self):
-        self.sq = self.usermodule_set.aggregate(Avg('sq'))['sq__avg']
+        self.sq = UserConcept.objects.filter(user=self.user, concept__module = self.module).aggregate(Avg('sq'))['sq__avg']
         self.save()
     # Users on this module in this specific context (network:course)
     def members_class(self):
@@ -134,19 +122,16 @@ class UserCourse(models.Model):
         return User.objects.filter(usercourse__coursei__course=self.coursei.course)
 
     user = models.ForeignKey(User)
-    usernetwork = models.ForeignKey(UserNetwork) # Up tree
+    module = models.ForeignKey(Module)
 
-    # Course instance
-    coursei = models.ForeignKey(CourseInstance)
-
-    start_date = models.DateField(null = True)
-    end_date = models.DateField(null = True)
+    start_date = models.DateTimeField(auto_now_add = True)
+    end_date = models.DateTimeField(null = True)
 
     sq = models.IntegerField(editable = False, null = True)
 
-class UserModule(models.Model):
+class UserConcept(models.Model):
     def __unicode__(self):
-        return self.modulei.module.name
+        return self.concept.name
     # Shortcuts through tree
     def network(self):
         return self.usercourse.coursei.network
@@ -166,7 +151,7 @@ class UserModule(models.Model):
         # x = qSQ (question's SQ)
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.modulei.module.question_set.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        data = self.concept.question_set.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
     # Users on this module in this specific context (network:course:module)
@@ -185,13 +170,10 @@ class UserModule(models.Model):
         return User.objects.filter( usermodule__modulei__module=self.module() )
     
     user = models.ForeignKey(User)
-    usercourse = models.ForeignKey(UserCourse) # Up tree
+    concept = models.ForeignKey(Concept)
 
-    # Module instance
-    modulei = models.ForeignKey(ModuleInstance)
-
-    start_date = models.DateField(null = True) 
-    end_date = models.DateField(null = True) 
+    start_date = models.DateTimeField(auto_now_add = True) 
+    end_date = models.DateTimeField(null = True) 
 
     sq = models.IntegerField(editable = False, null = True)
     focus = models.IntegerField( default = 0,editable = False)
@@ -199,50 +181,13 @@ class UserModule(models.Model):
 
 
 
-# Qualification types available, level is arbitrary comparison
-# Use standardised tables to build this e.g.
-# http://en.wikipedia.org/wiki/Scottish_Credit_and_Qualifications_Framework
-# http://en.wikipedia.org/wiki/UCAS_Tariff
-# A seperate sub-table giving relationships at grade level may be neccessary
-class Qualification(models.Model):
+
+# Resource attached to specific question
+# Use this model to specify question-specific bookmarks in the resource, for example 
+# page numbers, chapters, timestamp, #anchors etc.??
+class ConceptResource(models.Model):
     def __unicode__(self):
-        return self.name
-
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank = True)
-    level = models.IntegerField(blank = True)
-    country = models.ForeignKey(Country, blank = True, null = True)
-    members = models.ManyToManyField(User, through='UserQualification', related_name='qualifications')
-
-
-class Exam(models.Model):
-    def __unicode__(self):
-        return parent.name
-    module = models.ForeignKey('Module')
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank = True)
-    date = models.DateTimeField('exam date')
-    members = models.ManyToManyField(User, through='UserExam', related_name='exams')
-
-
-
-
-
-class UserQualification(models.Model):
-    def __unicode__(self):
-        return self.qualification.name
-    user = models.ForeignKey(User)
-    qualification = models.ForeignKey(Qualification, related_name='memberships')
-    date = models.DateField()
-    result = models.FloatField() # Store as grade value and provide alternative conversion patterns (70>A, etc.)
-    # course = models.ForeignKey(UserCourse) # Qualifications always assigned to specific courses (access via qualification>course)
-
-class UserExam(models.Model):
-    def __unicode__(self):
-        return self.exam.name
-    user = models.ForeignKey(User)
-    exam = models.ForeignKey(Exam, related_name='memberships')
-    # course acess via exam.course
-    result = models.IntegerField(blank = True, null = True)
-
-
+        return self.title
+        
+    resource = models.ForeignKey(Resource)
+    concept = models.ForeignKey(Concept)    

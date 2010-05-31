@@ -186,6 +186,7 @@ class Resource(models.Model):
     tags = TagField()
 
 
+
 # User's suggested resources (taken from incorrectly answered questions)
 class UserResource(models.Model):
     class Meta:

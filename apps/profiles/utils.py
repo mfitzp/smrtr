@@ -15,4 +15,4 @@ def batch_user_update_sq():
     objects = UserProfile.objects.order_by('?')[:100]
 
     for o in objects:
-        o.update_sq() # Call SQ recalculation for this course
+        o.update_sq() # Call SQ recalculation for this user

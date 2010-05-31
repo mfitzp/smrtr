@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
+    &raquo; <a href="{% url module-detail module_id=module.id %}">{{ module }}</a>
+    &raquo; Questions
+{% endblock %}
+
+{% block content %}
+
+    {% if questions %}
+        <table>
+        <caption>Latest Questions in {{module}}</caption>
+        <tr><th scope="column">Question Name</th><th scope="column">Posted</th></tr>
+        {% for question in questions %}
+            <tr>
+                <td><a href="/questions/{{ question.id }}">{{ question|truncatewords:15 }}</a></td>
+                <td>{{ question.last_updated|timesince }} ago</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No questions available.</p>
+    {% endif %}
+
+{% endblock %}

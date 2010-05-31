@@ -14,5 +14,5 @@ urlpatterns = patterns('',
 
         url(r'^(?P<resource_id>\d+)/$', 'resources.views.resource_detail', name='resource-detail' ),
 
-        url(r'^mi(?P<modulei_id>\d+)$', 'resources.views.module_userresources', name='resource-modulei-userresources' ),
+
 )

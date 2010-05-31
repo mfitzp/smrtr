@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
+from django.core.urlresolvers import reverse
 # Spenglr
 from resources.models import Resource
-from education.models import Module
+from education.models import Concept
 from sq.utils import * 
 # Externals
 from tagging.fields import TagField
@@ -19,6 +20,9 @@ class Question(models.Model):
         return self.content
     def answers_shuffled(self):
         return self.answer_set.order_by('?')
+        
+    def get_absolute_url(self):
+        return reverse('question-detail', urlconf=None, args=None, kwargs={ 'question_id':str(self.id) } )        
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
@@ -33,9 +37,8 @@ class Question(models.Model):
         self.save()
 
     content = models.TextField()
-    # Multiple resource records for this Question, resources assigned to >1 question
-    resources = models.ManyToManyField(Resource, blank=True, through='QuestionResource') 
-    modules = models.ManyToManyField(Module, blank=True)
+    concepts = models.ManyToManyField(Concept, blank=True) #, related_name='questions'
+    
     created = models.DateTimeField(auto_now_add = True)
     last_updated = models.DateTimeField(auto_now = True)
     tags = TagField()
@@ -47,16 +50,6 @@ class Answer(models.Model):
     content = models.CharField(max_length=200)
     is_correct = models.BooleanField()
 
-
-# Resource attached to specific question
-# Use this module to specify question-specific bookmarks in the resource, for example 
-# page numbers, chapters, timestamp, #anchors etc.
-class QuestionResource(models.Model):
-    def __unicode__(self):
-        return self.title
-
-    resource = models.ForeignKey(Resource)
-    question = models.ForeignKey(Question)    
 
 # Following models store user relationships with questions and resources
 # User's attempts at questions

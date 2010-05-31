@@ -1,11 +1,34 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
+from django.core.urlresolvers import reverse
 # Externals
 from countries.models import Country
 from datetime import date as _date
 from wall.models import Wall
 
+
+# Network = Course now e.g. 'Network' for AQA Biology
+# Network is any grouping of people that exists to support study - for example a course, institution, organisation
+
+TYPE_CHOICES = (
+        (0, 'Other'),
+        (1, 'Educational Institution'),
+        (2, 'Examination Board'),
+        (3, 'Organisation'),
+        (4, 'Community'),
+        (5, 'Course'),
+    )
+
+STAGE_CHOICES = (
+        (0, 'Other'),
+        (1, 'Preschool'),
+        (2, 'Primary'),
+        (3, 'Middle'),
+        (4, 'Secondary'),
+        (5, 'Tertiary'),
+        (6, 'Vocational'),
+    )
 
 # Education models contain educational structure from institution to module exam
 # INSERT INTO education_institution (name,address_1,address_2,city,state,country_id,postcode,telno,stage) SELECT SCHOOL_NAME as name,STREET as address_1, LOCALITY as address_2, TOWN as city, COUNTY as state, 'GB' as country_id, POSTCODE as postcode, CONCAT(0,TEL_STD,' ',TEL_NO) as telno,stage as stage FROM `school_list` WHERE 1
@@ -19,12 +42,29 @@ class Network(models.Model):
             super(Network, self).save(force_insert, force_update)
             self.wall = Wall.objects.create(slug='n'+str(self.id),name=self.name)
         super(Network, self).save(force_insert, force_update)
+        
+    def get_absolute_url(self):
+        return reverse('network-detail', urlconf=None, args=None, kwargs={ 'network_id':str(self.id) } )
 
     def locationquery(self):
+        query = list()
+        if self.address_1:
+            query.append(self.address_1)
+        if self.address_2:
+            query.append(self.address_2)
+        if self.city:
+            query.append(self.city)
         if self.postcode:
-            return self.postcode
-        else:
-            return self.city + ', ' + self.country.printable_name
+            query.append(self.postcode)
+        if self.state:
+            query.append(self.state)
+        if self.country:
+            query.append(self.country.printable_name)
+                
+        return "".join(["%s, " % (v) for v in query])
+            
+    def location_is_set(self):
+        return ( self.city or self.country_id )
 
     def memberships(self):
         return UserNetwork.objects.filter(network=self)
@@ -43,33 +83,23 @@ class Network(models.Model):
     country = models.ForeignKey(Country, null = True, blank = True)
     telno = models.CharField('Telephone', max_length=50, blank = True)
     url = models.URLField(verify_exists = True, blank = True)
-    TYPE_CHOICES = (
-        (0, 'Other'),
-        (1, 'Educational Institution'),
-        (2, 'Examination Board'),
-        (3, 'Organisation'),
-        (4, 'Community'),
-    )
+
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, null = True, blank = True)
-    STAGE_CHOICES = (
-        (0, 'Other'),
-        (1, 'Preschool'),
-        (2, 'Primary'),
-        (3, 'Middle'),
-        (4, 'Secondary'),
-        (5, 'Tertiary'),
-        (6, 'Vocational'),
-    )
     stage = models.PositiveSmallIntegerField(choices=STAGE_CHOICES, null = True, blank = True)
+
     members = models.ManyToManyField(User, through='UserNetwork', related_name='networks')
     # SQ average of members, rates network intelligence 
     sq = models.IntegerField(blank = True, null = True, editable = False)
     # Optional wall for this object
     wall = models.OneToOneField(Wall, editable = False, null = True)
+    # Parent network, courses at universities, or any other hierarchies stuff
+    parent = models.ForeignKey('Network', null = True, blank = True)
+    # Modules offered on this network - reverse from module
+    # modules = models.ManyToManyField('Module')
 
 class UserNetwork(models.Model):
     def __unicode__(self):
         return self.network.name
     user = models.ForeignKey(User)
     network = models.ForeignKey(Network)
-    start_date = models.DateField(editable = False, auto_now_add = True) # Join date for the network
+    start_date = models.DateTimeField(editable = False, auto_now_add = True) # Join date for the network

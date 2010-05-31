@@ -64,6 +64,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'pagination.middleware.PaginationMiddleware',
     'core.middleware.RequireLoginMiddleware',
 )
 
@@ -96,8 +97,11 @@ INSTALLED_APPS = (
     'notification', #http://github.com/jtauber/django-notification
     'wall',  #http://github.com/jtauber/django-wall
     'picklefield',  #http://github.com/shrubberysoft/django-picklefield
-    #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
+    #TODO: 'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
     'flowplayer', #http://github.com/mfitzp/django-flowplayer
+    'haystack', #http://haystacksearch.org/ http://github.com/toastdriven/django-haystack/tree/master  + xapian-haystack
+    'pagination', #http://code.google.com/p/django-pagination
+    'messages', #http://code.google.com/p/django-messages/downloads/list  Private messaging application
 # Spenglr
     'core',
     'profiles',
@@ -112,7 +116,8 @@ CACHE_BACKEND = 'dummy:///'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
-    'django.core.context_processors.request'
+    'django.core.context_processors.request',
+    'messages.context_processors.inbox',
 )
 
 AUTH_PROFILE_MODULE = "profiles.userprofile"
@@ -127,12 +132,9 @@ FORCE_LOWERCASE_TAGS = True
 
 # +/1 Range between levels of difficulty
 SQ_FAIR_RANGE = 20
-
 SQ_UPPER_LIMIT = 200
 SQ_LOWER_LIMIT = 0
-
 SQ_READOFF_MARK = 50
-
 SQ_PINNING_WEIGHT = 0.1
 
 # External avatar app setting (storage under /media/avatar)
@@ -147,6 +149,12 @@ FLOWPLAYER_CONFIG = {
                             { 'clip' : { 'autoPlay':'false' }, },
                     }
 
+COUNTRIES_FLAG_PATH = 'img/flags/%s.png'
+
+HAYSTACK_SITECONF = 'search_sites'
+HAYSTACK_SEARCH_ENGINE = 'xapian'
+
+HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_index'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
