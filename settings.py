@@ -1,4 +1,5 @@
 import os.path 
+import sys
 
 # Django settings for spenglr project.
 
@@ -78,6 +79,9 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), 'templates'),
 )
 
+sys.path.append(os.path.join(os.path.dirname(__file__), 'apps'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'external'))
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -110,6 +114,7 @@ INSTALLED_APPS = (
     'questions',
     'resources',
     'sq',
+    'challenge',
 )
 
 CACHE_BACKEND = 'dummy:///'

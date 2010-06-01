@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 # Spenglr
 from questions.models import Question
+from education.models import Concept
 from network.models import Network
 from sq.utils import * 
 # External
@@ -27,11 +28,11 @@ class Challenge(models.Model):
     description = models.TextField(blank = True)
 
     # List of questions included in this challenge, used for outputting questions to users
-    questions = models.ManyToMany(Question)
+    questions = models.ManyToManyField(Question)
 
     # Challenge definition: used to build the above questions
     # Only used when editing/updating list, not outputting questions
-    config_concepts = models.ManyToMany(Concept) # Concepts to source questions from
+    config_concepts = models.ManyToManyField(Concept) # Concepts to source questions from
     config_number = models.IntegerField(blank = True, null = True, default = 10) # Number of questions
     config_minsq = models.IntegerField(blank = True, null = True) # Min SQ for questions
     config_maxsq = models.IntegerField(blank = True, null = True) # Max SQ for questions
@@ -49,7 +50,7 @@ class Challenge(models.Model):
     #privacy = Public, Network, Private
 
 
-class UserChallenge(modules.Model):
+class UserChallenge(models.Model):
     def update_sq(self):
         # Get user's attempts on this challenges's questions 
         # group by x
