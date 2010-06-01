@@ -48,6 +48,8 @@ class Network(models.Model):
 
     def locationquery(self):
         query = list()
+        query.append(self.name)
+        
         if self.address_1:
             query.append(self.address_1)
         if self.address_2:
