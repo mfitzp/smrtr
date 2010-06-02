@@ -112,8 +112,8 @@ def do(request, challenge_id):
     #TODO: How do we select questions from the challenge queue to present? 
     #If returning in order will need to keep progress flag in userchallenge object
     #makes more sense, and allows for 'completion' of challenge
-    #FIXME: Return 10Qs in order, using progress flag in users bit
-    questions = challenge.questions.order_by('?')[:10] # Returns 10 random questions
+    #FIXME: Return 10Qs from X, using progress flag in users bit
+    questions = challenge.questions[:10] # Returns 10 questions (NOT random, randomised in generation) 
 
     return render_to_response('challenge_do.html', {'challenge': challenge, 'userchallenge':userchallenge, 'questions': questions}, context_instance=RequestContext(request))
 
@@ -122,7 +122,7 @@ def do_submit(request, challenge_id):
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
     questions = list()
 
-    challenge = get_object_or_404(Challenge, pk=concept_id)
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
 
     # If the user is registered on this concept pull record
     try:

@@ -70,6 +70,14 @@ class UserChallenge(models.Model):
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
 
+    STATUS_CHOICES = (
+            (0, 'New'),
+            (1, 'Active'),
+            (2, 'Complete'),
+        )
+
+    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, null = False, editable = False, default = 0)
+
     # Number of attempts for this set of questions
     attempts = models.IntegerField(editable = False, null = True)
     # SQ for this set of questions

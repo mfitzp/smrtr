@@ -2,15 +2,15 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; <a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a>
+    &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a>
     &raquo; Questions Answered
 {% endblock %}
 
 
 {% block content %}
 
-    {% if concept %}
-        <h1>{{ concept }}</h1>
+    {% if challenge %}
+        <h1>{{ challenge }}</h1>
         <p>You answered {{totals.correct}} out of {{totals.answered}} ( {{totals.percent}}% ) questions correctly.</p>
         {% if questions %}
             {% for question in questions %}

@@ -9,25 +9,55 @@
     {% if userconcepts %}
         <div id="dashboard">
 
-        {% if conceptfocus %}
-        <div id="focus" style="position:relative">
-        <h5>{{ conceptfocus }}</h5>
-        <div style="position:absolute;top:10px;right:10px;font-weight:bold;font-size:1.8em;">{% sqchange 100 conceptfocus.sq %}</div>
-        <blockquote>{{ conceptfocus.concept.description }}</blockquote>
+        <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5>
         <table>
-        <tr><th>Studying</th><td>{{ conceptfocus.start_date|timesince }}</td></tr>
-        <tr><th>Complete</th><td><div class="progress" style="width:{% widthratio 4 5 100 %}px;"></div></td></tr>
-        <tr><th>Speed</th><td><div class="progress" style="width:{% widthratio 1 5 100 %}px;"></div></td></tr>
-        <tr><th>Progress</th><td><div class="progress" style="width:{% widthratio 3 5 100 %}px;"></div></td></tr>
-        </table>
-        <p style="text-align:right">
-            <a href="{ % url concept-exam concept_id=conceptfocus.concept.id % }" class="questionlink">Questions &raquo;</a>
-            <a href="{ % url concept-resources concept_id=conceptfocus.concept.id % }" class="resourcelink">Study &raquo;</a>
-        </p>
-        </div>
+        {% for userchallenge in userchallenges %}
+        
+        {% if forloop.first %}
+            <tr id="focus"><td colspan="10">
+            <div id="focus" style="position:relative">
+            <h5>{{ userchallenge }}</h5>
+            <div style="position:absolute;top:10px;right:10px;font-weight:bold;font-size:1.8em;">{% sqchange 100 userchallenge.challenge.sq %}</div>
+            <blockquote>{{ userchallenge.challenge.description }}</blockquote>
+            <table>
+            <tr><th>Studying</th><td>{{ userchallenge.start_date|timesince }}</td></tr>
+            <tr><th>Progress</th><td><div class="progress" style="width:{% widthratio 3 5 100 %}px;"></div></td></tr>
+            </table>
+            <p style="text-align:right">
+                    {% ifequal userchallenge.status 0 %}
+                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
+                    {% else %}
+                        {% ifequal userchallenge.status 1 %}                    
+                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Continue</a>                        
+                        {% endifequal %}
+                    {% endifequal %}
+            </p>
+            </div>
+            </td></tr>
+        {% else %}               
+        
+            <tr class="{% cycle zebra %}">
+                <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
+                <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
+                <td>{{ userchallenge.last_access|timesince }}</td>
+                <td>    
+                    {% ifequal userchallenge.status 0 %}
+                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
+                    {% else %}
+                        {% ifequal userchallenge.status 1 %}                    
+                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Continue</a>                        
+                        {% endifequal %}
+                    {% endifequal %}
+                </td>
+            </tr>
+            
         {% endif %}
+            
+        {% endfor %}
+        </table>
 
 
+        <h5>Concepts</h5>
         <table>
         {% for userconcept in userconcepts %}
             <tr class="{% cycle zebra %}">
@@ -37,19 +67,6 @@
                 <td><a href="{ % url concept-exam concept_id=userconcept.concept.id % }" class="questionlink">Questions</a></td>
                 <td><a href="{ % url concept-resources concept_id=userconcept.concept.id % }" class="resourcelink">Study</a></td>
                 <td><a href="progress/m/{{ user_concept.concept.id }}" class="progresslink">Progress</a></td>
-                <td>
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
-
-        <h5>Challenges</h5>
-        <table>
-        {% for userchallenge in userchallenges %}
-            <tr class="{% cycle zebra %}">
-                <td class="dbcurriculumconcept"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
-                <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
-                <td><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="questionlink">Go...</a></td>
                 <td>
                 </td>
             </tr>

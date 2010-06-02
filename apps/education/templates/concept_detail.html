@@ -21,6 +21,11 @@
                 
                 {% sqdifficulty concept.sq request.user.get_profile.sq %}
             </td></tr>
+            {% if userconcept %}
+                <tr><th>Studying</th><td>{{ userconcept.start_date|timesince }}</td></tr>
+                <tr><th>Progress</th><td><div class="progress" style="width:{% widthratio 3 5 100 %}px;"></div></td></tr>            
+            {% endif %}
+            
         </table>
 
         <blockquote>{{ concept.description }}</blockquote>
@@ -40,7 +45,7 @@
         {% endif %}
 
         <p>
-            <a href="{% url concept-exam concept_id=concept.id %}" class="questionlink">Questions</a>
+            <a href="{ % url concept-exam concept_id=concept.id % }" class="questionlink">Questions</a>
             <a href="{% url concept-resources concept_id=concept.id %}" class="resourcelink">Study</a>
         </p>
 

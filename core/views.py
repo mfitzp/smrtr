@@ -21,10 +21,7 @@ def index(request):
         usermodules = request.user.usermodule_set.all()
         userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
 
-        conceptfocus = userconcepts.order_by('-focus')[0]
-        userconcepts = userconcepts[1:]
-
-        userchallenges = request.user.userchallenge_set.all()
+        userchallenges = request.user.userchallenge_set.all().order_by('status')
 
         # Get next activated concepts (available by modules reverse SQ), retrieving 5
         # Gets all concepts that are available (on user's modules) but not active
@@ -74,8 +71,7 @@ def index(request):
             'usernetworks': usernetworks,
             'usermodules': usermodules,
             'userconcepts': userconcepts,
-            # Focus / Suggest
-            'conceptfocus' : conceptfocus,
+            # Suggest
             'suggestconcepts' : suggestconcepts,
             # Challenges
             'userchallenges': userchallenges,
