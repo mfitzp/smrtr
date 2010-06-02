@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.admin import widgets                                       
 # Spenglr
 from challenge.models import *
+from education.models import *
 # External
 # from haystack.forms import SearchForm
 
@@ -10,9 +11,10 @@ class ChallengeForm(forms.ModelForm):
         model = Challenge
     def __init__(self, *args, **kwargs):
         super(ChallengeForm, self).__init__(*args, **kwargs)
+        
     name = forms.CharField(required=True)
     description = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'textarea'}))
-    concepts = forms.CharField(label='Concepts covered', widget=forms.TextInput(attrs={'class':'hiddeninput'})) # Concepts to source questions from
+    concepts = forms.ModelMultipleChoiceField(label='Concepts covered',queryset=Concept.objects.none()) # Concepts to source questions from
     total_questions = forms.IntegerField(label='Max number of questions',required=False) # Number of questions
     minsq = forms.IntegerField(label='Min SQ',required=False) # Min SQ for questions
     maxsq = forms.IntegerField(label='Max SQ',required=False) # Max SQ for questions

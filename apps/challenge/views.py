@@ -35,7 +35,8 @@ def edit(request, challenge_id = None):
     if request.POST.get('name'):
     
         form = ChallengeForm(request.POST, instance=challenge)       
-        
+        form.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user)
+                
         if form.is_valid(): # All validation rules pass
             
             # Update challenge instance object and save
@@ -66,7 +67,11 @@ def edit(request, challenge_id = None):
             }
         # TODO: Prefill concepts from csv list on query url
         # TODO: Prefill name/description (if not set yet) based on contents of concept list
+        
         form = ChallengeForm(initial=prefill, instance=challenge) 
+        
+        # Provide concept-possibilities (from user's own lists)
+        form.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user)
 
     context = { 
         'form': form,
@@ -113,7 +118,7 @@ def do(request, challenge_id):
     #If returning in order will need to keep progress flag in userchallenge object
     #makes more sense, and allows for 'completion' of challenge
     #FIXME: Return 10Qs from X, using progress flag in users bit
-    questions = challenge.questions[:10] # Returns 10 questions (NOT random, randomised in generation) 
+    questions = challenge.questions.all()[:10] # Returns 10 questions (NOT random, randomised in generation) 
 
     return render_to_response('challenge_do.html', {'challenge': challenge, 'userchallenge':userchallenge, 'questions': questions}, context_instance=RequestContext(request))
 
@@ -129,7 +134,7 @@ def do_submit(request, challenge_id):
         userchallenge = challenge.userchallenge_set.get( user=request.user )
     except:
         # Not found
-        #FIXME: Should this be another error code?
+        #FIXME: Should this be another error code? Access denied
         raise Http404
 
     # Iterate over all POST keys and pull out the question answer question-n fields
@@ -183,6 +188,8 @@ def do_submit(request, challenge_id):
     # Recalculate SQ values for this module/usermodule_set  
     # NOTE: May need to remove this is load too great?
     userchallenge.update_sq()
+    userchallenge.status = 2 #Complete
+    userchallenge.save()
 
     return render_to_response('challenge_do_submit.html', {'challenge': challenge,'userchallenge':userchallenge, 'questions': questions, 'totals': totals }, context_instance=RequestContext(request))
 
