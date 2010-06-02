@@ -19,7 +19,7 @@
                     {% sqchange 100 userchallenge.sq %}
                 {% endif %}
                 
-                {% sqdifficulty challenge.sq request.user.get_profile.sq %}
+                {% sqdifficulty request.user.get_profile.sq challenge.sq %}
             </td></tr>
         </table>
 

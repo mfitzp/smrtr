@@ -40,11 +40,11 @@ def edit(request, challenge_id = None):
         if form.is_valid(): # All validation rules pass
             
             # Update challenge instance object and save
-            challenge.name = form.cleaned_data['name']
-            challenge.description = form.cleaned_data['description']
+            challenge = form.save(commit=False)
             challenge.user = request.user
-            #challenge.concepts = form.cleaned_data['concepts']
             challenge.save()
+            form.save_m2m()
+            
             # Now populate question lists based on current settings
             challenge.update_questions()
             

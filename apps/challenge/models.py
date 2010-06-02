@@ -22,7 +22,12 @@ class Challenge(models.Model):
         # - through relationships back to this model ( question > question_concepts > concept > config_concepts )
         # - minSQ and maxSQ if these are set
         # - number of questions specified
-        self.questions = Question.objects.filter(sq__gte=self.minsq,sq__lte=self.maxsq)[0:self.total_questions]
+        self.questions = Question.objects.filter(
+                concepts__challenge=self,
+                sq__gte=self.minsq,
+                sq__lte=self.maxsq
+                )[0:self.total_questions]
+
         self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
         self.save()
         
