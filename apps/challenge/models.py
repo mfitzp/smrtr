@@ -22,35 +22,41 @@ class Challenge(models.Model):
         # - through relationships back to this model ( question > question_concepts > concept > config_concepts )
         # - minSQ and maxSQ if these are set
         # - number of questions specified
-        self.questions = Question.objects.filter(sq_gte==self.minsq,sq_lte==self.maxsq)[0:self.config.number]
+        self.questions = Question.objects.filter(sq__gte=self.minsq,sq__lte=self.maxsq)[0:self.total_questions]
+        self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
+        self.save()
         
     name = models.CharField(max_length=75)
     description = models.TextField(blank = True)
 
     # List of questions included in this challenge, used for outputting questions to users
-    questions = models.ManyToManyField(Question)
+    questions = models.ManyToManyField(Question, editable = False)
+    sq = models.IntegerField(editable = False, null = True) # Auto-filled from average of questions on populate
 
     # Challenge definition: used to build the above questions
     # Only used when editing/updating list, not outputting questions
-    config_concepts = models.ManyToManyField(Concept) # Concepts to source questions from
-    config_number = models.IntegerField(blank = True, null = True, default = 10) # Number of questions
-    config_minsq = models.IntegerField(blank = True, null = True) # Min SQ for questions
-    config_maxsq = models.IntegerField(blank = True, null = True) # Max SQ for questions
+    concepts = models.ManyToManyField(Concept) # Concepts to source questions from
+    total_questions = models.IntegerField(blank = True, null = True, default = 10) # Number of questions
+    minsq = models.IntegerField(blank = False, null = False, default = 0) # Min SQ for questions
+    maxsq = models.IntegerField(blank = False, null = False, default = 200) # Max SQ for questions
     # config_types = models.MultipleChoiceField(choices=questiontypes) # Types of questions (mcq, etc-not available yet)
 
     # Home network for e.g. company-specific challenges,restricted
-    network = models.ForeignKey(Network, blank = True, null = True) 
+    network = models.ForeignKey(Network, blank = True, null = True, editable = False) 
 
     # Created by
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, editable = False)
 
     # User's who have attempted this challenge and associated data
-    users = models.ManyToManyField(User, through='UserChallenge', related_name='challenges')
+    users = models.ManyToManyField(User, through='UserChallenge', related_name='challenges', editable = False)
 
     #privacy = Public, Network, Private
 
 
 class UserChallenge(models.Model):
+    def __unicode__(self):
+        return self.challenge.name
+        
     def update_sq(self):
         # Get user's attempts on this challenges's questions 
         # group by x

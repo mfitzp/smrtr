@@ -43,6 +43,18 @@
         {% endfor %}
         </table>
 
+        <h5>Challenges</h5>
+        <table>
+        {% for userchallenge in userchallenges %}
+            <tr class="{% cycle zebra %}">
+                <td class="dbcurriculumconcept"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
+                <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
+                <td><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="questionlink">Go...</a></td>
+                <td>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
 
         <h5>Ready for something new?</h5>
         {% if suggestconcepts %}

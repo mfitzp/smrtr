@@ -24,10 +24,13 @@ def index(request):
         conceptfocus = userconcepts.order_by('-focus')[0]
         userconcepts = userconcepts[1:]
 
+        userchallenges = request.user.userchallenge_set.all()
+
         # Get next activated concepts (available by modules reverse SQ), retrieving 5
         # Gets all concepts that are available (on user's modules) but not active
         # Later limit by 'dependencies on individual entries'
         suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
+
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
@@ -74,6 +77,8 @@ def index(request):
             # Focus / Suggest
             'conceptfocus' : conceptfocus,
             'suggestconcepts' : suggestconcepts,
+            # Challenges
+            'userchallenges': userchallenges,
             
             
             # Wall objects

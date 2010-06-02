@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load spenglr_sq_tags %}
+{% load pagination_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Challenge
+    &raquo; {{ challenge.name }}
+{% endblock %}
+
+
+{% block content %}
+
+    {% if challenge %}
+    
+        <h1>{{ challenge.name }}</h1>
+
+        <table>
+            <tr><th>SQ</th><td>{% sqchange 100 challenge.sq %} ({{ challenge.minsq }}-{{ challenge.maxsq }}) {% sqdifficulty challenge.sq request.user.get_profile.sq  %}</td></tr>
+            <tr><th>Questions</th><td>{{ challenge.total_questions }}</td></tr>    
+        </table>
+
+        <blockquote>{{ challenge.description }}</blockquote>
+
+        {% if challenge.concepts %}
+            <h3>Concepts Covered</h3>
+            <span class="stack">
+            {% for concept in challenge.concepts.all %}
+                    <a href="{% url concept-detail concept_id=concept.id %}" class="concept">{{ concept }}</a>
+            {% endfor %}
+            </span><br style="clear:both;" />
+        {% endif %}
+
+        {% if userchallenge %}
+            <h3>Performance</h3>    
+
+        {% else %}
+
+            <h3>Get Started</h3>
+            <p><a href="{% url challenge-do challenge_id=challenge.id %}">Start this challenge now...</a></p>
+
+        {% endif %}
+
+
+    {% else %}
+        <p>No challenge information available.</p>
+    {% endif %}
+ 
+{% endblock %}

@@ -10,6 +10,8 @@ from django.http import Http404
 from education.models import *
 from network.models import *
 from questions.models import *
+from challenge.models import *
+from challenge.forms import *
 # External
 from wall.forms import WallItemForm
 from haystack.query import SearchQuerySet
@@ -21,57 +23,76 @@ from haystack.query import SearchQuerySet
 # built from concepts, modules, tags, etc. (passed in as parameters)
 # Challenges may be public or private, and solo or group
 # Scoring can be individual or network based (e.g. university vs. university, course vs. course)
-def challenge_edit(request, challenge_id = None):
+def edit(request, challenge_id = None):
 
     if challenge_id:
+        # id passed we are editing previous Challenge object
         challenge = get_object_or_404(Challenge, pk=challenge_id)
     else:
-        # If no id passed, we are creating a new challenge object
-        challenge = Challenge
-        # FIXME: Temporarily just takes the url parameters and adds concepts 
-        # no way to add/remove manually from form
+        # If no id passed, we create a new challenge object
+        challenge = Challenge()
                 
-    if request.POST.get('addquestion'):
-        form = ChallengeForm(request.POST, instance=challenge)
+    if request.POST.get('name'):
+    
+        form = ChallengeForm(request.POST, instance=challenge)       
         
-        if form.is_valid():
-            query = form.cleaned_data['q']
-            results = form.search()
+        if form.is_valid(): # All validation rules pass
             
-            if form.is_valid(): # All validation rules pass
-
-                # Update challenge instance object and save
-                challenge.name = form.cleaned_data['subject']
-                challenge.description = form.cleaned_data['message']
-                challenge.concepts = form.cleaned_data['concepts']
-                # Now populate question lists based on current settings
-                challenge.update_questions()
-                challenge.save()
-
-                # Create userchallenge for the creating user (will need one anyway) and save
-                userchallenge = UserChallenge()
-                userchallenge.user = request.user
-                userchallenge.challenge = challenge
-                userchallenge.update_sq()
-                userchallenge.save()
-                
-                return HttpResponseRedirect( reverse('challenge_do',kwargs={'challenge_id':challenge.id} ) # Redirect to challenge_do for this challenge
+            # Update challenge instance object and save
+            challenge.name = form.cleaned_data['name']
+            challenge.description = form.cleaned_data['description']
+            challenge.user = request.user
+            #challenge.concepts = form.cleaned_data['concepts']
+            challenge.save()
+            # Now populate question lists based on current settings
+            challenge.update_questions()
+            
+            # Create userchallenge for the creating user (will need one anyway) and save
+            userchallenge = UserChallenge()
+            userchallenge.user = request.user
+            userchallenge.challenge = challenge
+            userchallenge.update_sq()
+            userchallenge.save()
+            
+            return HttpResponseRedirect( reverse('challenge-do',kwargs={'challenge_id':challenge.id} ) ) # Redirect to challenge_do for this challenge
+    
     else:
-        form = ChallengeForm(request.GET, instance=challenge) # An unbound form
+        prefill = {
+            'name':request.GET.get('name'),
+            'description':request.GET.get('description'),
+            'total_questions':request.GET.get('total_questions'),
+            'minsq':request.GET.get('minsq'),
+            'maxsq':request.GET.get('maxsq'),
+            }
+        # TODO: Prefill concepts from csv list on query url
+        # TODO: Prefill name/description (if not set yet) based on contents of concept list
+        form = ChallengeForm(initial=prefill, instance=challenge) 
 
     context = { 
         'form': form,
         'challenge':challenge,
     }
     
-    return render_to_response('challenge_create.html', context, context_instance=RequestContext(request))    
+    return render_to_response('challenge_edit.html', context, context_instance=RequestContext(request))    
   
 
+def detail(request, challenge_id):
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    #TODO: Access grant/deny
+        
+    # If the user has a challenge record retrieve it, or create a new one
+    try:
+        userchallenge = challenge.userchallenge_set.get( user=request.user )
+    except:
+        userchallenge = list()            
+
+    return render_to_response('challenge_view.html', {'challenge': challenge, 'userchallenge':userchallenge}, context_instance=RequestContext(request))
 
 
 
 
-def challenge_do(request, challenge_id):
+def do(request, challenge_id):
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     #TODO: Access grant/deny
@@ -96,7 +117,7 @@ def challenge_do(request, challenge_id):
 
     return render_to_response('challenge_do.html', {'challenge': challenge, 'userchallenge':userchallenge, 'questions': questions}, context_instance=RequestContext(request))
 
-def challenge_do_submit(request, challenge_id):
+def do_submit(request, challenge_id):
 
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
     questions = list()

@@ -21,7 +21,8 @@ urlpatterns = patterns('',
 
     (r'^network/', include('network.urls')),
     (r'^education/', include('education.urls')),
-    (r'^resources/', include('resources.urls')),
+    (r'^resources/', include('resources.urls')),    
+    (r'^challenge/', include('challenge.urls')),
 
     (r'^accounts/', include('registration.urls')),
     (r'^profile/', include('profiles.urls')),
