@@ -161,6 +161,10 @@ HAYSTACK_SEARCH_ENGINE = 'xapian'
 
 HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_index'
 
+# Some global urls for redirecting users nicely, error, 'finished', etc.
+SMRTR_FREE_TIME_URL = 'http://amanita-design.net/samorost-2/'
+
+
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:

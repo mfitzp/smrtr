@@ -10,7 +10,6 @@ from core.models import LoginForm
 from notification.models import Notice
 from wall.views import *
 
-
 def index(request):
     # External
     from wall.forms import WallItemForm
@@ -68,6 +67,8 @@ def index(request):
         # wi = wi.filter(author=request.user)
         #wi = wi.filter(author__usernetwork__network__usernetwork__user=request.user).distinct()
 
+        from settings import SMRTR_FREE_TIME_URL
+
         i = RequestContext(request, {
             'usernetworks': usernetworks,
             'usermodules': usermodules,
@@ -78,6 +79,7 @@ def index(request):
             'userchallenges': userchallenges,
             'userchallengescomplete': userchallengescomplete,
             
+            'SMRTR_FREE_TIME_URL': SMRTR_FREE_TIME_URL,
             
             # Wall objects
             # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
