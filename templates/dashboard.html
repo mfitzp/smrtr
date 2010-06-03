@@ -45,7 +45,7 @@
                     <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
                     {% else %}
                         {% ifequal userchallenge.status 1 %}                    
-                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Continue</a>                        
+                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a>                        
                         {% endifequal %}
                     {% endifequal %}
                 </td>
@@ -55,7 +55,7 @@
             
         {% endfor %}
         </table>
-
+        <br style="clear:both;" /><p><a href="" class="register">Show all available challenges &raquo;</a><p>
 
         <h5>Concepts</h5>
         <table>

@@ -58,13 +58,30 @@ def edit(request, challenge_id = None):
             return HttpResponseRedirect( reverse('challenge-do',kwargs={'challenge_id':challenge.id} ) ) # Redirect to challenge_do for this challenge
     
     else:
-        prefill = {
-            'name':request.GET.get('name'),
-            'description':request.GET.get('description'),
-            'total_questions':request.GET.get('total_questions'),
-            'minsq':request.GET.get('minsq'),
-            'maxsq':request.GET.get('maxsq'),
-            }
+        prefill = {}
+        prefillq = ['name','description','minsq','maxsq','total_questions']
+        
+        for src in prefillq:
+            if request.GET.get(src):
+                prefill[src] = request.GET.get(src)
+        
+        if request.GET.getlist('concepts'):
+            prefill['concepts'] = request.GET.getlist('concepts')
+        
+            if 'name' not in prefill:
+                name = list()
+                # Build suggested name from concept lists
+                for concept in prefill['concepts']:
+                    
+                    try:
+                        c = Concept.objects.get(pk=concept)
+                    except:
+                        pass
+                    else:
+                        name.append( c.name )
+                        
+                prefill['name'] = ', '  .join( name )
+        
         # TODO: Prefill concepts from csv list on query url
         # TODO: Prefill name/description (if not set yet) based on contents of concept list
         
@@ -107,11 +124,14 @@ def do(request, challenge_id):
         #TODO: Should only return if the challenge object is 'open'
         #UserChallenges should be closed on completion,re-attempts (if allowed)
         userchallenge = challenge.userchallenge_set.get( user=request.user )
+        userchallenge.status = 1 #Active
+        userchallenge.save()
     except:
         userchallenge = UserChallenge()
         userchallenge.user = request.user
         userchallenge.challenge = challenge
         userchallenge.update_sq() # Initial value from previous answers to included questions
+        userchallenge.status = 1 # Active
         userchallenge.save()              
 
     #TODO: How do we select questions from the challenge queue to present? 
