@@ -16,6 +16,4 @@ class ChallengeForm(forms.ModelForm):
     description = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'textarea'}))
     concepts = forms.ModelMultipleChoiceField(label='Concepts covered',queryset=Concept.objects.all()) # Concepts to source questions from
     total_questions = forms.IntegerField(label='Max number of questions',required=False) # Number of questions
-    minsq = forms.IntegerField(label='Min SQ',required=False) # Min SQ for questions
-    maxsq = forms.IntegerField(label='Max SQ',required=False) # Max SQ for questions
-       
+    targetsq = forms.IntegerField(label='Target SQ',required=False) # Min SQ for questions       

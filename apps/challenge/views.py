@@ -59,7 +59,7 @@ def edit(request, challenge_id = None):
     
     else:
         prefill = {}
-        prefillq = ['name','description','minsq','maxsq','total_questions']
+        prefillq = ['name','description','targetsq','total_questions']
         
         for src in prefillq:
             if request.GET.get(src):
@@ -81,6 +81,9 @@ def edit(request, challenge_id = None):
                         name.append( c.name )
                         
                 prefill['name'] = ', '  .join( name )
+        
+        if 'targetsq' not in prefill:
+            prefill['targetsq'] = request.user.get_profile().sq # If not set, find user's SQ and preset
         
         # TODO: Prefill concepts from csv list on query url
         # TODO: Prefill name/description (if not set yet) based on contents of concept list

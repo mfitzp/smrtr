@@ -44,13 +44,12 @@
 
         {% endif %}
 
+
+        <h5>Questions & Resources</h5>
         <p>
-            <a href="{ % url concept-exam concept_id=concept.id % }" class="questionlink">Questions</a>
-            <a href="{% url concept-resources concept_id=concept.id %}" class="resourcelink">Study</a>
+            There are <strong>{{ concept.question_set.count }} question{{ concept.question_set.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> available for {{ concept }}. Help yourself and others by <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Questions</a> or <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Resources</a> now.
         </p>
 
-        <p>
-            <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Add Questions</a>
         </p>
 
     {% else %}

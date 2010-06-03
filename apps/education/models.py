@@ -85,7 +85,7 @@ class Concept(models.Model):
     wall = models.OneToOneField(Wall, editable = False, null = True)
     
     # Resources (through conceptresource for bookmarks)
-    resource = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
+    resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
 
 # Study models store information about user's experience with education
 # Models are ManytoMany through Models (ie they are used as the basis for linking
