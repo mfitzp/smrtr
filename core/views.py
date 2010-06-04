@@ -20,8 +20,8 @@ def index(request):
         usermodules = request.user.usermodule_set.all()
         userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
 
-        userchallenges = request.user.userchallenge_set.filter(status__lt=3).order_by('status')[0:5]
-        userchallengescomplete = request.user.userchallenge_set.filter(status__exact=3)[0:3]
+        userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
+        userchallengescomplete = request.user.userchallenge_set.filter(status__exact=2)[0:3]
 
         # Get next activated concepts (available by modules reverse SQ), retrieving 5
         # Gets all concepts that are available (on user's modules) but not active
