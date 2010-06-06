@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # concept_ids, module_ids, home_network, privacy
     # Pass skip_config=true to bypass editing (useful for quick personal challenges: note user can invite another user at any time)    
     url(r'^create/$', 'challenge.views.edit', name='challenge-create' ),
+    url(r'^generate/$', 'challenge.views.generate', name='challenge-generate' ),
 
     url(r'^(?P<challenge_id>\d+)/$', 'challenge.views.detail', name='challenge-detail' ),
     url(r'^(?P<challenge_id>\d+)/edit/$', 'challenge.views.edit', name='challenge-edit' ),
@@ -20,5 +21,6 @@ urlpatterns = patterns('',
     url(r'^(?P<challenge_id>\d+)/do/$', 'challenge.views.do', name='challenge-do' ),
     url(r'^(?P<challenge_id>\d+)/do/submit/$', 'challenge.views.do_submit', name='challenge-do-submit'),
     
+
  
 )

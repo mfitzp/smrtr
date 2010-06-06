@@ -25,12 +25,19 @@ class Challenge(models.Model):
         # - randomise order here
         self.questions = Question.objects.filter(
                 concepts__challenge=self,
-                sq__gte=self.minsq,
-                sq__lte=self.maxsq
+#                sq__gte=self.sq + 20,
+#                sq__lte=self.sq - 20
                 ).order_by('?')[0:self.total_questions]
 
         self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
         self.save()
+        
+    # Auto-generate a name from the current list of concepts
+    def generate_name(self):
+        name = list()
+        for concept in self.concepts.all():
+            name.append( concept.name )
+        self.name = ', '  .join( name )
         
     name = models.CharField(max_length=75)
     description = models.TextField(blank = True)

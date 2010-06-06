@@ -61,9 +61,9 @@
         
             <tr id="focus"><td colspan="10">
             <div style="position:relative">
-            <h5>Challenge Complete</h5>
+            <h5>Challenge Complete!</h5>
             <p>Congratulations, you've completed your assigned challenges for today!</p>
-            <p><a href="{{ SMRTR_FREE_TIME_URL }}" target="_blank">Have a well-earned rest</a> or <a href="">get some more?</a></p>
+            <p><a href="{{ SMRTR_FREE_TIME_URL }}" target="_blank">Have a well-earned rest</a>, <a href="">study</a> or <a href="{% url challenge-generate %}">get some more?</a></p>
             </div>
             </td></tr>         
    
@@ -94,7 +94,7 @@
         {% for userconcept in userconcepts %}
             <span class="stack"><a href="{% url concept-detail concept_id=userconcept.concept.id %}" class="concept">{{ userconcept }} ({% sqchange 100 userconcept.sq %})</a></span>
         {% endfor %}
-        <br style="clear:both;" /><p><a href="" class="register">Show all &raquo;</a><p>
+        <br style="clear:both;" /><p><a href="" class="register">Show all concepts studied &raquo;</a><p>
 
         <h5>Available Concepts</h5>
         {% if suggestconcepts %}

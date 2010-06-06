@@ -7,7 +7,7 @@ from resources.models import Resource
 from sq.utils import * 
 # External
 from countries.models import Country
-from datetime import date as _date
+from datetime import datetime, timedelta, date as _date
 from wall.models import Wall
 
 # Network = Course now e.g. 'Network' for AQA Biology
@@ -144,9 +144,9 @@ class UserConcept(models.Model):
         return ( ( _date.today() - self.start_date  ).days / 7 ) + 1
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
-    # Update user's SQ value on this module
+    # Update user's SQ value on this concept
     def update_sq(self):
-        # Get user's attempts on this module's questions 
+        # Get user's attempts on this concept's questions 
         # group by x
         # x = qSQ (question's SQ)
         # y = percent_correct
@@ -154,6 +154,30 @@ class UserConcept(models.Model):
         data = self.concept.question_set.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
+    # Update user's focus value for this concept
+    # this is used to include in auto-challenges,etc.
+    def update_focus(self):
+        # Focus is an weighting value, with importance of variables configurable
+        # Variables
+        # - Time since last attempt (OR none if never attempted): long time = increased likelihood, declines with age
+        # - Lowest score (users SQ on this concept vs. SQ of the concept itself): lower = increased likelihood
+        # TODO: Should be last_attempt updated whenever this concept is attempted as part of a challenge
+ 
+        try: 
+            # This will fail if sq values are not set (None)  
+            self.focus = ( datetime.today() - self.start_date ).days + ( self.concept.sq - self.sq )
+            # Limit 0-100
+            # FIXME: Is there a better way to do this?
+            if self.focus > 100:
+                self.focus = 100
+            else:
+                 if self.focus < 0:
+                    self.focus = 0
+        except:
+            # If fail, put to front of queue: SQ is unset or start_date (latest_attempt) unset i.e. is new!!
+            self.focus = 100
+        self.save()
+        
     # Users on this module in this specific context (network:course:module)
     def members_class(self):
         return User.objects.filter( usermodule__modulei__module=self.module(), 

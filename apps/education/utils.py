@@ -50,3 +50,14 @@ def batch_userconcept_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
+        
+                               
+def batch_userconcept_update_focus():
+
+    # Random 100 courses
+    # NOTE: Fix to something more sensible
+    objects = UserConcept.objects.order_by('?')[:100]
+
+    for o in objects:
+        o.update_focus() # Call focus recalculation for this course
+

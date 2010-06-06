@@ -217,3 +217,10 @@ def do_submit(request, challenge_id):
     return render_to_response('challenge_do_submit.html', {'challenge': challenge,'userchallenge':userchallenge, 'questions': questions, 'totals': totals }, context_instance=RequestContext(request))
 
 
+def generate(request):
+    from challenge.utils import generate_user_challenges
+    # Generate challenges for the active user, redirect to homepage
+    generate_user_challenges(request.user)
+    return HttpResponseRedirect('/')
+
+
