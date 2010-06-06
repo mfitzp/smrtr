@@ -1,21 +1,21 @@
 import os.path 
 import sys
 
-# Django settings for spenglr project.
+# Django settings for smrtr project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Martin Fitzpatrick', 'mfitzp@spenglr.com'),
-     ('Cael Kay-Jackson', 'caelj@spenglr.com'),
+     ('Martin Fitzpatrick', 'mfitzp@smrtr.org'),
+     ('Cael Kay-Jackson', 'caelj@smrtr.org'),
 )
 
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'spenglr'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'spenglr'             # Not used with sqlite3.
+DATABASE_NAME = 'smrtr'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'smrtr'             # Not used with sqlite3.
 DATABASE_PASSWORD = 'mould'         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
@@ -106,7 +106,7 @@ INSTALLED_APPS = (
     'haystack', #http://haystacksearch.org/ http://github.com/toastdriven/django-haystack/tree/master  + xapian-haystack
     'pagination', #http://code.google.com/p/django-pagination
     'messages', #http://code.google.com/p/django-messages/downloads/list  Private messaging application
-# Spenglr
+# Smrtr
     'core',
     'profiles',
     'network',
@@ -133,7 +133,7 @@ LOGIN_REDIRECT_URL = '/'
 
 FORCE_LOWERCASE_TAGS = True
 
-# Spenglr constants
+# Smrtr constants
 
 # +/1 Range between levels of difficulty
 SQ_FAIR_RANGE = 20
@@ -145,7 +145,7 @@ SQ_PINNING_WEIGHT = 0.1
 # External avatar app setting (storage under /media/avatar)
 AVATAR_STORAGE_DIR = "avatar"
 AVATAR_DEFAULT_URL = "/media/img/default_avatar.png"
-AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://www.spenglr.com/media/img/default_avatar.png"
+AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://www.smrtr.org/media/img/default_avatar.png"
 
 # Flowplayer (audio/video output)
 FLOWPLAYER_URL = "/media/flowplayer/flowplayer-3.1.5.swf"
