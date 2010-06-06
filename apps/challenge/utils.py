@@ -39,7 +39,7 @@ def generate_user_challenges(user, number = 5):
                 final.append([module.id, build[module.id]])
                 build[module.id] = list()
     else:
-        iterate = 5 - len(final)
+        iterate = number - len(final)
         for b in build:
             if iterate == 0:
                 break
@@ -78,6 +78,7 @@ def batch_generate_user_challenges():
     objects = User.objects.order_by('?')[:100]
 
     for o in objects:
-        o.generate_user_challenges(o) # Call SQ recalculation for this course
+        if o.userchallenge_set.filter(status__lt=2).count() == 0:
+            generate_user_challenges(o) # Call SQ recalculation for this course
     
 

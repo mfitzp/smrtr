@@ -45,13 +45,20 @@
             {% endif %}
             {% trans 'Change password' %}</a>
 
+
         {% else %}
 
             <a href="{% url messages_compose_to recipient=puser.username %}">Send me a private message</a>
 
-
         {% endifequal %}
 
+        <h5>Networks</h5>
+            <div>
+            {% for network in puser.networks.all %}
+                <span class="stack"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a></span>
+            {% endfor %}
+            </div>        
+        
 
 
     {% else %}

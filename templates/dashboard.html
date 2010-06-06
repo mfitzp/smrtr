@@ -6,16 +6,15 @@
 
     {% block content_left %}
 
-    {% if userconcepts %}
-        <div id="dashboard">
+    <div id="dashboard">
 
-        <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5>
+    <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5>
+
+    {% if userconcepts %}
         <table>
-        
         {% for userchallenge in userchallenges %}
         
             {% if forloop.first %}
-
             <tr id="focus"><td colspan="10">
             <div style="position:relative">
             <h5>{{ userchallenge }}</h5>
@@ -37,25 +36,25 @@
             </div>
             </td></tr>
 
-        {% else %}
-        
-            <tr class="{% cycle zebra %}">
-                <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
-                <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
-                <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
-                <td>{{ userchallenge.last_access|timesince }}</td>
-                <td>    
-                    {% ifequal userchallenge.status 0 %}
-                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
-                    {% else %}
-                        {% ifequal userchallenge.status 1 %}                    
-                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a>           
+            {% else %}
+
+                <tr class="{% cycle zebra %}">
+                    <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
+                    <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
+                    <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
+                    <td>{{ userchallenge.last_access|timesince }}</td>
+                    <td>    
+                        {% ifequal userchallenge.status 0 %}
+                        <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
+                        {% else %}
+                            {% ifequal userchallenge.status 1 %}                    
+                                <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a>           
+                            {% endifequal %}
                         {% endifequal %}
-                    {% endifequal %}
-                </td>
-            </tr>
-            
-        {% endif %}
+                    </td>
+                </tr>
+                
+            {% endif %}
             
         {% empty %}
         
@@ -85,29 +84,46 @@
             </tr>
             
         {% endfor %}        
-        
-        
-        </table>
-        <br style="clear:both;" /><p><a href="" class="register">Show all available challenges &raquo;</a> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a><p>
+    </table>
+    <br style="clear:both;" /><p><a href="" class="register">Show all available challenges &raquo;</a> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a><p>
 
+    {% else %}
+    <table>
+        <tr id="focus"><td colspan="10">
+            <div style="position:relative">
+            <h5>Welcome to Smrtr!</h5>
+            <p>Once you're up and running, this box will show your current active challenges for today. To begin, just activate one of the modules
+            below.</p>
+            </div>
+        </td></tr>
+    </table>
+    {% endif %}
+
+
+    {% if userconcepts %}
         <h5>Active Concepts</h5>
         {% for userconcept in userconcepts %}
             <span class="stack"><a href="{% url concept-detail concept_id=userconcept.concept.id %}" class="concept">{{ userconcept }} ({% sqchange 100 userconcept.sq %})</a></span>
         {% endfor %}
         <br style="clear:both;" /><p><a href="" class="register">Show all concepts studied &raquo;</a><p>
+    {% endif %}
 
-        <h5>Available Concepts</h5>
-        {% if suggestconcepts %}
+    <h5>Available Concepts</h5>
+    {% if suggestconcepts %}
         {% for suggestconcept in suggestconcepts %}
             <span class="stack"><a href="{% url concept-detail concept_id=suggestconcept.id %}" class="concept">{{ suggestconcept }}</a><a href="" class="add">+</a></span>
         {% endfor %}
-            <br style="clear:both;" /><p><a href="" class="register">Show all available concepts &raquo;</a><p>
-        {% else %}
-            <p><a href="" class="register">Activate a new module</a></p>
-        {% endif %}
-
+        <br style="clear:both;" /><p><a href="" class="register">Show all available concepts &raquo;</a><p>
     {% else %}
-        <p>No curriculum information available. Join a network and then find your module <a href="/education/c/">here</a>.</p>
+        <p>You currently have no new concepts available to study.</p>
+        {% if usermodules %}
+           <p>Activate one of the following modules to begin!</p>
+            {% for usermodule in usermodules %}
+                <span class="stack"><a href="{% url module-detail module_id=usermodule.concept.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
+            {% endfor %}
+        {% else %}
+            <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
+        {% endif %}
     {% endif %}
 
     <h5>Networks</h5>
@@ -123,7 +139,7 @@
     <br style="clear:both;" /><p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
 
 
-        </div>
+    </div>
 
     {% endblock %}
 
