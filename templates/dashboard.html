@@ -116,11 +116,12 @@
         <br style="clear:both;" /><p><a href="" class="register">Show all available concepts &raquo;</a><p>
     {% else %}
         <p>You currently have no new concepts available to study.</p>
-        {% if usermodules %}
+        {% if suggestmodules %}
            <p>Activate one of the following modules to begin!</p>
-            {% for usermodule in usermodules %}
-                <span class="stack"><a href="{% url module-detail module_id=usermodule.concept.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
+            {% for suggestmodule in suggestmodules %}
+                <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
             {% endfor %}
+            <br style="clear:both;" />
         {% else %}
             <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
         {% endif %}

@@ -27,7 +27,7 @@ def index(request):
         # Gets all concepts that are available (on user's modules) but not active
         # Later limit by 'dependencies on individual entries'
         suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
-
+        suggestmodules = Module.objects.exclude(usermodule__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')[0:3]
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
@@ -66,7 +66,7 @@ def index(request):
         # the user's own networks (option configuration switching here)
         # wi = wi.filter(author=request.user)
         #wi = wi.filter(author__usernetwork__network__usernetwork__user=request.user).distinct()
-
+    
         from settings import SMRTR_FREE_TIME_URL
 
         i = RequestContext(request, {
@@ -75,6 +75,7 @@ def index(request):
             'userconcepts': userconcepts,
             # Suggest
             'suggestconcepts' : suggestconcepts,
+            'suggestmodules' : suggestmodules,
             # Challenges
             'userchallenges': userchallenges,
             'userchallengescomplete': userchallengescomplete,

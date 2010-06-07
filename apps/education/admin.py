@@ -1,13 +1,20 @@
 from django.contrib import admin
 # Spenglr
-#from education.models import *
+from network.models import *
+from education.models import *
 
-#admin.site.register(Qualification)
-#admin.site.register(Course)
-#admin.site.register(Module)
-#admin.site.register(Exam)
 
-#admin.site.register(UserQualification)
-#admin.site.register(UserCourse)
-#admin.site.register(UserModule)
-#admin.site.register(UserExam)
+class ModuleAdmin(admin.ModelAdmin):
+    # filter_horizontal = ('concepts',)
+    raw_id_fields = ('network','networks','concepts',)
+
+admin.site.register(Module, ModuleAdmin)
+
+class ConceptAdmin(admin.ModelAdmin):
+    # filter_horizontal = ('concepts',)
+    raw_id_fields = ('network',)
+
+admin.site.register(Concept, ConceptAdmin)
+
+admin.site.register(UserModule)
+admin.site.register(UserConcept)
