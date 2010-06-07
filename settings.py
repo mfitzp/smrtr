@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'avatar', #http://github.com/rhec/django-avatar/ This version supports overriding the default gravatar
               #Original at: switch on fix #http://github.com/ericflo/django-avatar #'gravatar', #http://code.google.com/p/django-gravatar/
     'tagging',
+    'friends',
     'notification', #http://github.com/jtauber/django-notification
     'wall',  #http://github.com/jtauber/django-wall
     'picklefield',  #http://github.com/shrubberysoft/django-picklefield
@@ -128,6 +129,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 AUTH_PROFILE_MODULE = "profiles.userprofile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
+LOGIN_PATH = '/accounts/' # All paths under here are still accessible when logged out - allows login/registration
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
@@ -164,6 +166,12 @@ HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_ind
 # Some global urls for redirecting users nicely, error, 'finished', etc.
 SMRTR_FREE_TIME_URL = 'http://amanita-design.net/samorost-2/'
 SMRTR_HAVE_BREAK_URL = 'http://www.popcap.com/games/free/pvz?mid=pvz_pcweb_en_full'
+
+# Email settings: user/pass combination is stored in local settings for security
+EMAIL_HOST = 'smtp.webfaction.com'
+EMAIL_SUBJECT_PREFIX ='[smrtr]'
+DEFAULT_FROM_EMAIL = 'noreply@smrtr.org'
+SERVER_EMAIL = 'noreply@smrtr.org'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

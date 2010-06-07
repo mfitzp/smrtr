@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content_title %}<h1>Get smrtr</h1>{% endblock %}
+
+{% block content %}
+<p><strong><a href="http://www.smrtr.org">smrtr</a></strong> is an open-source open-access web knowledge and learning system.</p>
+<p>To register with the site, simply enter your details below and click '<strong>Register</strong>'.</p>
+<p>
+<form action="" method="post">
+{{ form.as_p }}
+<input type="submit" value="Register" />
+</form>
+</p>
+<p class="notice"><strong>Note:</strong> Information you provide will never be sold or shared with any 3rd parties without your explicit permission.</p>
+
+{% endblock %}

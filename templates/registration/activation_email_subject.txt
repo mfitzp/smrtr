@@ -1,0 +1,1 @@
+[{{ site.name }}] Registration request ({{ activation_key }}) {{ expiration_days }}days remaining
