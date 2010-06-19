@@ -64,7 +64,7 @@ def module_register(request, module_id):
         
         # Find user record for parent network, must be registered on the network to register for module
         try:
-            # BUG: Note this is trying only to check if member of modules 'home' network not any it may have been assigned to
+            # FIXME: Note this is trying only to check if member of modules 'home' network not any it may have been assigned to
             usernetwork = request.user.usernetwork_set.get(network = module.network)
         except:
             assert False, module
@@ -80,6 +80,19 @@ def module_register(request, module_id):
             # Write to database 
             # um.usernetwork = usernetwork
             um.save()
+            
+            # Automatically activate all concepts on this module
+            # FIXME: Move this out to helper util function (same as for above)
+            
+            for concept in module.concepts.all():
+                try:
+                    uc = UserConcept()    
+                    uc.user = request.user
+                    uc.concept = concept
+                    uc.save()
+                except:
+                    pass
+            
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
             else:

@@ -129,6 +129,9 @@ class UserModule(models.Model):
 
     sq = models.IntegerField(editable = False, null = True)
 
+    class Meta:
+        unique_together = ("user", "module")
+
 class UserConcept(models.Model):
     def __unicode__(self):
         return self.concept.name
@@ -202,6 +205,8 @@ class UserConcept(models.Model):
     sq = models.IntegerField(editable = False, null = True)
     focus = models.IntegerField( default = 0,editable = False)
 
+    class Meta:
+        unique_together = ("user", "concept")
 
 
 

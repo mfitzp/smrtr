@@ -98,11 +98,10 @@ INSTALLED_APPS = (
     'avatar', #http://github.com/rhec/django-avatar/ This version supports overriding the default gravatar
               #Original at: switch on fix #http://github.com/ericflo/django-avatar #'gravatar', #http://code.google.com/p/django-gravatar/
     'tagging',
-    'friends',
+    #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
     'notification', #http://github.com/jtauber/django-notification
     'wall',  #http://github.com/jtauber/django-wall
     'picklefield',  #http://github.com/shrubberysoft/django-picklefield
-    #TODO: 'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
     'flowplayer', #http://github.com/mfitzp/django-flowplayer
     'haystack', #http://haystacksearch.org/ http://github.com/toastdriven/django-haystack/tree/master  + xapian-haystack
     'pagination', #http://code.google.com/p/django-pagination

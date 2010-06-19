@@ -108,23 +108,14 @@
         <br style="clear:both;" /><p><a href="" class="register">Show all concepts studied &raquo;</a><p>
     {% endif %}
 
-    <h5>Available Concepts</h5>
-    {% if suggestconcepts %}
-        {% for suggestconcept in suggestconcepts %}
-            <span class="stack"><a href="{% url concept-detail concept_id=suggestconcept.id %}" class="concept">{{ suggestconcept }}</a><a href="" class="add">+</a></span>
+    <h5>Available Modules</h5>
+    {% if suggestmodules %}
+        {% for suggestmodule in suggestmodules %}
+            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a><a href="" class="add">+</a></span>
         {% endfor %}
-        <br style="clear:both;" /><p><a href="" class="register">Show all available concepts &raquo;</a><p>
+        <br style="clear:both;" /><p><a href="" class="register">Show all available modules &raquo;</a><p>
     {% else %}
-        <p>You currently have no new concepts available to study.</p>
-        {% if suggestmodules %}
-           <p>Activate one of the following modules to begin!</p>
-            {% for suggestmodule in suggestmodules %}
-                <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
-            {% endfor %}
-            <br style="clear:both;" />
-        {% else %}
-            <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
-        {% endif %}
+        <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
     {% endif %}
 
     <h5>Networks</h5>
