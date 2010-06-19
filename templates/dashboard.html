@@ -100,12 +100,12 @@
     {% endif %}
 
 
-    {% if userconcepts %}
-        <h5>Active Concepts</h5>
-        {% for userconcept in userconcepts %}
-            <span class="stack"><a href="{% url concept-detail concept_id=userconcept.concept.id %}" class="concept">{{ userconcept }} ({% sqchange 100 userconcept.sq %})</a></span>
+    {% if usermodules %}
+        <h5>Active Modules</h5>
+        {% for usermodule in usermodules %}
+            <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
         {% endfor %}
-        <br style="clear:both;" /><p><a href="" class="register">Show all concepts studied &raquo;</a><p>
+        <br style="clear:both;" />
     {% endif %}
 
     <h5>Available Modules</h5>

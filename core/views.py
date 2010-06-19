@@ -26,7 +26,7 @@ def index(request):
         # Get next activated concepts (available by modules reverse SQ), retrieving 5
         # Gets all concepts that are available (on user's modules) but not active
         # Later limit by 'dependencies on individual entries'
-        suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
+        # suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
         suggestmodules = Module.objects.exclude(usermodule__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')[0:3]
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
@@ -72,9 +72,9 @@ def index(request):
         i = RequestContext(request, {
             'usernetworks': usernetworks,
             'usermodules': usermodules,
-            'userconcepts': userconcepts,
+#            'userconcepts': userconcepts,
             # Suggest
-            'suggestconcepts' : suggestconcepts,
+#            'suggestconcepts' : suggestconcepts,
             'suggestmodules' : suggestmodules,
             # Challenges
             'userchallenges': userchallenges,
