@@ -5,7 +5,9 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
+    {% if module.network %}
     &raquo; <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
+    {% endif %}
     &raquo; {{ module }}
 {% endblock %}
 

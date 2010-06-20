@@ -8,7 +8,9 @@
     {% if concept.network %}
     &raquo; <a href="{% url network-detail network_id=concept.network.id %}">{{ concept.network }}</a>
     {% endif %}
-    &raquo; {{ concept }}
+    &raquo; <a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a>
+    &raquo; Questions
+    &raquo; Add  
 {% endblock %}
 
 
