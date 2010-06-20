@@ -5,7 +5,7 @@ from django.http import HttpResponsePermanentRedirect
 from django.db.models import Q
 # Spenglr
 from education.models import Module, UserModule, Concept
-from core.models import LoginForm
+from core.forms import LoginForm
 # External
 from notification.models import Notice
 from wall.views import *
