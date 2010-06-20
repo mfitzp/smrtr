@@ -9,6 +9,7 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
+    print "Running smrtr cron.py..."
     batch_question_update_sq()
     
     batch_module_update_sq()
@@ -22,5 +23,5 @@ def cron():
     batch_network_update_sq()
 
     batch_generate_user_challenges()
-
+    print "Done."
 cron()
