@@ -10,13 +10,13 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
-    print datetime.now().strftime('\t %H:%M:%S') + ": Update SQ values..."
+    print datetime.now().strftime(' %H:%M:%S') + ": Update SQ values..."
     batch_question_update_sq()
     
     batch_module_update_sq()
     batch_concept_update_sq()    
 
-    print datetime.now().strftime('\t %H:%M:%S') + ": Update user SQ values..."
+    print datetime.now().strftime(' %H:%M:%S') + ": Update user SQ values..."
 
     batch_usermodule_update_sq()
     batch_userconcept_update_sq()
@@ -25,8 +25,8 @@ def cron():
     batch_user_update_sq()
     batch_network_update_sq()
 
-    print datetime.now().strftime('\t %H:%M:%S') + ": Generating challenges..."
+    print datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
     batch_generate_user_challenges()
 
-    print datetime.now().strftime('\t %H:%M:%S') + ": Done."
+    print datetime.now().strftime(' %H:%M:%S') + ": Done."
 cron()
