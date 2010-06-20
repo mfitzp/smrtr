@@ -28,5 +28,5 @@ def cron():
     print datetime.now().strftime('%H:%M:%S') + ": Generating challenges..."
     batch_generate_user_challenges()
 
-    print datetime.now().strftime('%A %d/%m/%Y %H:%M') + ": Done."
+    print datetime.now().strftime('%H:%M:%S') + ": Done."
 cron()
