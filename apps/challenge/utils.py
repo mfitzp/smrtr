@@ -5,13 +5,14 @@ import math
 from datetime import date as _date
 from django.contrib.auth.models import User
 # Spenglr
+from settings import CHALLENGES_MIN_ACTIVE
 from education.models import *
 from challenge.models import *
 
 # Check if challenges exist for a given user and if not, generate
 # Called on login to ensure always X challenges available, can be re-run on demand
 # by the user once initial set of challenges have been completed.
-def generate_user_challenges(user, number = 5):
+def generate_user_challenges(user, number = CHALLENGES_MIN_ACTIVE):
 
     # FIXME: This is all a bit horrible and hacky. It is difficult to do using Djangos query API directly
     # may be worth building SQL query to nab most of this in one go and save the looping
@@ -80,8 +81,6 @@ def batch_generate_user_challenges():
     # NOTE: Fix to something more sensible
     objects = User.objects.order_by('?')[:100]
 
-    from settings import CHALLENGES_MIN_ACTIVE
-    
     for o in objects:
         count = o.userchallenge_set.filter(status__lt=2).count()
         if count < CHALLENGES_MIN_ACTIVE:
