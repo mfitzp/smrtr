@@ -1,5 +1,6 @@
 from django.core.management import setup_environ
 import settings
+import datetime
 setup_environ(settings)
 # Spenglr
 from questions.utils import *
@@ -9,7 +10,7 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
-    print "Running smrtr cron.py..."
+    print datetime.now().strftime('%A %d/%m/%Y %H:%M') + ": Running smrtr cron.py..."
     batch_question_update_sq()
     
     batch_module_update_sq()
