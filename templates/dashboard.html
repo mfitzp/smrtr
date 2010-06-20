@@ -102,29 +102,28 @@
 
     {% if usermodules %}
         <h5>Active Modules</h5>
-        <div class="stackcontainer">
+        <div>
         {% for usermodule in usermodules %}
             <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
         {% endfor %}
         </div>
-        <br style="clear:both;" />
     {% endif %}
 
     <h5>Available Modules</h5>
     {% if suggestmodules %}
-        <div class="stackcontainer">
+        <div>
         {% for suggestmodule in suggestmodules %}
             <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a><a href="" class="add">+</a></span>
         {% endfor %}
         </div>
-        <br style="clear:both;" /><p><a href="" class="register">Show all available modules &raquo;</a><p>
+        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p>
     {% else %}
         <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
     {% endif %}
 
     <h5>Networks</h5>
     {% if usernetworks %}
-        <div class="stackcontainer">
+        <div>
         {% for usernetwork in usernetworks.all %}
             <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
         {% endfor %}
@@ -132,7 +131,7 @@
     {% else %}
         <p>Join networks to learn with others at school, online or in your workplace.</p>
     {% endif %}
-    <br style="clear:both;" /><p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
+    <p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
 
 
     </div>
