@@ -143,6 +143,10 @@ SQ_LOWER_LIMIT = 0
 SQ_READOFF_MARK = 50
 SQ_PINNING_WEIGHT = 0.1
 
+# Challenges
+
+CHALLENGES_MIN_ACTIVE = 5
+
 # External avatar app setting (storage under /media/avatar)
 AVATAR_STORAGE_DIR = "avatar"
 AVATAR_DEFAULT_URL = "/media/img/default_avatar.png"

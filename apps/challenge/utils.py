@@ -30,14 +30,17 @@ def generate_user_challenges(user, number = 5):
         modules = userconcept.concept.module_set.filter(usermodule__user=user)
         # Add this concept to the module stacks
         for module in modules:
+            # If started add to existing stack, otherwise create new
             try:
                 build[module.id].append(userconcept.concept.id)
             except:
                 build[module.id] = [ userconcept.concept.id ]
                 
+            # If we manage to build a list of 3, add to the final list
             if len(build[module.id]) == 3:
                 final.append([module.id, build[module.id]])
                 build[module.id] = list()
+    # Cleanup after the above for loop
     else:
         iterate = number - len(final)
         for b in build:
@@ -77,8 +80,11 @@ def batch_generate_user_challenges():
     # NOTE: Fix to something more sensible
     objects = User.objects.order_by('?')[:100]
 
+    from settings import CHALLENGES_MIN_ACTIVE
+    
     for o in objects:
-        if o.userchallenge_set.filter(status__lt=2).count() == 0:
-            generate_user_challenges(o) # Call SQ recalculation for this course
+        count = o.userchallenge_set.filter(status__lt=2).count()
+        if count < CHALLENGES_MIN_ACTIVE:
+            generate_user_challenges(o, CHALLENGES_MIN_ACTIVE - count) # Call SQ recalculation for this course
     
 
