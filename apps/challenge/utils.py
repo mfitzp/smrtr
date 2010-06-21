@@ -82,8 +82,7 @@ def batch_generate_user_challenges():
     objects = User.objects.order_by('?')[:100]
 
     for o in objects:
-        count = o.userchallenge_set.filter(status__lt=2).count()
-        if count < CHALLENGES_MIN_ACTIVE:
-            generate_user_challenges(o, CHALLENGES_MIN_ACTIVE - count) # Call SQ recalculation for this course
+        if o.userchallenge_set.filter(status__lt=2).count() == 0:
+            generate_user_challenges(o) # Call SQ recalculation for this course
     
 

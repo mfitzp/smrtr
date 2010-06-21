@@ -39,7 +39,7 @@ class Challenge(models.Model):
             name.append( concept.name )
         self.name = ', '  .join( name )
         
-    name = models.CharField(max_length=75)
+    name = models.CharField(max_length=100)
     description = models.TextField(blank = True)
 
     # List of questions included in this challenge, used for outputting questions to users
