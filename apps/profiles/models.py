@@ -23,7 +23,7 @@ class UserProfile(models.Model):
             # Will want to move this out into a helper app with canned messages for output (similar to notifications)
             item = WallItem(wall=self.wall,author_id=0,body='Welcome to Spenglr!')
             item.save()
-            # Auto-join networks smrtr Founders (temporary), smrtr Start and smrtr Study
+            # Auto-join networks smrtr Start and smrtr Study
             from network.models import Network, UserNetwork
             UserNetwork(user=self.user, network=Network.objects.get(pk=1)).save()
             UserNetwork(user=self.user, network=Network.objects.get(pk=2)).save()
