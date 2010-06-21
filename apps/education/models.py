@@ -48,7 +48,7 @@ class Module(models.Model):
     wall = models.OneToOneField(Wall, editable = False, null = True)
 
 # Concepts for this module
-    concepts = models.ManyToManyField('Concept')
+    concepts = models.ManyToManyField('Concept', blank=True)
     
     
     

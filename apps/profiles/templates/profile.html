@@ -19,7 +19,7 @@
 
         <table>
         <tr>
-        <th rowspan="3">{% avatar puser 48 %}</th></tr>
+        <th rowspan="10">{% avatar puser 48 %}</th></tr>
         
         {% if profile.city %}
             <tr>
@@ -29,6 +29,7 @@
             </a></td></tr>
         {% endif %}
         
+        <tr><th>Joined</th><td>{{ puser.date_joined|timesince }} ago</td></tr>
         <tr><th>SQ</th><td>{% sqchange 0 profile.sq %}</td></tr>
         </table>
 
