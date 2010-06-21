@@ -24,7 +24,7 @@ def index(request):
         userchallengescomplete = request.user.userchallenge_set.filter(status__exact=2)[0:3]
 
         # Flag True/False whether challenges exist at all for this user
-        userchallengesexist = ( userchallenges or userchallengescomplete )
+        userchallengesexist = ( userchallenges.count() + userchallengescomplete.count() ) > 0
         
         # Get next activated concepts (available by modules reverse SQ), retrieving 5
         # Gets all concepts that are available (on user's modules) but not active
