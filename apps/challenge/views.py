@@ -212,6 +212,7 @@ def do_submit(request, challenge_id):
     # NOTE: May need to remove this is load too great?
     userchallenge.update_sq()
     userchallenge.status = 2 #Complete
+    userchallenge.attempts += 1
     userchallenge.save()
 
     return render_to_response('challenge_do_submit.html', {'challenge': challenge,'userchallenge':userchallenge, 'questions': questions, 'totals': totals }, context_instance=RequestContext(request))

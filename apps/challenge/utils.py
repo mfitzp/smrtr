@@ -12,10 +12,14 @@ from challenge.models import *
 # Check if challenges exist for a given user and if not, generate
 # Called on login to ensure always X challenges available, can be re-run on demand
 # by the user once initial set of challenges have been completed.
-def generate_user_challenges(user, number = CHALLENGES_MIN_ACTIVE):
+def generate_user_challenges(user, number = None):
 
     # FIXME: This is all a bit horrible and hacky. It is difficult to do using Djangos query API directly
     # may be worth building SQL query to nab most of this in one go and save the looping
+
+    # No value passed, auto-calc number to generate for user to reach CHALLENGES_MIN_ACTIVE
+    if number == None:
+        number = CHALLENGES_MIN_ACTIVE - user.userchallenge_set.filter(status__lt=2).count()
 
     if number > 0: # Save db hits if generating nothing at all
     
@@ -91,8 +95,6 @@ def batch_generate_user_challenges():
     objects = User.objects.order_by('?')[:100]
 
     for o in objects:
-        current_active = o.userchallenge_set.filter(status__lt=2).count()
-        if current_active < CHALLENGES_MIN_ACTIVE:
-            generate_user_challenges(o, CHALLENGES_MIN_ACTIVE - current_active ) # Call SQ recalculation for this course
+        generate_user_challenges(o)
     
 
