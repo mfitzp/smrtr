@@ -153,7 +153,7 @@ AVATAR_DEFAULT_URL = "/media/img/default_avatar.png"
 AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://www.smrtr.org/media/img/default_avatar.png"
 
 # Flowplayer (audio/video output)
-FLOWPLAYER_URL = "/media/flowplayer/flowplayer-3.1.5.swf"
+FLOWPLAYER_URL = "/media/flowplayer/flowplayer-3.2.2.swf"
 FLOWPLAYER_CONFIG = {
                         'default' : 
                             { 'clip' : { 'autoPlay':'false' }, },
