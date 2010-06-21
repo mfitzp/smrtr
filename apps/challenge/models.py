@@ -59,6 +59,7 @@ class Challenge(models.Model):
 
     # Created by
     user = models.ForeignKey(User, editable = False)
+    created = models.DateTimeField(auto_now_add = True)
 
     # User's who have attempted this challenge and associated data
     users = models.ManyToManyField(User, through='UserChallenge', related_name='challenges', editable = False)
@@ -92,7 +93,7 @@ class UserChallenge(models.Model):
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, null = False, editable = False, default = 0)
 
     # Number of attempts for this set of questions
-    attempts = models.IntegerField(editable = False, null = True)
+    attempts = models.IntegerField(editable = False, null = False, default = 0)
     # SQ for this set of questions
     sq = models.IntegerField(editable = False, null = True)
     # User's rank on this challenge

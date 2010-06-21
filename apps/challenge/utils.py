@@ -16,74 +16,83 @@ def generate_user_challenges(user, number = CHALLENGES_MIN_ACTIVE):
 
     # FIXME: This is all a bit horrible and hacky. It is difficult to do using Djangos query API directly
     # may be worth building SQL query to nab most of this in one go and save the looping
-    
-    # Iterate concepts, combine into module-groups, maximum of 3 (configurable?), then stack up to post-process
-    # leftovers are carried over if < 5 total challenges generated (configurable?)
 
-    final = list()
-    build = dict()
+    if number > 0: # Save db hits if generating nothing at all
     
-    # Full list of user's concepts, in descending focus (highest focus first)
-    userconcepts = UserConcept.objects.filter(user=user).order_by('-focus','?')
-    # Iterate userconcepts 
-    for userconcept in userconcepts:
-        # Find modules the user is studying this concept on
-        modules = userconcept.concept.module_set.filter(usermodule__user=user)
-        # Add this concept to the module stacks
-        for module in modules:
-            # If started add to existing stack, otherwise create new
-            try:
-                build[module.id].append(userconcept.concept.id)
-            except:
-                build[module.id] = [ userconcept.concept.id ]
-                
-            # If we manage to build a list of 3, add to the final list
-            if len(build[module.id]) == 3:
-                final.append([module.id, build[module.id]])
-                build[module.id] = list()
-    # Cleanup after the above for loop
-    else:
-        iterate = number - len(final)
-        for b in build:
-            if iterate == 0:
-                break
-            iterate = iterate -1 
-            final.append([b, build[b]])
+        # Iterate concepts, combine into module-groups, maximum of 3 (configurable?), then stack up to post-process
+        # leftovers are carried over if < 5 total challenges generated (configurable?)
 
-    # Now we have a list of lists containing the module id and the concept ids
-    # [[16L, [68L, 70L, 78L]], [16L, [69L]], [305L, [99L]], [293L, [97L, 90L]]]
-            
-    # Iterate top list (module keyed)
-    for mlist in final:
-        challenge = Challenge()
-        challenge.user = user
-        challenge.save()
-                
-        # Iterate concepts
-        # mlist[1] is the list-within ie. [68,70,78] above
-        for concept_id in mlist[1]:
-            challenge.concepts.add(Concept.objects.get(pk=concept_id))            
+        final = list()
+        build = dict()
         
-        challenge.generate_name()
-        # Now populate question lists based on current settings
-        challenge.update_questions()
-        challenge.save()
+        # Full list of user's concepts, in descending focus (highest focus first)
+        userconcepts = UserConcept.objects.filter(user=user).order_by('-focus','?')
+        # Iterate userconcepts 
+        try:
+            for userconcept in userconcepts:
+                # Find modules the user is studying this concept on
+                modules = userconcept.concept.module_set.filter(usermodule__user=user)
+                # Add this concept to the module stacks
+                for module in modules:
+                    # If started add to existing stack, otherwise create new
+                    try:
+                        build[module.id].append(userconcept.concept.id)
+                    except:
+                        build[module.id] = [ userconcept.concept.id ]
+                        
+                    # If we manage to build a list of 3, add to the final list
+                    if len(build[module.id]) == 3:
+                        final.append([module.id, build[module.id]])
+                        build[module.id] = list()
 
-        userchallenge = UserChallenge()
-        userchallenge.challenge = challenge
-        userchallenge.user = user
-        userchallenge.save()
+                    if len(final) == number:
+                        raise StopIteration() # We have enough in the final list, drop out of nested loop
+
+            # Cleanup after the above for loop
+            else:
+                iterate = number - len(final)
+                for b in build:
+                    if iterate == 0:
+                        break
+                    iterate = iterate -1 
+                    final.append([b, build[b]])
+
+        except StopIteration:
+            pass
+            
+        # Now we have a list of lists containing the module id and the concept ids
+        # [[16L, [68L, 70L, 78L]], [16L, [69L]], [305L, [99L]], [293L, [97L, 90L]]]
+        # Iterate top list (module keyed)
+        for mlist in final:
+            challenge = Challenge()
+            challenge.user = user
+            challenge.save()
+                    
+            # Iterate concepts
+            # mlist[1] is the list-within ie. [68,70,78] above
+            for concept_id in mlist[1]:
+                challenge.concepts.add(Concept.objects.get(pk=concept_id))            
+            
+            challenge.generate_name()
+            # Now populate question lists based on current settings
+            challenge.update_questions()
+            challenge.save()
+
+            userchallenge = UserChallenge()
+            userchallenge.challenge = challenge
+            userchallenge.user = user
+            userchallenge.save()
 
 # Calculate SQ for the usercourse records with most recently updated usermodules
 def batch_generate_user_challenges():
 
-    # Random 100 courses
+    # Random 100 users
     # NOTE: Fix to something more sensible
     objects = User.objects.order_by('?')[:100]
 
     for o in objects:
         current_active = o.userchallenge_set.filter(status__lt=2).count()
         if current_active < CHALLENGES_MIN_ACTIVE:
-            generate_user_challenges(o, CHALLENGES_MIN_ACTIVE - current_active) # Call SQ recalculation for this course
+            generate_user_challenges(o, CHALLENGES_MIN_ACTIVE - current_active ) # Call SQ recalculation for this course
     
 
