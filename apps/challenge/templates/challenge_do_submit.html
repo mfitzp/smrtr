@@ -21,10 +21,13 @@
                 {% for answer in question.answer_set.all %}
                     {% ifequal question.answered answer.id %}
                        <li class="question_answer question_answered {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">{{ answer.content }}</li>
+                    {% else %}
+
+                        {% if answer.is_correct %}
+                           <li class="question_answer correct">{{ answer.content }}</li>
+                        {% endif %}
+
                     {% endifequal %}
-                    {% if answer.is_correct %}
-                       <li class="question_answer correct incorrect">{{ answer.content }}</li>
-                    {% endif %}
                 {% endfor %}
                 </ul>
             {% endfor %}
