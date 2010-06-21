@@ -24,7 +24,7 @@ def generate_user_challenges(user, number = CHALLENGES_MIN_ACTIVE):
     build = dict()
     
     # Full list of user's concepts, in descending focus (highest focus first)
-    userconcepts = UserConcept.objects.filter(user=user).order_by('-focus')
+    userconcepts = UserConcept.objects.filter(user=user).order_by('-focus','?')
     # Iterate userconcepts 
     for userconcept in userconcepts:
         # Find modules the user is studying this concept on
@@ -82,7 +82,8 @@ def batch_generate_user_challenges():
     objects = User.objects.order_by('?')[:100]
 
     for o in objects:
-        if o.userchallenge_set.filter(status__lt=2).count() == 0:
-            generate_user_challenges(o) # Call SQ recalculation for this course
+        current_active = o.userchallenge_set.filter(status__lt=2).count()
+        if current_active < CHALLENGES_MIN_ACTIVE:
+            generate_user_challenges(o, CHALLENGES_MIN_ACTIVE - current_active) # Call SQ recalculation for this course
     
 

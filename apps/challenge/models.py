@@ -38,6 +38,7 @@ class Challenge(models.Model):
         for concept in self.concepts.all():
             name.append( concept.name )
         self.name = ', '  .join( name )
+        self.name = self.name[0:100] # Truncate to field limit
         
     name = models.CharField(max_length=100)
     description = models.TextField(blank = True)
