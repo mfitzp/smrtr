@@ -2,13 +2,13 @@
 
 {% block content_title %}<h1>Welcome to smrtr!</h1>{% endblock %}
 
-{% block content %}
+{% block content_left %}
 <div class="boxout"><div>
 <p><strong><a href="http://www.smrtr.org">smrtr</a></strong> is a free 
 collaborative learning, quiz and study tool.</p>
 <p>Take <strong>quizzes</strong>, <strong>track progress</strong> and receive recommended <strong>study aids</strong> to build your knowledge.
 Ideal for <strong>students</strong>, <strong>professionals</strong> or general-knowledge <strong>know-it-alls</strong> alike!</p>
-
+<p>Have you got a higher <strong>SQ</strong> than your friends?</p>
 <p>Log in below, or <a href="{% url registration_register %}">create a new account</a> to get involved!</p>
 </div></div>
 <p>
@@ -19,4 +19,8 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 </form>
 </p>
 
+{% endblock %}
+
+{% block content_right %}
+    <img src="/media/img/screenshot1.png">
 {% endblock %}
