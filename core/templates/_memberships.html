@@ -3,15 +3,15 @@
 
     <h4>Members</h4>
 
-    <table>
+    <div class="membership-container clearfloats">
     {% for user in members %}
-        <tr class="{% cycle 'odd' 'even' %}">
-            <td>{% avatar user 48 %}</td>
-            <td>
-                <strong><a href="{% url user-profile user_id=user.id %}">{{ user.get_profile.fullname }}</a></strong>
-            </td>
-        </tr>
+        <div class="membership">
+            <table>
+            <tr><td>{% avatar user 48 %}</td></tr>
+            <tr><td><small><a href="{% url user-profile user_id=user.id %}">{{ user.get_profile.fullname }}</a></small></td></tr>
+            </table>
+        </div>
     {% empty %}
-        <tr><td>No members.</td></tr>
+        <p>No members.</p>
     {% endfor %}
-    </table>
+    </div>
