@@ -36,7 +36,7 @@ def index(request):
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
         # Top users for front page (will want network top users later also, perhaps)
-        topusers = User.objects.order_by('-userprofile__sq')[0:6]
+        topusers = User.objects.order_by('-userprofile__sq')[0:5]
 
         # Front page wallitems (wi) combine the user's accessible wall posts from 
         # user profile, networks, courses and modules (& friends later)
