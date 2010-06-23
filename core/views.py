@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 from django.http import HttpResponsePermanentRedirect
 from django.db.models import Q
+from django.contrib.auth.models import User
 # Spenglr
 from education.models import Module, UserModule, Concept
 from core.forms import LoginForm
@@ -33,6 +34,9 @@ def index(request):
         suggestmodules = Module.objects.exclude(usermodule__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')[0:3]
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
+
+        # Top users for front page (will want network top users later also, perhaps)
+        topusers = User.objects.order_by('-userprofile__sq')[0:6]
 
         # Front page wallitems (wi) combine the user's accessible wall posts from 
         # user profile, networks, courses and modules (& friends later)
@@ -85,6 +89,9 @@ def index(request):
             'userchallengescomplete': userchallengescomplete,
             
             'SMRTR_FREE_TIME_URL': SMRTR_FREE_TIME_URL,
+
+            # Extras
+            'topusers': topusers,
             
             # Wall objects
             # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
