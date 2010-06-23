@@ -17,7 +17,7 @@
         
         {% for item in wallitems %}
             <div class="wallitem">
-                <div class="wallitem-image">{% avatar item.author 48 %}</div>
+                <div class="wallitem-image"><a href="{% url user-profile user_id=item.author.id %}">{% avatar item.author 48 %}</a></div>
                 <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
                 <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
                 <div class="wallitem-actions"><a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a> &#183; <a href="">Like</a></div>
@@ -26,7 +26,7 @@
                 {% if comment_list %}
                     {% for comment in comment_list %}
                         <div class="comment">
-                            <div class="comment-image">{% avatar comment.user 32 %}</div>
+                            <div class="comment-image"><a href="{% url user-profile user_id=comment.user.id %}">{% avatar comment.user 32 %}</a></div>
                             <div class="comment-body"><a href="{% url user-profile user_id=comment.user.id %}" class="wallitem-author">{{ comment.user.get_profile.fullname }}</a>
                             {{ comment.comment }}</div>
                             <div class="comment-meta">{{ comment.submit_date|timesince }} ago</div>

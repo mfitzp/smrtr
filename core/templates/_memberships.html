@@ -7,7 +7,7 @@
     {% for user in members %}
         <div class="membership">
             <table>
-            <tr><td>{% avatar user 48 %}</td></tr>
+            <tr><td><a href="{% url user-profile user_id=user.id %}">{% avatar user 48 %}</a></td></tr>
             <tr><td><small><a href="{% url user-profile user_id=user.id %}">{{ user.get_profile.fullname }}</a></small></td></tr>
             </table>
         </div>

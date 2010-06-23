@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
-{% block content_title %}<h1>Get smrtr</h1>{% endblock %}
+{% block content_title %}<h1>Getting smrtr</h1>{% endblock %}
 
-{% block content %}
-<p><strong><a href="http://www.smrtr.org">smrtr</a></strong> is an open-source open-access web knowledge and learning system.</p>
-<p>To register with the site, simply enter your details below and click '<strong>Register</strong>'.</p>
+{% block content_left %}
+<p>To get started, simply enter your details below and click '<strong>Register</strong>'.</p>
 <p>
 <form action="" method="post">
 {% csrf_token %}
@@ -14,4 +13,8 @@
 </p>
 <p class="notice"><strong>Note:</strong> Information you provide will never be sold or shared with any 3rd parties without your explicit permission.</p>
 
+{% endblock %}
+
+{% block content_right %}
+    <img src="/media/img/screenshot1.jpg">
 {% endblock %}
