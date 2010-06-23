@@ -96,9 +96,9 @@ def index(request):
             # Wall objects
             # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
             # -wallitems should be combination of all user's available walls
-            'wall': request.user.get_profile().wall,
+            # 'wall': request.user.get_profile().wall,
             'wallitems': wi[0:10],
-            'wallform': WallItemForm()
+            #'wallform': WallItemForm()
         })
         
         return render_to_response('dashboard.html', i, context_instance=RequestContext(request))
