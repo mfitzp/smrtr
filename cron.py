@@ -11,22 +11,22 @@ from network.utils import *
 
 def cron():
     print datetime.now().strftime(' %H:%M:%S') + ": Update SQ values..."
-    batch_question_update_sq()
+    #batch_question_update_sq()
     
-    batch_module_update_sq()
-    batch_concept_update_sq()    
+    #batch_module_update_sq()
+    #batch_concept_update_sq()    
 
     print datetime.now().strftime(' %H:%M:%S') + ": Update user SQ values..."
 
-    batch_usermodule_update_sq()
-    batch_userconcept_update_sq()
-    batch_userconcept_update_focus()
+    #batch_usermodule_update_sq()
+    #batch_userconcept_update_sq()
+    #batch_userconcept_update_focus()
 
     batch_user_update_sq()
-    batch_network_update_sq()
+    #batch_network_update_sq()
 
     print datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
-    batch_generate_user_challenges()
+    #batch_generate_user_challenges()
 
     print datetime.now().strftime(' %H:%M:%S') + ": Done."
 cron()

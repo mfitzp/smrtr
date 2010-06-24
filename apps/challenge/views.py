@@ -182,7 +182,7 @@ def do_submit(request, challenge_id):
             uqa = UserQuestionAttempt()
             uqa.question = q
             uqa.user = request.user
-            uqa.usq = 100 #request.user.sq
+            uqa.usq = request.user.userprofile.sq
 
             # Find submitted answer id in the list of correct answers
             aid = request.POST.get('questions-' + qid)

@@ -72,7 +72,7 @@ def sq_calculate( data, direction = 'asc' ):
         x  = x  + e['x']
         y  = y  + e['y']
         xx = xx + math.pow(e['x'],2)
-        xy = xy + e['x'] * e['y']
+        xy = xy + ( e['x'] * e['y'] )
 
     # Increase pin as numbers increase (x0.1 e.g.)
     # +1 so is pinned before data is added

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 # Externals
 from countries.models import Country
-from datetime import date as _date
+from datetime import date as date, datetime, timedelta
 from notification import models as notification
 from wall.models import Wall, WallItem
 # Spenglr
@@ -44,7 +44,10 @@ class UserProfile(models.Model):
     def update_sq(self):
         # Only calculate if questions have been attempted
         if self.user.userquestionattempt_set.count() > 0:
-            data = self.user.userquestionattempt_set.values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
+            # Retrieve records for past 6 months
+            start_date = datetime.now() - timedelta(weeks=52)
+            end_date = datetime.now()
+            data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.sq = sq_calculate(data, 'desc') # Descending data set
             self.save()
         # Send notification to the user that their SQ has changed
