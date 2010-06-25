@@ -23,7 +23,15 @@ def index(request):
 
         userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
         userchallengescomplete = request.user.userchallenge_set.filter(status__exact=2)[0:3]
-
+        # If no userchallenges available, attempt to populate
+        # FIXME: This is going to fire on every dashboard load until the user has some challenge
+        # it's relatively quick/smart but still clunky. An 'event' trigger mechanism whereby
+        # this is called when new modules are activated would be preferable (adding this directly
+        # to the education app creates an unwanted dependency).
+        if not userchallenges:
+            from challenge.utils import generate_user_challenges
+            generate_user_challenges(request.user)
+        
         # Flag True/False whether challenges exist at all for this user
         userchallengesexist = ( userchallenges.count() + userchallengescomplete.count() ) > 0
         
@@ -106,6 +114,35 @@ def index(request):
         # User not logged in, provide login/signup form (no anonymous users)
         return HttpResponseRedirect("/accounts/login/")
 
+
+def welcome(request):
+    from django.contrib.auth.forms import AuthenticationForm
+    from education.models import Module
+    from network.models import Network
+    from django.db.models import Count
+
+    topusers = User.objects.order_by('-userprofile__sq')[0:5]
+    topnetworks = Network.objects.annotate(num_users=Count('usernetwork')).order_by('num_users')[0:10]
+    topmodules = Module.objects.annotate(num_users=Count('usermodule')).order_by('num_users')[0:10]
+    
+    authentication_form = AuthenticationForm
+    
+    context = {
+            'form' : authentication_form(request),
+            # Top
+            'topusers': topusers,
+            'topnetworks': topmodules,
+            'topmodules': topmodules,
+
+    }
+
+    return render_to_response('welcome.html', context, context_instance=RequestContext(request))
+
+
+
+
+
+
 # Take a wall slug and redirect to the spenglr 'home' for that wall
 # which will be on a network, course, module, or user profile
 # This could probably be better handled with a template tag to generate the url preventing the redirects?
@@ -147,4 +184,6 @@ def wall_edit( request, id ):
     else:
         success_url = False
     return edit( request, id, success_url=success_url)
+
+
 

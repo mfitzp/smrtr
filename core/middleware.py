@@ -11,7 +11,7 @@ class RequireLoginMiddleware(object):
         self.loginurl  = getattr( settings, 'LOGIN_URL' )
     
     def process_request( self, request ):
-        # No logged in, and target path is not in login/registration path
+        # Not logged in, and target path is not in login/registration path
         if request.user.is_anonymous() and request.path.startswith(self.loginpath) != True:
             if request.POST:
                 return login( request )

@@ -92,7 +92,7 @@ def module_register(request, module_id):
                     uc.save()
                 except:
                     pass
-            
+
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
             else:

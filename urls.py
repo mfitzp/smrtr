@@ -24,7 +24,9 @@ urlpatterns = patterns('',
     (r'^resources/', include('resources.urls')),    
     (r'^challenge/', include('challenge.urls')),
 
+    (r'^accounts/welcome/$', 'core.views.welcome'),
     (r'^accounts/', include('registration.urls')),
+
     (r'^profile/', include('profiles.urls')),
 
     (r'^questions/', include('questions.urls')),

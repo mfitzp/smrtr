@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load spenglr_sq_tags %}
+{% load i18n %}
+{% load avatar_tags %}
+
+{% block content_title %}<h1>Welcome to smrtr!</h1>{% endblock %}
+
+{% block content_left %}
+<div class="boxout"><div>
+<p><strong><a href="http://www.smrtr.org">smrtr</a></strong> is a free 
+collaborative learning, quiz and study tool.</p>
+<p>Take <strong>quizzes</strong>, <strong>track progress</strong> and receive recommended <strong>study aids</strong> to build your knowledge.
+Ideal for <strong>students</strong>, <strong>professionals</strong> or general-knowledge <strong>know-it-alls</strong> alike!</p>
+<p><strong>Log in below, or <a href="{% url registration_register %}">create a new account</a> to get involved!</strong></p>
+</div></div>
+<p>
+<form action="/accounts/login/" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Login &raquo;" />
+</form>
+</p>
+
+{% endblock %}
+
+{% block content_right %}
+    <h5>smrtst Users</h5>
+
+    <div class="membership-container clearfloats">
+    {% for user in topusers %}
+        <div class="membership">
+            <table>
+            <tr><td><a href="{% url user-profile user_id=user.id %}">{% avatar user 48 %}</a></td></tr>
+            <tr><td><small><a href="{% url user-profile user_id=user.id %}">{{ user.get_profile.fullname }}</a></small></td></tr>
+            <tr><td><small>{% sqchange 100 user.get_profile.sq %}</a></small></td></tr>
+            </table>
+        </div>
+    {% endfor %}
+    </div>
+
+    <h5>Top Networks</h5>
+
+        <div>
+        {% for network in topnetworks %}
+            <span class="stack"><span class="network network{{ network.type }}">{{ network }}</span></span>
+        {% endfor %}
+        </div>
+
+    <h5>Top Modules</h5>
+
+        <div>
+        {% for module in topmodules %}
+            <span class="stack"><span class="module">{{ module }}</span></span>
+        {% endfor %}
+        </div>
+{% endblock %}
