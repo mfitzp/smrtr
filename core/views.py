@@ -122,8 +122,8 @@ def welcome(request):
     from django.db.models import Count
 
     topusers = User.objects.order_by('-userprofile__sq')[0:5]
-    topnetworks = Network.objects.annotate(num_users=Count('usernetwork')).order_by('num_users')[0:10]
-    topmodules = Module.objects.annotate(num_users=Count('usermodule')).order_by('num_users')[0:10]
+    topnetworks = Network.objects.annotate(num_users=Count('usernetwork')).order_by('-num_users')[0:10]
+    topmodules = Module.objects.annotate(num_users=Count('usermodule')).order_by('-num_users')[0:10]
     
     authentication_form = AuthenticationForm
     
