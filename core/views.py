@@ -131,7 +131,7 @@ def welcome(request):
             'form' : authentication_form(request),
             # Top
             'topusers': topusers,
-            'topnetworks': topmodules,
+            'topnetworks': topnetworks,
             'topmodules': topmodules,
 
     }
