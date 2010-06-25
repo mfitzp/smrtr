@@ -7,7 +7,7 @@
 {% endblock %}
 
 
-{% block content %}
+{% block content_left %}
 
     {% if challenge %}
         <h1>{{ challenge }}</h1>
@@ -41,3 +41,7 @@
     {% endif %}
 
 {% endblock %}
+
+{% block content_right %}
+    {% include "_challengers.html" %}  
+{% endblock %} 

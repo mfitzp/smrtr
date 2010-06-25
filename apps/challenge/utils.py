@@ -67,6 +67,9 @@ def generate_user_challenges(user, number = None):
         # Now we have a list of lists containing the module id and the concept ids
         # [[16L, [68L, 70L, 78L]], [16L, [69L]], [305L, [99L]], [293L, [97L, 90L]]]
         # Iterate top list (module keyed)
+        
+        #TODO: Look for already existing, open, challenges to allow for multi-player as default
+        
         for mlist in final:
             challenge = Challenge()
             challenge.user = user

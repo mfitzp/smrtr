@@ -105,14 +105,23 @@ def detail(request, challenge_id):
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     #TODO: Access grant/deny
-        
+    
+    # List of previous/other challengers on this challenge
+    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
+    
     # If the user has a challenge record retrieve it, or create a new one
     try:
         userchallenge = challenge.userchallenge_set.get( user=request.user )
     except:
         userchallenge = list()            
 
-    return render_to_response('challenge_view.html', {'challenge': challenge, 'userchallenge':userchallenge}, context_instance=RequestContext(request))
+    context = {
+        'challenge': challenge,
+        'userchallenge':userchallenge,
+        'userchallenges':userchallenges,
+        }
+
+    return render_to_response('challenge_view.html', context, context_instance=RequestContext(request))
 
 
 
@@ -143,7 +152,17 @@ def do(request, challenge_id):
     #FIXME: Return 10Qs from X, using progress flag in users bit
     questions = challenge.questions.all()[:10] # Returns 10 questions (NOT random, randomised in generation) 
 
-    return render_to_response('challenge_do.html', {'challenge': challenge, 'userchallenge':userchallenge, 'questions': questions}, context_instance=RequestContext(request))
+    # List of previous/other challengers on this challenge
+    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
+    
+    context = {
+        'challenge': challenge, 
+        'userchallenge':userchallenge, 
+        'userchallenges':userchallenges,
+        'questions': questions
+        }
+
+    return render_to_response('challenge_do.html', context, context_instance=RequestContext(request))
 
 def do_submit(request, challenge_id):
 
@@ -182,7 +201,7 @@ def do_submit(request, challenge_id):
             uqa = UserQuestionAttempt()
             uqa.question = q
             uqa.user = request.user
-            uqa.usq = request.user.userprofile.sq
+            uqa.usq = request.user.get_profile().sq
 
             # Find submitted answer id in the list of correct answers
             aid = request.POST.get('questions-' + qid)
@@ -215,7 +234,18 @@ def do_submit(request, challenge_id):
     userchallenge.attempts += 1
     userchallenge.save()
 
-    return render_to_response('challenge_do_submit.html', {'challenge': challenge,'userchallenge':userchallenge, 'questions': questions, 'totals': totals }, context_instance=RequestContext(request))
+    # List of previous/other challengers on this challenge
+    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
+
+    context = {
+        'challenge': challenge,
+        'userchallenge': userchallenge, 
+        'userchallenges': userchallenges, 
+        'questions': questions, 
+        'totals': totals 
+        }
+
+    return render_to_response('challenge_do_submit.html', context, context_instance=RequestContext(request))
 
 
 def generate(request):

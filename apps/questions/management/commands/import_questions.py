@@ -46,26 +46,28 @@ class Command(BaseCommand):
         from django.contrib.auth.models import User
         from questions.models import Question, Answer
         from tagging.models import Tag
+    
+        try:
+            question = Question()
+            question.content = data['question']
+            question.tags = data['tags']
+            question.author = User.objects.get(pk=0) #FIXME: System smrtr user: use constant?
+            question.save() # Save to allow m2m
 
-        question = Question()
-        question.content = data['question']
-        question.tags = data['tags']
-        question.author = User.objects.get(pk=0) #FIXME: System smrtr user: use constant?
-        question.save() # Save to allow m2m
-
-        # Create correct answer
-        c = Answer()
-        c.content = data['correct']
-        c.is_correct = True
-        c.question = question
-        c.save()
-        
-        # Save incorrect answers
-        data['incorrect'] = filter(lambda x: len(x)>0, data['incorrect']) # Remove empty items
-        for incorrect in data['incorrect']:
-            ic = Answer()
-            ic.content = incorrect
-            ic.is_correct = False
-            ic.question = question
-            ic.save()
+            # Create correct answer
+            c = Answer()
+            c.content = data['correct']
+            c.is_correct = True
+            c.question = question
+            c.save()
             
+            # Save incorrect answers
+            data['incorrect'] = filter(lambda x: len(x)>0, data['incorrect']) # Remove empty items
+            for incorrect in data['incorrect']:
+                ic = Answer()
+                ic.content = incorrect
+                ic.is_correct = False
+                ic.question = question
+                ic.save()
+        except:
+            print "Error importing:" + data['question']    

@@ -10,7 +10,7 @@
 {% endblock %}
 
 
-{% block content %}
+{% block content_left %}
 
     {% if challenge %}
     
@@ -48,3 +48,7 @@
     {% endif %}
  
 {% endblock %}
+
+{% block content_right %}
+    {% include "_challengers.html" %}  
+{% endblock %} 

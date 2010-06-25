@@ -1,0 +1,17 @@
+{% load avatar_tags %}
+{% load spenglr_sq_tags %}
+
+    <h5>Challengers</h5>
+    <table>
+    {% for uc in userchallenges %}
+        <tr class="{% cycle 'odd' 'even' %}"><td><a href="{% url user-profile user_id=user.id %}">{% avatar uc.user 48 %}</a></td>
+        <td>
+            <a href="{% url user-profile user_id=user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
+            {% sqchange 100 userchallenge.sq %} with {{ uc.attempts }} attempt{{ uc.attempts|pluralize }}
+        </td> 
+        </tr>
+    {% empty %}
+        <tr><td>None yet. You're first to challenge!</td></tr>
+    {% endfor %}
+    </table>
+
