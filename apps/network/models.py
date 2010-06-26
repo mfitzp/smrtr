@@ -105,3 +105,8 @@ class UserNetwork(models.Model):
     user = models.ForeignKey(User)
     network = models.ForeignKey(Network)
     start_date = models.DateTimeField(editable = False, auto_now_add = True) # Join date for the network
+
+    class Meta:
+        unique_together = ("user", "network")
+    
+    

@@ -220,3 +220,7 @@ class ConceptResource(models.Model):
         
     resource = models.ForeignKey(Resource)
     concept = models.ForeignKey(Concept)    
+    
+    class Meta:
+        unique_together = ("resource", "concept")
+    

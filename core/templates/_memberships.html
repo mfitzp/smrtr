@@ -1,10 +1,10 @@
 {% load avatar_tags %}
 {% load spenglr_core_tags %}
 
-    <h4>Members</h4>
+    <h4>Members ({{ members.count }} total)</h4>
 
     <div class="membership-container clearfloats">
-    {% for user in members %}
+    {% for user in members|slice:":14" %}
         <div class="membership">
             <table>
             <tr><td><a href="{% url user-profile user_id=user.id %}">{% avatar user 48 %}</a></td></tr>
