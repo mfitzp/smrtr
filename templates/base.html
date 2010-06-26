@@ -1,25 +1,26 @@
 {% load i18n %}
 {% load spenglr_sq_tags %}
 {% load avatar_tags %}
+{% load adminmedia %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>{% block title %}smrtr{% endblock %}</title>
 <meta name="google-site-verification" content="PiKY_8J7A4e6g1RHwgUp4Z9RYRkr58aL6BlzCCZqgdo" />
-<link rel="icon" href="/media/img/favicon.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="/media/img/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 
-<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />
-<link rel="stylesheet" type="text/css" href="/media/css/base.css" />
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% admin_media_prefix %}css/base.css{% endblock %}" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
 {% block %rss %}{% endblock %}
 {% block extrastyle %}{% endblock %}
 <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
 {% block extrahead %}
-<ascript type="text/javascript" src="/media/admin/js/core.js"></script>
+<ascript type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
 <ascript type="text/javascript" src="/admin/jsi18n/"></script>
-<script type="text/javascript" src="/media/flowplayer/flowplayer-3.2.2.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer-3.2.2.min.js"></script>
 {% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
 </head>
@@ -101,7 +102,7 @@
     {% block footer %}                   <!-- Footer -->
         <div id="footer">
                 <p>All user generated content licensed under the <a href="http://www.gnu.org/copyleft/fdl.html" target="_blank">GFDL</a> and <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a>. Please read and follow the <a href="/cg">Community Guidelines</a><br />
-                <a href="http://www.smrtr.org"><strong>smrtr</strong></a> needs developers and content producers.
+                <a href="http://smrtr.org"><strong>smrtr</strong></a> needs developers and content producers.
                 You may <a href="http://github.com/spenglr/spenglr/issues" target="_blank">report any issues</a> or <a href="http://github.com/spenglr/spenglr" target="_blank">contribute to the code</a> via <a href="http://github.com/spenglr" target="_blank"><strong>github</strong></a>.
                 Web hosting by <a href="http://www.webfaction.com?affiliate=spenglr">WebFaction</a></p>
 
