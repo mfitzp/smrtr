@@ -11,8 +11,7 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 <p><strong>Log in below, or <a href="{% url registration_register %}">create a new account</a> to get involved!</strong></p>
 </div></div>
 <p>
-<form action="/accounts/login/" method="post">
-{% csrf_token %}
+<form action="/accounts/login/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Login &raquo;" />
 </form>

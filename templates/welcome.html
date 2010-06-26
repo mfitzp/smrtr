@@ -17,8 +17,7 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 <br /><br />
 <h5>Existing Member?</h5>
 <p>Welcome back! Enter your username and password below:
-<form action="/accounts/login/" method="post">
-{% csrf_token %}
+<form action="/accounts/login/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Login &raquo;" />
 </form>

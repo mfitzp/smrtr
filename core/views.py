@@ -127,14 +127,13 @@ def welcome(request):
     
     authentication_form = AuthenticationForm
     
-    context = {
+    context = RequestContext(request, {
             'form' : authentication_form(request),
             # Top
             'topusers': topusers,
             'topnetworks': topnetworks,
             'topmodules': topmodules,
-
-    }
+    })
 
     return render_to_response('welcome.html', context, context_instance=RequestContext(request))
 
