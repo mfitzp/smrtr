@@ -11,9 +11,12 @@
 collaborative learning, quiz and study tool.</p>
 <p>Take <strong>quizzes</strong>, <strong>track progress</strong> and receive recommended <strong>study aids</strong> to build your knowledge.
 Ideal for <strong>students</strong>, <strong>professionals</strong> or general-knowledge <strong>know-it-alls</strong> alike!</p>
-<p><strong>Log in below, or <a href="{% url registration_register %}">create a new account</a> to get involved!</strong></p>
 </div></div>
-<p>
+<div style="text-align:right;"><a href="{% url registration_register %}"><img src="/media/img/getsmrtr.png" alt="get smrtr"></a></div>
+
+<br /><br />
+<h5>Existing Member?</h5>
+<p>Welcome back! Enter your username and password below:
 <form action="/accounts/login/" method="post">
 {% csrf_token %}
 {{ form.as_p }}
