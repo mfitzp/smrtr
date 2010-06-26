@@ -5,11 +5,16 @@
 {% block content %}
 
     <h1>Networks</h1>
-
+    <div class="boxout"><div>
+    {% if query %}
+    {% else %}
+    <p>Find your <strong>school</strong>, <strong>college</strong> and <strong>courses</strong> by searching below.</p>
+    <p>Just enter <strong>part of the name</strong> and click <strong>Search</strong>.</p>
+    {% endif %}
     <form method="get" action=".">
         <table>
             <tr>
-                <th><label for="id_q">{{ form.q.label }}</th>
+                <th style="vertical-align:middle;"><label for="id_q">{{ form.q.label }}</th>
                     <td>{{ form.q.errors }}
 {{ form.q }}</td>
                     <td>{{ form.type.errors }}
@@ -22,6 +27,7 @@
             </tr>
         </table>
     </form>
+    </div></div>
 
         {% if query %}
             <h3>Results</h3>
@@ -44,6 +50,8 @@
             {% endfor %}
         </table>
 
+        <p>Don't find your network listed? <a href="#">Create it!</a></p>
+
         {% else %}
             {# Show some example queries to run, maybe query syntax, something else? #}
         {% endif %}
@@ -52,7 +60,5 @@
 {% with page as page_obj %}
     {% paginate %}
 {% endwith %}
-
-<p>Don't find your network listed? <a href="#">Create it!</a></p>
 
 {% endblock %}
