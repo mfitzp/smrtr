@@ -12,8 +12,13 @@ class RequireLoginMiddleware(object):
     
     def process_request( self, request ):
         # Not logged in, and target path is not in login/registration path
-        if request.user.is_anonymous() and request.path.startswith(self.loginpath) != True:
-            if request.POST:
-                return login( request )
+        if request.user.is_anonymous():
+            if request.path == '/':
+                from core.views import welcome
+                return welcome( request )
             else:
-                return HttpResponseRedirect('%s?next=%s' % (self.loginurl, request.path))
+                if request.path.startswith(self.loginpath) != True:
+                    if request.POST:
+                        return login( request )
+                    else:
+                        return HttpResponseRedirect('%s?next=%s' % (self.loginurl, request.path))

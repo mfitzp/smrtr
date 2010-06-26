@@ -131,7 +131,7 @@ AUTH_PROFILE_MODULE = "profiles.userprofile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
 LOGIN_PATH = '/accounts/' # All paths under here are still accessible when logged out - allows login/registration
-LOGIN_URL = '/accounts/welcome/'
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
 FORCE_LOWERCASE_TAGS = True
