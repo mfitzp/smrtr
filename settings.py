@@ -136,6 +136,15 @@ LOGIN_REDIRECT_URL = '/'
 
 FORCE_LOWERCASE_TAGS = True
 
+AVATAR_STORAGE_DIR = "avatar"
+
+FLOWPLAYER_CONFIG = {
+                        'default' : 
+                            { 'clip' : { 'autoPlay':'false' }, },
+                    }
+
+COUNTRIES_FLAG_PATH = 'img/flags/%s.png'
+
 # Smrtr constants
 
 # +/1 Range between levels of difficulty
@@ -148,20 +157,6 @@ SQ_PINNING_WEIGHT = 0.1
 # Challenges
 
 CHALLENGES_MIN_ACTIVE = 5
-
-# External avatar app setting (storage under /media/avatar)
-AVATAR_STORAGE_DIR = "avatar"
-AVATAR_DEFAULT_URL = "/media/img/default_avatar.png"
-AVATAR_GRAVATAR_BACKUP_DEFAULT = "http://static.smrtr.org/media/img/default_avatar.png"
-
-# Flowplayer (audio/video output)
-FLOWPLAYER_URL = "/media/flowplayer/flowplayer-3.2.2.swf"
-FLOWPLAYER_CONFIG = {
-                        'default' : 
-                            { 'clip' : { 'autoPlay':'false' }, },
-                    }
-
-COUNTRIES_FLAG_PATH = 'img/flags/%s.png'
 
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
@@ -184,3 +179,13 @@ try:
     from local_settings import *
 except ImportError:
     pass
+    
+    
+# The following paths are dependent on setting correct base MEDIA/MEDIAADMIN urls in localsettings
+# External avatar app setting (storage under /media/avatar)
+AVATAR_DEFAULT_URL = MEDIA_URL + "img/default_avatar.png"
+AVATAR_GRAVATAR_BACKUP_DEFAULT = MEDIA_URL + "img/default_avatar.png"
+
+# Flowplayer (audio/video output)
+FLOWPLAYER_URL = MEDIA_URL + "flowplayer/flowplayer-3.2.2.swf"
+
