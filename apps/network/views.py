@@ -38,7 +38,7 @@ def network_detail(request, network_id):
 
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
-                'members': network.members.all(),
+                'members': network.members.order_by('?'),
                 "wall": network.wall,
                 "wallitems": network.wall.wallitem_set.select_related(),
                 "wallform": WallItemForm()
