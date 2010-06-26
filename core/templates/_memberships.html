@@ -4,7 +4,7 @@
     <h4>Members ({{ members.count }} total)</h4>
 
     <div class="membership-container clearfloats">
-    {% for user in members|slice:":14" %}
+    {% for user in members|slice:":12" %}
         <div class="membership">
             <table>
             <tr><td><a href="{% url user-profile user_id=user.id %}">{% avatar user 48 %}</a></td></tr>
