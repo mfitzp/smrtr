@@ -36,8 +36,9 @@
         <blockquote>{{ profile.about }}</blockquote>
     
         {% ifequal puser user %}
+
+            <a href="{% url profile-edit %}">Edit your profile</a><br />
             <a href="{% url avatar_change %}">Change your profile picture</a><br />
-            
             {% url admin:password_change as password_change_url %}
             {% if password_change_url %}
                 <a href="{{ password_change_url }}">

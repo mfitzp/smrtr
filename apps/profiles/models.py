@@ -54,7 +54,7 @@ class UserProfile(models.Model):
         # notification.send([self.user], "user_sq_updated", {"user": self.user})        
 
     # This is the only required field
-    user = models.ForeignKey(User, unique=True)
+    user = models.ForeignKey(User, unique=True, editable = False)
 
     # The rest is completely up to you...
     about = models.TextField(blank = True)
