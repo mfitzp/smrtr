@@ -10,7 +10,10 @@ from profiles.forms import *
 # External
 from wall.forms import WallItemForm
 
-def profile(request, user_id):
+def profile(request, user_id = None):
+
+    if user_id == None:
+        user_id = request.user.id
 
     puser = get_object_or_404(User, pk=user_id)
     profile = puser.get_profile()

@@ -12,10 +12,12 @@
 {% endblock %}
 
 {% block content_left %}
-
+<p class="notice">Information you enter will be visible on your personal profile page.</p>
     <form action="{% url profile-edit %}" method="post">
-    {{ uform.as_p }}
-    {{ pform.as_p }}
+    <table>
+    {{ uform.as_table }}
+    {{ pform.as_table }}
+    </table>
     <input type="submit" value="Submit" />
     </form>
 

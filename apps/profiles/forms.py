@@ -6,9 +6,12 @@ from profiles.models import *
 
 
 class UserForm(forms.ModelForm):
+
+    email = forms.EmailField(max_length=200, required=True)
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name','email']
+        fields = ['first_name', 'last_name', 'email']
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
