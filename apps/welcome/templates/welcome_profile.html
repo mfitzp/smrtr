@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load spenglr_sq_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Welcome
+    &raquo; Tell us about yourself
+{% endblock %}
+
+{% block content_title %}<h1>Tell us about yourself</h1>{% endblock %}
+
+{% block content_left %}
+<p>Information you give us will be displayed on your personal profile page, and used to find like-minded and nearby networks.</p>
+    <form action="{% url welcome-1 %}" method="post">
+    {{ uform.as_p }}
+    {{ pform.as_p }}
+    <input type="submit" value="Next &raquo;" />
+    </form>
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load spenglr_sq_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ profile }}
+{% endblock %}
+
+{% block content_left %}
+
+    <form action="{% url profile-edit %}" method="post">
+    {{ uform.as_p }}
+    {{ pform.as_p }}
+    <input type="submit" value="Submit" />
+    </form>
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+{% endblock %}

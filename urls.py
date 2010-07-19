@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     (r'^admin/jsi18n', i18n_javascript),
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
-    (r'^$', 'core.views.index'),
+    url(r'^$', 'core.views.home', name='home'),
 
     (r'^comments/', include('django.contrib.comments.urls')),
 
@@ -24,10 +24,11 @@ urlpatterns = patterns('',
     (r'^resources/', include('resources.urls')),    
     (r'^challenge/', include('challenge.urls')),
 
-    (r'^accounts/welcome/$', 'core.views.welcome'),
+    (r'^accounts/intro/$', 'core.views.intro'),
     (r'^accounts/', include('registration.urls')),
 
     (r'^profile/', include('profiles.urls')),
+    (r'^welcome/', include('welcome.urls')),
 
     (r'^questions/', include('questions.urls')),
 

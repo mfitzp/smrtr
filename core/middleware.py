@@ -22,4 +22,4 @@ class RequireLoginMiddleware(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
         from core.views import *
         if request.user.is_anonymous() and view_func == index:
-            return welcome( request )
+            return intro( request )

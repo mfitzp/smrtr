@@ -11,7 +11,7 @@ from core.forms import LoginForm
 from notification.models import Notice
 from wall.views import *
 
-def index(request):
+def home(request):
     # External
     from wall.forms import WallItemForm
 
@@ -115,7 +115,7 @@ def index(request):
         return HttpResponseRedirect("/accounts/login/")
 
 
-def welcome(request):
+def intro(request):
     from django.contrib.auth.forms import AuthenticationForm
     from education.models import Module
     from network.models import Network
@@ -135,7 +135,7 @@ def welcome(request):
             'topmodules': topmodules,
     })
 
-    return render_to_response('welcome.html', context, context_instance=RequestContext(request))
+    return render_to_response('intro.html', context, context_instance=RequestContext(request))
 
 
 

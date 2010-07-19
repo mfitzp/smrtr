@@ -12,6 +12,7 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 </div></div>
 <p>
 <form action="/accounts/login/" method="post">{% csrf_token %}
+<input type="hidden" name="next" value="{{ request.GET.next }}">
 {{ form.as_p }}
 <input type="submit" value="Login &raquo;" />
 </form>

@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'resources',
     'sq',
     'challenge',
+    'welcome',
 )
 
 CACHE_BACKEND = 'dummy:///'
