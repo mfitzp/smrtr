@@ -162,7 +162,7 @@ CHALLENGES_MIN_ACTIVE = 5
 
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
-HAYSTACK_DEFAULT_OPERATOR = 'NEAR'
+HAYSTACK_DEFAULT_OPERATOR = 'AND'
 
 HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_index'
 
