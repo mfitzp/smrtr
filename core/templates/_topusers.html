@@ -1,0 +1,16 @@
+{% load spenglr_sq_tags %}
+{% load i18n %}
+{% load avatar_tags %}
+
+    <div class="membership-container clearfloats">
+    {% for user in topusers %}
+        <div class="membership">
+            <table>
+            <tr><td><a href="{% url user-profile user_id=user.id %}">{% avatar user 48 %}</a></td></tr>
+            <tr><td><small><a href="{% url user-profile user_id=user.id %}" styl="word-wrap:break-word">{{ user.get_profile.fullname }}</a></small></td></tr>
+            <tr><td><small>{% sqchange 100 user.get_profile.sq %}</a></small></td></tr>
+            </table>
+        </div>
+    {% endfor %}
+    </div>
+

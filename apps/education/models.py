@@ -81,8 +81,6 @@ class Concept(models.Model):
     users = models.ManyToManyField(User, through='UserConcept', related_name='concepts')
 
     sq = models.IntegerField(editable = False, null = True)
-    # Optional wall for this object
-    wall = models.OneToOneField(Wall, editable = False, null = True)
     
     # Resources (through conceptresource for bookmarks)
     resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')

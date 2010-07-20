@@ -50,25 +50,24 @@ class UserProfile(models.Model):
             data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.sq = sq_calculate(data, 'desc') # Descending data set
             self.save()
-        # Send notification to the user that their SQ has changed
-        # notification.send([self.user], "user_sq_updated", {"user": self.user})        
-
-    # This is the only required field
+            # Send notification to the user if their SQ has changed
+            if self.sq != prev_sq:
+                notification.send([self.user], "user_sq_updated", {"user": self.user})        
+                
     user = models.ForeignKey(User, unique=True, editable = False)
 
-    # The rest is completely up to you...
+    # Information
     about = models.TextField(blank = True)
+    # Location
     city = models.CharField('City', max_length = 50, blank = True)
     state = models.CharField('State/Province/Region', max_length = 50, blank = True)
     postcode = models.CharField('ZIP/Postal Code', max_length = 15, blank = True)
     country = models.ForeignKey(Country, null = True, blank = True)
-
-    # Email already stored in main user record
+    # Contact (email already in user model)
     telno = models.CharField('Telephone', max_length=50, blank = True)
-    # IM shit in here
     url = models.URLField(verify_exists = True, blank = True)
     sq = models.IntegerField(blank = True, null = True, editable = False)
-    # Optional wall for this object
+    # Wall for this user
     wall = models.OneToOneField(Wall, editable = False, null = True)
     
 def create_profile(sender, **kw):

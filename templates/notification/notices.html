@@ -12,9 +12,9 @@
     {% if notices %}
     
     {% for notice in notices %}
-    <div class="notice">
+    <div class="notice" style="position:relative;">
         {{ notice.message|safe }}
-        <div class="notice-meta">{{ notice.added|timesince }} ago &#183; <a href="">Comment</a> &#183; <a href="">Like</a></div>
+        <div class="notice-meta" style="position:absolute;right:0px; top:0px;">{{ notice.added|timesince }} ago</div>
     </div>
     {% endfor %}
     

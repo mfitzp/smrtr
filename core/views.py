@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 from django.http import HttpResponsePermanentRedirect
 from django.db.models import Q
+from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 # Spenglr
 from education.models import Module, UserModule, Concept
@@ -44,13 +45,15 @@ def home(request):
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
         # Top users for front page (will want network top users later also, perhaps)
-        topusers = User.objects.order_by('-userprofile__sq')[0:5]
+        # Put this on another page (stats, ranking, etc.)
+        # topusers = User.objects.order_by('-userprofile__sq')[0:5]
 
         # Front page wallitems (wi) combine the user's accessible wall posts from 
         # user profile, networks, courses and modules (& friends later)
         
-        # Posts to user's personal wall (profile) *ALWAYS* appear
         wi = request.user.get_profile().wall.wallitem_set.select_related()
+        # Posts to SYSTEM wall *ALWAYS* appear
+        wi = wi | Wall.objects.get(pk=1).wallitem_set.select_related()
         
         # TODO: All the following need some mechanism to filter, reduce the number shown
         # Like +1, Comment +1 or +2
@@ -63,14 +66,10 @@ def home(request):
         # Posts on user's networks, courses, modules
         for un in usernetworks:
             wi = wi | un.network.wall.wallitem_set.select_related()
-            
+          
         # These need to be limited to active only
         for um in usermodules:
             wi = wi | um.module.wall.wallitem_set.select_related()        
-                      
-        for uc in userconcepts:
-            wi = wi | uc.concept.wall.wallitem_set.select_related()        
-                    
                     
         # Filter out to show only *other* users - may not want this as comments/etc. on user's 
         # own posts will be missed? Depends on the profile/dashboard interaction - future
@@ -97,16 +96,14 @@ def home(request):
             'userchallengescomplete': userchallengescomplete,
             
             'SMRTR_FREE_TIME_URL': SMRTR_FREE_TIME_URL,
-
-            # Extras
-            'topusers': topusers,
+            
+            # Notifications
+            'notices' : Notice.objects.notices_for(request.user, on_site=True)[0:3],            
             
             # Wall objects
             # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
             # -wallitems should be combination of all user's available walls
-            # 'wall': request.user.get_profile().wall,
             'wallitems': wi[0:10],
-            #'wallform': WallItemForm()
         })
         
         return render_to_response('dashboard.html', i, context_instance=RequestContext(request))

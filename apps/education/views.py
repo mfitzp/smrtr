@@ -137,10 +137,6 @@ def concept_detail(request, concept_id):
     context = { 'concept': concept, 
                 'userconcept': userconcept, 
                 #'members':members,
-                # Wall items
-                'wall': concept.wall,
-                'wallitems': concept.wall.wallitem_set.select_related(),
-                'wallform': WallItemForm()
             }
 
     return render_to_response('concept_detail.html', context, context_instance=RequestContext(request))

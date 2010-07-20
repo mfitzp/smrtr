@@ -3,5 +3,5 @@
 {% load spenglr_sq_tags %}
 
 {% block notice %}
-Your SQ changed to a {% sqdescriptive user.get_profile.sq %} {% sqchange 100 user.get_profile.sq %}
+Your SQ is now {% sqchange 100 user.get_profile.sq %} ({% sqdescriptive user.get_profile.sq %})
 {% endblock %}

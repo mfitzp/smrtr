@@ -8,6 +8,8 @@
 
     <div id="dashboard">
 
+    {% include "_wall.html" %}  
+
     <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5>
 
     {% if userchallengesexist %}
@@ -100,58 +102,56 @@
     {% endif %}
 
 
-    {% if usermodules %}
-        <h5>Active Modules</h5>
-        <div>
-        {% for usermodule in usermodules %}
-            <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
-        {% endfor %}
-        </div>
-    {% endif %}
-
-    <h5>Available Modules</h5>
-    {% if suggestmodules %}
-        <div>
-        {% for suggestmodule in suggestmodules %}            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
-        {% endfor %}
-        </div>
-<!--        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p> -->
-    {% else %}
-        <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
-    {% endif %}
-
-    <h5>Networks</h5>
-    {% if usernetworks %}
-        <div>
-        {% for usernetwork in usernetworks.all %}
-            <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
-        {% endfor %}
-        </div>
-    {% else %}
-        <p>Join networks to learn with others at school, online or in your workplace.</p>
-    {% endif %}
-    <p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
-
-
     </div>
 
     {% endblock %}
 
     {% block content_right %}
-        <h5>smrtst Users</h5>
-
-        <div class="membership-container clearfloats">
-        {% for user in topusers %}
-            <div class="membership">
-                <table>
-                <tr><td><a href="{% url user-profile user_id=user.id %}">{% avatar user 48 %}</a></td></tr>
-                <tr><td><small><a href="{% url user-profile user_id=user.id %}" styl="word-wrap:break-word">{{ user.get_profile.fullname }}</a></small></td></tr>
-                <tr><td><small>{% sqchange 100 user.get_profile.sq %}</a></small></td></tr>
-                </table>
-            </div>
-        {% endfor %}
-        </div>
     
-        <h5>Activity Feed</h5>
-        {% include "_wall.html" %}  
+        <h5>Notifications</h5>
+
+        {% if notices %}
+        <table style="width:100%">
+        {% for notice in notices %}
+        <tr class="{% cycle zebra %}"><td>{{ notice.message|safe }}</td>
+            <td class="notice-meta">{{ notice.added|timesince }} ago</td></tr>
+        {% endfor %}
+        </table>      
+        <p style="text-align:right;"><a href="{% url notification_notices %}">Show all notifications &raquo;</a></p>
+        {% else %}
+        <p>There are no notifications for you yet.</p>
+        {% endif %}
+
+       {% if usermodules %}
+            <h5>Active Modules</h5>
+            <div>
+            {% for usermodule in usermodules %}
+                <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        <h5>Available Modules</h5>
+        {% if suggestmodules %}
+            <div>
+            {% for suggestmodule in suggestmodules %}            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
+            {% endfor %}
+            </div>
+    <!--        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p> -->
+        {% else %}
+            <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
+        {% endif %}
+
+        <h5>Networks</h5>
+        {% if usernetworks %}
+            <div>
+            {% for usernetwork in usernetworks.all %}
+                <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Join networks to learn with others at school, online or in your workplace.</p>
+        {% endif %}
+        <p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
+
     {% endblock %}
