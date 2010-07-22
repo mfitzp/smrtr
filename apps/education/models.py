@@ -8,7 +8,8 @@ from sq.utils import *
 # External
 from countries.models import Country
 from datetime import datetime, timedelta, date as _date
-from wall.models import Wall
+# Smrtr
+from discuss.models import Forum
 
 # Network = Course now e.g. 'Network' for AQA Biology
 # Below this modules are the basis of study on that modules may have a home network, be tied to a specific network, or freely open
@@ -23,7 +24,7 @@ class Module(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Module, self).save(force_insert, force_update)
-            self.wall = Wall.objects.create(slug='c'+str(self.id),name=self.name)
+            self.forum = Forum.objects.create(slug='c'+str(self.id),name=self.name)
         super(Module, self).save(force_insert, force_update)
 
     def update_sq(self):
@@ -44,8 +45,8 @@ class Module(models.Model):
     description = models.TextField(blank = True)
 
     sq = models.IntegerField(editable = False, null = True)
-    # Optional wall for this object
-    wall = models.OneToOneField(Wall, editable = False, null = True)
+
+    forum = models.OneToOneField(Forum, editable = False, null = True)
 
 # Concepts for this module
     concepts = models.ManyToManyField('Concept', blank=True)
@@ -64,7 +65,7 @@ class Concept(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Concept, self).save(force_insert, force_update)
-            self.wall = Wall.objects.create(slug='m'+str(self.id),name=self.name)
+            self.forum = Forum.objects.create(slug='m'+str(self.id),name=self.name)
         super(Concept, self).save(force_insert, force_update)
 
     def update_sq(self):
@@ -81,6 +82,8 @@ class Concept(models.Model):
     users = models.ManyToManyField(User, through='UserConcept', related_name='concepts')
 
     sq = models.IntegerField(editable = False, null = True)
+
+    forum = models.OneToOneField(Forum, editable = False, null = True)
     
     # Resources (through conceptresource for bookmarks)
     resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')

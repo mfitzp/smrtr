@@ -93,6 +93,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.comments',
 # External Helpers
+    'markdown', # Allow markdown-style markup in forums etc.
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
     #'atomformat',   # http://github.com/pinax/atom-format (place atomformat.py in externals/, no subdir, not actually an INSTALLED_APP
 # Externals
@@ -118,6 +119,7 @@ INSTALLED_APPS = (
     'sq',
     'challenge',
     'welcome',
+    'discuss',
 )
 
 CACHE_BACKEND = 'dummy:///'

@@ -43,10 +43,9 @@ def module_detail(request, module_id):
 
     context = { 'module': module, 
                 'usermodule': usermodule,
-                # Wall items
-                "wall": module.wall,
-                "wallitems": module.wall.wallitem_set.select_related(),
-                "wallform": WallItemForm()
+                # Forum items
+                "forum": module.forum,
+                "threads": module.forum.thread_set.all()
               }
 
     return render_to_response('module_detail.html', context, context_instance=RequestContext(request) )

@@ -5,7 +5,8 @@ from django.core.urlresolvers import reverse
 # Externals
 from countries.models import Country
 from datetime import date as _date
-from wall.models import Wall
+# Smrtr
+from discuss.models import Forum
 
 
 # Network = Course now e.g. 'Network' for AQA Biology
@@ -40,7 +41,7 @@ class Network(models.Model):
         if self.id is None: #is new
             # Need to save the parent object first to guarantee unique slug
             super(Network, self).save(force_insert, force_update)
-            self.wall = Wall.objects.create(slug='n'+str(self.id),name=self.name)
+            self.forum = Forum.objects.create(slug='n'+str(self.id),name=self.name)
         super(Network, self).save(force_insert, force_update)
         
     def get_absolute_url(self):
@@ -93,7 +94,7 @@ class Network(models.Model):
     # SQ average of members, rates network intelligence 
     sq = models.IntegerField(blank = True, null = True, editable = False)
     # Optional wall for this object
-    wall = models.OneToOneField(Wall, editable = False, null = True)
+    forum = models.OneToOneField(Forum, editable = False, null = True)
     # Parent network, courses at universities, or any other hierarchies stuff
     parent = models.ForeignKey('Network', null = True, blank = True)
     # Modules offered on this network - reverse from module

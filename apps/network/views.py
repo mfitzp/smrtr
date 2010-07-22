@@ -39,9 +39,8 @@ def network_detail(request, network_id):
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
                 'members': network.members.order_by('?'),
-                "wall": network.wall,
-                "wallitems": network.wall.wallitem_set.select_related(),
-                "wallform": WallItemForm()
+                "forum": network.forum,
+                "threads": network.forum.thread_set.all()
               }
 
     return render_to_response('network_detail.html', context, context_instance=RequestContext(request))

@@ -34,7 +34,7 @@ urlpatterns = patterns('',
 
     (r'^notification/', include('notification.urls')),
 
-    url(r'^wall/(?P<slug>[-\w]+)/$', 'core.views.wall_home', name="wall_home"),
+    url(r'^discuss/(?P<forum_id>[-\w]+)/$', 'core.views.forum_parent_redirect', name="forum_parent_redirect"),
     url(r'^wall/add/(?P<slug>[-\w]+)/$', 'core.views.wall_add', name="add_wall_item"),
     #url(r'^wall/edit/(?P<id>\d+)/$', 'core.views.wall_edit', name="edit_wall_item"),
     

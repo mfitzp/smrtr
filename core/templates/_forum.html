@@ -1,0 +1,19 @@
+{% load avatar_tags %}
+{% load i18n %}
+
+{% if threads %}
+    {% for thread in threads %}
+        <div class="threaditem {% if thread.sticky %}threaditem-sticky{% endif %}">
+            <div class="threaditem-image"><a href="{% url user-profile user_id=thread.author.id %}">{% avatar thread.author 48 %}</a></div>
+            <div class="threaditem-body"><a href="">{{ thread.title }}</a></div>
+            <div class="threaditem-meta">
+                {{ thread.author.get_profile.fullname }} on <a href="{% url forum_parent_redirect thread.forum.id %}">{{ thread.forum.title }}</a><br />
+                {{ thread.posts }} replies, latest {{ thread.latest_post_created|timesince }} ago by {{ thread.latest_post.author.get_profile.fullname }}</div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No messages yet</p>
+{% endif %}
+
+
+<br class="clear" />

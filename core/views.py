@@ -1,20 +1,18 @@
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response
-from django.http import HttpResponsePermanentRedirect
+from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
-# Spenglr
-from education.models import Module, UserModule, Concept
-from core.forms import LoginForm
 # External
 from notification.models import Notice
-from wall.views import *
+# Smrtr
+from education.models import Module, UserModule, Concept
+from core.forms import LoginForm
+from discuss.models import *
 
 def home(request):
-    # External
-    from wall.forms import WallItemForm
 
     if request.user.is_authenticated():
         # User logged in, present the user dashboard
@@ -51,9 +49,8 @@ def home(request):
         # Front page wallitems (wi) combine the user's accessible wall posts from 
         # user profile, networks, courses and modules (& friends later)
         
-        wi = request.user.get_profile().wall.wallitem_set.select_related()
         # Posts to SYSTEM wall *ALWAYS* appear
-        wi = wi | Wall.objects.get(pk=1).wallitem_set.select_related()
+        threads = Forum.objects.get(pk=1).thread_set.select_related()
         
         # TODO: All the following need some mechanism to filter, reduce the number shown
         # Like +1, Comment +1 or +2
@@ -65,11 +62,11 @@ def home(request):
         
         # Posts on user's networks, courses, modules
         for un in usernetworks:
-            wi = wi | un.network.wall.wallitem_set.select_related()
+            threads = threads | un.network.forum.thread_set.select_related()
           
         # These need to be limited to active only
         for um in usermodules:
-            wi = wi | um.module.wall.wallitem_set.select_related()        
+            threads = threads | um.module.forum.thread_set.select_related()
                     
         # Filter out to show only *other* users - may not want this as comments/etc. on user's 
         # own posts will be missed? Depends on the profile/dashboard interaction - future
@@ -81,8 +78,6 @@ def home(request):
         # wi = wi.filter(author=request.user)
         #wi = wi.filter(author__usernetwork__network__usernetwork__user=request.user).distinct()
     
-        from settings import SMRTR_FREE_TIME_URL
-
         i = RequestContext(request, {
             'usernetworks': usernetworks,
             'usermodules': usermodules,
@@ -95,15 +90,11 @@ def home(request):
             'userchallenges': userchallenges,
             'userchallengescomplete': userchallengescomplete,
             
-            'SMRTR_FREE_TIME_URL': SMRTR_FREE_TIME_URL,
-            
             # Notifications
             'notices' : Notice.objects.notices_for(request.user, on_site=True)[0:3],            
             
-            # Wall objects
-            # -wall should remain user's own wall on dashboard view (post>broadcast on user's page)
-            # -wallitems should be combination of all user's available walls
-            'wallitems': wi[0:10],
+            # Combined threads available to this user, limited to 10 max
+            'threads': threads[0:10],
         })
         
         return render_to_response('dashboard.html', i, context_instance=RequestContext(request))
@@ -139,31 +130,25 @@ def intro(request):
 
 
 
-# Take a wall slug and redirect to the spenglr 'home' for that wall
+# Take a forum id and redirect to the 'home' for that forum
 # which will be on a network, course, module, or user profile
 # This could probably be better handled with a template tag to generate the url preventing the redirects?
-def wall_home( request, slug ):
-    wall = get_object_or_404( Wall, slug=slug )
+def forum_parent_redirect( request, forum_id ):
+    forum = get_object_or_404( Forum, pk=forum_id )
     
     try:
-        wall.network
-        return HttpResponseRedirect(reverse('network-detail', kwargs={'network_id':wall.network.id}))
+        forum.network
     except:
         pass
+    else:
+        return redirect('network-detail', network_id=forum.network.id)
 
     try:
-        wall.module
-        #Need to implement coursei cover here
-        return HttpResponseRedirect(reverse('module-detail', kwargs={'module_id':wall.module.id}))
+        forum.module
     except:
         pass
-
-    try:
-        wall.userprofile
-        return HttpResponseRedirect(reverse('user-profile', kwargs={'user_id':wall.userprofile.user.id}))
-    except:
-        return HttpResponseRedirect(reverse('home'))
-
+    else:
+        return redirect('module-detail', module_id=forum.module.id)
 
 def wall_add( request, slug ):
     if request.POST:

@@ -6,7 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from countries.models import Country
 from datetime import date as date, datetime, timedelta
 from notification import models as notification
-from wall.models import Wall, WallItem
 # Spenglr
 from sq.utils import * 
 
@@ -67,8 +66,6 @@ class UserProfile(models.Model):
     telno = models.CharField('Telephone', max_length=50, blank = True)
     url = models.URLField(verify_exists = True, blank = True)
     sq = models.IntegerField(blank = True, null = True, editable = False)
-    # Wall for this user
-    wall = models.OneToOneField(Wall, editable = False, null = True)
     
 def create_profile(sender, **kw):
     user = kw["instance"]

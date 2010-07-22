@@ -8,8 +8,6 @@
 
     <div id="dashboard">
 
-    {% include "_wall.html" %}  
-
     <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5>
 
     {% if userchallengesexist %}
@@ -101,27 +99,6 @@
     </table>
     {% endif %}
 
-
-    </div>
-
-    {% endblock %}
-
-    {% block content_right %}
-    
-        <h5>Notifications</h5>
-
-        {% if notices %}
-        <table style="width:100%">
-        {% for notice in notices %}
-        <tr class="{% cycle zebra %}"><td>{{ notice.message|safe }}</td>
-            <td class="notice-meta">{{ notice.added|timesince }} ago</td></tr>
-        {% endfor %}
-        </table>      
-        <p style="text-align:right;"><a href="{% url notification_notices %}">Show all notifications &raquo;</a></p>
-        {% else %}
-        <p>There are no notifications for you yet.</p>
-        {% endif %}
-
        {% if usermodules %}
             <h5>Active Modules</h5>
             <div>
@@ -153,5 +130,32 @@
             <p>Join networks to learn with others at school, online or in your workplace.</p>
         {% endif %}
         <p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
+
+
+
+    </div>
+
+    {% endblock %}
+
+    {% block content_right %}
+    
+        <h5>Notifications</h5>
+
+        {% if notices %}
+        <table style="width:100%">
+        {% for notice in notices %}
+        <tr class="{% cycle zebra %}"><td>{{ notice.message|safe }}</td>
+            <td class="notice-meta">{{ notice.added|timesince }} ago</td></tr>
+        {% endfor %}
+        </table>      
+        <p style="text-align:right;"><a href="{% url notification_notices %}">Show all notifications &raquo;</a></p>
+        {% else %}
+        <p>There are no notifications for you yet.</p>
+        {% endif %}
+        
+        <h5>Discussions</h5>        
+        
+        {% include "_forum.html" %}  
+
 
     {% endblock %}
