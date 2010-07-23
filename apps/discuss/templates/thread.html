@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+{% load i18n %}
+{% load markup %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url discuss_forum forum_id=thread.forum.id %}">{{ thread.forum }}</a>
+    &raquo; {{ thread.title }}
+{% endblock %}
+
+{% block content_left %}
+
+{% for post in thread.post_set.all %}
+
+<div class="postitem">
+    <div class="postitem-image"><a href="{% url user-profile user_id=thread.author.id %}">{% avatar post.author 48 %}</a></div>
+    <div class="postitem-body"> {{ post.body|markdown }}</div>
+    <div class="threaditem-meta">
+        Posted by {{ thread.author.get_profile.fullname }}, {{ post.created|timesince }} ago<br />
+    </div>
+    <br class="clear" />
+</div>
+
+{% endfor %}
+
+<p style="text-align:right"><a href="{% url discuss_reply thread.id %}" class="button">Reply to this &raquo;</a></p>
+
+<!-- Reply -->
+
+
+
+{% endblock %}
+
+{% block content_right %}
+<h5>Subscriptions</h5>
+<p style="font-size:smaller">RSS feed?</p>
+<p style="font-size:smaller">Notification</p>
+<h5>About</h5>
+<p style="font-size:smaller">Discussion started by <a href="{% url user-profile user_id=thread.author.id %}">{{ thread.author.get_profile }}</a></p>
+<p style="font-size:smaller">Latest post {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>.
+<h5>Tags</h5>
+{% with thread.get_tags as tags %}{% include "_tags.html" %}{% endwith %}
+{% endblock %}

@@ -7,13 +7,11 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; {{ network }}
 {% endblock %}
 
 {% block content_left %}
 
     {% if network %}
-        <h1>{{ network.name }}</h1>
         <table>
             {% if network.location_is_set %}
                 <tr><th>Location</th>

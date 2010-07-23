@@ -11,18 +11,23 @@
     &raquo; {{ module }}
 {% endblock %}
 
-
 {% block content_left %}
 
     {% if module %}
     
-        <h1>{{ module.name }}</h1>
-
         <table>
-            <tr><th>Network</th><td><a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>
+
+            <tr><th>Networks</th><td>
+            {% if module.network %}
+                Available from <a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>
                 {% ifnotequal module.networks.count 1 %}
-                    and <a href="{% url module-detail-providers module_id=module.id %}">{{ module.networks.count|add:"-1" }} other network{{ module.networks.count|pluralize }}</a></td></tr>   
+                    and <a href="{% url module-detail-providers module_id=module.id %}">{{ module.networks.count|add:"-1" }} other network{{ module.networks.count|pluralize }}</a>
                 {% endifnotequal %}
+            {% else %}
+                Available from <a href="{% url module-detail-providers module_id=module.id %}">{{ module.networks.count }} network{{ module.networks.count|pluralize }}</a>                
+            {% endif %}
+            </td></tr>               
+
             <tr><th>SQ</th><td>
                 {% if usermodule %}{% sqchange 100 usermodule.sq %}{% endif %}
                 {% sqdifficulty module.sq request.user.get_profile.sq %}

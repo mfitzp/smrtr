@@ -41,7 +41,8 @@ def module_detail(request, module_id):
             module.concepts_filtered.append(concept)
                     
 
-    context = { 'module': module, 
+    context = { 'title':module,
+                'module': module, 
                 'usermodule': usermodule,
                 # Forum items
                 "forum": module.forum,

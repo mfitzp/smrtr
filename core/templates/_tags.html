@@ -1,0 +1,5 @@
+{% if tags %}
+    <div>{% for tag in tags %}<span class="stack"><a class="tag" href="{% url questions-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
+{% else %}
+    <p style="font-size:smaller">No tags</p> 
+{% endif%}

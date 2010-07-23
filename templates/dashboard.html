@@ -85,7 +85,10 @@
             
         {% endfor %}        
     </table>
-    <br style="clear:both;" /><p><a href="" class="register">Show all available challenges &raquo;</a> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a><p>
+    <br style="clear:both;" /><p>
+        <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span>
+        <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>
+    <p>
 
     {% else %}
     <table>

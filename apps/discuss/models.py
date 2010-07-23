@@ -7,6 +7,9 @@ from django.utils.html import escape
 # Externals
 from datetime import date as date, datetime, timedelta
 from notification import models as notification
+# Externals
+from tagging.fields import TagField
+from tagging.models import Tag
 
 class Forum(models.Model):
     # attached = Reverse linker to parent-object
@@ -22,20 +25,29 @@ class Thread(models.Model):
     title = models.CharField(max_length=100)
 
     posts = models.IntegerField(editable=False,default=0)
-    
-    latest_post = models.OneToOneField('Post', editable=False, null=True, related_name='_thread_id')    
+
+    # first_post = models.OneToOneField('Post', editable=False, null=True, related_name='_dummy_thread_id1')    
+    latest_post = models.OneToOneField('Post', editable=False, null=True, related_name='_dummy_thread_id2')    
     latest_post_created = models.DateTimeField(editable=False, null=True)
     
     sticky = models.BooleanField(default=False)
     system = models.BooleanField(default=False) # System message flag, allow important notices flagged
     
     closed = models.BooleanField(default=False)
+    
+    tags = TagField()
+
 
     class Meta:
         ordering = ('-sticky', '-latest_post_created')
 
     def __unicode__(self):
         return self.title
+        
+    def set_tags(self, tags):
+        Tag.objects.update_tags(self, tags)
+    def get_tags(self):
+        return Tag.objects.get_for_object(self)             
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread)
@@ -46,7 +58,7 @@ class Post(models.Model):
     body = models.TextField()
     
     class Meta:
-        ordering = ('-created',)
+        ordering = ('created',)
         
     def save(self):
         super(Post, self).save() # Call the "real" save() method

@@ -67,7 +67,7 @@
         {% block nav-global %}{% endblock %}
     </div>
     <!-- END Header -->
-    <div class="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}{% endblock %}</div>
+    <div class="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% endblock %}{% if title %} &rsaquo; {{ title }}{% endif %}</div>
     {% endif %}
 
         {% if messages %}
@@ -75,9 +75,9 @@
         {% endif %}
 
     <!-- Content -->
+    {% block pretitle %}{% endblock %}
+    <div id="content-title">{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}</div>
     <div id="content" class="{% block coltype %}colM{% endblock %}">
-        {% block pretitle %}{% endblock %}
-        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
         {% block content %}
 
         {% block object-tools %}{% endblock %}

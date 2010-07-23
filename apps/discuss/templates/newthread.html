@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+{% load i18n %}
+{% load markup %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url discuss_forum forum_id=forum.id %}">{{ forum }}</a>
+    &raquo; Post new topic
+{% endblock %}
+
+{% block content_title %}<h1>{{forum}}</h1>{% endblock %}
+
+{% block content_left %}
+
+<h5>Post new topic</h5>
+{% if form.errors %}<ul>{{ form.errors.as_ul }}</ul>{% endif %}
+<form method="post" action="{% url discuss_newthread forum_id=forum.id %}">
+<table>
+{{ tform.as_table }}
+{{ pform.as_table }}
+</table>
+<input type='submit' value='Post' />
+</form>
+
+
+
+
+{% endblock %}
+
+{% block content_right %}
+<h5>Subscriptions</h5>
+<p style="font-size:smaller">RSS feed?</p>
+<h5>About</h5>
+<p style="font-size:smaller"><a href="{% url discuss_forum forum_id=forum.id %}">{{ forum }}</a> has {{ forum.thread_set.all.count }} threads.</p>
+{% endblock %}

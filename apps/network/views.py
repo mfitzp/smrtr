@@ -36,7 +36,8 @@ def network_detail(request, network_id):
             network.modules_filtered.append(module)
              
 
-    context = { 'network': network, 
+    context = { 'title':network,
+                'network': network, 
                 'usernetwork': usernetwork, 
                 'members': network.members.order_by('?'),
                 "forum": network.forum,
