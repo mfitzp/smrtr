@@ -17,7 +17,7 @@
     <div class="postitem-image"><a href="{% url user-profile user_id=thread.author.id %}">{% avatar post.author 48 %}</a></div>
     <div class="postitem-body"> {{ post.body|markdown }}</div>
     <div class="threaditem-meta">
-        Posted by {{ thread.author.get_profile.fullname }}, {{ post.created|timesince }} ago<br />
+        Posted by <a href="{% url user-profile user_id=thread.author.id %}">{{ thread.author.get_profile.fullname }}</a>, {{ post.created|timesince }} ago<br />
     </div>
     <br class="clear" />
 </div>
@@ -38,7 +38,7 @@
 <p style="font-size:smaller">Notification</p>
 <h5>About</h5>
 <p style="font-size:smaller">Discussion started by <a href="{% url user-profile user_id=thread.author.id %}">{{ thread.author.get_profile }}</a></p>
-<p style="font-size:smaller">Latest post {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>.
+<p style="font-size:smaller">Latest post {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>
 <h5>Tags</h5>
 {% with thread.get_tags as tags %}{% include "_tags.html" %}{% endwith %}
 {% endblock %}

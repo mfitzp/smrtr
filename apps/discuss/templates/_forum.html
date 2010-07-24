@@ -1,9 +1,13 @@
 {% load avatar_tags %}
 {% load i18n %}
 
+{% if forum %}
+    <p style="text-align:right"><a href="{% url discuss_newthread forum.id %}" class="button">Post new topic &raquo;</a></p>
+{% endif %}
+
 {% if threads %}
     {% for thread in threads %}
-        <div class="threaditem {% if thread.sticky %}threaditem-sticky{% endif %}">
+        <div class="threaditem {% if thread.sticky %}threaditem-sticky{% endif %} {% cycle 'odd' 'even' %}">
             <div class="threaditem-image"><a href="{% url user-profile user_id=thread.author.id %}">{% avatar thread.author 48 %}</a></div>
             <div class="threaditem-title"><a href="{% url discuss_thread thread_id=thread.id %}">{{ thread.title }}</a></div>
             <div class="threaditem-meta">
@@ -13,7 +17,11 @@
         </div>
     {% endfor %}
 {% else %}
-    <p>No messages yet</p>
+    <p>No discussions have been started yet. 
+    {% if forum %}
+        <br /><a href="{% url discuss_newthread forum.id %}">Be the first to post a message!</a>
+    {% endif %}
+    </p>
 {% endif %}
 
 
