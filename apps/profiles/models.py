@@ -17,11 +17,11 @@ class UserProfile(models.Model):
         if self.id is None: #is new
             super(UserProfile, self).save(force_insert, force_update)
             # Attach wall item
-            self.wall = Wall.objects.create(slug='u'+str(self.user.id),name=self.fullname())
+            #self.wall = Wall.objects.create(slug='u'+str(self.user.id),name=self.fullname())
             # Add welcome message to the wall (as this is a new user)
             # Will want to move this out into a helper app with canned messages for output (similar to notifications)
-            item = WallItem(wall=self.wall,author_id=0,body='Welcome to Spenglr!')
-            item.save()
+            #item = WallItem(wall=self.wall,author_id=0,body='Welcome to Spenglr!')
+            #item.save()
             # Auto-join networks smrtr Start and smrtr Study
             from network.models import Network, UserNetwork
             UserNetwork(user=self.user, network=Network.objects.get(pk=1)).save()
@@ -46,12 +46,13 @@ class UserProfile(models.Model):
             # Retrieve records for past 6 months
             start_date = datetime.now() - timedelta(weeks=52)
             end_date = datetime.now()
+            prev_sq = self.sq
             data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.sq = sq_calculate(data, 'desc') # Descending data set
             self.save()
             # Send notification to the user if their SQ has changed
-            if self.sq != prev_sq:
-                notification.send([self.user], "user_sq_updated", {"user": self.user})        
+            #if self.sq != prev_sq:
+            #    notification.send([self.user], "user_sq_updated", {"user": self.user})        
                 
     user = models.ForeignKey(User, unique=True, editable = False)
 

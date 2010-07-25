@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Q
 from django.db.models import Avg, Max, Min, Count
 # Python standard
 import math
@@ -10,6 +11,9 @@ from education.models import *
 from challenge.models import *
 
 # Check if challenges exist for a given user and if not, generate
+# Challenges are combinations of concepts (from the same module, from user's perspective)
+# Once a combination has been identified as most beneficial for the user, look for existing
+# challenges the user has not attempted. Allows for multi-user competition, and cross-course competition
 # Called on login to ensure always X challenges available, can be re-run on demand
 # by the user once initial set of challenges have been completed.
 def generate_user_challenges(user, number = None):
@@ -20,7 +24,7 @@ def generate_user_challenges(user, number = None):
     # No value passed, auto-calc number to generate for user to reach CHALLENGES_MIN_ACTIVE
     if number == None:
         number = CHALLENGES_MIN_ACTIVE - user.userchallenge_set.filter(status__lt=2).count()
-
+    print number
     if number > 0: # Save db hits if generating nothing at all
     
         # Iterate concepts, combine into module-groups, maximum of 3 (configurable?), then stack up to post-process
@@ -69,15 +73,33 @@ def generate_user_challenges(user, number = None):
         # Iterate top list (module keyed)
         
         #TODO: Look for already existing, open, challenges to allow for multi-player as default
+        print final
         
         for mlist in final:
+            # For clarity
+            module_id = mlist[0]
+            concept_ids = mlist[1]
+            # Look for existing challenges matching (exact) this set of concepts
+            # Make sure the user has not previously attempted the challenge
+            print mlist
+            # Build Q objects
+            qs = Q()
+            for concept_id in concept_ids:
+                qs = qs & Q(concepts__id=concept_id)
+            
+            # Find challenge matching all listed concepts
+            challenge = Challenge.objects.filter(qs) #.exclude(userchallenge__user=user) # Return only 1
+            print challenge.query
+            
+            assert False, challenge
+            
             challenge = Challenge()
             challenge.user = user
             challenge.save()
                     
             # Iterate concepts
             # mlist[1] is the list-within ie. [68,70,78] above
-            for concept_id in mlist[1]:
+            for concept_id in concept_ids:
                 challenge.concepts.add(Concept.objects.get(pk=concept_id))            
             
             challenge.generate_name()
@@ -92,6 +114,8 @@ def generate_user_challenges(user, number = None):
 
 # Calculate SQ for the usercourse records with most recently updated usermodules
 def batch_generate_user_challenges():
+
+    generate_user_challenges(User.objects.get(pk=1),5)
 
     # Random 100 users
     # NOTE: Fix to something more sensible

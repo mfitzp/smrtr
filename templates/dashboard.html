@@ -122,20 +122,6 @@
             <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
         {% endif %}
 
-        <h5>Networks</h5>
-        {% if usernetworks %}
-            <div>
-            {% for usernetwork in usernetworks.all %}
-                <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
-            {% endfor %}
-            </div>
-        {% else %}
-            <p>Join networks to learn with others at school, online or in your workplace.</p>
-        {% endif %}
-        <p style="margin-top:1em;"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></p>
-
-
-
     </div>
 
     {% endblock %}
@@ -159,6 +145,18 @@
         <h5>Discussions</h5>        
         
         {% include "_forum.html" %}  
+
+        <h5>Networks</h5>
+        {% if usernetworks %}
+            <div>
+            {% for usernetwork in usernetworks.all %}
+                <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Join networks to learn with others at school, online or in your workplace.</p>
+        {% endif %}
+        <p style="margin-top:1em;"><span class="button"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></span></p>
 
 
     {% endblock %}

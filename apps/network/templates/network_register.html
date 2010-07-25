@@ -18,11 +18,12 @@
     &raquo; {{ network }}
 {% endblock %}
 
+{% block content_title %}<h1>{{network}}</h1>{% endblock %}
+
 {% block content %}
 
     {% if network %}
     
-        <h1>{{ network.name }}</h1>
         <table>
         {% if network.city %}
         <tr><th>Location</th>
