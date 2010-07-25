@@ -52,9 +52,9 @@ class UserProfile(models.Model):
             self.sq = sq_calculate(data, 'desc') # Descending data set
             self.save()
             # Send notification to the user if their SQ has changed
-            #if self.sq != prev_sq:
-            #    notification.send([self.user], "user_sq_updated", {"user": self.user})        
-                
+            if self.sq != prev_sq:
+                notification.send([self.user], "user_sq_updated", {"user": self.user})        
+
     user = models.ForeignKey(User, unique=True, editable = False)
 
     # Information
