@@ -104,7 +104,7 @@ class UserModule(models.Model):
                     UserConcept(user=self.user, concept=concept).save()
                 except:
                     pass
-        super(UserProfile, self).save(force_insert, force_update)
+        super(UserModule, self).save(force_insert, force_update)
 
     # Additional information
     def year_of_study(self):
