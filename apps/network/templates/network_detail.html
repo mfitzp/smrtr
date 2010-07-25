@@ -39,7 +39,7 @@
         {% if usernetwork %}
             
         {% if network.modules_filtered %}
-            <h4>Modules</h4>
+            <h5>Modules</h5>
             <table>
             <tr><th scope="column">Name</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
             {% for module in network.modules_filtered %}
@@ -68,7 +68,7 @@
 
 
         {% else %}
-            <h3>Registration</h3>
+            <h5>Registration</h5>
             <p>Join this network for access to courses and other members.</p>
             <!-- Registration form -->
             <form action="{% url network-register network_id=network.id %}" method="post">
@@ -79,7 +79,7 @@
 
 
         {% if network.network_set %}
-        <h4>Community Networks</h4>
+        <h5>Community Networks</h5>
         <table>
             {% for subnetwork in network.network_set.all %}
                 <tr class="{% cycle zebra %}">

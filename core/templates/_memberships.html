@@ -1,7 +1,7 @@
 {% load avatar_tags %}
 {% load spenglr_core_tags %}
 
-    <h4>Members ({{ members.count }} total)</h4>
+    <h5>Members ({{ members.count }} total)</h5>
 
     <div class="membership-container clearfloats">
     {% for user in members|slice:":12" %}
