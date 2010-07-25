@@ -26,6 +26,7 @@
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
             </table>
             <p style="text-align:right">
+                    <span class="button">
                     {% ifequal userchallenge.status 0 %}
                     <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
                     {% else %}
@@ -33,6 +34,7 @@
                             <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a>                        
                         {% endifequal %}
                     {% endifequal %}
+                    </span>
             </p>
             </div>
             </td></tr>
