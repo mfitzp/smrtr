@@ -38,7 +38,7 @@ def network_detail(request, network_id):
 
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
-                'members': network.members.order_by('?'),
+                'members': network.members.order_by('-usernetwork__start_date'),
                 "forum": network.forum,
                 "threads": network.forum.thread_set.all()
               }
