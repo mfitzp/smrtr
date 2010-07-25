@@ -83,14 +83,14 @@ def module_register(request, module_id):
             # Automatically activate all concepts on this module
             # FIXME: Move this out to helper util function (same as for above)
             
-            for concept in module.concepts.all():
-                try:
-                    uc = UserConcept()    
-                    uc.user = request.user
-                    uc.concept = concept
-                    uc.save()
-                except:
-                    pass
+            #for concept in module.concepts.all():
+            #    try:
+            #        uc = UserConcept()    
+            #        uc.user = request.user
+            #        uc.concept = concept
+            #        uc.save()
+            #    except:
+            #        pass
 
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])

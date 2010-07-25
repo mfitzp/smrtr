@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 admin.autodiscover()
 
@@ -45,5 +46,8 @@ urlpatterns = patterns('',
     (r'^avatar/', include('avatar.urls')),
     
     (r'^messages/', include('messages.urls')),
+    
+    (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    
 )
 

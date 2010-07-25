@@ -8,6 +8,7 @@ from datetime import date as date, datetime, timedelta
 from notification import models as notification
 # Spenglr
 from sq.utils import * 
+from education.models import Module, UserModule, UserConcept
 
 class UserProfile(models.Model):
     def __unicode__(self):
@@ -16,16 +17,14 @@ class UserProfile(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(UserProfile, self).save(force_insert, force_update)
-            # Attach wall item
-            #self.wall = Wall.objects.create(slug='u'+str(self.user.id),name=self.fullname())
-            # Add welcome message to the wall (as this is a new user)
-            # Will want to move this out into a helper app with canned messages for output (similar to notifications)
-            #item = WallItem(wall=self.wall,author_id=0,body='Welcome to Spenglr!')
-            #item.save()
             # Auto-join networks smrtr Start and smrtr Study
             from network.models import Network, UserNetwork
             UserNetwork(user=self.user, network=Network.objects.get(pk=1)).save()
             UserNetwork(user=self.user, network=Network.objects.get(pk=2)).save()
+            # Auto-join General Knowledge module in smrtr Start
+            # n.b. All child concepts are auto-activated by UserModule.save 
+            UserModule(user=self.user, module=Module.objects.get(pk=1) ).save()
+
         super(UserProfile, self).save(force_insert, force_update)
 
     def fullname(self):

@@ -95,11 +95,17 @@ class Concept(models.Model):
 class UserModule(models.Model):
     def __unicode__(self):
         return self.module.name
-    # Shortcuts through tree
-    def network(self):
-        return self.coursei.network
-    def subject(self):
-        return self.subjecti.subject
+        
+    def save(self, force_insert=False, force_update=False):
+        if self.id is None: #is new
+            # Auto-activate all child concepts for this module
+            for concept in self.module.concepts.all():
+                try:
+                    UserConcept(user=self.user, concept=concept).save()
+                except:
+                    pass
+        super(UserProfile, self).save(force_insert, force_update)
+
     # Additional information
     def year_of_study(self):
         return ( ( _date.today() - self.start_date  ).days / 365 )+1
