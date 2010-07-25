@@ -23,7 +23,7 @@
         <blockquote>{{ challenge.description }}</blockquote>
 
         {% if challenge.concepts %}
-            <h3>Concepts Covered</h3>
+            <h5>Concepts Covered</h5>
             <span class="stack">
             {% for concept in challenge.concepts.all %}
                     <a href="{% url concept-detail concept_id=concept.id %}" class="concept">{{ concept }}</a>
@@ -32,11 +32,11 @@
         {% endif %}
 
         {% if userchallenge %}
-            <h3>Performance</h3>    
+            <h5>Performance</h5>    
 
         {% else %}
 
-            <h3>Get Started</h3>
+            <h5>Get Started</h5>
             <p><a href="{% url challenge-do challenge_id=challenge.id %}">Start this challenge now...</a></p>
 
         {% endif %}
