@@ -41,6 +41,7 @@
                 <tr class="{% cycle zebra %}">
                     <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
                     <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
+                    <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                     <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
                     <td>{{ userchallenge.last_access|timesince }}</td>
                     <td>    
@@ -76,11 +77,10 @@
             <tr class="{% cycle zebra %}">
                 <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
                 <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
+                    <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                 <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
                 <td>{{ userchallenge.last_access|timesince }}</td>
-                <td>    
-                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Retry</a>                        
-                </td>
+                <td></td>
             </tr>
             
         {% endfor %}        

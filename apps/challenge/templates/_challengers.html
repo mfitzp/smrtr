@@ -7,7 +7,7 @@
         <tr class="{% cycle 'odd' 'even' %}"><td><a href="{% url user-profile user_id=user.id %}">{% avatar uc.user 48 %}</a></td>
         <td>
             <a href="{% url user-profile user_id=user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
-            {% sqchange 100 userchallenge.sq %} with {{ uc.attempts }} attempt{{ uc.attempts|pluralize }}
+            {% sqchange 100 userchallenge.sq %}
         </td> 
         </tr>
     {% empty %}

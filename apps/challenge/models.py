@@ -17,7 +17,7 @@ class Challenge(models.Model):
     def __unicode__(self):
         return self.name
 
-    def update_questions(self): # Update questions for this challenge, using config settings on the model
+    def generate_questions(self): # Update questions for this challenge, using config settings on the model
         # Limit:
         # - through relationships back to this model ( question > question_concepts > concept > config_concepts )
         # - minSQ and maxSQ if these are set
@@ -50,7 +50,7 @@ class Challenge(models.Model):
     # Challenge definition: used to build the above questions
     # Only used when editing/updating list, not outputting questions
     concepts = models.ManyToManyField(Concept) # Concepts to source questions from
-    total_questions = models.IntegerField(blank = True, null = True, default = 10) # Number of questions
+    total_questions = models.IntegerField(blank = True, null = True, default = 20) # Number of questions
     targetsq = models.IntegerField(blank = False, null = False, default = 100) # Target SQ for questions (Qs chosen will be as close to this as possible)
     # config_types = models.MultipleChoiceField(choices=questiontypes) # Types of questions (mcq, etc-not available yet)
 
@@ -92,8 +92,6 @@ class UserChallenge(models.Model):
 
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, null = False, editable = False, default = 0)
 
-    # Number of attempts for this set of questions
-    attempts = models.IntegerField(editable = False, null = False, default = 0)
     # SQ for this set of questions
     sq = models.IntegerField(editable = False, null = True)
     # User's rank on this challenge

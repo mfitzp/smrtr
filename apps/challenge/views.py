@@ -1,7 +1,7 @@
 from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
@@ -133,11 +133,9 @@ def do(request, challenge_id):
         
     # If the user has a challenge record retrieve it, or create a new one
     try:
-        #TODO: Should only return if the challenge object is 'open'
+        #TODO: If user has not 'completed' the challenge, allow through, otherwise redirect to viewing
         #UserChallenges should be closed on completion,re-attempts (if allowed)
         userchallenge = challenge.userchallenge_set.get( user=request.user )
-        userchallenge.status = 1 #Active
-        userchallenge.save()
     except:
         userchallenge = UserChallenge()
         userchallenge.user = request.user
@@ -145,12 +143,15 @@ def do(request, challenge_id):
         userchallenge.update_sq() # Initial value from previous answers to included questions
         userchallenge.status = 1 # Active
         userchallenge.save()              
+    else:
+        if userchallenge.status == 2: #Complete
+            return redirect('challenge-detail', challenge_id=challenge_id)
+        
+        if userchallenge.status == 0: #New
+            userchallenge.status = 1
+            userchallenge.save()
 
-    #TODO: How do we select questions from the challenge queue to present? 
-    #If returning in order will need to keep progress flag in userchallenge object
-    #makes more sense, and allows for 'completion' of challenge
-    #FIXME: Return 10Qs from X, using progress flag in users bit
-    questions = challenge.questions.all()[:10] # Returns 10 questions (NOT random, randomised in generation) 
+    questions = challenge.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
 
     # List of previous/other challengers on this challenge
     userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
@@ -231,7 +232,6 @@ def do_submit(request, challenge_id):
     # NOTE: May need to remove this is load too great?
     userchallenge.update_sq()
     userchallenge.status = 2 #Complete
-    userchallenge.attempts += 1
     userchallenge.save()
 
     # List of previous/other challengers on this challenge
