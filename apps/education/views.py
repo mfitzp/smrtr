@@ -43,7 +43,7 @@ def module_detail(request, module_id):
 
     context = { 'module': module, 
                 'usermodule': usermodule,
-                'members': module.members.order_by('-usermodule__start_date'),
+                'members': module.users.order_by('-usermodule__start_date'),
                 # Forum items
                 "forum": module.forum,
                 "threads": module.forum.thread_set.all()
@@ -136,7 +136,7 @@ def concept_detail(request, concept_id):
 
     context = { 'concept': concept, 
                 'userconcept': userconcept, 
-                'members': concept.members.order_by('-userconcept__start_date'),
+                'members': concept.users.order_by('-userconcept__start_date'),
                 # Forum items
                 "forum": concept.forum,
                 "threads": concept.forum.thread_set.all()
