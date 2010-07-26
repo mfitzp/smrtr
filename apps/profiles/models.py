@@ -48,7 +48,8 @@ class UserProfile(models.Model):
             start_date = datetime.now() - timedelta(weeks=52)
             end_date = datetime.now()
             prev_sq = self.sq
-            data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
+            # Get for specified date range, exclude questions without SQ values
+            data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.sq = sq_calculate(data, 'desc') # Descending data set
             self.save()
             # Send notification to the user if their SQ has changed

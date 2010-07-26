@@ -173,7 +173,7 @@ SMRTR_HAVE_BREAK_URL = 'http://www.popcap.com/games/free/pvz?mid=pvz_pcweb_en_fu
 
 # Email settings: user/pass combination is stored in local settings for security
 EMAIL_HOST = 'smtp.webfaction.com'
-EMAIL_SUBJECT_PREFIX ='[smrtr]'
+EMAIL_SUBJECT_PREFIX ='[smrtr] '
 DEFAULT_FROM_EMAIL = 'noreply@smrtr.org'
 SERVER_EMAIL = 'noreply@smrtr.org'
 
