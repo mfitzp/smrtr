@@ -38,6 +38,7 @@
 
             {% for result in page.object_list %}
             {% with result.object as network %}
+            {% if network %}
             <tr>
                 <th><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></th>
                 <td><span class="network network{{network.type}}">{{ network.get_type_display }}</span></td>
@@ -45,6 +46,7 @@
                 <td>{{ network.city }}</td>
                 <td>{% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }} </span> {% endif %}</td>
             </tr>
+            {% endif %}
             {% endwith %}
             {% empty %}
                 <tr><td><p>No results found.</p></td></tr>
