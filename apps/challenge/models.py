@@ -30,6 +30,7 @@ class Challenge(models.Model):
                 ).order_by('?')[0:self.total_questions]
 
         self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
+        self.total_questions = self.questions.count() # Update total questions to the actual value
         self.save()
         
     # Auto-generate a name from the current list of concepts

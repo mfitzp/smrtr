@@ -185,6 +185,10 @@ def concept_add_questions(request, concept_id):
         for qid in qids:
             concept.question_set.add( Question.objects.get( pk=qid ) )
             
+        # Update total_question count for this concept
+        # used to highlight empty concepts and to exclude them from challenges
+        concept.total_questions = concept.questions.count()
+        concept.save()
 
     query = ''
     results = []

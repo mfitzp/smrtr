@@ -81,6 +81,7 @@ class Concept(models.Model):
     # Users
     users = models.ManyToManyField(User, through='UserConcept', related_name='concepts')
 
+    total_questions = models.IntegerField(default = 0) # Number of questions
     sq = models.IntegerField(editable = False, null = True)
 
     forum = models.OneToOneField(Forum, editable = False, null = True)
