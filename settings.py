@@ -103,7 +103,6 @@ INSTALLED_APPS = (
     'tagging',
     #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
     'notification', #http://github.com/jtauber/django-notification
-    'wall',  #http://github.com/jtauber/django-wall
     'picklefield',  #http://github.com/shrubberysoft/django-picklefield
     'flowplayer', #http://github.com/mfitzp/django-flowplayer
     'haystack', #http://haystacksearch.org/ http://github.com/toastdriven/django-haystack/tree/master  + xapian-haystack

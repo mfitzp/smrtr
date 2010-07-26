@@ -24,7 +24,7 @@ class Module(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Module, self).save(force_insert, force_update)
-            self.forum = Forum.objects.create(slug='c'+str(self.id),name=self.name)
+            self.forum = Forum.objects.create(title=self.name)
         super(Module, self).save(force_insert, force_update)
 
     def update_sq(self):
@@ -65,7 +65,7 @@ class Concept(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Concept, self).save(force_insert, force_update)
-            self.forum = Forum.objects.create(slug='m'+str(self.id),name=self.name)
+            self.forum = Forum.objects.create(title=self.name)
         super(Concept, self).save(force_insert, force_update)
 
     def update_sq(self):
