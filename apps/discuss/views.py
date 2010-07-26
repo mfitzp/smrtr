@@ -57,7 +57,6 @@ def thread(request, thread_id):
     context = {
         'forum': thread.forum,
         'thread': thread, 
-        'title': thread,
     }
 
     return render_to_response('thread.html', context, context_instance=RequestContext(request))

@@ -5,7 +5,13 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; <a href="{% url messages_inbox %}">Inbox</a>
+    &raquo; Messages
+    {% ifequal message.sender request.user %}
+        &raquo; <a href="{% url messages_outbox %}">Outbox</a>
+    {% else %}
+        &raquo; <a href="{% url messages_inbox %}">Inbox</a>
+    
+    {% endifequal %}
     &raquo; {{message.subject}}
 {% endblock %}
 
