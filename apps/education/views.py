@@ -187,7 +187,7 @@ def concept_add_questions(request, concept_id):
             
         # Update total_question count for this concept
         # used to highlight empty concepts and to exclude them from challenges
-        concept.total_questions = concept.questions.count()
+        concept.total_questions = concept.question_set.count()
         concept.save()
 
     query = ''
