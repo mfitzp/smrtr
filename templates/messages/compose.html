@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+{% load i18n %} 
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{network}}
+{% endblock %}
+
+{% block content_title %}<h1>{% trans "Compose Message"%}</h1>{% endblock %}
+
+{% block content_left %}
+<form action="" method="post">
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" value="{% trans "Send" %} &raquo;"/>
+</form>
+
+{% endblock %}
+
+{% block content_right %}
+<h5>Message Folders</h5>
+{% include "messages/_message_folders.html" %}  
+{% endblock %}
