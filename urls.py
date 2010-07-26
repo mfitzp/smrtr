@@ -46,5 +46,9 @@ urlpatterns = patterns('',
     
     (r'^messages/', include('messages.urls')),
     
+    # The following are included for development purposes (i.e. can view/edit error page without creating an error ;)
+    (r'^500/$', 'django.views.generic.simple.direct_to_template', {'template': '500.html'}),
+    (r'^404/$', 'django.views.generic.simple.direct_to_template', {'template': '404.html'})
+    
 )
 
