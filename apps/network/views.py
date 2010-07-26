@@ -2,6 +2,7 @@ from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
+from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 # Spenglr
@@ -68,6 +69,8 @@ def network_register(request, network_id):
         else:
             # Write to database 
             un.save()
+            request.user.message_set.create(
+                message=_(u"You are now a member of ") + network.name)
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
             else:
