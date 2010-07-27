@@ -240,7 +240,7 @@ def do_submit(request, challenge_id):
         'challenge': challenge,
         'userchallenge': userchallenge, 
         'questions': questions, 
-        'totals': totals 
+        'totals': totals,
         
         # List of previous/other challengers on this challenge
         'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
