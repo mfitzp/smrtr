@@ -68,7 +68,7 @@ class UserProfile(models.Model):
     # Contact (email already in user model)
     telno = models.CharField('Telephone', max_length=50, blank = True)
     url = models.URLField(verify_exists = True, blank = True)
-    sq = models.IntegerField(blank = True, null = True, editable = False)
+    sq = models.IntegerField(blank = False, default = 100, editable = False)
     
 def create_profile(sender, **kw):
     user = kw["instance"]
