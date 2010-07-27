@@ -11,7 +11,6 @@ from education.models import *
 from network.models import *
 from questions.models import *
 # External
-from wall.forms import WallItemForm
 from haystack.query import SearchQuerySet
 
 # MODULE VIEWS

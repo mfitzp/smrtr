@@ -12,7 +12,7 @@ from sq.utils import *
 class UserProfile(models.Model):
     def __unicode__(self):
         return self.fullname()
-    # Attach wall for this profile on save new profile
+
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(UserProfile, self).save(force_insert, force_update)

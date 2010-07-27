@@ -7,8 +7,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 # Spenglr
 from education.models import *
-# External
-from wall.forms import WallItemForm
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page

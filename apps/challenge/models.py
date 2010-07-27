@@ -8,7 +8,6 @@ from network.models import Network
 from sq.utils import * 
 # External
 from datetime import date as _date
-from wall.models import Wall
 
 # Challenges are tests of questions, on a particular topic/etc. created and pre-filled with 
 # questions on creation. Once created exists until expire date passed

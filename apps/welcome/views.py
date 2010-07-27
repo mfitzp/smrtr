@@ -7,8 +7,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 # Smrtr
 from welcome.forms import *
-# External
-from wall.forms import WallItemForm
     
 # Get basic profile information from the user once registered    
 def profile(request):

@@ -13,7 +13,6 @@ from questions.models import *
 from challenge.models import *
 from challenge.forms import *
 # External
-from wall.forms import WallItemForm
 from haystack.query import SearchQuerySet
 
 
