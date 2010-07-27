@@ -228,7 +228,8 @@ def do_submit(request, challenge_id):
             # then advance challenge progress counter on completion ONLY
     if totals['answered'] > 0:
         totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
-    else totals['percent'] = 0
+    else:
+        totals['percent'] = 0
 
     # Recalculate SQ values for this module/usermodule_set  
     # NOTE: May need to remove this is load too great?
