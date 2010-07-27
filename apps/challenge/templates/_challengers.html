@@ -6,7 +6,7 @@
     {% for uc in challengers_done %}
         <tr class="{% cycle 'odd' 'even' %}"><td><a href="{% url user-profile user_id=user.id %}">{% avatar uc.user 48 %}</a></td>
         <td>
-            <a href="{% url user-profile user_id=user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
+            <a href="{% url user-profile user_id=uc.user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
             {% sqchange 100 uc.sq %}
         </td> 
         </tr>
@@ -20,7 +20,7 @@
     {% for uc in challengers_todo %}
         <tr class="{% cycle 'odd' 'even' %}"><td><a href="{% url user-profile user_id=user.id %}">{% avatar uc.user 48 %}</a></td>
         <td>
-            <a href="{% url user-profile user_id=user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
+            <a href="{% url user-profile user_id=uc.user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
             {% sqchange 100 uc.user.get_profile.sq %}
         </td> 
         </tr>
