@@ -79,7 +79,7 @@
         {% endif %}
 
 
-        {% if network.network_set %}
+        {% if network.network_set.all %}
         <h5>Community Networks</h5>
         <table>
             {% for subnetwork in network.network_set.all %}
