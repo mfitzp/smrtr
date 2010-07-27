@@ -106,9 +106,6 @@ def detail(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     #TODO: Access grant/deny
     
-    # List of previous/other challengers on this challenge
-    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
-    
     # If the user has a challenge record retrieve it, or create a new one
     try:
         userchallenge = challenge.userchallenge_set.get( user=request.user )
@@ -118,7 +115,10 @@ def detail(request, challenge_id):
     context = {
         'challenge': challenge,
         'userchallenge':userchallenge,
-        'userchallenges':userchallenges,
+        
+        # List of previous/other challengers on this challenge
+        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_view.html', context, context_instance=RequestContext(request))
@@ -235,15 +235,16 @@ def do_submit(request, challenge_id):
     userchallenge.status = 2 #Complete
     userchallenge.save()
 
-    # List of previous/other challengers on this challenge
-    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
 
     context = {
         'challenge': challenge,
         'userchallenge': userchallenge, 
-        'userchallenges': userchallenges, 
         'questions': questions, 
         'totals': totals 
+        
+        # List of previous/other challengers on this challenge
+        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_do_submit.html', context, context_instance=RequestContext(request))
