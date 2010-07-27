@@ -12,13 +12,14 @@
 {% block content_left %}
 
     {% if challenge %}
-        <p>You answered {{totals.correct}} out of {{totals.answered}} ( {{totals.percent}}% ) questions correctly.</p>
+        <p>You answered <strong>{{totals.correct}} out of {{totals.answered}}</strong> ( {{totals.percent}}% ) questions correctly.</p>
         {% if questions %}
             {% for question in questions %}
-            <blockquote>
+            <div class="question-block">
+            <div class="question dropcap_light">Q
                 {{ question.content }}
-            </blockquote>
-                <ul>
+            </div>
+                <ul class="answers">
                 {% for answer in question.answer_set.all %}
                     {% ifequal question.answered answer.id %}
                        <li class="question_answer question_answered {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">{{ answer.content }}</li>
@@ -31,8 +32,8 @@
                     {% endifequal %}
                 {% endfor %}
                 </ul>
+            </div>
             {% endfor %}
-            </table>
         {% else %}
             <p>No questions available.</p>
         {% endif %}

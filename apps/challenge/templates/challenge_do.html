@@ -28,18 +28,20 @@
         {% if questions %}
             <form action="{% url challenge-do-submit challenge_id=challenge.id %}" method="POST">
             {% for question in questions %}
-            <blockquote>
+            <div class="question-block">
+            
+            <div class="question dropcap">Q
                 {{ question.content }}
-            </blockquote>
-                <ul>
+            </div>
+                <ul class="answers">
                 {% for answer in question.answers_shuffled %}
                     <li class="question_answer"><input name="questions-{{question.id}}" type="radio" value="{{ answer.id }}"> {{ answer.content }}</li>
                 {% endfor %}
-                    <br />
                     <li class="question_answer hidden"><input name="questions-{{question.id}}" type="radio" value="0" checked="true"> I don't know</li>
                 </ul>
+            </div>
             {% endfor %}
-            </table>
+
             <input type="submit" value="Submit">
             </form>
         {% else %}
