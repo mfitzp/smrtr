@@ -153,14 +153,15 @@ def do(request, challenge_id):
 
     questions = challenge.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
 
-    # List of previous/other challengers on this challenge
-    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
     
     context = {
         'challenge': challenge, 
         'userchallenge':userchallenge, 
-        'userchallenges':userchallenges,
-        'questions': questions
+        'questions': questions,
+
+        # List of previous/other challengers on this challenge
+        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_do.html', context, context_instance=RequestContext(request))

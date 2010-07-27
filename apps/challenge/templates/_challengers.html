@@ -1,17 +1,31 @@
 {% load avatar_tags %}
 {% load spenglr_sq_tags %}
 
-    <h5>Challengers</h5>
+    <h5>Challenger Results</h5>
     <table>
-    {% for uc in userchallenges %}
+    {% for uc in challengers_done %}
         <tr class="{% cycle 'odd' 'even' %}"><td><a href="{% url user-profile user_id=user.id %}">{% avatar uc.user 48 %}</a></td>
         <td>
             <a href="{% url user-profile user_id=user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
-            {% sqchange 100 userchallenge.sq %}
+            {% sqchange 100 uc.sq %}
         </td> 
         </tr>
     {% empty %}
         <tr><td>None yet. You're first to challenge!</td></tr>
+    {% endfor %}
+    </table>
+    <br />
+    <h5>Upcoming Challengers</h5>
+    <table>
+    {% for uc in challengers_todo %}
+        <tr class="{% cycle 'odd' 'even' %}"><td><a href="{% url user-profile user_id=user.id %}">{% avatar uc.user 48 %}</a></td>
+        <td>
+            <a href="{% url user-profile user_id=user.id %}">{{ uc.user.get_profile.fullname }}</a><br />
+            {% sqchange 100 uc.user.get_profile.sq %}
+        </td> 
+        </tr>
+    {% empty %}
+        <tr><td>None left!</td></tr>
     {% endfor %}
     </table>
 
