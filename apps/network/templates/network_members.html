@@ -26,6 +26,6 @@
 
 {% block content_right %}
 <h5>Statistics</h5>
-<p>There are {{ total_members }} members in total on <a href="{% url network-detail network_id=network.id %}">{{ network }}</a>.</p>
+<p>There are {{ total_members }} members in total on the <a href="{% url network-detail network_id=network.id %}">{{ network }}</a> network.</p>
 <p>The members of <a href="{% url network-detail network_id=network.id %}">{{ network }}</a> have a {% sqdescriptive network.sq %} SQ of {% sqchange 0 network.sq %}.</p>
 {% endblock %}
