@@ -95,6 +95,7 @@
         {% endif %}
 
         {% include "_memberships.html" %}
+        <p style="text-align:right"><a href="{% url network-members network_id=network.id %}">View all members &raquo;</a></p>
 
         {% else %}
             <p>No network information available.</p>

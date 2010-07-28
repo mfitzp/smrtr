@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.paginator import Paginator, InvalidPage
 # Spenglr
 from education.models import *
 from network.models import *
@@ -43,7 +42,7 @@ def module_detail(request, module_id):
 
     context = { 'module': module, 
                 'usermodule': usermodule,
-                'members': module.users.order_by('-usermodule__start_date'),
+                'members': module.users.order_by('-usermodule__start_date')[0:12],
                 # Forum items
                 "forum": module.forum,
                 "threads": module.forum.thread_set.all()
@@ -126,7 +125,7 @@ def concept_detail(request, concept_id):
 
     context = { 'concept': concept, 
                 'userconcept': userconcept, 
-                'members': concept.users.order_by('-userconcept__start_date'),
+                'members': concept.users.order_by('-userconcept__start_date')[0:12],
                 # Forum items
                 "forum": concept.forum,
                 "threads": concept.forum.thread_set.all()

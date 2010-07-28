@@ -37,7 +37,7 @@ def network_detail(request, network_id):
 
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
-                'members': network.members.order_by('-usernetwork__start_date'),
+                'members': network.members.order_by('-usernetwork__start_date')[0:12],
                 "forum": network.forum,
                 "threads": network.forum.thread_set.all()
               }
@@ -76,4 +76,21 @@ def network_register(request, network_id):
 
     return render_to_response('network_register.html', {'network': network }, context_instance=RequestContext(request))
 
+
+
+def network_members(request, network_id):
+    network = get_object_or_404(Network, pk=network_id)
+
+    # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
+    try:
+        usernetwork = network.usernetwork_set.get( user=request.user )
+    except:
+        usernetwork = None
+
+    context = { 'network': network, 
+                'usernetwork': usernetwork, 
+                'members': network.members.order_by('-usernetwork__start_date'),
+              }
+
+    return render_to_response('network_members.html', context, context_instance=RequestContext(request))
 
