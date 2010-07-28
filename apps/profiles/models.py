@@ -12,7 +12,7 @@ from sq.utils import *
 class UserProfile(models.Model):
     def __unicode__(self):
         return self.fullname()
-    # Attach wall for this profile on save new profile
+
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(UserProfile, self).save(force_insert, force_update)
@@ -48,7 +48,8 @@ class UserProfile(models.Model):
             start_date = datetime.now() - timedelta(weeks=52)
             end_date = datetime.now()
             prev_sq = self.sq
-            data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
+            # Get for specified date range, exclude questions without SQ values
+            data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.sq = sq_calculate(data, 'desc') # Descending data set
             self.save()
             # Send notification to the user if their SQ has changed
@@ -67,7 +68,7 @@ class UserProfile(models.Model):
     # Contact (email already in user model)
     telno = models.CharField('Telephone', max_length=50, blank = True)
     url = models.URLField(verify_exists = True, blank = True)
-    sq = models.IntegerField(blank = True, null = True, editable = False)
+    sq = models.IntegerField(blank = False, default = 100, editable = False)
     
 def create_profile(sender, **kw):
     user = kw["instance"]

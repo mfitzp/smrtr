@@ -5,6 +5,8 @@ admin.autodiscover()
 def i18n_javascript(request):
   return admin.site.i18n_javascript(request)
 
+handler500 = 'core.views.error500' # Override default handler to pass MEDIA_URL
+
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
@@ -45,6 +47,10 @@ urlpatterns = patterns('',
     (r'^avatar/', include('avatar.urls')),
     
     (r'^messages/', include('messages.urls')),
+    
+    # The following are included for development purposes (i.e. can view/edit error page without creating an error ;)
+    (r'^500/$', 'django.views.generic.simple.direct_to_template', {'template': '500.html'}),
+    (r'^404/$', 'django.views.generic.simple.direct_to_template', {'template': '404.html'})
     
 )
 

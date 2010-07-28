@@ -8,7 +8,6 @@ from network.models import Network
 from sq.utils import * 
 # External
 from datetime import date as _date
-from wall.models import Wall
 
 # Challenges are tests of questions, on a particular topic/etc. created and pre-filled with 
 # questions on creation. Once created exists until expire date passed
@@ -30,6 +29,7 @@ class Challenge(models.Model):
                 ).order_by('?')[0:self.total_questions]
 
         self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
+        self.total_questions = self.questions.count() # Update total questions to the actual value
         self.save()
         
     # Auto-generate a name from the current list of concepts
@@ -77,7 +77,7 @@ class UserChallenge(models.Model):
         # x = qSQ (question's SQ)
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.challenge.questions.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        data = self.challenge.questions.filter(userquestionattempt__user=self.user).exclude(sq=None).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
         

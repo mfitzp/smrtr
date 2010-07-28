@@ -2,6 +2,7 @@ from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404
+from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
@@ -10,7 +11,6 @@ from education.models import *
 from network.models import *
 from questions.models import *
 # External
-from wall.forms import WallItemForm
 from haystack.query import SearchQuerySet
 
 # MODULE VIEWS
@@ -78,20 +78,10 @@ def module_register(request, module_id):
 
         else:
             # Write to database 
-            # um.usernetwork = usernetwork
+            # All concepts on this module automagically activated by the usermodule save
             um.save()
-            
-            # Automatically activate all concepts on this module
-            # FIXME: Move this out to helper util function (same as for above)
-            
-            #for concept in module.concepts.all():
-            #    try:
-            #        uc = UserConcept()    
-            #        uc.user = request.user
-            #        uc.concept = concept
-            #        uc.save()
-            #    except:
-            #        pass
+            request.user.message_set.create(
+                message=_(u"You are now studying ") + module.name)
 
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
@@ -163,8 +153,10 @@ def concept_register(request, concept_id ):
 
         else:
             # Write to database 
-            # um.usernetwork = usernetwork
             uc.save()
+            request.user.message_set.create(
+                message=concept.name + _(u" has been added to your study list"))
+                            
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
             else:
@@ -192,6 +184,10 @@ def concept_add_questions(request, concept_id):
         for qid in qids:
             concept.question_set.add( Question.objects.get( pk=qid ) )
             
+        # Update total_question count for this concept
+        # used to highlight empty concepts and to exclude them from challenges
+        concept.total_questions = concept.question_set.count()
+        concept.save()
 
     query = ''
     results = []

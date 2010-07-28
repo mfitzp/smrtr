@@ -7,8 +7,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 # Smrtr
 from profiles.forms import *
-# External
-from wall.forms import WallItemForm
 
 def profile(request, user_id = None):
 

@@ -7,7 +7,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>{% block title %}smrtr{% endblock %}</title>
-<meta name="google-site-verification" content="PiKY_8J7A4e6g1RHwgUp4Z9RYRkr58aL6BlzCCZqgdo" />
 <link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 
@@ -22,7 +21,7 @@
 <ascript type="text/javascript" src="/admin/jsi18n/"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer-3.2.2.min.js"></script>
 {% endblock %}
-{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+{% block blockbots %}{% endblock %}
 </head>
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
@@ -70,13 +69,16 @@
     <div class="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% endblock %}{% if title %} &rsaquo; {{ title }}{% endif %}</div>
     {% endif %}
 
-        {% if messages %}
-        <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
-        {% endif %}
-
     <!-- Content -->
     {% block pretitle %}{% endblock %}
     <div id="content-title">{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}</div>
+
+    <!-- Notices -->
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}<li>{{ message }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block content %}
 

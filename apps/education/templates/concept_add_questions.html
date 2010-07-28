@@ -46,12 +46,14 @@
             <table>
             {% for result in page_obj.object_list %}
             {% with result.object as question %}
+                {% if question %}
                 <tr>
                     <td><input type="checkbox" name="addquestion" value="{{ question.id }}"></td>
                     <th><a href="{{ result.object.get_absolute_url }}"></th>
                     <td><a href="{% url question-detail question_id=question.id %}">{{ question.content }}</a></td>
                     <td>{% sqchange 100 question.sq %}</td>
                 </tr>
+                {% endif %}
             {% endwith %}
             {% empty %}
                 <tr><td>No results found.</td></tr>

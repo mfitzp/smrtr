@@ -1,4 +1,6 @@
-from django.template import RequestContext, loader
+from django.conf import settings
+from django import http
+from django.template import Context, RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
@@ -152,21 +154,19 @@ def forum_parent_redirect( request, forum_id ):
     else:
         return redirect('module-detail', module_id=forum.module.id)
 
-def wall_add( request, slug ):
-    if request.POST:
-        success_url = request.POST['success_url']
-    else:
-        success_url = False
-    return add( request, slug, success_url=success_url)
-        
 
-def wall_edit( request, id ):
+def error500(request, template_name='500.html'):
+    """
+    500 error handler.
 
-    if request.POST:
-        success_url = request.POST['success_url']
-    else:
-        success_url = False
-    return edit( request, id, success_url=success_url)
-
+    Templates: `500.html`
+    Context:
+        MEDIA_URL
+            Path of static media (e.g. "media.example.org")
+    """
+    t = loader.get_template(template_name) # You need to create a 500.html template.
+    return http.HttpResponseServerError(t.render(Context({
+        'MEDIA_URL': settings.MEDIA_URL
+    })))
 
 

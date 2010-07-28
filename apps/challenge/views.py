@@ -13,7 +13,6 @@ from questions.models import *
 from challenge.models import *
 from challenge.forms import *
 # External
-from wall.forms import WallItemForm
 from haystack.query import SearchQuerySet
 
 
@@ -106,9 +105,6 @@ def detail(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     #TODO: Access grant/deny
     
-    # List of previous/other challengers on this challenge
-    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
-    
     # If the user has a challenge record retrieve it, or create a new one
     try:
         userchallenge = challenge.userchallenge_set.get( user=request.user )
@@ -118,7 +114,10 @@ def detail(request, challenge_id):
     context = {
         'challenge': challenge,
         'userchallenge':userchallenge,
-        'userchallenges':userchallenges,
+        
+        # List of previous/other challengers on this challenge
+        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_view.html', context, context_instance=RequestContext(request))
@@ -153,14 +152,15 @@ def do(request, challenge_id):
 
     questions = challenge.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
 
-    # List of previous/other challengers on this challenge
-    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
     
     context = {
         'challenge': challenge, 
         'userchallenge':userchallenge, 
-        'userchallenges':userchallenges,
-        'questions': questions
+        'questions': questions,
+
+        # List of previous/other challengers on this challenge
+        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_do.html', context, context_instance=RequestContext(request))
@@ -225,8 +225,10 @@ def do_submit(request, challenge_id):
             # Remove this question from the user's question queue (NOTE: If implemented?)
             # TODO: Should throw an error on missing answers and enforce them
             # then advance challenge progress counter on completion ONLY
-
-    totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
+    if totals['answered'] > 0:
+        totals['percent'] = ( 100 * totals['correct'] ) / totals['answered']
+    else:
+        totals['percent'] = 0
 
     # Recalculate SQ values for this module/usermodule_set  
     # NOTE: May need to remove this is load too great?
@@ -234,15 +236,16 @@ def do_submit(request, challenge_id):
     userchallenge.status = 2 #Complete
     userchallenge.save()
 
-    # List of previous/other challengers on this challenge
-    userchallenges = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
 
     context = {
         'challenge': challenge,
         'userchallenge': userchallenge, 
-        'userchallenges': userchallenges, 
         'questions': questions, 
-        'totals': totals 
+        'totals': totals,
+        
+        # List of previous/other challengers on this challenge
+        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_do_submit.html', context, context_instance=RequestContext(request))

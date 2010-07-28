@@ -10,9 +10,10 @@
 <p><strong><a href="http://smrtr.org">smrtr</a></strong> is a free 
 collaborative learning, quiz and study tool.</p>
 <p>Take <strong>quizzes</strong>, <strong>track progress</strong> and receive recommended <strong>study aids</strong> to build your knowledge.
-Ideal for <strong>students</strong>, <strong>professionals</strong> or general-knowledge <strong>know-it-alls</strong> alike!</p>
+Ideal for <strong>students</strong>, <strong>professionals</strong> or general-knowledge <strong>know-it-alls</strong> alike.</p>
+<p><strong><a href="{% url registration_register %}">Sign up now!</a></strong></p>
 </div></div>
-<div class="boxoutbottom"><a href="{% url registration_register %}" style="color:white">Click here to Get smrtr &raquo;</a></div>
+<div class="boxoutbottom"><a href="{% url registration_register %}" style="color:white">Get smrtr &raquo;</a></div>
 
 <br /><br />
 <h5>Existing Member?</h5>
@@ -22,6 +23,7 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 <input type="submit" value="Login &raquo;" />
 </form>
 </p>
+<p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password?</a></p>
 
 {% endblock %}
 

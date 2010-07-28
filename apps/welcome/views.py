@@ -5,10 +5,9 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 # Smrtr
 from welcome.forms import *
-# External
-from wall.forms import WallItemForm
     
 # Get basic profile information from the user once registered    
 def profile(request):
@@ -24,6 +23,8 @@ def profile(request):
             user.save()
             profile = pform.save()
             profile.save()
+            request.user.message_set.create(
+                message=_(u"Welcome to smrtr! Get started by choosing a challenge below and clicking Start..."))
             return HttpResponseRedirect( reverse('home') ) #reverse('welcome-2') )
     else:
         uform = UserForm(instance=user)
