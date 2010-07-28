@@ -95,4 +95,4 @@ def sq_calculate( data, direction = 'asc' ):
     #else No pinning   
 
     # Pass query result to lobf function, return SQ
-    return sq_lobf( n, x, y, xx, xy )
+    return round( sq_lobf( n, x, y, xx, xy ), 0 )
