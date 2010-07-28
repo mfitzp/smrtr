@@ -22,7 +22,7 @@
             <blockquote>{{ userchallenge.challenge.description }}</blockquote>
             <table>
             <tr><th>Available</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
-            <tr><th>Difficulty</th><td>{% sqdifficulty request.user.get_profile.sq userchallenge.sq %}</td></tr>
+            <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
             </table>
             <p style="text-align:right">
@@ -45,7 +45,7 @@
                     <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
                     <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
-                    <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
+                    <td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td>
                     <td>{{ userchallenge.last_access|timesince }}</td>
                     <td>    
                         {% ifequal userchallenge.status 0 %}
