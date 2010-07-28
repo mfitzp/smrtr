@@ -30,7 +30,7 @@
 
 {% block content_right %}
 <h5>Subscriptions</h5>
-<p style="font-size:smaller">RSS feed?</p>
+<p>RSS feed?</p>
 <h5>About</h5>
-<p style="font-size:smaller"><a href="{% url discuss_forum forum_id=forum.id %}">{{ forum }}</a> has {{ forum.thread_set.all.count }} threads.</p>
+<p><a href="{% url discuss_forum forum_id=forum.id %}">{{ forum }}</a> has {{ forum.thread_set.all.count }} threads.</p>
 {% endblock %}

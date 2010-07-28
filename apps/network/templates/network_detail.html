@@ -94,7 +94,10 @@
         </table>
         {% endif %}
 
-        {% include "_memberships.html" %}
+        {% with network.members.count as total_members %}
+            {% include "_memberships.html" %}
+        {% endwith %}
+        
         <p style="text-align:right"><a href="{% url network-members network_id=network.id %}">View all members &raquo;</a></p>
 
         {% else %}

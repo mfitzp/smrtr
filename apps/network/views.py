@@ -38,6 +38,7 @@ def network_detail(request, network_id):
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
                 'members': network.members.order_by('-usernetwork__start_date')[0:12],
+                'total_members': network.members.count(),                
                 "forum": network.forum,
                 "threads": network.forum.thread_set.all()
               }
@@ -90,6 +91,7 @@ def network_members(request, network_id):
     context = { 'network': network, 
                 'usernetwork': usernetwork, 
                 'members': network.members.order_by('-usernetwork__start_date'),
+                'total_members': network.members.count(),                      
               }
 
     return render_to_response('network_members.html', context, context_instance=RequestContext(request))

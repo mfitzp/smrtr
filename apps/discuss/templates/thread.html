@@ -36,11 +36,11 @@
 
 {% block content_right %}
 <h5>Subscriptions</h5>
-<p style="font-size:smaller">RSS feed?</p>
-<p style="font-size:smaller">Notification</p>
+<p>RSS feed?</p>
+<p>Notification</p>
 <h5>About</h5>
-<p style="font-size:smaller">Discussion started by <a href="{% url user-profile user_id=thread.author.id %}">{{ thread.author.get_profile }}</a></p>
-<p style="font-size:smaller">Latest post {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>
+<p>Discussion started by <a href="{% url user-profile user_id=thread.author.id %}">{{ thread.author.get_profile }}</a></p>
+<p>Latest post {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>
 <h5>Tags</h5>
 {% with thread.get_tags as tags %}{% include "_tags.html" %}{% endwith %}
 {% endblock %}
