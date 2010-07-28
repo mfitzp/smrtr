@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from notification.models import Notice
 # Smrtr
 from education.models import Module, UserModule, Concept
+from challenge.models import Challenge
 from core.forms import LoginForm
 from discuss.models import *
 
@@ -112,7 +113,7 @@ def intro(request):
 
     topusers = User.objects.order_by('-userprofile__sq')[0:5]
     topnetworks = Network.objects.annotate(num_users=Count('usernetwork')).order_by('-num_users')[0:10]
-    topmodules = Module.objects.annotate(num_users=Count('usermodule')).order_by('-num_users')[0:10]
+    topchallenges = Challenge.objects.annotate(num_users=Count('userchallenge')).order_by('-num_users')[0:5]
     
     authentication_form = AuthenticationForm
     
@@ -121,7 +122,7 @@ def intro(request):
             # Top
             'topusers': topusers,
             'topnetworks': topnetworks,
-            'topmodules': topmodules,
+            'topchallenges': topchallenges,
     })
 
     return render_to_response('intro.html', context, context_instance=RequestContext(request))
