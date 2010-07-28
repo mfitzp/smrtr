@@ -51,10 +51,10 @@ class UserProfile(models.Model):
             # Get for specified date range, exclude questions without SQ values
             data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.sq = sq_calculate(data, 'desc') # Descending data set
-            self.save()
             # Send notification to the user if their SQ has changed
             if self.sq != prev_sq:
                 notification.send([self.user], "user_sq_updated", {"user": self.user})        
+                self.save()
 
     user = models.ForeignKey(User, unique=True, editable = False)
 
