@@ -16,3 +16,13 @@ def batch_question_update_sq():
 
     for q in questions:
         q.update_sq() # Call SQ recalculation for this question
+        
+        
+def batch_question_update_ttc():
+    
+    # Retrieve 20 questions that have recently been answered and recalculates the ttc on these
+    questions = Question.objects.filter(userquestionattempt__created__isnull=False).order_by('userquestionattempt__created')[:20]
+
+    for q in questions:
+        q.update_ttc() # Call SQ recalculation for this question
+

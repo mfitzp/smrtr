@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% cycle 'odd' 'even' as zebra %}
-{% load spenglr_sq_tags %}
+{% load sq_tags %}
 {% load i18n %}
 {% load avatar_tags %}
+{% load core_tags %}
 
     {% block content_left %}
 
@@ -24,6 +24,7 @@
             <tr><th>Available</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
+            <tr><th>Duration</th><td>{% duration userchallenge.challenge.time_to_complete %}</td></tr>
             </table>
             <p style="text-align:right">
                     <span class="button">
@@ -41,7 +42,7 @@
 
             {% else %}
 
-                <tr class="{% cycle zebra %}">
+                <tr class="{% cycle 'odd' 'even' %}">
                     <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
                     <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
@@ -77,7 +78,7 @@
 
        {% for userchallenge in userchallengescomplete %}
         
-            <tr class="{% cycle zebra %}">
+            <tr class="{% cycle 'odd' 'even' %}">
                 <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
                 <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
@@ -136,7 +137,7 @@
         {% if notices %}
         <table style="width:100%">
         {% for notice in notices %}
-        <tr class="{% cycle zebra %}"><td>{{ notice.message|safe }}</td>
+        <tr class="{% cycle 'odd' 'even' %}"><td>{{ notice.message|safe }}</td>
             <td class="notice-meta">{{ notice.added|timesince }} ago</td></tr>
         {% endfor %}
         </table>      

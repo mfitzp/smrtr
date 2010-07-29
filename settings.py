@@ -163,6 +163,11 @@ SQ_PINNING_WEIGHT = 0.1
 
 CHALLENGES_MIN_ACTIVE = 5
 
+CHALLENGE_TTC_MINIMUM = 60 # Minimum time in seconds for a challenge time limit
+CHALLENGE_TTC_FAIRNESS_MULTIPLIER = 1.5 # Multiple avg by this value to get 'fair' limit
+
+QUESTION_TTC_MINIMUM = 5 # Minimume time in seconds for a question time limit
+
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
 HAYSTACK_DEFAULT_OPERATOR = 'AND'
@@ -172,6 +177,8 @@ HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_ind
 # Some global urls for redirecting users nicely, error, 'finished', etc.
 SMRTR_FREE_TIME_URL = 'http://amanita-design.net/samorost-2/'
 SMRTR_HAVE_BREAK_URL = 'http://www.popcap.com/games/free/pvz?mid=pvz_pcweb_en_full'
+
+
 
 # Email settings: user/pass combination is stored in local settings for security
 EMAIL_HOST = 'smtp.webfaction.com'

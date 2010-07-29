@@ -1,5 +1,62 @@
 {% extends "base.html" %}
-{% load spenglr_sq_tags %}
+{% load sq_tags %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+    
+        timer = false;
+        clock = {{ challenge.time_to_complete }};
+        
+        function make_plural(word, value){
+            if(value == 1){
+                return word;
+            } else {
+                return word + 's';
+            }
+        }
+        
+        function seconds_to_hms(seconds){
+        
+            var str = '';
+        
+            var tm = new Date(seconds*1000)
+            var h = tm.getUTCHours();
+            var m = tm.getUTCMinutes();
+            var s = tm.getUTCSeconds();
+            
+            if(h != 0){ str += ' ' + h + make_plural( ' hour', h ); }
+            if(m != 0){ str += ' ' + m + make_plural( ' minute', m ); }
+            if(s != 0){ str += ' ' + s + make_plural( ' second', s ); }
+            
+            return str;
+        }
+    
+        function countdowntimer(){
+            clock--;
+            document.getElementById('timerfield').value = seconds_to_hms( clock );
+            if(clock == 0){
+                stop_timer()
+                document.getElementById('timerform').submit();
+            }
+        }
+        
+        function start_timer(){
+            /* Pulse timer every 1 second */
+            timer = window.setInterval("countdowntimer()", 1000)
+            document.getElementById('timerfield').value = seconds_to_hms( clock );
+        }
+
+        function stop_timer(){
+            /* Pulse timer every 1 second */
+            window.clearInterval( timer );
+            document.getElementById('timerformsubmit').disabled=true;
+        }
+        
+        start_timer()
+
+    </script>
+{% endblock %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
@@ -21,12 +78,13 @@
                 
                 {% sqdifficulty request.user.get_profile.sq challenge.sq %}
             </td></tr>
+            <tr><th>Time Remaining</th><td><input id="timerfield" name="timerfield" class="display-field"></td></tr>
         </table>
 
         <blockquote>{{ challenge.description }}</blockquote>
 
         {% if questions %}
-            <form action="{% url challenge-do-submit challenge_id=challenge.id %}" method="POST">
+            <form action="{% url challenge-do-submit challenge_id=challenge.id %}" method="POST" id="timerform">
             {% for question in questions %}
             <div class="question-block">
             
@@ -42,7 +100,7 @@
             </div>
             {% endfor %}
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="timerformsubmit" onclick="stop_timer()">
             </form>
         {% else %}
             <p>No questions available.</p>

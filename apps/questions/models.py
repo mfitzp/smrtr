@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 from django.core.urlresolvers import reverse
-# Spenglr
+import datetime
+# Smrtr
+from settings import QUESTION_TTC_MINIMUM
 from resources.models import Resource
 from education.models import Concept
 from sq.utils import * 
@@ -32,9 +34,15 @@ class Question(models.Model):
     def update_sq(self):
         # Get all user's attempts at this question
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.userquestionattempt_set.values('usq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('usq'))
+        data = self.userquestionattempt_set.values('user_sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('user_sq'))
         self.sq = sq_calculate(data, 'asc') # Ascending data set
         self.save()
+        
+    def update_ttc(self):
+        ttc = self.userquestionattempt_set.aggregate(Avg('time_to_complete'))
+        if ttc:
+            self.time_to_complete = min( ttc['time_to_complete__avg'], QUESTION_TTC_MINIMUM) # Minimum 5 seconds per question
+            self.save()
 
     content = models.TextField()
     concepts = models.ManyToManyField(Concept, blank=True) #, related_name='questions'
@@ -44,6 +52,9 @@ class Question(models.Model):
     tags = TagField()
     author = models.ForeignKey(User)
     sq = models.IntegerField(blank = True, null = True, editable = False) 
+    
+    # Auto-populated from averages of all user attempts (total seconds taken)
+    time_to_complete = models.IntegerField(default = 15 )#, editable = False )
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
@@ -57,14 +68,11 @@ class UserQuestionAttempt(models.Model):
     question = models.ForeignKey('Question')
     user = models.ForeignKey(User)
     percent_correct = models.IntegerField() # Percent correct (will be 0 or 100 until implement multi-part answers)
-    usq = models.IntegerField() # User's SQ at time of answering
+    user_sq = models.IntegerField() # User's SQ at time of answering
     created = models.DateTimeField(auto_now_add = True)
 
-# Question Queue stores questions that have been presented, and is added to to make sure user always has n available
-# this prevents the user skipping a question. Cross-site locking may also be implemented on this (if we can be bothered)
-# User's queued questions for locking/skip preventing
-# class UserQuestionQueue
-
+    # Time taken by the user to answer the question (seconds), calculated from no_of_questions/total_time
+    time_to_complete = models.IntegerField(editable = False )
 
 
 

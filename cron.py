@@ -1,8 +1,8 @@
 from django.core.management import setup_environ
 import settings
-import datetime
+import datetime.datetime as _datetime
 setup_environ(settings)
-# Spenglr
+# Smrtr
 from questions.utils import *
 from education.utils import *
 from challenge.utils import *
@@ -10,26 +10,27 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
-    print datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Update question SQ/ttc..."
     batch_question_update_sq()
+    batch_question_update_ttc()
     
-    print datetime.now().strftime(' %H:%M:%S') + ": Update network, module & concept SQ..."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Update network, module & concept SQ..."
     batch_module_update_sq()
     batch_concept_update_sq()    
     batch_network_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user profile SQ..."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Update user profile SQ..."
     batch_user_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user module & concept SQ..."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Update user module & concept SQ..."
     batch_usermodule_update_sq()
     batch_userconcept_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
     batch_userconcept_update_focus()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
     batch_generate_user_challenges()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Done."
+    print _datetime.now().strftime(' %H:%M:%S') + ": Done."
 cron()
