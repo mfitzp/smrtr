@@ -1,13 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Avg, Max, Min, Count
-# Spenglr
+from django.db.models import Avg, Max, Min, Count, Sum, StdDev
+# Smrtr
+from settings import CHALLENGE_TTC_MINIMUM, CHALLENGE_TTC_FAIRNESS_MULTIPLIER
 from questions.models import Question
 from education.models import Concept
 from network.models import Network
 from sq.utils import * 
 # External
-from datetime import date as _date
+import datetime
+import math
 
 # Challenges are tests of questions, on a particular topic/etc. created and pre-filled with 
 # questions on creation. Once created exists until expire date passed
@@ -27,10 +29,18 @@ class Challenge(models.Model):
 #                sq__gte=self.sq + 20,
 #                sq__lte=self.sq - 20
                 ).order_by('?')[0:self.total_questions]
-
-        self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
         self.total_questions = self.questions.count() # Update total questions to the actual value
-        self.save()
+
+        if self.total_questions > 0:
+            self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
+            # Generate time to complete *1.5, rounded up to nearest minute ( 60 seconds ). Should be fair and tidy
+            # Get average of questions in this challenge, * 1.5
+            time_to_complete = self.questions.aggregate(Sum('time_to_complete'))['time_to_complete__sum'] * CHALLENGE_TTC_FAIRNESS_MULTIPLIER
+            # Set minimum challenge time of 1 minute
+            time_to_complete = min( time_to_complete, CHALLENGE_TTC_MINIMUM )
+            # Round up to nearest minute
+            self.time_to_complete = math.ceil( time_to_complete / 60 ) * 60 # Round to nearest minute
+            self.save()
         
     # Auto-generate a name from the current list of concepts
     def generate_name(self):
@@ -64,6 +74,9 @@ class Challenge(models.Model):
     # User's who have attempted this challenge and associated data
     users = models.ManyToManyField(User, through='UserChallenge', related_name='challenges', editable = False)
 
+    # Auto-populated from total of question expected-duration times
+    time_to_complete = models.IntegerField(editable = False, null = True )
+
     #privacy = Public, Network, Private
 
 
@@ -88,6 +101,23 @@ class UserChallenge(models.Model):
         data = self.challenge.questions.filter(userquestionattempt__user=self.user).exclude(sq=None).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
+
+    def start(self):
+        # Set values for start
+        self.status = 1
+        self.started = datetime.datetime.now()
+            
+    def complete(self):
+        # Set values for completion
+        self.status = 2
+        self.completed = datetime.datetime.now()
+        
+    def is_new(self):
+        return self.status == 0
+    def is_active(self):
+        return self.status == 1
+    def is_complete(self):
+        return self.status == 2
         
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
@@ -104,5 +134,10 @@ class UserChallenge(models.Model):
     sq = models.IntegerField(editable = False, null = True)
     # User's rank on this challenge
     rank = models.IntegerField(editable = False, null = True)
+
+    # Values of the /sucessful/ completion of the attempt
+    # Started is update on each attempt start, completed only at finish - used to calculate question duration times
+    started = models.DateTimeField(blank = True, null = True, editable = False)
+    completed = models.DateTimeField(blank = True, null = True, editable = False)
 
     

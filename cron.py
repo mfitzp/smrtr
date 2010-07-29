@@ -10,26 +10,27 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
-    print datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ/ttc..."
     batch_question_update_sq()
+    batch_question_update_ttc()
     
-    print datetime.now().strftime(' %H:%M:%S') + ": Update network, module & concept SQ..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update network, module & concept SQ..."
     batch_module_update_sq()
     batch_concept_update_sq()    
     batch_network_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user profile SQ..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user profile SQ..."
     batch_user_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user module & concept SQ..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user module & concept SQ..."
     batch_usermodule_update_sq()
     batch_userconcept_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user cocept focus..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user cocept focus..."
     batch_userconcept_update_focus()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
     batch_generate_user_challenges()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Done."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Done."
 cron()

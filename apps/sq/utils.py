@@ -96,3 +96,15 @@ def sq_calculate( data, direction = 'asc' ):
 
     # Pass query result to lobf function, return SQ
     return round( sq_lobf( n, x, y, xx, xy ), 0 )
+    
+    
+def sq_division(sq):
+    # Limit SQ to the range 149-69
+    sq = min( max( sq , 69  ) , 149 )
+    # Convert to 14-6
+    return int( math.floor( sq / 10) )
+
+
+def sq_division_changed( sqa, sqb ):
+    return sq_division( sqa ) != sq_division( sqb )
+

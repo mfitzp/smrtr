@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
 from django.http import Http404
+import datetime
 # Spenglr
 from education.models import *
 from network.models import *
@@ -139,15 +140,14 @@ def do(request, challenge_id):
         userchallenge = UserChallenge()
         userchallenge.user = request.user
         userchallenge.challenge = challenge
-        userchallenge.update_sq() # Initial value from previous answers to included questions
-        userchallenge.status = 1 # Active
+        userchallenge.start()
         userchallenge.save()              
     else:
-        if userchallenge.status == 2: #Complete
+        if userchallenge.is_complete(): #Complete
             return redirect('challenge-detail', challenge_id=challenge_id)
         
-        if userchallenge.status == 0: #New
-            userchallenge.status = 1
+        if userchallenge.is_new(): #New
+            userchallenge.start()
             userchallenge.save()
 
     questions = challenge.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
@@ -180,6 +180,10 @@ def do_submit(request, challenge_id):
         #FIXME: Should this be another error code? Access denied
         raise Http404
 
+    userchallenge.complete() #Complete (get ourselves a duration value)
+    time_to_complete = userchallenge.completed - userchallenge.started
+    time_to_complete_each = round( time_to_complete.seconds / challenge.total_questions, 0 )    
+
     # Iterate over all POST keys and pull out the question answer question-n fields
     for key in request.POST.keys():
 
@@ -195,6 +199,7 @@ def do_submit(request, challenge_id):
             pass
 
         else:
+
             # We have a valid set of answer data, save to db
             totals['answered'] = totals['answered'] + 1
 
@@ -202,7 +207,8 @@ def do_submit(request, challenge_id):
             uqa = UserQuestionAttempt()
             uqa.question = q
             uqa.user = request.user
-            uqa.usq = request.user.get_profile().sq
+            uqa.user_sq = request.user.get_profile().sq
+            uqa.time_to_complete = time_to_complete_each # Assign point of completion time to the question
 
             # Find submitted answer id in the list of correct answers
             aid = request.POST.get('questions-' + qid)
@@ -233,7 +239,6 @@ def do_submit(request, challenge_id):
     # Recalculate SQ values for this module/usermodule_set  
     # NOTE: May need to remove this is load too great?
     userchallenge.update_sq()
-    userchallenge.status = 2 #Complete
     userchallenge.save()
 
 

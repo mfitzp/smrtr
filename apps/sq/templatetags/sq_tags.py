@@ -64,11 +64,9 @@ def sqdescriptive( sq ):
     if sq is None:
         return "Unknown"
 
-    # Limit SQ to the range 149-69
-    sq = min( max( sq , 69  ) , 149 )
-    # Convert to 14-6
-    dn = int( math.floor( sq / 10) )
-
+    # sq_division limits to range 14-6 based on sq input
+    from sq.utils import sq_division
+    
     descriptive = {
         14: "Genius",
         13: "Very Superior",
@@ -79,6 +77,9 @@ def sqdescriptive( sq ):
         8 : "Low Average",
         7 : "Very Low",
         6 : "Extremely Low",
-    }[dn]
+    }[sq_division(sq)]
 
     return '<span class="sq sqdescriptive">%s</span>' % (descriptive)
+    
+    
+
