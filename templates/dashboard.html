@@ -4,21 +4,22 @@
 {% load avatar_tags %}
 {% load core_tags %}
 
-    {% block content_left %}
+{% cycle 'odd' 'even' as zebra%}
+
+{% block content_left %}
 
     <div id="dashboard">
 
     <!-- <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5> -->
 
     {% if userchallengesexist %}
-        <table>
+        <div class="focus"><h4>Challenges</h4>
+        <table id="challenges">
         {% for userchallenge in userchallenges %}
         
             {% if forloop.first %}
-            <tr id="focus"><td colspan="10">
-            <div style="position:relative">
-            <h5>{{ userchallenge }}</h5>
-            <div style="position:absolute;top:10px;right:10px;font-weight:bold;font-size:1.8em;">{% sqchange 100 userchallenge.challenge.sq %}</div>
+            <tr><td colspan="10" class="challenge_focus">
+            <h5>{{ userchallenge }}</h5>         
             <blockquote>{{ userchallenge.challenge.description }}</blockquote>
             <table>
             <tr><th>Available</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
@@ -27,12 +28,12 @@
             <tr><th>Duration</th><td>{% duration userchallenge.challenge.time_to_complete %}</td></tr>
             </table>
             <p style="text-align:right">
-                    <span class="button">
+                    <span class="button button_hi">
                     {% ifequal userchallenge.status 0 %}
-                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
+                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start Challenge</a>
                     {% else %}
                         {% ifequal userchallenge.status 1 %}                    
-                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a>                        
+                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue Challenge</a>                        
                         {% endifequal %}
                     {% endifequal %}
                     </span>
@@ -42,8 +43,7 @@
 
             {% else %}
 
-                <tr class="{% cycle 'odd' 'even' %}">
-                    <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
+                <tr class="{% cycle zebra %}">
                     <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                     <td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td>
@@ -78,8 +78,7 @@
 
        {% for userchallenge in userchallengescomplete %}
         
-            <tr class="{% cycle 'odd' 'even' %}">
-                <td style="vertical-align:middle"><div class="progress" style="width:{% widthratio userconcept.focus 5 50 %}px;"></div></td>
+            <tr class="{% cycle zebra %}">
                 <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                 <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
@@ -89,21 +88,21 @@
             
         {% endfor %}        
     </table>
+    </div>
     <br style="clear:both;" /><p>
         <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span>
         <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>
     <p>
 
     {% else %}
+    <div class="focus"><h4>Welcome!</h4>
     <table>
         <tr id="focus"><td colspan="10">
-            <div style="position:relative">
-            <h5>Welcome to Smrtr!</h5>
             <p>Once you're up and running, this box will show your current active challenges for today. To begin, just activate one of the modules
             below.</p>
-            </div>
         </td></tr>
     </table>
+    </div>
     {% endif %}
 
        {% if usermodules %}
