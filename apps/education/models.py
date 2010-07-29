@@ -178,12 +178,7 @@ class UserConcept(models.Model):
             # This will fail if sq values are not set (None)  
             self.focus = ( datetime.today() - self.start_date ).days + ( self.concept.sq - self.sq )
             # Limit 0-100
-            # FIXME: Is there a better way to do this?
-            if self.focus > 100:
-                self.focus = 100
-            else:
-                 if self.focus < 0:
-                    self.focus = 0
+            self.focus = max( min( self.focus, 100 ), 100 )
         except:
             # If fail, put to front of queue: SQ is unset or start_date (latest_attempt) unset i.e. is new!!
             self.focus = 100

@@ -25,7 +25,7 @@ def cron():
     batch_usermodule_update_sq()
     batch_userconcept_update_sq()
 
-    print datetime.now().strftime(' %H:%M:%S') + ": Update user cocept focus..."
+    print datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
     batch_userconcept_update_focus()
 
     print datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."

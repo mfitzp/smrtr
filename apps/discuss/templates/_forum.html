@@ -12,7 +12,7 @@
             <div class="threaditem-title"><a href="{% url discuss_thread thread_id=thread.id %}">{{ thread.title }}</a></div>
             <div class="threaditem-meta">
                 <a href="{% url user-profile user_id=thread.author.id %}">{{ thread.author.get_profile.fullname }}</a> on <a href="{% url discuss_forum thread.forum.id %}">{{ thread.forum.title }}</a><br />
-                {{ thread.posts }} replies, latest {{ thread.latest_post_created|timesince }} ago by {{ thread.latest_post.author.get_profile.fullname }}</div>
+                {{ thread.posts }} replies, latest {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile.fullname }}</a></div>
         <br class="clear" />
         </div>
     {% endfor %}
