@@ -13,27 +13,10 @@
 {% block content_left %}
 
 {% if message_list %} 
-{% for message in message_list %} 
 
-        <div class="boxmessage {% if message.new %}boxmessage-new{% endif %} {% if message.replied %}boxmessage-replied{% endif %} {% cycle 'odd' 'even' %}">
-            <div class="boxmessage-emblems">  
-                <div class="boxmessage-emblem-new" title="New message"></div>
-                <div class="boxmessage-emblem-replied" title="Replied to"></div>
-            </div>
-            <div class="boxmessage-image"><a href="{% url user-profile user_id=message.sender.id %}">{% avatar message.sender 48 %}</a></div>
-            <div class="boxmessage-title"><a href="{% url messages_detail message_id=message.id %}">{{ message.subject }}</a>
-            {{ message.body|striptags|truncatewords:30 }}
-            </div>
-            
-            <div class="boxmessage-meta">
-                By <a href="{% url user-profile user_id=message.sender.id %}">{{ message.sender.get_profile.fullname }}</a> {{ message.sent_at|timesince }} ago 
-                {% if message.parent_msg %}
-                in reply to <a href="{% url messages_detail message_id=message.parent_msg.id %}">#{{ message.id }}</a>
-                {% endif %}
-            </div>        
-        </div>
+{% include "messages/_messagelist.html" %}  
     
-{% endfor %}
+
 
 {% else %}
 <p>{% trans "No messages." %}</p>
