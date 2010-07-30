@@ -27,7 +27,7 @@
             <tr><th>Duration</th><td><span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span></td></tr>
             <tr><th>Expires</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
             </table>
-            <p style="text-align:right">
+            <div class="buttonbox">
                     <span class="button button_hi">
                     {% ifequal userchallenge.status 0 %}
                     <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start Challenge</a>
@@ -37,7 +37,6 @@
                         {% endifequal %}
                     {% endifequal %}
                     </span>
-            </p>
             </div>
             </td></tr>
 

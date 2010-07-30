@@ -1,15 +1,17 @@
 {% extends "base.html" %} 
 {% load i18n %} 
+{% load avatar_tags %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; Messages
+    &raquo; <a href="{% url messages_inbox %}">Messages</a>
     &raquo; Compose
 {% endblock %}
 
 {% block content_title %}<h1>{% trans "Compose Message"%}</h1>{% endblock %}
 
 {% block content_left %}
+
 <form action="" method="post">
 <table>
 {{ form.as_table }}

@@ -8,7 +8,7 @@
 {% if threads %}
     {% for thread in threads %}
         <div class="threaditem {% if thread.system %}threaditem-system{% endif %} {% if thread.closed %}threaditem-closed{% endif %} {% if thread.sticky %}threaditem-sticky{% endif %} {% cycle 'odd' 'even' %}">
-            <div class="threaditem-threademblems">  
+            <div class="threaditem-emblems">  
                 <div class="threaditem-emblem-sticky"></div>
                 <div class="threaditem-emblem-closed"></div>
                 <div class="threaditem-emblem-system"></div>

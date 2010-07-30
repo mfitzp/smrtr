@@ -95,4 +95,64 @@ def network_members(request, network_id):
               }
 
     return render_to_response('network_members.html', context, context_instance=RequestContext(request))
+    
+    
+    
+# Presents a search mechanism to find networks (free text and tags)
+def network_search(request, concept_id):
+    
+    from questions.forms import QuestionSearchForm
+    
+    concept = get_object_or_404(Concept, pk=concept_id)
+    
+    # Get usernetwork of the concept's 'home network'
+    # must be a member of the network to add questions
+    # additional limitations may be set by the network
+
+    if request.POST.get('addquestion'):
+        
+        qids = request.POST.getlist('addquestion')
+        
+        for qid in qids:
+            concept.question_set.add( Question.objects.get( pk=qid ) )
+            
+        # Update total_question count for this concept
+        # used to highlight empty concepts and to exclude them from challenges
+        concept.total_questions = concept.question_set.count()
+        concept.save()
+
+    query = ''
+    results = []
+    
+    searchqueryset = SearchQuerySet().models(Question)
+
+    if request.GET.get('q'):
+        form = QuestionSearchForm(request.GET, searchqueryset=searchqueryset, load_all=True )
+        
+    else:
+        form = QuestionSearchForm({'q':concept.name}, searchqueryset=searchqueryset, load_all=True )
+        
+    if form.is_valid():
+        query = form.cleaned_data['q']
+        results = form.search()
+        
+    paginator = Paginator(results, 10)
+        
+    try:
+        page_obj = paginator.page(int(request.GET.get('page', 1)))
+    except InvalidPage:
+        raise Http404("No such page of results!")    
+
+    context = { 
+        'form': form,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'query': query,
+        'concept': concept, 
+    }
+    
+    return render_to_response('concept_add_questions.html', context, context_instance=RequestContext(request))    
+    
+    
+        
 
