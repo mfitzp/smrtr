@@ -10,7 +10,6 @@
 <link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 
-<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% admin_media_prefix %}css/base.css{% endblock %}" />
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
 {% block %rss %}{% endblock %}
 {% block extrastyle %}{% endblock %}
@@ -37,7 +36,7 @@
         {% if user.is_authenticated %}
         <div id="user-tools">
             <table id="user-tools-panel">
-            <tr><td>
+            <tr><td id="user-tools-panel-top">
             {% trans 'Welcome,' %}
             <strong><a href="{% url user-profile user_id=user.id %}">{% firstof user.first_name user.username %}</a></strong>
                 &#183;

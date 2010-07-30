@@ -146,9 +146,9 @@ def do(request, challenge_id):
         if userchallenge.is_complete(): #Complete
             return redirect('challenge-detail', challenge_id=challenge_id)
         
-        if userchallenge.is_new(): #New
-            userchallenge.start()
-            userchallenge.save()
+        #if userchallenge.is_new(): #New
+        userchallenge.start()
+        userchallenge.save()
 
     questions = challenge.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
 
