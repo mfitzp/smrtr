@@ -22,10 +22,10 @@
             <h5>{{ userchallenge }}</h5>         
             <blockquote>{{ userchallenge.challenge.description }}</blockquote>
             <table>
-            <tr><th>Available</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
-            <tr><th>Duration</th><td>{% duration userchallenge.challenge.time_to_complete %}</td></tr>
+            <tr><th>Duration</th><td><span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span></td></tr>
+            <tr><th>Expires</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
             </table>
             <p style="text-align:right">
                     <span class="button button_hi">
