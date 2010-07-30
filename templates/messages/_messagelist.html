@@ -11,9 +11,9 @@
             </div>
             <div class="messagelist-image">
             {% ifequal message.sender request.user %}            
-                <a href="{% url user-profile user_id=message.sender.id %}">{% avatar message.sender 48 %}</a>
-            {% else %}
                 <a href="{% url user-profile user_id=message.recipient.id %}">{% avatar message.recipient 48 %}</a>
+            {% else %}
+                <a href="{% url user-profile user_id=message.sender.id %}">{% avatar message.sender 48 %}</a>
             {% endifequal %}
             </div>
             <div class="messagelist-title"><a href="{% url messages_detail message_id=message.id %}">{{ message.subject }}</a><br />
