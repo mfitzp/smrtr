@@ -36,7 +36,7 @@
 {% if message.parent_msg %}
 <h5>Previous Message</h5>
 <div class="postitem">
-    <div class="postitem-image"><a href="{% url user-profile user_id=message.parent_msg.parent_msg.id %}">{% avatar message.parent_msg.sender 48 %}</a></div>
+    <div class="postitem-image"><a href="{% url user-profile user_id=message.parent_msg.sender.id %}">{% avatar message.parent_msg.sender 48 %}</a></div>
     <div class="postitem-body"> {{ message.parent_msg.body|markdown }}</div>
     <div class="threaditem-meta">
         Message from <a href="{% url user-profile user_id=message.parent_msg.sender.id %}">{{ message.parent_msg.sender.get_profile.fullname }}</a>, <span title="{{ message.parent_msg.sent_at|date:_("DATETIME_FORMAT")}}">{{ message.parent_msg.sent_at|timesince }} ago</span><br />
