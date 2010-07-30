@@ -1,0 +1,38 @@
+{% load i18n %} 
+{% load avatar_tags %} 
+
+{% for message in message_list %} 
+
+        <div class="messagelist {% if message.new %}messagelist-new{% endif %} {% if message.replied %}messagelist-replied{% endif %} {% if trash %}messagelist-deleted{% endif %} {% cycle 'odd' 'even' %}">
+            <div class="messagelist-emblems">  
+                <div class="messagelist-emblem-new" title="New message"></div>
+                <div class="messagelist-emblem-replied" title="Replied to"></div>
+                <div class="messagelist-emblem-deleted" title="Deleted"></div>
+            </div>
+            <div class="messagelist-image">
+            {% ifequal message.sender request.user %}            
+                <a href="{% url user-profile user_id=message.sender.id %}">{% avatar message.sender 48 %}</a>
+            {% else %}
+                <a href="{% url user-profile user_id=message.recipient.id %}">{% avatar message.recipient 48 %}</a>
+            {% endifequal %}
+            </div>
+            <div class="messagelist-title"><a href="{% url messages_detail message_id=message.id %}">{{ message.subject }}</a><br />
+            {{ message.body|striptags|truncatewords:30 }}
+            </div>
+            
+            <div class="messagelist-meta">
+                {% ifequal message.sender request.user %}
+                To <a href="{% url user-profile user_id=message.recipient.id %}">{{ message.recipient.get_profile.fullname }}</a> {{ message.sent_at|timesince }} ago 
+                {% else %}                
+                By <a href="{% url user-profile user_id=message.sender.id %}">{{ message.sender.get_profile.fullname }}</a> {{ message.sent_at|timesince }} ago 
+                {% endifequal %}
+                {% if message.parent_msg %}
+                in reply to <a href="{% url messages_detail message_id=message.parent_msg.id %}">#{{ message.id }}</a>
+                {% endif %}
+                {% if trash %}<span class="button"><a href="{% url messages_undelete message.id %}">{% trans "Undelete" %}</a></span>{% endif %}
+
+            </div>       
+            
+             
+        </div>
+{% endfor %}        
