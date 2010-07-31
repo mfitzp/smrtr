@@ -13,10 +13,9 @@
     &raquo; Add  
 {% endblock %}
 
+{% block content_title %}<h1>{{ concept.name }}</h1>{% endblock %}
 
-{% block content %}
-
-    <h1>{{ concept.name }}</h1>
+{% block content_left %}
 
     <table>
         <tr><th>SQ</th><td>
@@ -32,23 +31,26 @@
 
     <form method="get" action=".">
         <table>
-            {{ form.as_table }}
             <tr>
-                <td>&nbsp;</td>
+                <th style="vertical-align:middle;"><label for="id_q">{{ form.q.label }}</th>
+                    <td>{{ form.q.errors }} {{ form.q }}</td>
                 <td>
                     <input type="submit" value="Search">
                 </td>
             </tr>
-        </table>
+        </table> 
     </form>
         {% if query %}
             <form method="post" action=".">
+            <input type="hidden" name="q" value="{{ query }}">
             <table>
             {% for result in page_obj.object_list %}
             {% with result.object as question %}
+            
+            
                 {% if question %}
                 <tr>
-                    <td><input type="checkbox" name="addquestion" value="{{ question.id }}"></td>
+                    <td><input type="checkbox" name="addquestion" value="{{ question.id }}" {% if concept in question.concepts.all %}checked disabled{% endif %}></td>
                     <th><a href="{{ result.object.get_absolute_url }}"></th>
                     <td><a href="{% url question-detail question_id=question.id %}">{{ question.content }}</a></td>
                     <td>{% sqchange 100 question.sq %}</td>
@@ -56,7 +58,7 @@
                 {% endif %}
             {% endwith %}
             {% empty %}
-                <tr><td>No results found.</td></tr>
+                <tr><td>No new questions found for '{{query}}'</td></tr>
             {% endfor %}
             </table>
             <input type="submit" value="Add Questions">
@@ -70,3 +72,11 @@
 {% paginate %}
 
 {% endblock %}
+{% block content_right %}
+        <h5>Statistics</h5>
+        <p>
+            There are <strong>{{ concept.question_set.count }} question{{ concept.question_set.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> currently assigned to {{ concept }}.
+        </p>
+
+{% endblock %}
+

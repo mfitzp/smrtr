@@ -14,8 +14,8 @@ from discuss.models import Forum
 
 TYPE_CHOICES = (
         (0, 'Other'),
-        (1, 'Educational Institution'),
-        (2, 'Examination Board'),
+        (1, 'Examination Board'),
+        (2, 'Educational Institution'),
         (3, 'Organisation'),
         (4, 'Community'),
         (5, 'Course'),

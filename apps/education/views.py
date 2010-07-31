@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
-# Spenglr
+# Smrtr
 from education.models import *
 from network.models import *
 from questions.models import *
@@ -190,27 +190,32 @@ def concept_add_questions(request, concept_id):
         # used to highlight empty concepts and to exclude them from challenges
         concept.total_questions = concept.question_set.count()
         concept.save()
+        
+        request.user.message_set.create(
+        message=_(u"%s questions added to %s" % ( len(qids) , concept.name ) ) )
 
-    query = ''
+    if request.POST:
+        querydata = request.POST
+    elif request.GET.get('q'):
+        querydata = request.GET
+    else:
+        querydata = {'q': concept.name}
+
+    sqs = SearchQuerySet().models(Question)
+    #sqs = sqs.load_all_queryset(Question, Question.objects.select_related(depth=1) ) #exclude(concepts=concept)
+
+    form = QuestionSearchForm(querydata, searchqueryset=sqs, load_all=True )
     results = []
     
-    searchqueryset = SearchQuerySet().models(Question)
-
-    if request.GET.get('q'):
-        form = QuestionSearchForm(request.GET, searchqueryset=searchqueryset, load_all=True )
-        
-    else:
-        form = QuestionSearchForm({'q':concept.name}, searchqueryset=searchqueryset, load_all=True )
-        
     if form.is_valid():
         query = form.cleaned_data['q']
         results = form.search()
-        
-    paginator = Paginator(results, 10)
+
+    paginator = Paginator(list(results), 10)
         
     try:
         page_obj = paginator.page(int(request.GET.get('page', 1)))
-    except InvalidPage:
+    except (ValueError, EmptyPage, InvalidPage): 
         raise Http404("No such page of results!")    
 
     context = { 

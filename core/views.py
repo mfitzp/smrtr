@@ -7,6 +7,7 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
+from django.contrib import messages
 # External
 from notification.models import Notice
 # Smrtr

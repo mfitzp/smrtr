@@ -5,8 +5,12 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-# Spenglr
+from django.core.paginator import Paginator, InvalidPage
+from django.contrib import messages
+# Smrtr
 from education.models import *
+# External
+from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
@@ -98,60 +102,55 @@ def network_members(request, network_id):
     
     
     
-# Presents a search mechanism to find networks (free text and tags)
-def network_search(request, concept_id):
+# Presents a search mechanism to find networks to join (optionally) (free text and tags)
+def network_search(request):
     
-    from questions.forms import QuestionSearchForm
+    from network.forms import NetworkSearchForm
     
-    concept = get_object_or_404(Concept, pk=concept_id)
-    
-    # Get usernetwork of the concept's 'home network'
-    # must be a member of the network to add questions
-    # additional limitations may be set by the network
-
-    if request.POST.get('addquestion'):
+    if request.POST.get('addnetwork'):
         
-        qids = request.POST.getlist('addquestion')
+        nids = request.POST.getlist('addnetwork')
         
-        for qid in qids:
-            concept.question_set.add( Question.objects.get( pk=qid ) )
-            
-        # Update total_question count for this concept
-        # used to highlight empty concepts and to exclude them from challenges
-        concept.total_questions = concept.question_set.count()
-        concept.save()
+        for nid in nids:
+            network = Network.objects.get(pk=nid)
+            usernetwork = UserNetwork( user=request.user, network=network  )
+            try:
+                usernetwork.save()
+            except:
+                messages.warning(request, _(u"You are already a member of %s" % network.name ) )
+            else:
+                messages.success(request, _(u"You have joined %s" % network.name ) )
 
     query = ''
     results = []
-    
-    searchqueryset = SearchQuerySet().models(Question)
+    # RelatedSearchQuerySet().filter(content='foo').load_all()
 
-    if request.GET.get('q'):
-        form = QuestionSearchForm(request.GET, searchqueryset=searchqueryset, load_all=True )
-        
+    sqs = SearchQuerySet().models(Network)
+
+    if request.POST:
+        querydata = request.POST
+    elif request.GET.get('q'):
+        querydata = request.GET
     else:
-        form = QuestionSearchForm({'q':concept.name}, searchqueryset=searchqueryset, load_all=True )
+        querydata = {'q':''}
+        
+    form = NetworkSearchForm(querydata, searchqueryset=sqs, load_all=True )
         
     if form.is_valid():
         query = form.cleaned_data['q']
-        results = form.search()
-        
-    paginator = Paginator(results, 10)
-        
-    try:
-        page_obj = paginator.page(int(request.GET.get('page', 1)))
-    except InvalidPage:
-        raise Http404("No such page of results!")    
-
+        results = form.search_split() # Returns a list of SearchQuerySets one for each network type
+    
+    from network.models import TYPE_CHOICES
+    
     context = { 
         'form': form,
-        'page_obj': page_obj,
-        'paginator': paginator,
         'query': query,
-        'concept': concept, 
+        'results': results,
+        'TYPE_CHOICES': TYPE_CHOICES,
+        'next' : request.GET.get('next'),
     }
     
-    return render_to_response('concept_add_questions.html', context, context_instance=RequestContext(request))    
+    return render_to_response('network_search.html', context, context_instance=RequestContext(request))    
     
     
         

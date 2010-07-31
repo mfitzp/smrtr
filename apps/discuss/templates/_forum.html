@@ -9,8 +9,8 @@
     {% for thread in threads %}
         <div class="threaditem {% if thread.system %}threaditem-system{% endif %} {% if thread.closed %}threaditem-closed{% endif %} {% if thread.sticky %}threaditem-sticky{% endif %} {% cycle 'odd' 'even' %}">
             <div class="threaditem-emblems">  
-                <div class="threaditem-emblem-sticky"></div>
                 <div class="threaditem-emblem-closed"></div>
+                <div class="threaditem-emblem-sticky"></div>
                 <div class="threaditem-emblem-system"></div>
             </div>
             <div class="threaditem-image"><a href="{% url user-profile user_id=thread.author.id %}">{% avatar thread.author 48 %}</a></div>

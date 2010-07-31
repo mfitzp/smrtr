@@ -67,6 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.csrf.CsrfResponseMiddleware', 
+    'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'core.middleware.RequireLoginMiddleware',
 )
@@ -92,6 +93,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.comments',
+    'django.contrib.messages',
 # External Helpers
     'markdown', # Allow markdown-style markup in forums etc.
     'countries', # http://code.google.com/p/django-countries/   (0.1r3)
@@ -129,6 +131,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
     'messages.context_processors.inbox',
 )
 
@@ -171,6 +174,7 @@ QUESTION_TTC_MINIMUM = 5 # Minimume time in seconds for a question time limit
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
 HAYSTACK_DEFAULT_OPERATOR = 'AND'
+HAYSTACK_INCLUDE_SPELLING = True
 
 HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_index'
 

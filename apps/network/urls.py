@@ -20,9 +20,10 @@ urlpatterns = patterns('',
     url(r'^(?P<network_id>\d+)/register/$', 'network.views.network_register', name='network-register'  ),
     url(r'^(?P<network_id>\d+)/members/$', 'network.views.network_members', name='network-members'  ),
     
-    url(r'^search/$', SearchView(form_class=NetworkSearchForm, template='network_search.html', searchqueryset=SearchQuerySet().models(Network)), name='network-search'),
+    #url(r'^search/$', SearchView(form_class=NetworkSearchForm, template='network_search.html', searchqueryset=SearchQuerySet().models(Network)), name='network-search'),
     
-    
+
+    url(r'^search/$', 'network.views.network_search', name='network-search' ),    
     
 
 )
