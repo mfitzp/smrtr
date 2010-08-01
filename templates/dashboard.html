@@ -104,6 +104,19 @@
     </div>
     {% endif %}
 
+        <h5>Available Modules</h5>
+        {% if suggestmodules %}
+            <div>
+            {% for suggestmodule in suggestmodules %}            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
+            {% endfor %}
+            </div>
+    <!--        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p> -->
+        {% else %}
+            <p>You have no more modules to activate! <a href="{% url network-search %}">Join new networks</a> to find more to study...</p>
+        {% endif %}
+
+
+
        {% if usermodules %}
             <h5>Active Modules</h5>
             <div>
@@ -113,16 +126,6 @@
             </div>
         {% endif %}
 
-        <h5>Available Modules</h5>
-        {% if suggestmodules %}
-            <div>
-            {% for suggestmodule in suggestmodules %}            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
-            {% endfor %}
-            </div>
-    <!--        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p> -->
-        {% else %}
-            <p><a href="{% url network-search %}">Join new networks</a> to find new study materials.</p>
-        {% endif %}
 
     </div>
 
@@ -130,24 +133,6 @@
 
     {% block content_right %}
     
-        <h5>Notifications</h5>
-
-        {% if notices %}
-        <table style="width:100%">
-        {% for notice in notices %}
-        <tr class="{% cycle 'odd' 'even' %}"><td>{{ notice.message|safe }}</td>
-            <td class="notice-meta">{{ notice.added|timesince }} ago</td></tr>
-        {% endfor %}
-        </table>      
-        <p style="text-align:right;"><a href="{% url notification_notices %}">Show all notifications &raquo;</a></p>
-        {% else %}
-        <p>There are no notifications for you yet.</p>
-        {% endif %}
-        
-        <h5>Discussions</h5>        
-        
-        {% include "_forum.html" %}  
-
         <h5>Networks</h5>
         {% if usernetworks %}
             <div>
@@ -158,7 +143,11 @@
         {% else %}
             <p>Join networks to learn with others at school, online or in your workplace.</p>
         {% endif %}
-        <p style="margin-top:1em;"><span class="button"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></span></p>
-
+        <br style="clear" />
+        <p style="text-align:right;"><span class="button"><a href="{% url network-search %}" class="register">Join new network &raquo;</a></span></p>
+        
+        <h5>Discussions</h5>        
+        
+        {% include "_forum.html" %}  
 
     {% endblock %}

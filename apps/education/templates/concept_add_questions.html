@@ -29,7 +29,7 @@
 
     <blockquote>{{ concept.description }}</blockquote>
 
-    <form method="get" action=".">
+    <form method="get" action="?q={{ query }}">
         <table>
             <tr>
                 <th style="vertical-align:middle;"><label for="id_q">{{ form.q.label }}</th>
@@ -41,8 +41,7 @@
         </table> 
     </form>
         {% if query %}
-            <form method="post" action=".">
-            <input type="hidden" name="q" value="{{ query }}">
+            <form method="post" action="?q={{ query }}">
             <table>
             {% for result in page_obj.object_list %}
             {% with result.object as question %}

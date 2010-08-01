@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
+from django.contrib import messages
 # Smrtr
 from education.models import *
 from network.models import *
@@ -191,12 +192,12 @@ def concept_add_questions(request, concept_id):
         concept.total_questions = concept.question_set.count()
         concept.save()
         
-        request.user.message_set.create(
-        message=_(u"%s questions added to %s" % ( len(qids) , concept.name ) ) )
+        messages.success( request, _(u"%s questions added to %s" % ( len(qids) , concept.name ) ) )
+        
+        #if request.POST.get('next'):
+            
 
-    if request.POST:
-        querydata = request.POST
-    elif request.GET.get('q'):
+    if request.GET.get('q'):
         querydata = request.GET
     else:
         querydata = {'q': concept.name}

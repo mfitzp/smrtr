@@ -96,7 +96,7 @@ def home(request):
             'userchallengescomplete': userchallengescomplete,
             
             # Notifications
-            'notices' : Notice.objects.notices_for(request.user, on_site=True)[0:3],            
+            #'notices' : Notice.objects.notices_for(request.user, on_site=True)[0:3],            
             
             # Combined threads available to this user, limited to 10 max
             'threads': threads[0:10],

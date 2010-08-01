@@ -127,9 +127,7 @@ def network_search(request):
 
     sqs = SearchQuerySet().models(Network)
 
-    if request.POST:
-        querydata = request.POST
-    elif request.GET.get('q'):
+    if request.GET.get('q'):
         querydata = request.GET
     else:
         querydata = {'q':''}

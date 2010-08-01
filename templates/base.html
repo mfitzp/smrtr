@@ -42,7 +42,9 @@
                 &#183;
                 <a href="{% url user-profile user_id=user.id %}">Profile</a>
                 &#183;
-                <a href="{% url messages_inbox %}">Inbox{% if messages_inbox_count %}({{ messages_inbox_count }}){% endif %}</a>
+                <a href="{% url messages_inbox %}">Inbox{% if messages_inbox_count %} (<strong>{{ messages_inbox_count }}</strong>){% endif %}</a>
+                &#183;
+                <a href="{% url notification_notices %}">Notices{% if notice_unseen_count %} (<strong>{{ notice_unseen_count }}</strong>){% endif %}</a>
                 &#183;
                 {% block userlinks %}
                 {% url auth.logout as logout_url %}

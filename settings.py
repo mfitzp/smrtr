@@ -133,6 +133,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
     'messages.context_processors.inbox',
+    'notification.context_processors.notification',
 )
 
 AUTH_PROFILE_MODULE = "profiles.userprofile"
