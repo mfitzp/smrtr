@@ -135,7 +135,7 @@
     
         <h5>Networks</h5>
         {% if usernetworks %}
-            <div>
+            <div class="stackcontainer">
             {% for usernetwork in usernetworks.all %}
                 <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
             {% endfor %}
