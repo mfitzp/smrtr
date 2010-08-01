@@ -12,12 +12,18 @@
 {% block content %}
 
     {% if notices %}
-    <p style="text-align:right"><span class="button"><a href="{% url notification_mark_all_seen %}">Dismiss all notifications</a></span></p>
+    <p class="buttonbar"><span class="button"><a href="{% url notification_mark_all_seen %}">Dismiss all notifications</a></span></p>
     {% for notice in notices %}
-    <div class="notice" style="position:relative;">
-        {{ notice.message|safe }}
-        <div class="notice-meta" style="position:absolute;right:0px; top:0px;">{{ notice.added|timesince }} ago</div>
-    </div>
+    
+        <div class="notification {% if notice.unseen %}notification-new{% endif %} {% cycle 'odd' 'even' %}">
+            <div class="notification-emblems">  
+                <div class="notification-emblem-new" title="New message"></div>
+            </div>
+            {{ notice.message|safe }}
+<!--             <div class="notification-message">{{ notice.message|safe }}</div> -->
+            <div class="notification-meta">Notification recieved {{ notice.added|timesince }} ago</div>       
+        </div>    
+    
     {% endfor %}
     
     {% else %}

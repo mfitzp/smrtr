@@ -1,2 +1,9 @@
+{% extends "notification/base_notice.html" %}
 {% load i18n %}
+{% load avatar_tags %}
+
+{% block notice_image %}{% avatar message.sender 48 %}{% endblock %}
+
+{% block notice %}
 {% blocktrans with message.get_absolute_url as message_url and message.sender as message_sender and message.parent_msg as message_parent_msg %}{{ message_sender }} has sent you a reply to {{ message_parent_msg }}.{% endblocktrans %}
+{% enblock %}

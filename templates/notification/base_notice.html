@@ -1,5 +1,5 @@
 {% load i18n %}
 
-<div class="notice-body" style="position:relative;">
-{% block notice_image %}{% endblock %}<span style="vertical-align:middle;">{% block notice %}Notice text in here{% endblock %}</span>
-</div>
+<div class="notification-image">{% block notice_image %}{% endblock %}</div>
+<div class="notification-message">{% block notice %}Notice text in here{% endblock %}</div>
+
