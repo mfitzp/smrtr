@@ -54,12 +54,14 @@
             /* Pulse timer every 1 second */
             timer = window.setInterval("countdowntimer()", 1000);
             document.getElementById('timertext').innerHTML = seconds_to_hms( clock );
+            return true;
         }
 
         function stop_timer(){
             /* Pulse timer every 1 second */
             window.clearInterval( timer );
             document.getElementById('timerformsubmit').disabled=true;
+            return true;
         }
      </script>   
 {% endblock %}
