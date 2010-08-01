@@ -41,13 +41,15 @@
         {% if usermodule %}
             
         {% else %}
-            <h4>Registration</h4>
-            <p>Join this module for access to concepts and other members.</p>
+            <div class="focus">
+            <h4>Activate module</h4>
+            <p>Activate this module for access to concepts and other members.</p>
             <!-- Registration form -->
             <form action="{% url module-register module_id=module.id %}" method="post">
             <input type="hidden" name="submit" value="1" />
-            &nbsp;<input type="submit" value="Register &raquo;" />
+            &nbsp;<input type="submit" value="Activate '{{module}}' &raquo;" />
             </form>
+            </div>
         {% endif %}
 
         {% if module.concepts %}
@@ -59,17 +61,18 @@
                         <td colspan="2"><a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a></td>
                         <td>
                         </td>
-                    
-                        {% if concept.userconcept %}
-                            {% if concept.userconcept.is_active %}
-                                <td><a href="#" class="active">Active</a></td>
+                        {% if usermodule %}
+                            {% if concept.userconcept %}
+                                {% if concept.userconcept.is_active %}
+                                    <td><a href="#" class="active">Active</a></td>
+                                {% else %}
+                                    <td><span class="complete">Completed</span></td>
+                                {% endif %}
+                                <td>{% sqchange 100 concept.userconcept.sq %}</td>
                             {% else %}
-                                <td><span class="complete">Completed</span></td>
+                                <td><a href="{% url concept-register concept_id=concept.id %}" class="inactive">Register</a></td>
                             {% endif %}
-                            <td>{% sqchange 100 concept.userconcept.sq %}</td>
-                        {% else %}
-                            <td><a href="{% url concept-register concept_id=concept.id %}" class="inactive">Register</a></td>
-                        {% endif %}
+                        {% else %}<td></td>{% endif %}
                     </tr>
                 {% endfor %}
             {% endif %}

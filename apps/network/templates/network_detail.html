@@ -36,13 +36,24 @@
         </table>
 
         <blockquote>{{ network.description }}</blockquote>
-
+        
         {% if usernetwork %}
-            
+        {% else %}
+            <div class="focus">
+            <h4>Join network</h4>
+            <p>Join this network for access to courses and other members.</p>
+            <!-- Registration form -->
+            <form action="{% url network-register network_id=network.id %}" method="post">
+            <input type="hidden" name="submit" value="1" />
+            &nbsp;<input type="submit" value="Join '{{network}}' network &raquo;" />
+            </form>
+            </div>
+        {% endif %}        
+        
+        
         {% if network.modules_filtered %}
             <h5>Modules</h5>
             <table>
-            <tr><th scope="column">Name</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
             {% for module in network.modules_filtered %}
                 <tr class="{% cycle zebra %}">
                     <td colspan="2"><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></td>
@@ -51,33 +62,22 @@
                         <a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>
                     {% endifnotequal %}
                     </td>
-                
-                    {% if module.usermodule %}
-                        {% if module.usermodule.is_active %}
-                            <td><a href="#" class="active">Active</a></td>
+                    {% if usernetwork %}
+                        {% if module.usermodule %}
+                            {% if module.usermodule.is_active %}
+                                <td><a href="#" class="active">Active</a></td>
+                            {% else %}
+                                <td><span class="complete">Completed</span></td>
+                            {% endif %}
+                            
                         {% else %}
-                            <td><span class="complete">Completed</span></td>
+                            <td><a href="{% url module-register module_id=module.id %}" class="inactive">Join network &raquo;</a></td>
                         {% endif %}
-                        
-                    {% else %}
-                        <td><a href="{% url module-register module_id=module.id %}" class="inactive">Register</a></td>
-                    {% endif %}
+                    {% else %}<td></td>{% endif %}
                 </tr>
             {% endfor %}
             </table>
         {% endif %}
-
-
-        {% else %}
-            <h5>Registration</h5>
-            <p>Join this network for access to courses and other members.</p>
-            <!-- Registration form -->
-            <form action="{% url network-register network_id=network.id %}" method="post">
-            <input type="hidden" name="submit" value="1" />
-            &nbsp;<input type="submit" value="Register &raquo;" />
-            </form>
-        {% endif %}
-
 
         {% if network.network_set.all %}
         <h5>Community Networks</h5>

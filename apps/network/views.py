@@ -79,7 +79,7 @@ def register(request, network_id):
             else:
                 return detail(request, network_id)
 
-    return render_to_response('network_register.html', {'network': network }, context_instance=RequestContext(request))
+    return detail(request, network_id)
 
 
 
