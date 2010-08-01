@@ -79,7 +79,7 @@ def sqdescriptive( sq ):
         6 : "Extremely Low",
     }[sq_division(sq)]
 
-    return '<span class="sq sqdescriptive">%s</span>' % (descriptive)
+    return '%s' % (descriptive)
     
     
 

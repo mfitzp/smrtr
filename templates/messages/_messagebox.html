@@ -3,11 +3,11 @@
 
 {% for message in message_list %} 
 
-        <div class="messagebox {% if message.new %}messagebox-new{% endif %} {% if message.replied %}messagebox-replied{% endif %} {% if trash %}messagebox-deleted{% endif %} {% cycle 'odd' 'even' %}">
+        <div class="messagebox {% if message.new %}emblem-trigger-new{% endif %} {% if message.replied %}emblem-trigger-replied{% endif %} {% if trash %}emblem-trigger-deleted{% endif %} {% cycle 'odd' 'even' %}">
             <div class="messagebox-emblems">  
-                <div class="messagebox-emblem-new" title="New message"></div>
-                <div class="messagebox-emblem-replied" title="Replied to"></div>
-                <div class="messagebox-emblem-deleted" title="Deleted"></div>
+                <div class="emblem-new" title="New message"></div>
+                <div class="emblem-replied" title="Replied to"></div>
+                <div class="emblem-deleted" title="Deleted"></div>
             </div>
             <div class="messagebox-image">
             {% ifequal message.sender request.user %}            

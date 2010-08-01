@@ -1,0 +1,9 @@
+{% extends "notification/base_notice.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+
+{% block notice_image %}{% avatar message.recipient 48 %}{% endblock %}
+
+{% block notice %}
+{% blocktrans with message.get_absolute_url as message_url and message.recipient as message_recipient %}You have sent the message <a href="{{ message_url }}">{{ message }}</a> to {{ message_recipient }}.{% endblocktrans %}
+{% endblock %}

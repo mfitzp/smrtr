@@ -16,9 +16,9 @@
     <div class="feedbubble">
     {% for notice in notices %}
     
-        <div class="notification {% if notice.is_unseen %}notification-new{% endif %} {% cycle 'odd' 'even' %}">
+        <div class="notification {% if notice.is_unseen %}emblem-trigger-new{% endif %} {% cycle 'odd' 'even' %}">
             <div class="notification-emblems">  
-                <div class="notification-emblem-new" title="New message"></div>
+                <div class="emblem-new" title="New message"></div>
             </div>
             {{ notice.message|safe }}
 <!--             <div class="notification-message">{{ notice.message|safe }}</div> -->

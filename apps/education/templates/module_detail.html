@@ -53,8 +53,8 @@
         {% endif %}
 
         {% if module.concepts %}
+        <h5>Concepts</h5>
         <table>
-        <tr><th scope="column">Concept</th><th scope="column"></th><th></th><th scope="column">Status</th></tr>
             {% if module.concepts_filtered %}
                 {% for concept in module.concepts_filtered %}
                     <tr class="{% cycle zebra %}">

@@ -44,7 +44,7 @@
                 &#183;
                 <a href="{% url messages_inbox %}">Inbox{% if messages_inbox_count %} (<strong>{{ messages_inbox_count }}</strong>){% endif %}</a>
                 &#183;
-                <a href="{% url notification_notices %}">Notices{% if notice_unseen_count %} (<strong>{{ notice_unseen_count }}</strong>){% endif %}</a>
+                <a href="{% url notification_notices %}">Notifications{% if notice_unseen_count %} (<strong>{{ notice_unseen_count }}</strong>){% endif %}</a>
                 &#183;
                 {% block userlinks %}
                 {% url auth.logout as logout_url %}
@@ -57,7 +57,7 @@
             {% endblock %}   
             </td><td rowspan="2">{% avatar user 48 %}</td></tr>
             <tr><td id="user-tools-panel-stats">
-                {% sqchange 100 user.get_profile.sq %}
+                <span title="{% sqdescriptive user.get_profile.sq %}">{% sqchange 100 user.get_profile.sq %}</span>
                 <span class="challenges" title="You have completed {{ user.userchallenge_set.count }} challenges">{{ user.userchallenge_set.count }}</span>
                 <span class="concepts" title="You are studying {{ user.userconcept_set.count }} concepts">{{ user.userconcept_set.count }}</span>
                 <span class="networks" title="You are a member of {{ user.usernetwork_set.count }} networks">{{ user.usernetwork_set.count }}</span>
