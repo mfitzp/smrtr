@@ -77,7 +77,7 @@ def register(request, network_id):
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
             else:
-                return network_detail(request, network_id)
+                return detail(request, network_id)
 
     return render_to_response('network_register.html', {'network': network }, context_instance=RequestContext(request))
 
