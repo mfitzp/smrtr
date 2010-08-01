@@ -9,22 +9,21 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Welcome
-    &raquo; Tell us about yourself
+    &raquo; Profile
 {% endblock %}
 
-{% block content_title %}<h1>Tell us about yourself</h1>{% endblock %}
-
 {% block content_left %}
-<p>Fill in your details to find like-minded members and nearby networks for study.</p>
-<p class="notice">Information you enter will be visible on your personal profile page.</p>
+<div class="focus"><h4>Introduce yourself</h4>
+<p>We use the information you provide to <strong>match you up with classmates and friends</strong>, as well as to find <strong>like-minded people</strong> to study with.</p>
     <form action="{% url welcome-1 %}" method="post">
     <table>
     {{ uform.as_table }}
     {{ pform.as_table }}
     </table>
-    <input type="submit" value="Next &raquo;" />
+<p style="text-align:right"><input type="submit" value="Next &raquo;" /></p>
     </form>
-
+</div>
+<p class="notice">Information you enter will be visible on your personal profile page.</p>
 {% endblock %}
 
 {% block content_right %}

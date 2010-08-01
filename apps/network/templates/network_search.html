@@ -25,7 +25,7 @@
         {% if query %}
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
-            <p style="text-align:right"><input type="submit" value="Join selected networks &raquo;"></p>
+            <p class="buttonbar"><input type="submit" value="Join selected networks &raquo;"></p>
 
             {% for set in results %}
             <div style="float:left; width: 49%; margin-left: 0.5%;">
@@ -51,7 +51,7 @@
             
             {% endfor %}
         <br class="clear" />
-        <p style="text-align:right"><input type="submit" value="Join selected networks &raquo;"></p>
+        <p class="buttonbar"><input type="submit" value="Join selected networks &raquo;"></p>
         </form>        
 
         <!-- <p>Don't find your network listed? <a href="#">Create it!</a></p> -->
@@ -61,7 +61,7 @@
         {% endif %}
 
         {% if next %}
-            <p style="text-align:right"><span class="button"><a href="{{ next }}">Do not join any networks &raquo;</a></span></p>
+            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not join any networks &raquo;</a></span></p>
         {% endif %}
 
 
