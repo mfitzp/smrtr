@@ -6,11 +6,9 @@
 
 {% block content %}
 
-    <div class="boxout"><div>
-    {% if query %}
-    {% else %}
-    <p>You can find your <strong>school</strong>, <strong>college</strong> and <strong>courses</strong> by searching below.</p>
-    {% endif %}
+    <div class="focus"><h4>Find your networks</h4><div>
+    <p>Networks are central to the <strong>smrtr</strong> world. Find your classmates and friends to study, challenge and compete together!</p>    
+    <p>You can find your <strong>school</strong>, <strong>college</strong> and <strong>courses</strong> by searching below. <strong>Simply tick the box and Join selected networks!</strong></p>
     <form method="get" action="?q={{query}}">
         <table>
             <tr>
@@ -24,13 +22,15 @@
     </form>
     </div></div>
 
-        {% if 1 %}
+        {% if query %}
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
+            <p style="text-align:right"><input type="submit" value="Join selected networks &raquo;"></p>
+
             {% for set in results %}
-            
+            <div style="float:left; width: 49%; margin-left: 0.5%;">
             {% if set.results %}
-                <h5>{{ set.name }}</h5>
+                <h5 class="network network{{ set.type }}">{{ set.name }}</h5>
                 <table>
                 {% for result in set.results %}
                     {% with result.object as network %}
@@ -38,8 +38,6 @@
                         <tr>
                             <td><input type="checkbox" name="addnetwork" value="{{ network.id }}" {% if network in request.user.networks.all %}checked disabled{% endif %}></td>
                             <th><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></th>
-                            <td><span class="network network{{network.type}}">{{ network.get_type_display }}</span></td>
-                            <td>{{ network.get_stage_display }}</td>
                             <td>{{ network.city }}</td>
                             <td>{% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }} </span> {% endif %}</td>
                         </tr>
@@ -49,9 +47,11 @@
                 {% endfor %}
                 </table>                
             {% endif %}
+            </div>
+            
             {% endfor %}
-        </table>
-        <p style="text-align:right"><input type="submit" value="Register on selected networks &raquo;"></p>
+        <br class="clear" />
+        <p style="text-align:right"><input type="submit" value="Join selected networks &raquo;"></p>
         </form>        
 
         <!-- <p>Don't find your network listed? <a href="#">Create it!</a></p> -->

@@ -1,7 +1,7 @@
 from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -23,9 +23,7 @@ def profile(request):
             user.save()
             profile = pform.save()
             profile.save()
-            request.user.message_set.create(
-                message=_(u"Welcome to smrtr! Get started by choosing a challenge below and clicking Start..."))
-            return HttpResponseRedirect( reverse('home') ) #reverse('welcome-2') )
+            return HttpResponseRedirect( reverse('welcome-2') )
     else:
         uform = UserForm(instance=user)
         pform = ProfileForm(instance=profile)
@@ -39,5 +37,3 @@ def profile(request):
     return render_to_response('welcome_profile.html', context, context_instance=RequestContext(request))
 
 
-def networks(request):
-    return False

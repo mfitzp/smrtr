@@ -34,6 +34,7 @@ class NetworkSearchForm(SearchForm):
         # Seperate the network types for listing
         for tid,tname in TYPE_CHOICES:
             item = dict()
+            item['type'] = tid
             item['name'] = tname
             item['results'] = sqs.filter(type=tid)[0:10]
             search.insert(0, item) # Reverse

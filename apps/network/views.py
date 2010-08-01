@@ -1,7 +1,7 @@
 from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -14,7 +14,7 @@ from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
-def network_detail(request, network_id):
+def detail(request, network_id):
 
 
     network = get_object_or_404(Network, pk=network_id)
@@ -53,7 +53,7 @@ def network_detail(request, network_id):
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
-def network_register(request, network_id):
+def register(request, network_id):
 
     network = get_object_or_404(Network, pk=network_id)
 
@@ -83,7 +83,7 @@ def network_register(request, network_id):
 
 
 
-def network_members(request, network_id):
+def members(request, network_id):
     network = get_object_or_404(Network, pk=network_id)
 
     # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
@@ -103,7 +103,9 @@ def network_members(request, network_id):
     
     
 # Presents a search mechanism to find networks to join (optionally) (free text and tags)
-def network_search(request):
+def search( request, 
+                    template_name='network_search.html',
+                    next=None ):
     
     from network.forms import NetworkSearchForm
     
@@ -120,6 +122,8 @@ def network_search(request):
                 messages.warning(request, _(u"You are already a member of %s" % network.name ) )
             else:
                 messages.success(request, _(u"You have joined %s" % network.name ) )
+        if next:
+            return redirect( next )
 
     query = ''
     results = []
@@ -130,10 +134,10 @@ def network_search(request):
     if request.GET.get('q'):
         querydata = request.GET
     else:
-        querydata = {'q':''}
+        querydata = {'q':' '} #Default search return all
         
     form = NetworkSearchForm(querydata, searchqueryset=sqs, load_all=True )
-        
+
     if form.is_valid():
         query = form.cleaned_data['q']
         results = form.search_split() # Returns a list of SearchQuerySets one for each network type
@@ -145,10 +149,10 @@ def network_search(request):
         'query': query,
         'results': results,
         'TYPE_CHOICES': TYPE_CHOICES,
-        'next' : request.GET.get('next'),
+        'next' : next,
     }
     
-    return render_to_response('network_search.html', context, context_instance=RequestContext(request))    
+    return render_to_response(template_name, context, context_instance=RequestContext(request))    
     
     
         
