@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %} 
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ user.get_profile }}
+{% endblock %}
+
+{% block content_title %}<h1>{% trans "Change profile picture"%}</h1>{% endblock %}
+
 
 {% block content %}
     <p>Please select the profile picture that you would like to delete.</p>

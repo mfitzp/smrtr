@@ -3,24 +3,24 @@
 
 {% for message in message_list %} 
 
-        <div class="messagelist {% if message.new %}messagelist-new{% endif %} {% if message.replied %}messagelist-replied{% endif %} {% if trash %}messagelist-deleted{% endif %} {% cycle 'odd' 'even' %}">
-            <div class="messagelist-emblems">  
-                <div class="messagelist-emblem-new" title="New message"></div>
-                <div class="messagelist-emblem-replied" title="Replied to"></div>
-                <div class="messagelist-emblem-deleted" title="Deleted"></div>
+        <div class="messagebox {% if message.new %}messagebox-new{% endif %} {% if message.replied %}messagebox-replied{% endif %} {% if trash %}messagebox-deleted{% endif %} {% cycle 'odd' 'even' %}">
+            <div class="messagebox-emblems">  
+                <div class="messagebox-emblem-new" title="New message"></div>
+                <div class="messagebox-emblem-replied" title="Replied to"></div>
+                <div class="messagebox-emblem-deleted" title="Deleted"></div>
             </div>
-            <div class="messagelist-image">
+            <div class="messagebox-image">
             {% ifequal message.sender request.user %}            
                 <a href="{% url user-profile user_id=message.recipient.id %}">{% avatar message.recipient 48 %}</a>
             {% else %}
                 <a href="{% url user-profile user_id=message.sender.id %}">{% avatar message.sender 48 %}</a>
             {% endifequal %}
             </div>
-            <div class="messagelist-title"><a href="{% url messages_detail message_id=message.id %}">{{ message.subject }}</a><br />
+            <div class="messagebox-title"><a href="{% url messages_detail message_id=message.id %}">{{ message.subject }}</a><br />
             {{ message.body|striptags|truncatewords:30 }}
             </div>
             
-            <div class="messagelist-meta">
+            <div class="messagebox-meta">
                 {% ifequal message.sender request.user %}
                 To <a href="{% url user-profile user_id=message.recipient.id %}">{{ message.recipient.get_profile.fullname }}</a> {{ message.sent_at|timesince }} ago 
                 {% else %}                
