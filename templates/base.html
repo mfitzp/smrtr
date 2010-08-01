@@ -31,7 +31,7 @@
     <!-- Header -->
     <div id="header">
         <div id="branding">
-        {% block branding %}{% endblock %}
+        {% block branding %}<a href="/"><img src="{{ MEDIA_URL }}img/smrtr.png"></a>{% endblock %}
         </div>
         {% if user.is_authenticated %}
         <div id="user-tools">

@@ -10,12 +10,13 @@
 
 
 {% block content %}
-
+    
     {% if notices %}
-    <p class="buttonbar"><span class="button"><a href="{% url notification_mark_all_seen %}">Dismiss all notifications</a></span></p>
+<!--    <p class="buttonbar"><span class="button"><a href="{% url notification_mark_all_seen %}">Dismiss all notifications</a></span></p> -->
+    <div class="feedbubble">
     {% for notice in notices %}
     
-        <div class="notification {% if notice.unseen %}notification-new{% endif %} {% cycle 'odd' 'even' %}">
+        <div class="notification {% if notice.is_unseen %}notification-new{% endif %} {% cycle 'odd' 'even' %}">
             <div class="notification-emblems">  
                 <div class="notification-emblem-new" title="New message"></div>
             </div>
@@ -25,7 +26,7 @@
         </div>    
     
     {% endfor %}
-    
+    </div>
     {% else %}
     <p>There are no notifications for you yet.</p>
     {% endif %}
