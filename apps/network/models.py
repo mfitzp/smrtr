@@ -100,6 +100,9 @@ class Network(models.Model):
     # Modules offered on this network - reverse from module
     # modules = models.ManyToManyField('Module')
 
+    class Meta:
+        ordering = ['name']
+
 class UserNetwork(models.Model):
     def __unicode__(self):
         return self.network.name
@@ -109,5 +112,7 @@ class UserNetwork(models.Model):
 
     class Meta:
         unique_together = ("user", "network")
+        ordering = ['network']
+
     
     
