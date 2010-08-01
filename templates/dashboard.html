@@ -106,7 +106,7 @@
 
         <h5>Available Modules</h5>
         {% if suggestmodules %}
-            <div>
+            <div class="stackcontainer">
             {% for suggestmodule in suggestmodules %}            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
             {% endfor %}
             </div>
@@ -119,7 +119,7 @@
 
        {% if usermodules %}
             <h5>Active Modules</h5>
-            <div>
+            <div class="stackcontainer">
             {% for usermodule in usermodules %}
                 <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
             {% endfor %}
