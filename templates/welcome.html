@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load sq_tags %}
+{% load i18n %}
+{% load avatar_tags %}
+
+{% block content_title %}<h1>Welcome to smrtr!</h1>{% endblock %}
+
+{% block content_left %}
+<div class="boxout"><div>
+<p><strong><a href="http://smrtr.org">smrtr</a></strong> is a free 
+collaborative learning, quiz and study tool.</p>
+<p>Take <strong>quizzes</strong>, <strong>track progress</strong> and receive recommended <strong>study aids</strong> to build your knowledge.
+Ideal for <strong>students</strong>, <strong>professionals</strong> or general-knowledge <strong>know-it-alls</strong> alike.</p>
+<p><strong><a href="{% url registration_register %}">Sign up now!</a></strong></p>
+</div></div>
+<div class="boxoutbottom"><a href="{% url registration_register %}" style="color:white">Get smrtr &raquo;</a></div>
+
+<br /><br />
+<h5>Existing Member?</h5>
+<p>Welcome back! Enter your username and password below:
+<form action="/accounts/login/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Login &raquo;" />
+</form>
+</p>
+<p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password?</a></p>
+
+{% endblock %}
+
+{% block content_right %}
+    <h5>smrtst Users</h5>
+
+    <div class="membership-container clearfloats">
+    {% for user in topusers %}
+        <div class="membership">
+            <table>
+            <tr><td>{% avatar user 48 %}</td></tr>
+            <tr><td><small>{{ user.get_profile.fullname }}</small></td></tr>
+            <tr><td><small>{% sqchange 100 user.get_profile.sq %}</a></small></td></tr>
+            </table>
+        </div>
+    {% endfor %}
+    </div>
+
+    <h5>Top Challenges</h5>
+
+        <table>
+        {% for challenge in topchallenges %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td class="dbcurriculumconcept"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></td>
+                <td><span class="users">{{ challenge.userchallenge_set.count }}</span></td>
+                <td style="text-align:right">{% sqchange 100 challenge.sq %} </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+    <h5>Top Networks</h5>
+
+        <div>
+        {% for network in topnetworks %}
+            <span class="stack"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a></span>
+        {% endfor %}
+        </div>
+
+{% endblock %}
