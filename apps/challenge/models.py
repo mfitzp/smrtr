@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count, Sum, StdDev
+from django.core.urlresolvers import reverse
 # Smrtr
 from settings import CHALLENGE_TTC_MINIMUM, CHALLENGE_TTC_FAIRNESS_MULTIPLIER
 from questions.models import Question
@@ -17,6 +18,9 @@ import math
 class Challenge(models.Model):
     def __unicode__(self):
         return self.name
+        
+    def get_absolute_url(self):
+        return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
 
     def generate_questions(self): # Update questions for this challenge, using config settings on the model
         # Limit:

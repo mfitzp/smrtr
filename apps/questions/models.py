@@ -20,11 +20,12 @@ UPDATE questions_question AS q, (SELECT xti.object_id as id, GROUP_CONCAT(name )
 class Question(models.Model):
     def __unicode__(self):
         return self.content
-    def answers_shuffled(self):
-        return self.answer_set.order_by('?')
         
     def get_absolute_url(self):
-        return reverse('question-detail', urlconf=None, args=None, kwargs={ 'question_id':str(self.id) } )        
+        return reverse('question-detail', kwargs={ 'question_id':str(self.id) } )        
+
+    def answers_shuffled(self):
+        return self.answer_set.order_by('?')
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
@@ -43,7 +44,7 @@ class Question(models.Model):
         if ttc:
             self.time_to_complete = min( ttc['time_to_complete__avg'], QUESTION_TTC_MINIMUM) # Minimum 5 seconds per question
             self.save()
-
+            
     content = models.TextField()
     concepts = models.ManyToManyField(Concept, blank=True) #, related_name='questions'
     

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import escape
+from django.core.urlresolvers import reverse
 # Externals
 from datetime import date as date, datetime, timedelta
 from notification import models as notification
@@ -46,8 +47,12 @@ class Thread(models.Model):
         
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
+        
     def get_tags(self):
         return Tag.objects.get_for_object(self)             
+        
+    def get_absolute_url(self):
+        return reverse('discuss_thread',kwargs={'thread_id':str(self.id)})        
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread)
@@ -73,7 +78,9 @@ class Post(models.Model):
             self.thread.latest_post_created = self.thread.latest_post.created
             self.thread.save()
         super(Post, self).delete() # Call the "real" delete() method
-
+        
     def __unicode__(self):
         return u'Post %d on thread "%s"' % (self.id, self.thread.title)
-
+        
+    def get_absolute_url(self):
+        return reverse('discuss_thread',kwargs={'thread_id':str(self.thread.id)})

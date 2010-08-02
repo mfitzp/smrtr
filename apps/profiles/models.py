@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 # Externals
 from countries.models import Country
 from datetime import date as date, datetime, timedelta
@@ -12,6 +13,9 @@ from sq.utils import *
 class UserProfile(models.Model):
     def __unicode__(self):
         return self.fullname()
+
+    def get_absolute_url(self):
+        return reverse('user-profile',kwargs={'user_id':str(self.user.id)})
 
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
@@ -64,6 +68,7 @@ class UserProfile(models.Model):
     # Contact (email already in user model)
     telno = models.CharField('Telephone', max_length=50, blank = True)
     url = models.URLField(verify_exists = True, blank = True)
+    # SQ values
     sq = models.IntegerField(blank = False, null=True, editable = False) # Normalised (to whole population) SQ
     previous_sq = models.IntegerField(blank = False, null=True, editable = False) # Previous value of SQ
     calculated_sq = models.IntegerField(blank = False, null=True, editable = False) # Direct calculated SQ

@@ -36,6 +36,10 @@ STAGE_CHOICES = (
 class Network(models.Model):
     def __unicode__(self):
         return self.name
+        
+    def get_absolute_url(self):
+        return reverse('network-detail',kwargs={'network_id':str(self.id)})        
+        
     # Auto-add a new wall object when saving Network
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
@@ -71,6 +75,7 @@ class Network(models.Model):
 
     def memberships(self):
         return UserNetwork.objects.filter(network=self)
+        
     def update_sq(self):
         # update
         self.sq = self.members.aggregate(sq=Avg('userprofile__sq'))['sq']

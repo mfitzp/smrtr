@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
+from django.core.urlresolvers import reverse
 # Spenglr
 from network.models import Network,UserNetwork
 from resources.models import Resource
@@ -20,6 +21,10 @@ from discuss.models import Forum
 class Module(models.Model):
     def __unicode__(self):
         return self.name
+        
+    def get_absolute_url(self):
+        return reverse('module-detail',kwargs={'module_id':str(self.id)})
+                
     # Auto-add a new wall object when creating new Course
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
@@ -61,6 +66,9 @@ class Module(models.Model):
 class Concept(models.Model):
     def __unicode__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('concept-detail',kwargs={'concept_id':str(self.id)})
+                
     # Auto-add a new wall object when creating new Concept
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new

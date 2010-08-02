@@ -2,6 +2,8 @@ from django.core.management import setup_environ
 import settings
 import datetime
 setup_environ(settings)
+
+from django.contrib.sitemaps import ping_google
 # Smrtr
 from questions.utils import *
 from education.utils import *
@@ -38,5 +40,8 @@ def cron():
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
     batch_generate_user_challenges()
 
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Pinging Google with sitemap..."
+    ping_google()
+    
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Done."
 cron()
