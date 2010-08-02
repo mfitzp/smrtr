@@ -45,7 +45,7 @@ class UserProfile(models.Model):
         # Only calculate if questions have been attempted
         if self.user.userquestionattempt_set.count() > 0:
             # Retrieve records for past 6 months
-            start_date = datetime.now() - timedelta(weeks=52)
+            start_date = datetime.now() - timedelta(weeks=26)
             end_date = datetime.now()
             # Get for specified date range, exclude questions without SQ values
             data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
