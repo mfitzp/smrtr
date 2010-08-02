@@ -162,7 +162,7 @@ class UserConcept(models.Model):
         # x = qSQ (question's SQ)
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.concept.question_set.filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        data = self.concept.question_set.exclude(sq=None).filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
     # Update user's focus value for this concept

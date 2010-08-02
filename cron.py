@@ -10,21 +10,26 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ/ttc..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
     batch_question_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update questionttc..."
     batch_question_update_ttc()
     
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update network, module & concept SQ..."
-    batch_module_update_sq()
-    batch_concept_update_sq()    
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update network SQ..."
     batch_network_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update module SQ..."
+    batch_module_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update concept SQ..."
+    batch_concept_update_sq()    
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user profile SQ..."
     batch_user_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Normalise user profile SQ..."
     batch_user_normalise_sq()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user module & concept SQ..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user module SQ..."
     batch_usermodule_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept SQ..."
     batch_userconcept_update_sq()
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
