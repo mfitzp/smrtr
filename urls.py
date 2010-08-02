@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', 'core.views.home', name='home'),
     # Override the account/login view, to provide additional info
-    url(r'^accounts/login/$', 'core.views.login', name='login'),
+    url(r'^login/$', 'core.views.login', name='login'),
 
     (r'^comments/', include('django.contrib.comments.urls')),
 
