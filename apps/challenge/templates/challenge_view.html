@@ -18,7 +18,7 @@
     
         <table>
             <tr><th>SQ</th><td>{% sqchange 100 challenge.sq %} ({{ challenge.minsq }}-{{ challenge.maxsq }}) 
-                {% if request.user.get_profile %}{% sqdifficulty concept.sq request.user.get_profile.sq %}
+                {% if request.user.get_profile %}{% sqdifficulty challenge.sq request.user.get_profile.sq %}
                 {% else %}None{% endif %}
             </td></tr>
             <tr><th>Questions</th><td>{{ challenge.total_questions }}</td></tr>    

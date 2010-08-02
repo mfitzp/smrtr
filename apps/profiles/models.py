@@ -47,14 +47,13 @@ class UserProfile(models.Model):
             # Retrieve records for past 6 months
             start_date = datetime.now() - timedelta(weeks=52)
             end_date = datetime.now()
-            prev_sq = self.sq
             # Get for specified date range, exclude questions without SQ values
             data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
-            self.sq = sq_calculate(data, 'desc') # Descending data set
+            self.calculated_sq = sq_calculate(data, 'desc') # Descending data set
             # Send notification to the user if their SQ has changed
-            if self.sq != prev_sq:
-                notification.send([self.user], "user_sq_updated", {"user": self.user})        
-                self.save()
+            #if self.sq != prev_sq:
+            #    notification.send([self.user], "user_sq_updated", {"user": self.user})        
+            #    self.save()
 
     user = models.ForeignKey(User, unique=True, editable = False)
 
@@ -68,7 +67,9 @@ class UserProfile(models.Model):
     # Contact (email already in user model)
     telno = models.CharField('Telephone', max_length=50, blank = True)
     url = models.URLField(verify_exists = True, blank = True)
-    sq = models.IntegerField(blank = False, default = 100, editable = False)
+    sq = models.IntegerField(blank = False, null=True, editable = False) # Normalised (to whole population) SQ
+    previous_sq = models.IntegerField(blank = False, null=True, editable = False) # Previous value of SQ
+    calculated_sq = models.IntegerField(blank = False, null=True, editable = False) # Direct calculated SQ
     
 def create_profile(sender, **kw):
     user = kw["instance"]
