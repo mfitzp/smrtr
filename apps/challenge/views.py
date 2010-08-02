@@ -210,7 +210,12 @@ def do_submit(request, challenge_id):
             uqa = UserQuestionAttempt()
             uqa.question = q
             uqa.user = request.user
-            uqa.user_sq = request.user.get_profile().sq
+            # If user has had SQ calculated (default is Null) then store, else use 100
+            if request.user.get_profile().sq:
+                uqa.user_sq = request.user.get_profile().sq
+            else:
+                uqa.user_sq = 100
+                
             uqa.time_to_complete = time_to_complete_each # Assign point of completion time to the question
 
             # Find submitted answer id in the list of correct answers

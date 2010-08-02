@@ -1,11 +1,14 @@
 from django.conf import settings
 from django.db.models import Avg, Max, Min, Count, StdDev, F
 from django.contrib.auth.models import User
+
 # Python standard
 import math
 from datetime import date as _date
-# Spenglr
+# Smrtr
 from profiles.models import UserProfile
+# External
+from notification import models as notification
 
 # Calculate mSQ for the oldest records
 def batch_user_update_sq():
@@ -19,17 +22,18 @@ def batch_user_update_sq():
 
 def batch_user_normalise_sq():
 
-
     d = UserProfile.objects.aggregate(avg_sq=Avg('calculated_sq'),stddev_sq=StdDev('calculated_sq'))
     d['stddev_sq'] = max( 1, d['stddev_sq'] ) # Prevent <1 sd mean
-
-    assert False, d
     # Store previous SQ value
     UserProfile.objects.all().update( previous_sq=F('sq') )
     #UPDATE {spenglr_users} SET  nuSQ = 100 + ( ( ( uSQ - %d ) / %d ) * 16) WHERE questions_attempted>0
     UserProfile.objects.all().update( sq= 100 + ( ( ( F('calculated_sq') - d['avg_sq'] ) / d['stddev_sq'] ) * 16 ) )
 
-    #users_sq_changed = UserProfile.objects.filter( previous_sq__ne=F('sq') )
-    #for user in changed:
-    #    notification.send([user], "user_sq_updated", {"user": user})        
-    #    self.save()
+    # Limit: this is horrible but using min() max() does not work on above query
+    UserProfile.objects.filter(sq__gt=200).update( sq=200 )
+    UserProfile.objects.filter(sq__lt=0).update( sq=0 )
+
+    users_sq_changed = UserProfile.objects.exclude(sq=F('previous_sq'))
+    for userp in users_sq_changed:
+        notification.send([userp.user], "user_sq_updated", {"user": userp.user})        
+
