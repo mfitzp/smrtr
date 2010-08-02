@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', 'core.views.home', name='home'),
+    # Override the account/login view, to provide additional info
+    url(r'^accounts/login/$', 'core.views.login', name='login'),
 
     (r'^comments/', include('django.contrib.comments.urls')),
 
@@ -26,7 +28,7 @@ urlpatterns = patterns('',
     (r'^resources/', include('resources.urls')),    
     (r'^challenge/', include('challenge.urls')),
 
-    (r'^accounts/intro/$', 'core.views.intro'),
+    #(r'^accounts/intro/$', 'core.views.intro'),
     (r'^accounts/', include('registration.urls')),
 
     (r'^profile/', include('profiles.urls')),

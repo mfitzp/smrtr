@@ -31,8 +31,12 @@
             </td></tr>               
 
             <tr><th>SQ</th><td>
-                {% if usermodule %}{% sqchange 100 usermodule.sq %}{% endif %}
-                {% sqdifficulty module.sq request.user.get_profile.sq %}
+                {% if usermodule %}
+                    {% sqchange 100 usermodule.sq %}
+                {% else %}
+                    {% if request.user.get_profile %}{% sqdifficulty module.sq request.user.get_profile.sq %}
+                    {% else %}None{% endif %}
+                {% endif %}
             </td></tr>
         </table>
 

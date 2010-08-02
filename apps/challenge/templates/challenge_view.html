@@ -17,7 +17,10 @@
     {% if challenge %}
     
         <table>
-            <tr><th>SQ</th><td>{% sqchange 100 challenge.sq %} ({{ challenge.minsq }}-{{ challenge.maxsq }}) {% sqdifficulty challenge.sq request.user.get_profile.sq  %}</td></tr>
+            <tr><th>SQ</th><td>{% sqchange 100 challenge.sq %} ({{ challenge.minsq }}-{{ challenge.maxsq }}) 
+                {% if request.user.get_profile %}{% sqdifficulty concept.sq request.user.get_profile.sq %}
+                {% else %}None{% endif %}
+            </td></tr>
             <tr><th>Questions</th><td>{{ challenge.total_questions }}</td></tr>    
             <tr><th>Duration</th><td>{% duration challenge.time_to_complete %}</td></tr>
         </table>
@@ -26,11 +29,12 @@
 
         {% if challenge.concepts %}
             <h5>Concepts Covered</h5>
-            <span class="stack">
-            {% for concept in challenge.concepts.all %}
-                    <a href="{% url concept-detail concept_id=concept.id %}" class="concept">{{ concept }}</a>
-            {% endfor %}
-            </span><br style="clear:both;" />
+            <div class="stackcontainer">
+                {% for concept in challenge.concepts.all %}
+                    <span class="stack"><a href="{% url concept-detail concept_id=concept.id %}" class="concept">{{ concept }}</a></span>
+                {% endfor %}
+            </div>
+            <br style="clear:both;" />
         {% endif %}
 
         {% if userchallenge %}

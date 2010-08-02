@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 # Smrtr
 from education.models import *
 # External
@@ -15,7 +17,6 @@ from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
 def detail(request, network_id):
-
 
     network = get_object_or_404(Network, pk=network_id)
 
@@ -53,6 +54,7 @@ def detail(request, network_id):
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the network, provide a tailored page
+@login_required
 def register(request, network_id):
 
     network = get_object_or_404(Network, pk=network_id)
@@ -103,6 +105,7 @@ def members(request, network_id):
     
     
 # Presents a search mechanism to find networks to join (optionally) (free text and tags)
+@login_required
 def search( request, 
                     template_name='network_search.html',
                     next=None ):

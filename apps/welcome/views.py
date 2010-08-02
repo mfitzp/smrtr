@@ -6,10 +6,12 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import login_required
 # Smrtr
 from welcome.forms import *
     
 # Get basic profile information from the user once registered    
+@login_required
 def profile(request):
 
     user = request.user

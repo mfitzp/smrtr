@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 # Smrtr
 from profiles.forms import *
 
@@ -23,7 +24,7 @@ def profile(request, user_id = None):
 
     return render_to_response('profile.html', context, context_instance=RequestContext(request))
     
-    
+@login_required
 def edit_profile(request):
 
     user = request.user

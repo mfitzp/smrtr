@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 # Smrtr
 from discuss.models import *
 from discuss.forms import *
@@ -15,6 +16,7 @@ from discuss.forms import *
 def forum(request, forum_id):
     return False
 
+@login_required
 def newthread(request, forum_id):
 
     forum = get_object_or_404(Forum, pk=forum_id)
@@ -61,6 +63,7 @@ def thread(request, thread_id):
 
     return render_to_response('thread.html', context, context_instance=RequestContext(request))
 
+@login_required
 def reply(request, thread_id):
 
     thread = get_object_or_404(Thread, pk=thread_id)

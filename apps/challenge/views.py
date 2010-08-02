@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 import datetime
 # Spenglr
 from education.models import *
@@ -23,6 +24,7 @@ from haystack.query import SearchQuerySet
 # built from concepts, modules, tags, etc. (passed in as parameters)
 # Challenges may be public or private, and solo or group
 # Scoring can be individual or network based (e.g. university vs. university, course vs. course)
+@login_required
 def edit(request, challenge_id = None):
 
     if challenge_id:
@@ -110,7 +112,7 @@ def detail(request, challenge_id):
     try:
         userchallenge = challenge.userchallenge_set.get( user=request.user )
     except:
-        userchallenge = list()            
+        userchallenge = None          
 
     context = {
         'challenge': challenge,
@@ -125,7 +127,7 @@ def detail(request, challenge_id):
 
 
 
-
+@login_required
 def do(request, challenge_id):
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
@@ -165,6 +167,7 @@ def do(request, challenge_id):
 
     return render_to_response('challenge_do.html', context, context_instance=RequestContext(request))
 
+@login_required
 def do_submit(request, challenge_id):
 
     totals = { 'correct': 0, 'incorrect': 0, 'answered': 0, 'percent': 1 }
@@ -255,7 +258,7 @@ def do_submit(request, challenge_id):
 
     return render_to_response('challenge_do_submit.html', context, context_instance=RequestContext(request))
 
-
+@login_required
 def generate(request):
     from challenge.utils import generate_user_challenges
     # Generate challenges for the active user, redirect to homepage

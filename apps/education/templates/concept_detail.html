@@ -19,9 +19,10 @@
             <tr><th>SQ</th><td>
                 {% if userconcept %}
                     {% sqchange 100 userconcept.sq %}
+                {% else %}
+                    {% if request.user.get_profile %}{% sqdifficulty concept.sq request.user.get_profile.sq %}
+                    {% else %}None{% endif %}
                 {% endif %}
-                
-                {% sqdifficulty concept.sq request.user.get_profile.sq %}
             </td></tr>
             {% if userconcept %}
                 <tr><th>Studying</th><td>{{ userconcept.start_date|timesince }}</td></tr>

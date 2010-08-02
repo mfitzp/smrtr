@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Smrtr
 from education.models import *
 from network.models import *
@@ -56,6 +57,7 @@ def module_detail(request, module_id):
 
 # Get an insititution id and present a page showing detail
 # if user is registered at the module, provide a tailored page
+@login_required
 def module_register(request, module_id):
 
     module = get_object_or_404(Module, pk=module_id)
@@ -100,7 +102,7 @@ def module_detail_providers(request, module_id):
     module = get_object_or_404(Course, pk=module_id)
 
     # usermodules "you are studying this module at..."
-    usermodules = UserCourse.objects.filter(modulei__module=module)
+    usermodules = list() #UserCourse.objects.filter(modulei__module=module)
 
     return render_to_response('module_detail.html', {'module': module, 'usermodules': usermodules}, context_instance=RequestContext(request))
 
@@ -139,6 +141,7 @@ def concept_detail(request, concept_id):
 
 # Register for this concept
 # pass in moduleinstance for context to pull of usermodule record (specific)
+@login_required
 def concept_register(request, concept_id ):
 
     concept = get_object_or_404(Concept, pk=concept_id)
@@ -170,6 +173,7 @@ def concept_register(request, concept_id ):
 # Add questions to the concept
 # Presents a search mechanism to find questions (using free text and tags)
 # Returned questions can be ticked and added through this interface
+@login_required
 def concept_add_questions(request, concept_id):
     
     from questions.forms import QuestionSearchForm
@@ -229,13 +233,7 @@ def concept_add_questions(request, concept_id):
     
     return render_to_response('concept_add_questions.html', context, context_instance=RequestContext(request))    
     
-    
-    
-    
-    
-    
-
-
+ 
 def concept_resources(request, concept_id):
     
     concept = get_object_or_404(Concept, pk=concept_id)

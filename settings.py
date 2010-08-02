@@ -69,7 +69,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfResponseMiddleware', 
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'core.middleware.RequireLoginMiddleware',
+    #'core.middleware.RequireLoginMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -139,7 +139,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 AUTH_PROFILE_MODULE = "profiles.userprofile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
-LOGIN_PATH = '/accounts/' # All paths under here are still accessible when logged out - allows login/registration
+#LOGIN_PATH = '/accounts/' # All paths under here are still accessible when logged out - allows login/registration
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
