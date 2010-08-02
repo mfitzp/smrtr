@@ -31,7 +31,7 @@
         {% endif %}
         
         <tr><th>Joined</th><td>{{ puser.date_joined|timesince }} ago</td></tr>
-        <tr><th>SQ</th><td>{% sqchange 0 profile.sq %}</td></tr>
+        <tr><th>SQ</th><td>{% sqchange profile.previous_sq profile.sq %}</td></tr>
         </table>
 
         <blockquote>{{ profile.about }}</blockquote>
