@@ -23,9 +23,12 @@ def sqchange( prevsq, sq ):
     elif sq < prevsq:
         change = 'down'
     else:
-        change = 'nochange'     
+        change = 'nochange'   
+        
+    from sq.utils import sq_division
+    level = sq_division(sq)
 
-    return '<span class="sq %s">%d</span>' % (change, sq)
+    return '<span class="sq %s sq%s">%d</span>' % (change, level, sq)
 
 
 @register.simple_tag
@@ -71,15 +74,15 @@ def sqdescriptive( sq ):
     from sq.utils import sq_division
     
     descriptive = {
-        14: "Genius",
-        13: "Very Superior",
-        12: "Superior",
-        11: "High Average",
-        10: "Average",
-        9 : "Average",
-        8 : "Low Average",
-        7 : "Very Low",
-        6 : "Extremely Low",
+        9 : "Genius",
+        8 : "Very Superior",
+        7 : "Superior",
+        6 : "High Average",
+        5 : "Average",
+        4 : "Average",
+        3 : "Low Average",
+        2 : "Very Low",
+        1 : "Extremely Low",
     }[sq_division(sq)]
 
     return '%s' % (descriptive)

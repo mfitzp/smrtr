@@ -99,10 +99,14 @@ def sq_calculate( data, direction = 'asc' ):
     
     
 def sq_division(sq):
+
+    if sq is None:
+        return None
+        
     # Limit SQ to the range 149-69
     sq = min( max( sq , 69  ) , 149 )
     # Convert to 14-6
-    return int( math.floor( sq / 10) )
+    return int( math.floor( sq / 10) ) - 5 # Range 1-9
 
 
 def sq_division_changed( sqa, sqb ):
