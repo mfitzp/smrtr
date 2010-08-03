@@ -7,12 +7,15 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Smrtr
 from welcome.forms import *
     
 # Get basic profile information from the user once registered    
 @login_required
 def profile(request):
+
+    messages.success(request, _(u"Welcome to smrtr! Get started by telling us a bit about yourself... ") )
 
     user = request.user
     profile = user.get_profile()
