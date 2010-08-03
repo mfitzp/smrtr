@@ -12,6 +12,9 @@ def sqchange( prevsq, sq ):
     Usage: {% sqchange sq prevsq %}
             Returns up down nochange
     """   
+    if prevsq is None:
+        prevsq = 100
+    
     if sq is None:
         return '<span class="sq nochange">tbc</span>'
 
