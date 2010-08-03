@@ -98,4 +98,6 @@
 {% block content_right %}
 <h5>Discussion</h5>
 {% include "_forum.html" %}
+
+{% with module as obj %}{% include "_social.html" %}{% endwith %}
 {% endblock %}

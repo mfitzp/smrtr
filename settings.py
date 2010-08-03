@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'challenge',
     'welcome',
     'discuss',
+    #'facebook',
 )
 
 CACHE_BACKEND = 'dummy:///'

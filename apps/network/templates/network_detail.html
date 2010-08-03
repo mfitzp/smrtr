@@ -119,4 +119,6 @@
         <p>You joined this network on {{ usernetwork.start_date|date }} ({{usernetwork.start_date|timesince}} ago)</p>
         {% endif %}
 
+        {% with network as obj %}{% include "_social.html" %}{% endwith %}
+
         {% endblock %}

@@ -58,4 +58,6 @@
 
 {% block content_right %}
     {% include "_challengers.html" %}  
+    
+{% with challenge as obj %}{% include "_social.html" %}{% endwith %} 
 {% endblock %} 
