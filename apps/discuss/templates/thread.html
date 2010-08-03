@@ -49,5 +49,5 @@
 <h5>Tags</h5>
 {% with thread.get_tags as tags %}{% include "_tags.html" %}{% endwith %}
 
-{% with network as obj %}{% include "_social.html" %}{% endwith %}
+{% with thread as obj %}{% include "_social.html" %}{% endwith %}
 {% endblock %}
