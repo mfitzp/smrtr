@@ -48,4 +48,6 @@
 <p>Latest post {{ thread.latest_post_created|timesince }} ago by <a href="{% url user-profile user_id=thread.latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>
 <h5>Tags</h5>
 {% with thread.get_tags as tags %}{% include "_tags.html" %}{% endwith %}
+
+{% with network as obj %}{% include "_social.html" %}{% endwith %}
 {% endblock %}
