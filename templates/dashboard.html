@@ -49,10 +49,10 @@
                     <td>{{ userchallenge.last_access|timesince }}</td>
                     <td style="text-align:right; vertical-align:middle;">    
                         {% ifequal userchallenge.status 0 %}
-                        <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
+                        <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
                         {% else %}
                             {% ifequal userchallenge.status 1 %}                    
-                                <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
+                                <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
                             {% endifequal %}
                         {% endifequal %}
                     </td>
