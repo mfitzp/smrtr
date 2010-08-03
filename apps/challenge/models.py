@@ -103,6 +103,7 @@ class UserChallenge(models.Model):
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
         data = self.challenge.questions.filter(userquestionattempt__user=self.user).exclude(sq=None).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        self.previous_sq = self.sq
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
 
@@ -115,6 +116,13 @@ class UserChallenge(models.Model):
         # Set values for completion
         self.status = 2
         self.completed = datetime.datetime.now()
+        # TODO: Does it make more sense to update a latest_attempt here to determine concept focus or to determine it dynamic at focus-calculation time
+        # Update associated userconcepts with last_attempt (now) 
+        # for concept in self.challenge.concepts:
+        #    uc = concept.userconcept_set.get(user=self.user)
+        #    uc.last_attempt = datetime.datetime.now()
+        #    # uc.update_sq(): Leave SQ recalculation to cron updates
+        #    uc.save()
         
     def is_new(self):
         return self.status == 0
@@ -136,6 +144,7 @@ class UserChallenge(models.Model):
 
     # SQ for this set of questions
     sq = models.IntegerField(editable = False, null = True)
+    previous_sq = models.IntegerField(editable = False, null = True)
     # User's rank on this challenge
     rank = models.IntegerField(editable = False, null = True)
 

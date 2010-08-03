@@ -7,6 +7,8 @@
     &raquo; {{ question.id }}
 {% endblock %}
 
+{% block title %}{{question.content}}{% endblock %}
+
 {% block content %}
 
     {% if question %}

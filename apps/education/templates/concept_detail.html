@@ -9,6 +9,8 @@
     &raquo; {{ concept }}
 {% endblock %}
 
+{% block title %}{{concept}}{% endblock %}
+
 {% block content_title %}<h1>{{concept}}</h1>{% endblock %}
 
 {% block content_left %}
@@ -18,7 +20,7 @@
         <table>
             <tr><th>SQ</th><td>
                 {% if userconcept %}
-                    {% sqchange 100 userconcept.sq %}
+                    {% sqchange userconcept.previous_sq userconcept.sq %}
                 {% else %}
                     {% if request.user.get_profile %}{% sqdifficulty concept.sq request.user.get_profile.sq %}
                     {% else %}None{% endif %}

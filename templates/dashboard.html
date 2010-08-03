@@ -47,12 +47,12 @@
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                     <td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td>
                     <td>{{ userchallenge.last_access|timesince }}</td>
-                    <td>    
+                    <td style="text-align:right; vertical-align:middle;">    
                         {% ifequal userchallenge.status 0 %}
-                        <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a>
+                        <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
                         {% else %}
                             {% ifequal userchallenge.status 1 %}                    
-                                <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a>           
+                                <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
                             {% endifequal %}
                         {% endifequal %}
                     </td>
@@ -80,7 +80,7 @@
             <tr class="{% cycle zebra %}">
                 <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
-                <td style="text-align:right">{% sqchange 100 userchallenge.sq %} </td>
+                <td style="text-align:right">{% sqchange userchallenge.previous_sq userchallenge.sq %} </td>
                 <td>{{ userchallenge.last_access|timesince }}</td>
                 <td></td>
             </tr>
@@ -121,7 +121,7 @@
             <h5>Active Modules</h5>
             <div class="stackcontainer">
             {% for usermodule in usermodules %}
-                <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange 100 usermodule.sq %})</a></span>
+                <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a></span>
             {% endfor %}
             </div>
         {% endif %}

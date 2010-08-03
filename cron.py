@@ -14,7 +14,7 @@ from network.utils import *
 def cron():
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
     batch_question_update_sq()
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update questionttc..."
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question ttc..."
     batch_question_update_ttc()
     
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update network SQ..."
@@ -40,8 +40,11 @@ def cron():
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
     batch_generate_user_challenges()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Pinging Google with sitemap..."
-    ping_google()
+    # Don't ping google with sitemap when developing (be nice)
+    from settings import DEBUG
+    if DEBUG == False:
+        print datetime.datetime.now().strftime(' %H:%M:%S') + ": Pinging Google with sitemap..."
+        ping_google()
     
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Done."
 cron()

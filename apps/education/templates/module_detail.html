@@ -11,6 +11,8 @@
     &raquo; {{ module }}
 {% endblock %}
 
+{% block title %}{{module}}{% endblock %}
+
 {% block content_title %}<h1>{{module}}</h1>{% endblock %}
 
 {% block content_left %}
@@ -32,7 +34,7 @@
 
             <tr><th>SQ</th><td>
                 {% if usermodule %}
-                    {% sqchange 100 usermodule.sq %}
+                    {% sqchange usermodule.previous_sq usermodule.sq %}
                 {% else %}
                     {% if request.user.get_profile %}{% sqdifficulty module.sq request.user.get_profile.sq %}
                     {% else %}None{% endif %}
@@ -72,7 +74,7 @@
                                 {% else %}
                                     <td><span class="complete">Completed</span></td>
                                 {% endif %}
-                                <td>{% sqchange 100 concept.userconcept.sq %}</td>
+                                <td>{% sqchange concept.userconcept.previous_sq concept.userconcept.sq %}</td>
                             {% else %}
                                 <td><a href="{% url concept-register concept_id=concept.id %}" class="inactive">Activate</a></td>
                             {% endif %}

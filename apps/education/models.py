@@ -121,6 +121,7 @@ class UserModule(models.Model):
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
     def update_sq(self):
+        self.previous_sq = self.sq
         self.sq = UserConcept.objects.filter(user=self.user, concept__module = self.module).aggregate(Avg('sq'))['sq__avg']
         self.save()
     # Users on this module in this specific context (network:course)
@@ -144,6 +145,7 @@ class UserModule(models.Model):
     end_date = models.DateTimeField(null = True)
 
     sq = models.IntegerField(editable = False, null = True)
+    previous_sq = models.IntegerField(editable = False, null = True)
 
     class Meta:
         unique_together = ("user", "module")
@@ -171,25 +173,39 @@ class UserConcept(models.Model):
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
         data = self.concept.question_set.exclude(sq=None).filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        self.previous_sq = self.sq
         self.sq = sq_calculate(data, 'desc') # Descending data set  
         self.save()
     # Update user's focus value for this concept
     # this is used to include in auto-challenges,etc.
     def update_focus(self):
+        self.focus = 0
         # Focus is an weighting value, with importance of variables configurable
         # Variables
         # - Time since last attempt (OR none if never attempted): long time = increased likelihood, declines with age
         # - Lowest score (users SQ on this concept vs. SQ of the concept itself): lower = increased likelihood
         # TODO: Should be last_attempt updated whenever this concept is attempted as part of a challenge
- 
-        try: 
-            # This will fail if sq values are not set (None)  
-            self.focus = ( datetime.today() - self.start_date ).days + ( self.concept.sq - self.sq )
-            # Limit 0-100
-            self.focus = max( min( self.focus, 100 ), 100 )
-        except:
-            # If fail, put to front of queue: SQ is unset or start_date (latest_attempt) unset i.e. is new!!
-            self.focus = 100
+
+        from challenge.models import UserChallenge
+        last_attempted = UserChallenge.objects.filter(challenge__concepts=self.concept, user=self.user).aggregate(Max('completed'))['completed__max']
+
+        if last_attempted:
+            # +1 for every day passed since last attempt
+            self.focus += min( 100, ( datetime.today() - last_attempted ).days )
+        else:
+            self.focus = 100 # Bump new items to max focus to guarantee first attempt
+            
+        if self.start_date:
+            # -1 for every week it has been active
+            self.focus -= min( 100, ( datetime.today() - self.start_date ).days / 7 )
+        
+        if self.concept.sq and self.sq:    
+            # +1 for every SQ point difference between the uc and the c
+            self.focus +=  self.concept.sq - self.sq
+            
+        # Limit 0-100
+        self.focus = max( min( self.focus, 100 ), 0 )
+        
         self.save()
         
     # Users on this module in this specific context (network:course:module)
@@ -214,8 +230,10 @@ class UserConcept(models.Model):
     end_date = models.DateTimeField(null = True) 
 
     sq = models.IntegerField(editable = False, null = True)
-    focus = models.IntegerField( default = 0,editable = False)
-
+    previous_sq = models.IntegerField(editable = False, null = True)
+   
+    focus = models.IntegerField(default = 0, editable = False)
+    
     class Meta:
         unique_together = ("user", "concept")
 

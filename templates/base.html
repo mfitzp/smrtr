@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
-<title>{% block title %}smrtr{% endblock %}</title>
+<title>smrtr &raquo; {% block title %}Learn smrtr not harder with free study materials and multiple choice questions{% endblock %}</title>
 <link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
@@ -19,7 +19,6 @@
 <ascript type="text/javascript" src="/admin/jsi18n/"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer-3.2.2.min.js"></script>
 {% endblock %}
-{% block blockbots %}{% endblock %}
 </head>
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
@@ -29,9 +28,7 @@
     {% if not is_popup %}
     <!-- Header -->
     <div id="header">
-        <div id="branding">
-        {% block branding %}<a href="/"><img src="{{ MEDIA_URL }}img/smrtr.png"></a>{% endblock %}
-        </div>
+        <div id="branding"><a href="/"><img src="{{ MEDIA_URL }}img/smrtr.png"></a></div>
         {% if user.is_authenticated %}
         <div id="user-tools">
             <table id="user-tools-panel">
