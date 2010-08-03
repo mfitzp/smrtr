@@ -7,7 +7,7 @@ import math
 register = template.Library()
 
 @register.simple_tag
-def sqchange( prevsq = 100, sq ):
+def sqchange( prevsq, sq ):
     """ 
     Usage: {% sqchange sq prevsq %}
             Returns up down nochange
