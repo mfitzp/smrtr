@@ -2,4 +2,25 @@
 
 <iframe src="http://www.facebook.com/widgets/like.php?href={{ obj.get_absolute_url }}"
         scrolling="no" frameborder="0"
-        style="border:none; height:80px"></iframe>
+        style="border:none; height:32px"></iframe>
+<div>
+<a href="http://facebook.com/share.php?u=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/facebook.png" title="Share this on Facebook"></a>
+<a href="http://twitter.com/home?status={{ obj }} study and resources at http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }} from @smrtr"><img src="/media/img/social/twitter.png" title="Tweet this!"></a>
+<a href="http://del.icio.us/post?url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/delicious.png" title="Share this on delicious"></a>
+<a href="http://reddit.com/submit?url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/reddit.png" title="Share this on reddit"></a>
+<a href="http://stumbleupon.com/submit?url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/stumble.png" title="Stumble this"></a>
+<a href="http://digg.com/submit?url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/digg.png" title="Digg this"></a>
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}&title={{ obj }}&source=smrtr"><img src="/media/img/social/linkedin.png" title="Share this on LinkedIn"></a>
+<a href="http://technorati.com/faves?add=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/technorati.png" title="Share this on MySpace"></a>
+<a href="http://www.myspace.com/Modules/PostTo/Pages/?u=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/myspace.png" title="Share this on MySpace"></a>
+
+
+<a href="http://friendfeed.com/?url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}&title={{ obj }}"><img src="/media/img/social/friendfeed.png" title="Share this on friendfeed"></a>
+<a href="http://posterous.com/share?linkto=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}"><img src="/media/img/social/posterous.png" title="Share this on Posterous"></a>
+<a href="http://www.tumblr.com/login?u=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}&t={{ obj }}"><img src="/media/img/social/tumblr.png" title="Share this on tumblr"></a>
+<a href="http://www.mixx.com/submit?page_url=http://{{ request.META.HTTP_HOST }}{{ obj.get_absolute_url }}&title={{ obj }}"><img src="/media/img/social/mixx.png" title="Share this on mixx"></a>
+
+<!-- <a href="{{ obj.get_absolute_url }}"><img src="/media/img/social/email.png" title="Share this via email"></a> -->
+
+</div>
+
