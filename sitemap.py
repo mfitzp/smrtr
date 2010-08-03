@@ -7,9 +7,11 @@ from profiles.models import UserProfile
 from questions.models import Question
 from discuss.models import Thread, Post
 
+
 class NetworkSitemap(Sitemap):
     changefreq = "weekly"
     priority = 1
+    limit = 1000
 
     def items(self):
         return Network.objects.all()
@@ -20,7 +22,8 @@ class NetworkSitemap(Sitemap):
 class ModuleSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.5
-
+    limit = 1000
+   
     def items(self):
         return Module.objects.all()
 
@@ -30,6 +33,7 @@ class ModuleSitemap(Sitemap):
 class ConceptSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
+    limit = 1000
 
     def items(self):
         return Concept.objects.all()
@@ -40,6 +44,7 @@ class ConceptSitemap(Sitemap):
 class ChallengeSitemap(Sitemap):
     changefreq = "weekly"
     priority = 1
+    limit = 1000
 
     def items(self):
         return Challenge.objects.all()
@@ -50,6 +55,7 @@ class ChallengeSitemap(Sitemap):
 class UserProfileSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.5
+    limit = 1000
 
     def items(self):
         return UserProfile.objects.all()
@@ -60,6 +66,7 @@ class UserProfileSitemap(Sitemap):
 class QuestionSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
+    limit = 1000
 
     def items(self):
         return Question.objects.all()
@@ -69,6 +76,7 @@ class QuestionSitemap(Sitemap):
         
 class ThreadSitemap(Sitemap):
     changefreq = "weekly"
+    limit = 1000
 
     def priority(self, obj):
         return 0.5 + ( (obj.sticky + obj.system) * 0.25 ) # Increase priority to 1 when sticky and system
@@ -82,6 +90,7 @@ class ThreadSitemap(Sitemap):
 class PostSitemap(Sitemap):
     changefreq = "never"
     priority = 0.5
+    limit = 1000
 
     def items(self):
         return Post.objects.all()
