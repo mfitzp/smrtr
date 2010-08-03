@@ -7,12 +7,12 @@ import math
 register = template.Library()
 
 @register.simple_tag
-def sqchange( prevsq, sq ):
+def sqchange( prevsq = 100, sq ):
     """ 
     Usage: {% sqchange sq prevsq %}
             Returns up down nochange
     """   
-    if prevsq is None or sq is None:
+    if sq is None:
         return '<span class="sq nochange">tbc</span>'
 
     if sq > prevsq:
