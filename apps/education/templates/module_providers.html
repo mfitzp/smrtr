@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load flowplayer_tags %}
+{% load countries_tags %}
+{% load pagination_tags %}
+{% load sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url module-detail module_id=module.id %}">{{ module }}</a>
+    &raquo; Providers
+{% endblock %}
+
+{% block content_title %}<h1>{{module}} Providers</h1>{% endblock %}
+
+{% block content %}
+
+    {% if providers %}
+        <p>This module is available for study on the following networks:</p>
+        <table>
+        {% for network in providers %}
+            <tr>
+                <th><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></th>
+                <td><a href="{% url network-detail network_id=network.id %}" class="network network{{network.type}}">{{ network.get_type_display }}</a></td>
+                <td>{{ network.city }}</td>
+                <td>{% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }} </span> {% endif %}</td>
+            </tr>
+
+        {% endfor %}
+        </table>                
+        
+    {% else %}
+        <p>No networks are currently offering this concept for study.</p>
+    {% endif %}
+
+{% endblock %}

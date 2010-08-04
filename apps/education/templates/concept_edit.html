@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load sq_tags %}
+{% load pagination_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Concept
+    {% if concept.name %}
+        &raquo; {{ concept.name }}
+    {% endif %}    
+{% endblock %}
+
+{% block title %}
+    {% if concept.name %}
+        Edit '{{ concept.name }}'
+    {% else %}
+        Create new concept
+    {% endif %}
+{% endblock %}
+
+{% block content_title %}
+<h1>
+    {% if concept.name %}
+        Edit '{{ concept.name }}'
+    {% else %}
+        Create new concept
+    {% endif %}
+</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% include "_form.html" %}
+ 
+{% endblock %}
