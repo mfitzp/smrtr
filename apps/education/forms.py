@@ -1,17 +1,34 @@
 from django import forms
 from django.contrib.admin import widgets                                       
-# Spenglr
-from education.models import UserModule
+# Smrtr
+from network.models import Network
+from education.models import Module, Concept
 # External
 from haystack.forms import SearchForm
 
-class UserModuleRegisterForm(forms.ModelForm):
+
+class ModuleForm(forms.ModelForm):
+
     class Meta:
-        model = UserModule
-    def __init__(self, *args, **kwargs):
-        super(UserModuleRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['start_date'].widget = widgets.AdminDateWidget()
-    start_date = forms.DateField(required=True)
+        model = Module
+        fields = ['name', 'description', 'network', 'concepts']
+
+    def __init__(self, request, *args, **kwargs):
+        super(ModuleForm, self).__init__(*args, **kwargs)    
+        if request: # If passed only show networks the user is on
+            self.fields['network'].queryset = Network.objects.filter(usernetwork__user=request.user) 
+            self.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user) 
 
 
-       
+        
+class ConceptForm(forms.ModelForm):
+
+    class Meta:
+        model = Concept
+        fields = ['name', 'description', 'network']
+        
+    def __init__(self, request, *args, **kwargs):
+        super(ConceptForm, self).__init__(*args, **kwargs)
+        if request: # If passed only show networks the user is on
+            self.fields['network'].queryset = Network.objects.filter(usernetwork__user=request.user)         
+

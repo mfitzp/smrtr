@@ -39,19 +39,19 @@ def sqdifficulty( usersq, diffsq ):
     """   
 
     if usersq is None or diffsq is None:
-        difficulty = 'unknown'
+        difficulty = 'tbc'
     elif usersq > diffsq + ( settings.SQ_FAIR_RANGE * 2 ):
-        difficulty = 'easy'
+        difficulty = 'Easy'
     elif usersq > diffsq + settings.SQ_FAIR_RANGE:
-        difficulty = 'simple'
+        difficulty = 'Simple'
     elif usersq > diffsq - settings.SQ_FAIR_RANGE:
-        difficulty = 'fair'     
+        difficulty = 'Fair'     
     elif usersq > diffsq - ( settings.SQ_FAIR_RANGE * 2):
-        difficulty = 'tricky'     
+        difficulty = 'Tricky'     
     else:
-        difficulty = 'hard'
+        difficulty = 'Hard'
 
-    return '<span class="sq %s">%s</span>' % (difficulty, difficulty.capitalize())
+    return '<span class="sq %s">%s</span>' % (difficulty.lower(), difficulty)
 
 @register.simple_tag
 def sqdescriptive( sq ):
@@ -68,7 +68,7 @@ def sqdescriptive( sq ):
     """  
 
     if sq is None:
-        return "Unknown"
+        return "TBC"
 
     # sq_division limits to range 14-6 based on sq input
     from sq.utils import sq_division

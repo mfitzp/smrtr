@@ -28,7 +28,7 @@ def profile(request):
             user.save()
             profile = pform.save()
             profile.save()
-            return HttpResponseRedirect( reverse('welcome-2') )
+            return redirect('welcome-2')
     else:
         uform = UserForm(instance=user)
         pform = ProfileForm(instance=profile)

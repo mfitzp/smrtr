@@ -1,7 +1,7 @@
 from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from education.models import *
 from network.models import *
 from questions.models import *
+from education.forms import *
+from core.http import Http403
 # External
 from haystack.query import SearchQuerySet
 
@@ -67,47 +69,40 @@ def module_register(request, module_id):
         um.user = request.user
         
         # Find user record for parent network, must be registered on the network to register for module
-        try:
+        # try:
             # FIXME: Note this is trying only to check if member of modules 'home' network not any it may have been assigned to
-            usernetwork = request.user.usernetwork_set.get(network = module.network)
-        except:
-            assert False, module
+        #    usernetwork = request.user.usernetwork_set.get(network = module.network)
+        # except:
+            # Error
+        #    pass
 
-        try:
-            um.module = module
-        except:
-            # Error when saving data, will need to redisplay form: error notifications here
-            assert False, um
-            pass
+        um.module = module
+        um.save()
+        request.user.message_set.create(
+        message=_(u"You are now studying ") + module.name)
 
+        if 'success_url' in request.POST:
+            return HttpResponseRedirect(request.POST['success_url'])
         else:
-            # Write to database 
-            # All concepts on this module automagically activated by the usermodule save
-            um.save()
-            request.user.message_set.create(
-                message=_(u"You are now studying ") + module.name)
-
-            if 'success_url' in request.POST:
-                return HttpResponseRedirect(request.POST['success_url'])
-            else:
-                return module_detail(request, module_id)
+            return module_detail(request, module_id)
 
     return module_detail(request, module_id)
 
 
 # Get an module id and present a page showing detail
 # if user is registered on the module, provide a additional information
-def module_detail_providers(request, module_id):
-
-    module = get_object_or_404(Course, pk=module_id)
-
-    # usermodules "you are studying this module at..."
-    usermodules = list() #UserCourse.objects.filter(modulei__module=module)
-
-    return render_to_response('module_detail.html', {'module': module, 'usermodules': usermodules}, context_instance=RequestContext(request))
+def module_providers(request, module_id):
+    module = get_object_or_404(Module, pk=module_id)
+    providers = module.networks.all()
+    return render_to_response('module_providers.html', {'module': module, 'providers': providers}, context_instance=RequestContext(request))
 
 
-
+# Get an module id and present a page showing detail
+# if user is registered on the module, provide a additional information
+def concept_providers(request, concept_id):
+    concept = get_object_or_404(Concept, pk=concept_id)
+    providers = concept.module_set.all()
+    return render_to_response('concept_providers.html', {'concept': concept, 'providers': providers}, context_instance=RequestContext(request))
 
 
 
@@ -119,14 +114,10 @@ def module_detail_providers(request, module_id):
 def concept_detail(request, concept_id):
 
     concept = get_object_or_404(Concept, pk=concept_id)
-
-    # userconcepts "you are studying this concept on these modules..."
     try:
         userconcept = UserConcept.objects.get(concept=concept, user=request.user)
     except:
         userconcept = list()
-
-    #members=concept.#User.objects.filter(userconcept__concepti__concept=concept)
 
     context = { 'concept': concept, 
                 'userconcept': userconcept, 
@@ -150,23 +141,16 @@ def concept_register(request, concept_id ):
         uc = UserConcept()
         uc.user = request.user
         
-        try:
-            uc.concept = concept
-        except:
-            # Error when saving data, will need to redisplay form: error notifications here
-            assert False, uc
-            pass
-
+        uc.concept = concept
+        uc.save()
+        
+        request.user.message_set.create(
+            message=concept.name + _(u" has been added to your study list"))
+                        
+        if 'success_url' in request.POST:
+            return HttpResponseRedirect(request.POST['success_url'])
         else:
-            # Write to database 
-            uc.save()
-            request.user.message_set.create(
-                message=concept.name + _(u" has been added to your study list"))
-                            
-            if 'success_url' in request.POST:
-                return HttpResponseRedirect(request.POST['success_url'])
-            else:
-                return concept_detail(request, concept_id)
+            return concept_detail(request, concept_id)
 
     return concept_detail(request, concept_id)
 
@@ -230,7 +214,7 @@ def concept_add_questions(request, concept_id):
         'query': query,
         'concept': concept, 
     }
-    
+    from base.http import Http403  
     return render_to_response('concept_add_questions.html', context, context_instance=RequestContext(request))    
     
  
@@ -247,4 +231,112 @@ def concept_resources(request, concept_id):
     resources = Resource.objects.all().filter(conceptresource__concept=concept).distinct()
     
     return render_to_response('concept_resources.html', {'concept': concept, 'userconcept':userconcept, 'resources': resources}, context_instance=RequestContext(request))
-            
+    
+    
+
+# Create a new concept
+@login_required
+def concept_create(request):
+
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http403
+                
+    if request.POST:
+        form = ConceptForm(request, request.POST)       
+
+        if form.is_valid(): # All validation rules pass
+            concept = form.save()
+            return redirect(concept.get_absolute_url()) # Redirect to default view for the concept
+    else:
+        form = ConceptForm(request, request.GET) # Allow prepopulate  
+   
+    context = { 
+        'form': form,
+        'concept': None,
+    }
+    
+    return render_to_response("concept_edit.html", context, context_instance=RequestContext(request)) 
+    
+    
+
+# Edit a concept
+@login_required
+def concept_edit(request, concept_id):
+
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http403
+
+    concept = get_object_or_404(Concept, pk=concept_id)
+                    
+    if request.POST:
+        form = ConceptForm(request, request.POST, instance=concept)       
+
+        if form.is_valid(): # All validation rules pass
+            concept = form.save()
+            return redirect(concept.get_absolute_url()) # Redirect to default view for the concept
+    else:
+        form = ConceptForm(request, instance=concept) # Allow prepopulate  
+   
+    context = { 
+        'form': form,
+        'concept': concept,
+    }
+    
+    return render_to_response("concept_edit.html", context, context_instance=RequestContext(request))   
+  
+
+
+
+# Create a new module
+@login_required
+def module_create(request):
+
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http403
+                
+    if request.POST:
+        form = ModuleForm(request, request.POST)       
+
+        if form.is_valid(): # All validation rules pass
+            module = form.save()
+            return redirect(module.get_absolute_url()) # Redirect to default view for the concept
+    else:
+        form = ModuleForm(request, request.GET) # Allow prepopulate  
+   
+    context = { 
+        'form': form,
+        'module': None,
+    }
+    
+    return render_to_response("module_edit.html", context, context_instance=RequestContext(request)) 
+    
+    
+
+# Edit a module
+@login_required
+def module_edit(request, module_id):
+
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http403
+
+    module = get_object_or_404(Module, pk=module_id)
+                    
+    if request.POST:
+        form = ModuleForm(request, request.POST, instance=module)       
+
+        if form.is_valid(): # All validation rules pass
+            module = form.save()
+            return redirect(module.get_absolute_url()) # Redirect to default view for the concept
+    else:
+        form = ModuleForm(request, instance=module) # Allow prepopulate  
+   
+    context = { 
+        'form': form,
+        'module': module,
+    }
+    
+    return render_to_response("module_edit.html", context, context_instance=RequestContext(request))   
+  
+
+
+

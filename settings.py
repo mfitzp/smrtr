@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfResponseMiddleware', 
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'core.http.Http403Middleware',
     #'core.middleware.RequireLoginMiddleware',
 )
 

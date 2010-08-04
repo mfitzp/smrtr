@@ -48,11 +48,7 @@ class Challenge(models.Model):
         
     # Auto-generate a name from the current list of concepts
     def generate_name(self):
-        name = list()
-        for concept in self.concepts.all():
-            name.append( concept.name )
-        self.name = ', '  .join( name )
-        self.name = self.name[0:100] # Truncate to field limit
+        self.name = ', '.join( concepts )
         
     name = models.CharField(max_length=100)
     description = models.TextField(blank = True)

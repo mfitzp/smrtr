@@ -118,5 +118,4 @@ def batch_generate_user_challenges():
 
     for o in objects:
         generate_user_challenges(o)
-    
 

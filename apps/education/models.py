@@ -30,6 +30,8 @@ class Module(models.Model):
         if self.id is None: #is new
             super(Module, self).save(force_insert, force_update)
             self.forum = Forum.objects.create(title=self.name)
+            self.networks.add(self.network) # Make link to 'offer' this network
+                          
         super(Module, self).save(force_insert, force_update)
 
     def update_sq(self):

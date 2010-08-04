@@ -6,14 +6,16 @@ from education.models import *
 # External
 # from haystack.forms import SearchForm
 
+
 class ChallengeForm(forms.ModelForm):
+
+    description = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'textarea'}))
+
     class Meta:
         model = Challenge
-    def __init__(self, *args, **kwargs):
-        super(ChallengeForm, self).__init__(*args, **kwargs)
-        
-    name = forms.CharField(required=True)
-    description = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'textarea'}))
-    concepts = forms.ModelMultipleChoiceField(label='Concepts covered',queryset=Concept.objects.all()) # Concepts to source questions from
-    total_questions = forms.IntegerField(label='Max number of questions',required=False) # Number of questions
-    targetsq = forms.IntegerField(label='Target SQ',required=False) # Min SQ for questions       
+        fields = ['name', 'description', 'concepts','total_questions']
+
+    def __init__(self, request, *args, **kwargs):
+        super(ChallengeForm, self).__init__(*args, **kwargs)    
+        if request:
+            self.fields['concepts'] = forms.ModelMultipleChoiceField(label='Concepts',queryset=Concept.objects.filter(userconcept__user=request.user)) # Only networks the user is on

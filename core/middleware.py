@@ -1,6 +1,10 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.template import RequestContext   
+from django.core.exceptions import PermissionDenied    
 from django.contrib.auth.views import login
+
+from core.views import *
 
 class RequireLoginMiddleware(object):
 
@@ -20,6 +24,7 @@ class RequireLoginMiddleware(object):
                     return HttpResponseRedirect('%s?next=%s' % (self.loginurl, request.path))
                         
     def process_view(self, request, view_func, view_args, view_kwargs):
-        from core.views import *
         if request.user.is_anonymous() and view_func == home:
             return intro( request )
+            
+   

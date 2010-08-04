@@ -25,18 +25,11 @@ from haystack.query import SearchQuerySet
 # Challenges may be public or private, and solo or group
 # Scoring can be individual or network based (e.g. university vs. university, course vs. course)
 @login_required
-def edit(request, challenge_id = None):
-
-    if challenge_id:
-        # id passed we are editing previous Challenge object
-        challenge = get_object_or_404(Challenge, pk=challenge_id)
-    else:
-        # If no id passed, we create a new challenge object
-        challenge = Challenge()
+def create(request):
                 
-    if request.POST.get('name'):
+    if request.POST:
     
-        form = ChallengeForm(request.POST, instance=challenge)       
+        form = ChallengeForm(request, request.POST)       
         form.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user)
                 
         if form.is_valid(): # All validation rules pass
@@ -51,57 +44,21 @@ def edit(request, challenge_id = None):
             challenge.update_questions()
             
             # Create userchallenge for the creating user (will need one anyway) and save
-            userchallenge = UserChallenge()
-            userchallenge.user = request.user
-            userchallenge.challenge = challenge
-            userchallenge.update_sq()
-            userchallenge.save()
+            UserChallenge(user=request.user, challenge=challenge).save()
             
-            return HttpResponseRedirect( reverse('challenge-do',kwargs={'challenge_id':challenge.id} ) ) # Redirect to challenge_do for this challenge
+            return redirect( 'challenge-do', {'challenge_id':challenge.id} ) # Redirect to challenge_do for this challenge
     
     else:
-        prefill = {}
-        prefillq = ['name','description','targetsq','total_questions']
-        
-        for src in prefillq:
-            if request.GET.get(src):
-                prefill[src] = request.GET.get(src)
-        
-        if request.GET.getlist('concepts'):
-            prefill['concepts'] = request.GET.getlist('concepts')
-        
-            if 'name' not in prefill:
-                name = list()
-                # Build suggested name from concept lists
-                for concept in prefill['concepts']:
-                    
-                    try:
-                        c = Concept.objects.get(pk=concept)
-                    except:
-                        pass
-                    else:
-                        name.append( c.name )
-                        
-                prefill['name'] = ', '  .join( name )
-        
-        if 'targetsq' not in prefill:
-            prefill['targetsq'] = request.user.get_profile().sq # If not set, find user's SQ and preset
-        
-        # TODO: Prefill concepts from csv list on query url
-        # TODO: Prefill name/description (if not set yet) based on contents of concept list
-        
-        form = ChallengeForm(initial=prefill, instance=challenge) 
-        
+        form = ChallengeForm(request, request.GET) 
         # Provide concept-possibilities (from user's own lists)
-        form.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user)
+        
 
     context = { 
         'form': form,
-        'challenge':challenge,
     }
     
-    return render_to_response('challenge_edit.html', context, context_instance=RequestContext(request))    
-  
+    return render_to_response("challenge_edit.html", context, context_instance=RequestContext(request))    
+ 
 
 def detail(request, challenge_id):
 
@@ -268,6 +225,6 @@ def generate(request):
     from challenge.utils import generate_user_challenges
     # Generate challenges for the active user, redirect to homepage
     generate_user_challenges(request.user)
-    return HttpResponseRedirect('/')
+    return redirect('home')
 
 

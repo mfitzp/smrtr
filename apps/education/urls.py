@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
-# Spenglr
+# Smrtr
 from education.models import *
+from education.forms import *
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -17,20 +18,26 @@ urlpatterns = patterns('',
     # url(r'^mi(?P<modulei_id>\d+)/$', 'education.views.modulei_detail',  name='modulei-detail'  ),
 
     # Module generic
-    url(r'^m(?P<module_id>\d+)/$', 'education.views.module_detail',  name='module-detail'  ),
-    url(r'^m(?P<module_id>\d+)/providers/$', 'education.views.module_detail_providers',  name='module-detail-providers'  ),
-    url(r'^m(?P<module_id>\d+)/register/$', 'education.views.module_register',  name='module-register'  ),
-    
-    # Concept generic
-    url(r'^c(?P<concept_id>\d+)/$', 'education.views.concept_detail',  name='concept-detail'  ),
-    url(r'^c(?P<concept_id>\d+)/register/$', 'education.views.concept_register',  name='concept-register'  ),
+    url(r'^module/(?P<module_id>\d+)/$', 'education.views.module_detail',  name='module-detail'  ),
+    url(r'^module/(?P<module_id>\d+)/providers/$', 'education.views.module_providers',  name='module-providers'  ),
+    url(r'^module/(?P<module_id>\d+)/register/$', 'education.views.module_register',  name='module-register'  ),
 
-    # User specific pass module instance data
-    # url(r'^c(?P<concept_id>\d+)/exam/$', 'education.views.concept_exam', name='concept-exam' ),
-    # url(r'^c(?P<concept_id>\d+)/exam/submit$', 'education.views.concept_exam_submit', name='concept-exam-submit'),
-    
-    url(r'^c(?P<concept_id>\d+)/resources$', 'education.views.concept_resources', name='concept-resources' ),
-    # url(r'^mi(?P<modulei_id>\d+)$', 'resources.views.module_userresources', name='resource-modulei-userresources' ),
+    # Module creation and editing
+    url(r'^module/create/$', 'education.views.module_create',  name='module-create'  ),
+    url(r'^module/(?P<module_id>\d+)/edit/$', 'education.views.module_edit',  name='module-edit'  ),
+    url(r'^module/(?P<module_id>\d+)/concepts/add/$', 'education.views.module_detail',  name='module-add-concepts'  ),
+
+    # Concept generic
+    url(r'^concept/(?P<concept_id>\d+)/$', 'education.views.concept_detail',  name='concept-detail'  ),
+    url(r'^concept/(?P<concept_id>\d+)/register/$', 'education.views.concept_register',  name='concept-register'  ),
+    url(r'^concept/(?P<concept_id>\d+)/providers/$', 'education.views.concept_providers',  name='concept-providers'  ),
+
+    # Concept creation and editing
+    url(r'^concept/create/$', 'education.views.concept_create',  name='concept-create'  ),
+    url(r'^concept/(?P<concept_id>\d+)/edit/$', 'education.views.concept_edit',  name='concept-edit'  ),
+
+
+    url(r'^concept/(?P<concept_id>\d+)/resources$', 'education.views.concept_resources', name='concept-resources' ),
 
 
     url(r'^c(?P<concept_id>\d+)/questions/add/', 'education.views.concept_add_questions', name='concept-add-questions' ),
