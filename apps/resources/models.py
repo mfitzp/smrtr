@@ -171,6 +171,10 @@ class Resource(models.Model):
             return self.mimetype.split('/')[0]
         else:
             return False
+            
+    def thumbnail(self):
+        return "http://covers.openlibrary.org.nyud.net/b/isbn/" + self.uri + "-S.jpg"
+        #return "http://covers.librarything.com/devkey/6ab5ad1c803e720093e328c88eaa2d5b/small/isbn/" + self.uri
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)

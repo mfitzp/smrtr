@@ -7,6 +7,7 @@ from settings import CHALLENGE_TTC_MINIMUM, CHALLENGE_TTC_FAIRNESS_MULTIPLIER
 from questions.models import Question
 from education.models import Concept
 from network.models import Network
+from resources.models import Resource
 from sq.utils import * 
 # External
 import datetime
