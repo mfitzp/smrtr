@@ -16,12 +16,11 @@
             <tr>
             <td>
             {% ifequal resource.namespace 'isbn' %}
-                <img src="http://covers.openlibrary.org/b/isbn/{{ resource.uri }}-S.jpg">
+                <img src="{{ resource.thumbnail }}">
             {% endifequal %}
             </td>
-            <td><a href="{{ resource.url }}"><strong>{{ resource.title }}</strong></a><br />{{ resource.description|truncatewords:25 }}</td>
+            <td><a href="{% url resource-detail resource.id %}"><strong>{{ resource.title }}</strong></a><br />{{ resource.description|truncatewords:25 }}</td>
             <td>{{ resource.created|timesince }}</a></td>
-            <td><a href="{% url resource-detail resource.id %}">Details</a></td>
             </tr>
         {% endfor %}
         </table>

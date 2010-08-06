@@ -14,7 +14,6 @@
 {% block content_title %}<h1>{{ challenge.name }}</h1>{% endblock %}
 
 {% block content_left %}
-
     {% if audiovideo %}
     <h5>Audio & Video</h5>
     {% flowplayer audiovideo %}
@@ -24,9 +23,13 @@
     <h5>Books</h5>
     <table>
         {% for book in books %}
-            <tr><td><img src="http://covers.openlibrary.org/b/isbn/{{ book.uri }}-S.jpg"></td>
-            <td><strong><a href="{{ book.uri }}" target="_blank">{{ book.title }}</a></strong><br />{{ book.description|truncatewords:15 }}</td>
-            <td><a href="{% url resource-detail book.id %}">Details</a></td>
+            <!-- http://covers.openlibrary.org/b/isbn/{{ book.uri }}-S.jpg -->
+            <tr><td><img src="{{ book.thumbnail }}" style="width:36px;height:48px"></td>
+            <td><strong><a href="{% url resource-detail book.id %}">{{ book.title }}</a></strong><br />{{ book.description|truncatewords:15 }}</td>
+            <td>
+                <a href="{% url resource-detail book.id %}">Details</a><br />
+                <a href="{% url resource-detail book.id %}">Buy</a><br />
+            </td>
             </tr>
         {% endfor %}
     </table>

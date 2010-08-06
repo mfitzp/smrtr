@@ -2,61 +2,115 @@
 {% load sq_tags %}
 {% load flowplayer_tags %}
 
+{% block extrahead %}
+{{ block.super }}
+    {% if resource.namespace == 'isbn' %}
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("books", "0");
+
+      function viewerError() {
+          document.getElementById('viewerCanvas').setAttribute('style','display:none;');
+          document.getElementById('viewerCanvasError').setAttribute('style','display:block;');
+      } 
+
+      function initialize() {
+        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        viewer.load('ISBN:{{ resource.uri }}', viewerError);
+      }
+
+      google.setOnLoadCallback(initialize);
+    </script>
+    {% endif %}
+{% endblock %}
+
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; <a href="{% url latest-resources %}">Resources</a>
     &raquo; {{ resource.id }}
 {% endblock %}
 
-{% block content_title %}<h1>{{ resource.title }}</h1>{% endblock %}
+{% block content_title %}
+<div>
+<div id="content-title-image">{% if resource.namespace == 'isbn' %}<img src="{{ resource.thumbnail }}" height="48px">{% endif %}</div>
+<div id="content-title-header"><h1 style="display:inline">{{resource}}</h1></div>
+<div id="content-title-meta">
+{% if resource.author %}<strong>Author:</strong> {{ resource.author }}{% endif %}
+{% if resource.publisher %}<strong>Publisher:</strong> {{ resource.publisher }}{% endif %}
+{% if resource.published %}<strong>Published:</strong> {{ resource.published }}{% endif %}
 
-{% block content %}
+<strong>Locate:</strong>
+{% ifequal resource.namespace 'doi' %}<a href="{{ resource.url }}" target="_blank">doi:{{ resource.uri }}</a>{% endifequal %}
+{% ifequal resource.namespace 'isbn' %}<a href="{{ resource.url }}" target="_blank">isbn:{{ resource.uri }}</a>{% endifequal %}
+{% ifequal resource.namespace None %}<a href="{{ resource.url }}" target="_blank">{{ resource.uri }}</a>{% endifequal %}
+</div>
+</div>  
+{% endblock %}
+
+{% block content_left %}
 
     {% if resource %}
 
-        <table>
-            {% if resource.author %}<tr><th>Author</th><td>{{ resource.author }}</td></tr>{% endif %}
-            {% if resource.publisher %}<tr><th>Publisher</th><td>{{ resource.publisher }}</td></tr>{% endif %}
-            {% if resource.published %}<tr><th>Published</th><td>{{ resource.published }}</td></tr>{% endif %}
-            <tr><th>Locate</th><td>
-            {% ifequal resource.namespace 'doi' %}<a href="{{ resource.url }}" target="_blank">doi:{{ resource.uri }}</a>{% endifequal %}
-            {% ifequal resource.namespace 'isbn' %}<a href="{{ resource.url }}" target="_blank">isbn:{{ resource.uri }}</a>{% endifequal %}
-            {% ifequal resource.namespace None %}<a href="{{ resource.url }}" target="_blank">{{ resource.uri }}</a>{% endifequal %}
-            </td></tr>
-
-        </table>
         {% ifequal resource.namespace 'isbn' %}
-            <img src="http://covers.openlibrary.org/b/isbn/{{ resource.uri }}-M.jpg">
-        {% endifequal %}
-        <blockquote>
-            {{ resource.description }}
-        </blockquote>   
-        {% ifequal resource.mimemajor 'audio' %}
-            <!-- audio player -->
-            {% flowplayer resource.url audio %}
+            <div id="viewerCanvas" style="width: 530px; height: 400px"></div>
+            <div id="viewerCanvasError" class="notice" style="display:none;" >No preview of this book is currently available.</div>
+            <br class="clear" />
         {% endifequal %}
 
-        {% ifequal resource.mimemajor 'video' %}
-            <!-- video player -->
+        {% ifequal resource.namespace 'doi' %}
+            <div class="notice">
+                <p>This resource depends on subscription access and cannot be viewed on site.</p>
+                <p>Access to the resource is available here: <a href="{{ resource.url }}" target="_blank">doi:{{ resource.uri }}</a>.</p></div>
+            <br class="clear" />
+        {% endifequal %}
+
+        {% if resource.mimemajor == 'audio' or resource.mimemajor == 'video' %}
             {% flowplayer resource.url %}
-        {% endifequal %}
-
-        <div>{% for tag in resource.get_tags %}<span class="stack"><a class="tag" href="{% url resources-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
-        <br style="clear:both;">
-        {% if resource.meta %}
-        <h5>Metadata</h5>
-        <table>
-            {% for key,value in resource.meta.items %}
-                <tr><th>{{ key|capfirst }}</th><td>{{ value }}</td></tr>
-            {% endfor %}
-        </table>
         {% endif %}
-        
-
+ 
     {% else %}
         <p>Question does not exist.</p>
     {% endif %}
 
+&nbsp;
 {% endblock %}
 
+{% block content_right %}
+<h5>Description</h5>
+{% if resource.description %}
+<blockquote>{{ resource.description }}</blockquote>
+{% else %}<p>None provided for this resource.</p>{% endif %}
+
+{% if resource.namespace == 'isbn' %}
+<h5>Buy Now</h5>
+<ul class="shoplist">
+<li class="amazon"><a href="http://www.amazon.com/gp/search?ie=UTF8&field-isbn={{ resource.uri }}&tag=mutadsman-20&index=books&linkCode=ur2&camp=1789&creative=9325" target="_blank">Amazon</a></li>
+<li class="abebooks"><a href="http://www.dpbolvw.net/click-3438919-9867503?url=http://www.abebooks.co.uk/servlet/SearchResults?isbn={{ resource.uri }}" target="_blank" class="abebooks">AbeBooks.co.uk</a><img src="http://www.tqlkg.com/image-3438919-9867503" width="1" height="1" border="0"/></li>
+<li class="biblio"><a href="http://www.dpbolvw.net/click-3438919-10470209?url=http://www.biblio.com/search.php?keyisbn={{ resource.uri }}" target="_blank" class="biblio">Biblio.com</a><img src="http://www.awltovhc.com/image-3438919-10470209" width="1" height="1" border="0"/></li>
+<li class="betterworldbooks"><a href="http://www.tkqlhce.com/click-3438919-10487484?url=http://www.betterworldbooks.com/detail.aspx?utm_source=Affiliate&utm_campaign=Text&utm_medium=Link_to_a_Specific_Book&ItemId={{ resource.uri }}" target="_blank" class="betterworldbooks">BetterWorldBooks</a><img src="http://www.awltovhc.com/image-3438919-10487484" width="1" height="1" border="0"/></li>
+<li class="bookbyte"><a href="http://www.tkqlhce.com/click-3438919-10365617?url=http://www.bookbyte.com/product.aspx?isbn={{ resource.uri }}" target="_blank" class="bookbyte">Bookbyte</a><img src="http://www.ftjcfx.com/image-3438919-10365617" width="1" height="1" border="0"/></li>
+</ul>
+
+{% endif %}
+<!-- Bookmarks -->
+
+
+
+
+{% if resource.meta %}
+<h5>Metadata</h5>
+<table>
+{% for key,data in resource.meta.items %}
+    <tr><th>{{ key|capfirst }}</th><td>{{ data }}</td></tr>
+{% endfor %}
+</table>
+{% endif %}
+
+<h5>Tags</h5>
+{% if resource.tags %}
+    <div>{% for tag in resource.get_tags %}<span class="stack"><a class="tag" href="{% url resources-tagged tag_id=tag.id %}" alt="{{tag}}" title="{{tag}}">{{tag}}</a></span> {%endfor%}</div>
+    <br style="clear:both;">
+{% else %}<p>None provided for this resource.</p>{% endif %}
+
+{% endblock %}
 
