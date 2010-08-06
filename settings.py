@@ -153,8 +153,8 @@ AVATAR_STORAGE_DIR = "avatar"
 FLOWPLAYER_CONFIG = {
                         'default' : 
                             { 'clip' : { 
-                                'autoPlay':'true',
-                                'autoBuffering':'true'                                }, 
+                                'autoPlay':'false',
+                             }, 
                             },
                     }
 

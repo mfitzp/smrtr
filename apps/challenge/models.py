@@ -152,4 +152,4 @@ class UserChallenge(models.Model):
     started = models.DateTimeField(blank = True, null = True, editable = False)
     completed = models.DateTimeField(blank = True, null = True, editable = False)
 
-    
+

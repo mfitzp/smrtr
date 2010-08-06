@@ -19,8 +19,27 @@ def getText(nodelist):
             rc = rc + node.data
     return rc
 
+   
+# Managers providing filters of resource listings for better output (restrict audio/video to flowplayer for example)    
+class ResourceAudioManager(models.Manager):
+    def get_query_set(self):
+        return super(ResourceAudioManager, self).get_query_set().filter(mimetype__startswith='audio/')
 
+class ResourceVideoManager(models.Manager):
+    def get_query_set(self):
+        return super(ResourceAudioManager, self).get_query_set().filter(mimetype__startswith='audio/')
 
+class ResourceAudioVideoManager(models.Manager):
+    def get_query_set(self):
+        return super(ResourceAudioVideoManager, self).get_query_set().filter(mimetype__startswith='audio/') | super(ResourceAudioVideoManager, self).get_query_set().filter(mimetype__startswith='video/')
+
+class ResourceBooksManager(models.Manager):
+    def get_query_set(self):
+        return super(ResourceBooksManager, self).get_query_set().filter(namespace='isbn')
+
+class ResourceLinksManager(models.Manager):
+    def get_query_set(self):
+        return super(ResourceLinksManager, self).get_query_set().exclude(namespace='isbn').exclude(mimetype__startswith='audio/').exclude(mimetype__startswith='video/')
 
 # Question and resource models store information for testing/studying purposes
 class Resource(models.Model):
@@ -33,20 +52,15 @@ class Resource(models.Model):
     # Generate an URL for this resource object - these are standard resource
     # urls (not amazon/etc. which are handled by the template)
     # Preference is given to doi, then urn, then direct links
-    def url(self):
+    def _uri2url(self):
         if self.namespace == 'doi':
             return "http://dx.doi.org/" + self.uri
-
         elif self.namespace == 'isbn':
             return "http://books.google.com/books?as_isbn=%s" % self.uri
-
-        elif self.url:
+        elif self.uri:
             return self.uri
 
-    # Provide Coral cached URL for audio/video media
-    def coral_url(self):
-        p = re.compile('^http://(.*?)/(.*)$')
-        return p.sub(r'http://\1.nyud.net/\2',self.url())
+    url = property(_uri2url, None)
 
     # Autopopulate fields from the url/uri via webservices or direct request
     def autopopulate(self):
@@ -189,6 +203,12 @@ class Resource(models.Model):
     # Resource tagging to aid searching
     tags = TagField()
 
+    objects = models.Manager()
+    audio = ResourceAudioManager()
+    video = ResourceVideoManager()
+    audiovideo = ResourceAudioVideoManager()
+    books = ResourceBooksManager()
+    links = ResourceLinksManager()
 
 
 # User's suggested resources (taken from incorrectly answered questions)
@@ -198,3 +218,8 @@ class UserResource(models.Model):
 
     user = models.ForeignKey(User)
     resource = models.ForeignKey(Resource)
+    
+    
+
+
+        

@@ -96,22 +96,13 @@ def prepare(request, challenge_id):
     except:
         userchallenge = None          
         
-    resources = Resource.objects.filter(concepts__challenge=challenge)
-
-    playlist = list()
-
-    for resource in resources:
-        if resource.mimemajor() == 'audio' or resource.mimemajor() == 'video':
-            playlist.append(
-                {'url':resource.uri, 'title':resource.title}
-                            )
-
     context = {
         'challenge': challenge,
         'userchallenge':userchallenge,
         # List of resources for this challenge's concepts
-        # 'resources': resources,
-        'playlist': playlist,
+        'audiovideo': Resource.audiovideo.filter(concepts__challenge=challenge),
+        'books': Resource.books.filter(concepts__challenge=challenge),
+        'links': Resource.links.filter(concepts__challenge=challenge),
         }
 
     return render_to_response('challenge_prepare.html', context, context_instance=RequestContext(request))
