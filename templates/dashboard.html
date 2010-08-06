@@ -137,7 +137,11 @@
     {% endblock %}
 
     {% block content_right %}
-    
+        
+        <h5>Discussions</h5>        
+        
+        {% include "_forum.html" %}  
+
         <h5>Networks</h5>
         {% if usernetworks %}
             <div class="stackcontainer">
@@ -149,9 +153,6 @@
             <p>Join networks to learn with others at school, online or in your workplace.</p>
         {% endif %}
         <p class="buttonbar"><span class="button"><a href="{% url network-search %}" class="register">Join new networks &raquo;</a></span></p>
-        
-        <h5>Discussions</h5>        
-        
-        {% include "_forum.html" %}  
+
 
     {% endblock %}
