@@ -152,7 +152,10 @@ AVATAR_STORAGE_DIR = "avatar"
 
 FLOWPLAYER_CONFIG = {
                         'default' : 
-                            { 'clip' : { 'autoPlay':'false' }, },
+                            { 'clip' : { 
+                                'autoPlay':'true',
+                                'autoBuffering':'true'                                }, 
+                            },
                     }
 
 COUNTRIES_FLAG_PATH = 'img/flags/%s.png'

@@ -8,12 +8,12 @@
     &raquo; {{ resource.id }}
 {% endblock %}
 
+{% block content_title %}<h1>{{ resource.title }}</h1>{% endblock %}
+
 {% block content %}
 
     {% if resource %}
-        <h1>
-            {{ resource.title }}
-        </h1>
+
         <table>
             {% if resource.author %}<tr><th>Author</th><td>{{ resource.author }}</td></tr>{% endif %}
             {% if resource.publisher %}<tr><th>Publisher</th><td>{{ resource.publisher }}</td></tr>{% endif %}

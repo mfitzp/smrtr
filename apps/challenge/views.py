@@ -13,6 +13,7 @@ from education.models import *
 from network.models import *
 from questions.models import *
 from challenge.models import *
+from resources.models import *
 from challenge.forms import *
 # External
 from haystack.query import SearchQuerySet
@@ -81,6 +82,39 @@ def detail(request, challenge_id):
         }
 
     return render_to_response('challenge_view.html', context, context_instance=RequestContext(request))
+
+
+@login_required
+def prepare(request, challenge_id):
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    #TODO: Access grant/deny
+    
+    # If the user has a challenge record retrieve it, or create a new one
+    try:
+        userchallenge = challenge.userchallenge_set.get( user=request.user )
+    except:
+        userchallenge = None          
+        
+    resources = Resource.objects.filter(concepts__challenge=challenge)
+
+    playlist = list()
+
+    for resource in resources:
+        if resource.mimemajor() == 'audio' or resource.mimemajor() == 'video':
+            playlist.append(
+                {'url':resource.uri, 'title':resource.title}
+                            )
+
+    context = {
+        'challenge': challenge,
+        'userchallenge':userchallenge,
+        # List of resources for this challenge's concepts
+        # 'resources': resources,
+        'playlist': playlist,
+        }
+
+    return render_to_response('challenge_prepare.html', context, context_instance=RequestContext(request))
 
 
 

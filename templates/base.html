@@ -15,9 +15,12 @@
 <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
 {% block extrahead %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <ascript type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
 <ascript type="text/javascript" src="/admin/jsi18n/"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer-3.2.2.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer.playlist-3.0.8.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer.coralcdn.js"></script>
 {% endblock %}
 </head>
 
@@ -62,6 +65,7 @@
         </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
+        
     </div>
     <!-- END Header -->
     <div class="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% endblock %}{% if title %} &rsaquo; {{ title }}{% endif %}</div>

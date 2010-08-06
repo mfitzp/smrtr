@@ -43,6 +43,10 @@ class Resource(models.Model):
         elif self.url:
             return self.uri
 
+    # Provide Coral cached URL for audio/video media
+    def coral_url(self):
+        p = re.compile('^http://(.*?)/(.*)$')
+        return p.sub(r'http://\1.nyud.net/\2',self.url())
 
     # Autopopulate fields from the url/uri via webservices or direct request
     def autopopulate(self):
