@@ -55,4 +55,15 @@ def classname(obj, arg=None):
     else:
         return classname
 
-
+@register.simple_tag
+def percentbar( num ):
+    """ 
+    Usage: {% percentbar o %} 
+            Returns div bar for percent
+    """
+    if num > 0:
+        num = max( 0, min( 100, num ) ) # Limit to 0-100
+        #        return '<span class="sq %s sq%s">%d</span>' % (change, level, sq)
+        return '<div class="percent-bar" style="width:%d%%"></div>' % num         
+    else:
+        return ''

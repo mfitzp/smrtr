@@ -131,8 +131,7 @@
             <h5>Active Modules</h5>
             <div class="stackcontainer">
             {% for usermodule in usermodules %}
-                <div class="stack module">
-                <div class="percent-bar" style="width:{{ usermodule.percent_complete }}%"></div>
+                <div class="stack module">{% percentbar usermodule.percent_complete %}
                 <a href="{% url module-detail module_id=usermodule.module.id %}" title="{{ usermodule.percent_complete }}% complete">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a>
                 </div>
                

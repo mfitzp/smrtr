@@ -15,7 +15,7 @@
 
 {% block progressbar %}
 {% if userconcept %}
-<div class="percent-bar" style="width:{{ userconcept.percent_complete }}%"></div>
+{% percentbar userconcept.percent_complete %}
 <div id="progressbar-content" title="{{ userconcept.percent_complete }}% complete">Active {{ userconcept.start_date|timesince }} </div>
 <div id="progressbar-sq">{% sqchange userconcept.previous_sq userconcept.sq %}</div>
 </div>
