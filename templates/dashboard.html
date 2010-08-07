@@ -114,9 +114,12 @@
         <h5>Available Modules</h5>
         {% if suggestmodules %}
             <div class="stackcontainer">
-            {% for suggestmodule in suggestmodules %}            <span class="stack"><a href="{% url module-detail module_id=suggestmodule.id %}" class="module">{{ suggestmodule }}</a></span>
+            {% for suggestmodule in suggestmodules %}
+                <span class="stack module">
+                <a href="{% url module-detail module_id=suggestmodule.id %}">{{ suggestmodule }}</a>
+                </span>
             {% endfor %}
-            </div>
+            </div><br class="clear" />
     <!--        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p> -->
         {% else %}
             <p>You have no more modules to activate! <a href="{% url network-search %}">Join new networks</a> to find more to study...</p>
@@ -128,7 +131,11 @@
             <h5>Active Modules</h5>
             <div class="stackcontainer">
             {% for usermodule in usermodules %}
-                <span class="stack"><a href="{% url module-detail module_id=usermodule.module.id %}" class="module">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a></span>
+                <div class="stack module">
+                <div class="percent-bar" style="width:{{ usermodule.percent_complete }}%"></div>
+                <a href="{% url module-detail module_id=usermodule.module.id %}" title="{{ usermodule.percent_complete }}% complete">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a>
+                </div>
+               
             {% endfor %}
             </div>
         {% endif %}
@@ -148,7 +155,7 @@
         {% if usernetworks %}
             <div class="stackcontainer">
             {% for usernetwork in usernetworks.all %}
-                <span class="stack"><a href="{% url network-detail network_id=usernetwork.network.id %}" class="network network{{ usernetwork.network.type }}">{{ usernetwork }}</a></span>
+                <span class="stack network network network{{ usernetwork.network.type }}"><a href="{% url network-detail network_id=usernetwork.network.id %}">{{ usernetwork }}</a></span>
             {% endfor %}
             </div>
         {% else %}

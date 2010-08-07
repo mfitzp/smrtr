@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load sq_tags %}
+{% load core_tags %}
 
 {% cycle 'odd' 'even' as zebra %}
 
@@ -17,9 +18,9 @@
 
 {% block progressbar %}
 {% if usermodule %}
+<div class="percent-bar" style="width:{{ usermodule.percent_complete }}%"></div>
 <div id="progressbar-content" title="{{ usermodule.percent_complete }}% complete">Active {{ usermodule.start_date|timesince }} </div>
 <div id="progressbar-sq">{% sqchange usermodule.previous_sq usermodule.sq %}</div>
-<div id="progressbar-complete" style="width:{{ usermodule.percent_complete }}%"></div>
 {% endif %}
 {% endblock %}
 

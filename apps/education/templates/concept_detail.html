@@ -15,9 +15,10 @@
 
 {% block progressbar %}
 {% if userconcept %}
+<div class="percent-bar" style="width:{{ userconcept.percent_complete }}%"></div>
 <div id="progressbar-content" title="{{ userconcept.percent_complete }}% complete">Active {{ userconcept.start_date|timesince }} </div>
 <div id="progressbar-sq">{% sqchange userconcept.previous_sq userconcept.sq %}</div>
-<div id="progressbar-complete" style="width:{{ userconcept.percent_complete }}%"></div>
+</div>
 {% endif %}
 {% endblock %}
 
@@ -25,14 +26,6 @@
 
     {% if concept %}
     
-        <table>
-            {% if userconcept %}
-                <tr><th>Studying</th><td>{{ userconcept.start_date|timesince }}</td></tr>
-                <tr><th>Progress</th><td><div class="progress" style="width:{% widthratio 3 5 100 %}px;"></div></td></tr>            
-            {% endif %}
-            
-        </table>
-
         <blockquote>{{ concept.description }}</blockquote>
 
         {% if userconcept %}
