@@ -3,5 +3,13 @@ from django.contrib import admin
 from education.models import *
 
 
-admin.site.register(Network)
-admin.site.register(UserNetwork)
+class NetworkAdmin(admin.ModelAdmin):
+    # filter_horizontal = ('concepts',)
+    raw_id_fields = ('network',)
+    
+class UserNetworkAdmin(admin.ModelAdmin):
+    # filter_horizontal = ('concepts',)
+    raw_id_fields = ('network',)    
+
+admin.site.register(Network, NetworkAdmin)
+admin.site.register(UserNetwork, UserNetworkAdmin)
