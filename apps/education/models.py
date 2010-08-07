@@ -227,6 +227,7 @@ class UserConcept(models.Model):
             self.percent_complete = self.concept.total_questions / questions_attempted
             # Limit 0-100 (in case the total_questions count is off)
             self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
+            self.save()
         
     # Users on this module in this specific context (network:course:module)
     def members_class(self):
