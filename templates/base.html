@@ -74,7 +74,7 @@
     <!-- Content -->
     {% block pretitle %}{% endblock %}
     <div id="content-title">{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}</div>
-
+    <div id="progressbar">{% block progressbar %}{% endblock %}</div>
     <!-- Notices -->
     {% if messages %}
     <ul class="messagelist">{% for message in messages %}<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>{% endfor %}

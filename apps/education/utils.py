@@ -35,7 +35,7 @@ def batch_concept_update_sq():
 def batch_usermodule_update_sq():
 
     # Random 100 courses
-    # NOTE: Fix to something more sensible
+    # FIXME: Fix to something more sensible
     objects = UserModule.objects.order_by('?')[:100]
 
     for o in objects:
@@ -45,7 +45,7 @@ def batch_usermodule_update_sq():
 def batch_userconcept_update_sq():
 
     # Random 100 courses
-    # NOTE: Fix to something more sensible
+    # FIXME: Fix to something more sensible
     objects = UserConcept.objects.order_by('?')[:100]
 
     for o in objects:
@@ -55,9 +55,29 @@ def batch_userconcept_update_sq():
 def batch_userconcept_update_focus():
 
     # Random 100 courses
-    # NOTE: Fix to something more sensible
+    # FIXME: Fix to something more sensible
     objects = UserConcept.objects.order_by('?')[:100]
 
     for o in objects:
         o.update_focus() # Call focus recalculation for this course
+        
+        
+def batch_userconcept_update_percent_complete():
+
+    # Random 100 courses
+    # FIXME: Fix to something more sensible
+    objects = UserConcept.objects.order_by('?')[:100]
+
+    for o in objects:
+        o.update_percent_complete() # Call focus recalculation for this course 
+        
+# Calculate SQ for the usermodule records with most recently answered questions
+def batch_usermodule_update_percent_complete():
+
+    # Random 100 courses
+    # FIXME: Fix to something more sensible
+    objects = UserModule.objects.order_by('?')[:100]
+
+    for o in objects:
+        o.update_percent_complete() # Call SQ recalculation for this course               
 

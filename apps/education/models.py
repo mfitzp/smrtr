@@ -126,6 +126,13 @@ class UserModule(models.Model):
         self.previous_sq = self.sq
         self.sq = UserConcept.objects.filter(user=self.user, concept__module = self.module).aggregate(Avg('sq'))['sq__avg']
         self.save()
+    def update_percent_complete(self):
+        percent_complete = UserConcept.objects.filter(user=self.user, concept__module = self.module).aggregate(Avg('percent_complete'))['percent_complete__avg']
+        # Don't save if null (i.e. no value yet on any concepts)
+        if percent_complete:
+            self.percent_complete = percent_complete
+            self.save()
+        
     # Users on this module in this specific context (network:course)
     def members_class(self):
         return User.objects.filter( usercourse__coursei__course=self.course(), 
@@ -148,6 +155,8 @@ class UserModule(models.Model):
 
     sq = models.IntegerField(editable = False, null = True)
     previous_sq = models.IntegerField(editable = False, null = True)
+
+    percent_complete = models.IntegerField(editable = False, null = False, default=0)
 
     class Meta:
         unique_together = ("user", "module")
@@ -210,6 +219,14 @@ class UserConcept(models.Model):
         
         self.save()
         
+    def update_percent_complete(self):
+        # We get a list of all attempts, 1 record per question attempted. The count of these is the total attempted questions (magic)
+        # FIXME: Is there an neater way to do this?
+        questions_attempted = self.concept.question_set.filter(userquestionattempt__user=self.user).values('id').annotate(attempts=Count('id')).count()
+        self.percent_complete = self.concept.total_questions / questions_attempted
+        # Limit 0-100 (in case the total_questions count is off)
+        self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
+        
     # Users on this module in this specific context (network:course:module)
     def members_class(self):
         return User.objects.filter( usermodule__modulei__module=self.module(), 
@@ -236,6 +253,8 @@ class UserConcept(models.Model):
    
     focus = models.IntegerField(default = 0, editable = False)
     
+    percent_complete = models.IntegerField(editable = False, null = False, default=0)
+
     class Meta:
         unique_together = ("user", "concept")
 

@@ -13,33 +13,14 @@
 
 {% block title %}{{module}}{% endblock %}
 
-{% block content_title %}
-<div>
-<div id="content-title-image"></div>
-<div id="content-title-header">
-    <h1 style="display:inline">{{module}}</h1> 
-        {% if module.network %}<a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>{% endif %}
-</div>
-<div id="content-title-meta">
-{% if module.network %}
-    Available from <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
-    {% ifnotequal module.networks.count 1 %}
-        and <a href="{% url module-providers module_id=module.id %}">{{ module.networks.count|add:"-1" }} other network{{ module.networks.count|pluralize }}</a>
-    {% endifnotequal %}
-{% else %}
-    Available from <a href="{% url module-providers module_id=module.id %}">{{ module.networks.count }} network{{ module.networks.count|pluralize }}</a>                
-{% endif %}
-</div>                    
-<div id="content-title-sq">
-    {% if usermodule %}
-        {% sqchange usermodule.previous_sq usermodule.sq %}
-    {% else %}
-        {% if request.user.get_profile %}{% sqdifficulty module.sq request.user.get_profile.sq %}
-        {% else %}None{% endif %}
-    {% endif %}
-</div>
-</div>     
+{% block content_title %}{% include "_module_header.html" %}{% endblock %}
 
+{% block progressbar %}
+{% if usermodule %}
+<div id="progressbar-content">Active {{ usermodule.start_date|timesince }} </div>
+<div id="progressbar-sq">{% sqchange usermodule.previous_sq usermodule.sq %}</div>
+<div id="progressbar-complete" style="width:{{ usermodule.percent_complete }}%"></div>
+{% endif %}
 {% endblock %}
 
 {% block content_left %}

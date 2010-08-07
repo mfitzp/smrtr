@@ -6,8 +6,12 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Module
+    &raquo;
     {% if module.name %}
-        &raquo; {{ module.name }}
+        {{ module.name }}
+        &raquo; Edit
+    {% else %}
+        Create new module
     {% endif %}    
 {% endblock %}
 
@@ -20,13 +24,11 @@
 {% endblock %}
 
 {% block content_title %}
-<h1>
     {% if module.name %}
-        Edit '{{ module.name }}'
+        {% include "_module_header.html" %}
     {% else %}
-        Create new module
+        <h1>Create new module</h1>
     {% endif %}
-</h1>
 {% endblock %}
 
 {% block content %}

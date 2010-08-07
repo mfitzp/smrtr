@@ -10,7 +10,7 @@
     &raquo; Providers
 {% endblock %}
 
-{% block content_title %}<h1>{{module}} Providers</h1>{% endblock %}
+{% block content_title %}{% block content_title %}{% include "_module_header.html" %}{% endblock %}{% endblock %}
 
 {% block content %}
 
