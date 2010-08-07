@@ -223,9 +223,10 @@ class UserConcept(models.Model):
         # We get a list of all attempts, 1 record per question attempted. The count of these is the total attempted questions (magic)
         # FIXME: Is there an neater way to do this?
         questions_attempted = self.concept.question_set.filter(userquestionattempt__user=self.user).values('id').annotate(attempts=Count('id')).count()
-        self.percent_complete = self.concept.total_questions / questions_attempted
-        # Limit 0-100 (in case the total_questions count is off)
-        self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
+        if questions_attempted > 0:
+            self.percent_complete = self.concept.total_questions / questions_attempted
+            # Limit 0-100 (in case the total_questions count is off)
+            self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
         
     # Users on this module in this specific context (network:course:module)
     def members_class(self):
