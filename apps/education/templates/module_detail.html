@@ -17,7 +17,7 @@
 
 {% block progressbar %}
 {% if usermodule %}
-<div id="progressbar-content">Active {{ usermodule.start_date|timesince }} </div>
+<div id="progressbar-content" title="{{ usermodule.percent_complete }}% complete">Active {{ usermodule.start_date|timesince }} </div>
 <div id="progressbar-sq">{% sqchange usermodule.previous_sq usermodule.sq %}</div>
 <div id="progressbar-complete" style="width:{{ usermodule.percent_complete }}%"></div>
 {% endif %}
