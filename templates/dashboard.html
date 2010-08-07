@@ -115,11 +115,11 @@
         {% if suggestmodules %}
             <div class="stackcontainer">
             {% for suggestmodule in suggestmodules %}
-                <span class="stack module">
+                <div class="stack module">
                 <a href="{% url module-detail module_id=suggestmodule.id %}">{{ suggestmodule }}</a>
-                </span>
+                </div>
             {% endfor %}
-            </div><br class="clear" />
+            </div>
     <!--        <p style="margin-top:1em;"><a href="" class="register">Show all available modules &raquo;</a><p> -->
         {% else %}
             <p>You have no more modules to activate! <a href="{% url network-search %}">Join new networks</a> to find more to study...</p>
@@ -155,7 +155,9 @@
         {% if usernetworks %}
             <div class="stackcontainer">
             {% for usernetwork in usernetworks.all %}
-                <span class="stack network network network{{ usernetwork.network.type }}"><a href="{% url network-detail network_id=usernetwork.network.id %}">{{ usernetwork }}</a></span>
+                <div class="stack network network{{ usernetwork.network.type }}">
+                <a href="{% url network-detail network_id=usernetwork.network.id %}">{{ usernetwork }}</a>
+                </div>
             {% endfor %}
             </div>
         {% else %}
