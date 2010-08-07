@@ -93,6 +93,8 @@ class UserChallenge(models.Model):
             super(UserChallenge, self).save(force_insert, force_update)
             self.update_sq()
             
+        #self.expires = datetime.datetime.now() + datetime.timedelta(weeks=1) # Default expires in 1 week
+            
         super(UserChallenge, self).save(force_insert, force_update)
 
         
@@ -153,4 +155,5 @@ class UserChallenge(models.Model):
     started = models.DateTimeField(blank = True, null = True, editable = False)
     completed = models.DateTimeField(blank = True, null = True, editable = False)
 
+    #expires = models.DateTimeField(blank = True, editable = False) # Exlucde from listings after this time. If not started by this time+n, remove from listings.
 

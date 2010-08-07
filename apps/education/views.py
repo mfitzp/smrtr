@@ -416,3 +416,79 @@ def concept_resources(request, concept_id):
     
     return render_to_response('concept_resources.html', {'concept': concept, 'userconcept':userconcept, 'resources': resources}, context_instance=RequestContext(request))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+# Presents a search mechanism to find modules to activate (optionally) (free text and tags)
+@login_required
+def module_search( request, 
+                    template_name='module_search.html',
+                    next=None ):
+    
+    from education.forms import ModuleSearchForm
+    
+    if request.POST.get('addmodule'):
+        
+        mids = request.POST.getlist('addmodule')
+        
+        for mid in mids:
+            module = Module.objects.get(pk=mid)
+            usermodule = UserModule( user=request.user, module=module  )
+            try:
+                usermodule.save()
+            except:
+                messages.warning(request, _(u"You have already activated %s" % module.name ) )
+            else:
+                messages.success(request, _(u"You have activated %s" % module.name ) )
+        if next:
+            return redirect( next )
+
+    query = ''
+    results = []
+    # RelatedSearchQuerySet().filter(content='foo').load_all()
+
+    sqs = SearchQuerySet().models(Module)
+
+    if request.GET.get('q'):
+        querydata = request.GET
+    else:
+        querydata = {'q':' '} #Default search return all
+        
+    form = ModuleSearchForm(querydata, searchqueryset=sqs, load_all=True )
+
+    if form.is_valid():
+        query = form.cleaned_data['q']
+        results = form.search()
+        
+    paginator = Paginator(list(results), 10)
+        
+    try:
+        page_obj = paginator.page(int(request.GET.get('page', 1)))
+    except (ValueError, EmptyPage, InvalidPage): 
+        raise Http404("No such page of results!")    
+        
+    
+    context = { 
+        'form': form,
+        'query': query,
+        'results': results,
+        'next' : next,
+        'page_obj': page_obj,
+        'paginator': paginator,
+    }
+    
+    return render_to_response(template_name, context, context_instance=RequestContext(request))    
+
+

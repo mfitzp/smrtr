@@ -32,3 +32,14 @@ class ConceptForm(forms.ModelForm):
         if request: # If passed only show networks the user is on
             self.fields['network'].queryset = Network.objects.filter(usernetwork__user=request.user)         
 
+
+class ModuleSearchForm(SearchForm):
+
+    def search(self):
+        sqs = super(ModuleSearchForm, self).search()
+        return sqs
+        
+
+    def __init__(self, *args, **kwargs):
+        super(ModuleSearchForm, self).__init__(*args, **kwargs)
+       

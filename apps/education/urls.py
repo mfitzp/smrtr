@@ -27,6 +27,9 @@ urlpatterns = patterns('',
     url(r'^module/(?P<module_id>\d+)/edit/$', 'education.views.module_edit',  name='module-edit'  ),
     url(r'^module/(?P<module_id>\d+)/concepts/add/$', 'education.views.module_detail',  name='module-add-concepts'  ),
 
+    url(r'^module/search/$', 'education.views.module_search',  name='module-search'  ),
+
+
     # Concept generic
     url(r'^concept/(?P<concept_id>\d+)/$', 'education.views.concept_detail',  name='concept-detail'  ),
     url(r'^concept/(?P<concept_id>\d+)/register/$', 'education.views.concept_register',  name='concept-register'  ),

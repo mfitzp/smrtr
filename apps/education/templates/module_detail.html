@@ -20,7 +20,7 @@
 {% if usermodule %}
 {% percentbar usermodule.percent_complete %}
 <div id="progressbar-content" title="{{ usermodule.percent_complete }}% complete">Active {{ usermodule.start_date|timesince }} </div>
-<div id="progressbar-sq">{% sqchange usermodule.previous_sq usermodule.sq %}</div>
+<div id="progressbar-sq" title="Your module SQ is {{ userconcept.sq }}">{% sqchange usermodule.previous_sq usermodule.sq %}</div>
 {% endif %}
 {% endblock %}
 

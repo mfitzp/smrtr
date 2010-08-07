@@ -46,7 +46,7 @@ def home(request):
         # Gets all concepts that are available (on user's modules) but not active
         # Later limit by 'dependencies on individual entries'
         # suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
-        suggestmodules = Module.objects.exclude(usermodule__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')[0:3]
+        suggestmodules = Module.objects.exclude(usermodule__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
