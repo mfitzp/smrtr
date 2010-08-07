@@ -76,6 +76,7 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
+    &raquo; Challenge    
     &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a>
     &raquo; Questions
 {% endblock %}

@@ -45,7 +45,7 @@ class Network(models.Model):
         if self.id is None: #is new
             # Need to save the parent object first to guarantee unique slug
             super(Network, self).save(force_insert, force_update)
-            self.forum = Forum.objects.create(slug='n'+str(self.id),name=self.name)
+            self.forum = Forum.objects.create(name=self.name)
         super(Network, self).save(force_insert, force_update)
         
     def get_absolute_url(self):
