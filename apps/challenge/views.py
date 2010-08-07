@@ -42,7 +42,7 @@ def create(request):
             form.save_m2m()
             
             # Now populate question lists based on current settings
-            challenge.update_questions()
+            challenge.generate_questions()
             
             # Create userchallenge for the creating user (will need one anyway) and save
             UserChallenge(user=request.user, challenge=challenge).save()
