@@ -41,5 +41,6 @@ urlpatterns = patterns('',
 
 
     url(r'^c(?P<concept_id>\d+)/questions/add/', 'education.views.concept_add_questions', name='concept-add-questions' ),
+    url(r'^c(?P<concept_id>\d+)/resources/add/', 'education.views.concept_add_resources', name='concept-add-resources' ),
 
 )

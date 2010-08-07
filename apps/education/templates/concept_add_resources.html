@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load sq_tags %}
+{% load pagination_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    {% if concept.network %}
+    &raquo; <a href="{% url network-detail network_id=concept.network.id %}">{{ concept.network }}</a>
+    {% endif %}
+    &raquo; <a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a>
+    &raquo; Resources
+    &raquo; Add  
+{% endblock %}
+
+{% block content_title %}<h1>{{ concept.name }}</h1>{% endblock %}
+
+{% block content_left %}
+
+    <table>
+        <tr><th>SQ</th><td>
+            {% if userconcept %}
+                {% sqchange 100 userconcept.sq %}
+            {% endif %}
+            
+            {% sqdifficulty concept.sq request.user.get_profile.sq %}
+        </td></tr>
+    </table>
+
+    <blockquote>{{ concept.description }}</blockquote>
+
+    <form method="get" action="?q={{ query }}">
+        <table>
+            <tr>
+                <th style="vertical-align:middle;"><label for="id_q">{{ form.q.label }}</th>
+                    <td>{{ form.q.errors }} {{ form.q }}</td>
+                <td>
+                    <input type="submit" value="Search">
+                </td>
+            </tr>
+        </table> 
+    </form>
+        {% if query %}
+            <form method="post" action="?q={{ query }}">
+            <table>
+            {% for result in page_obj.object_list %}
+            {% with result.object as resource %}
+            
+                {% if resource %}
+                <tr>
+                    <td><input type="checkbox" name="addresource" value="{{ resource.id }}" {% if concept in resource.concepts.all %}checked disabled{% endif %}></td>
+                    <td>
+                    {% ifequal resource.namespace 'isbn' %}
+                        <img src="{{ resource.thumbnail }}">
+                    {% endifequal %}
+                    </td>
+                    <td><a href="{% url resource-detail resource.id %}"><strong>{{ resource.title }}</strong></a><br />{{ resource.description|truncatewords:25 }}</td>
+                    <td>{{ resource.created|timesince }}</a></td>
+                </tr>                
+                {% endif %}
+
+            {% endwith %}
+            {% empty %}
+                <tr><td>No new questions found for '{{query}}'</td></tr>
+            {% endfor %}
+            </table>
+            <input type="submit" value="Add Questions">
+            </form>
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+
+
+
+{% paginate %}
+
+{% endblock %}
+{% block content_right %}
+        <h5>Statistics</h5>
+        <p>
+            There are <strong>{{ concept.question_set.count }} question{{ concept.question_set.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> currently assigned to {{ concept }}.
+        </p>
+
+{% endblock %}
+

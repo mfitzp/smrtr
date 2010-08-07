@@ -1,0 +1,9 @@
+{{ object.title }}
+{{ object.description }}
+{{ object.uri }}
+{{ object.author }}
+{{ object.publisher }}
+
+{% for tag in object.get_tags %}
+    {{ tag }}
+{% endfor %}

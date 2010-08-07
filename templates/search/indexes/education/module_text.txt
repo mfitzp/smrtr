@@ -1,0 +1,6 @@
+{{ object.name }}
+{{ object.description }}
+
+{% for concept in object.concept_set.all %}
+    {{ concept.name }}
+{% endfor %}

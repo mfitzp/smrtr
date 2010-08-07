@@ -66,7 +66,7 @@
 
         <h5>Questions & Resources</h5>
         <p>
-            There are <strong>{{ concept.question_set.count }} question{{ concept.question_set.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> available for {{ concept }}. Help yourself and others by <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Questions</a> or <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Resources</a> now.
+            There are <strong>{{ concept.question_set.count }} question{{ concept.question_set.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> available for {{ concept }}. You can help yourself and others by <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Questions</a> or <a href="{% url concept-add-resources concept_id=concept.id %}" class="questionlink">Adding Resources</a> now.
         </p>
 
         {% include "_memberships.html" %}
@@ -84,6 +84,10 @@
 {% with concept as obj %}{% include "_social.html" %}{% endwith %}
 
 <h5>Management</h5>
-<div class="buttonbar"><span class="button"><a href="{% url concept-edit concept_id=concept.id %}">Edit</a></span></div>
+<div class="buttonbar left">
+<span class="button"><a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Add Questions</a></span>
+<span class="button"><a href="{% url concept-add-resources concept_id=concept.id %}" class="questionlink">Add Resources</a></span>
+<span class="button"><a href="{% url concept-edit concept_id=concept.id %}">Edit</a></span>
+</div>
 
 {% endblock %}
