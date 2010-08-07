@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load countries_tags %}
+{% load pagination_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Module
+    &raquo; Search
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="focus"><h4>Find new modules</h4><div>
+    <p>Modules are collections of subjects you've chosen to study on <strong>smrtr</strong>.</p>    
+    <p>Normally you will find these through your networks, but if you want to do your own thing you can also find them by searching below!</p>
+    <form method="get" action="?q={{query}}">
+        <table>
+            <tr>
+                <th style="vertical-align:middle;"><label for="id_q">{{ form.q.label }}</th>
+                    <td>{{ form.q.errors }} {{ form.q }}</td>
+                <td>
+                    <input type="submit" value="Search">
+                </td>
+            </tr>
+        </table>            <form method="post" action=".">
+    </form>
+    </div></div>
+
+        {% if query %}
+            <form method="post" action="?q={{query}}">
+            <input type="hidden" name="q" value="{{ query }}">
+            <p class="buttonbar"><input type="submit" value="Activate selected modules &raquo;"></p>
+            <table>
+            {% for result in page_obj.object_list %}
+                {% with result.object as module %}
+                    {% if module %}
+                    <tr>
+                        <td><input type="checkbox" name="addmodule" value="{{ module.id }}" {% if module in request.user.modules.all %}checked disabled{% endif %}></td>
+                        <th><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></th>
+                        <td>{% if module.network %}<span class="network network{{ module.network.type }}">{{ module.network }}</span>{% endif %}</td>
+                    </tr>
+                    {% endif %}
+                {% endwith %}
+                {% empty %}
+            {% endfor %}
+            </table>                
+        <br class="clear" />
+        <p class="buttonbar"><input type="submit" value="Activate selected modules &raquo;"></p>
+        </form>        
+
+        <!-- <p>Don't find your module listed? <a href="#">Create it!</a></p> -->
+
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+
+        {% if next %}
+            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any modules &raquo;</a></span></p>
+        {% endif %}
+
+
+        {% paginate %}
+{% endblock %}

@@ -1,2 +1,10 @@
 {{ object.name }}
 {{ object.description }}
+
+{% for module in object.modules %}
+    {{ module.name }}
+{% endfor %}
+
+{% for concept in object.concept_set %}
+    {{ concept.name }}
+{% endfor %}
