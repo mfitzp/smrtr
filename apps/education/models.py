@@ -213,6 +213,9 @@ class UserConcept(models.Model):
         if self.concept.sq and self.sq:    
             # +1 for every SQ point difference between the uc and the c
             self.focus +=  self.concept.sq - self.sq
+
+        # If done all the questions, ask them less often        
+        self.focus -= self.percent_complete
             
         # Limit 0-100
         self.focus = max( min( self.focus, 100 ), 0 )
