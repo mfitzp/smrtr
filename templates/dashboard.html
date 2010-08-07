@@ -121,7 +121,10 @@
             {% endfor %}
             </div>
         {% endif %}
-        <p class="buttonbar">Don't see what you want here? <span class="button"><a href="{% url network-search %}" class="register">Join new networks &raquo;</a></span></p>
+        <p class="buttonbar">Don't see what you want here? 
+            <span class="button"><a href="{% url network-search %}" class="register">Join networks &raquo;</a></span>
+            <span class="button"><a href="{% url module-search %}" class="register">Add modules &raquo;</a></span>
+        </p>
 
        {% if usermodules %}
             <h5>Active Modules</h5>
@@ -158,7 +161,7 @@
         {% else %}
             <p>Join networks to learn with others at school, online or in your workplace.</p>
         {% endif %}
-        <p class="buttonbar"><span class="button"><a href="{% url network-search %}" class="register">Join new networks &raquo;</a></span></p>
+        <p class="buttonbar"><span class="button"><a href="{% url network-search %}" class="register">Join networks &raquo;</a></span></p>
 
 
     {% endblock %}
