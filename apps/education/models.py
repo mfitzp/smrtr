@@ -224,7 +224,7 @@ class UserConcept(models.Model):
         # FIXME: Is there an neater way to do this?
         questions_attempted = self.concept.question_set.filter(userquestionattempt__user=self.user).values('id').annotate(attempts=Count('id')).count()
         if questions_attempted > 0:
-            self.percent_complete = self.concept.total_questions / questions_attempted
+            self.percent_complete = (self.concept.total_questions / questions_attempted) * 100
             # Limit 0-100 (in case the total_questions count is off)
             self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
             self.save()
