@@ -34,7 +34,7 @@ def generate_user_challenges(user, number = None):
         build = dict()
         
         # Full list of user's concepts, in descending focus (highest focus first)
-        userconcepts = UserConcept.objects.filter(user=user).exclude(concept__total_questions=0).order_by('-focus','?')
+        userconcepts = UserConcept.objects.filter(user=user).exclude(concept__total_questions=0).order_by('-focus')
         # Iterate userconcepts 
         try:
             for userconcept in userconcepts:
