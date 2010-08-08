@@ -33,6 +33,13 @@
 </div>                    
 {% endblock %}
 
+{% block progressbar %}
+{% if usernetwork %}
+<div id="progressbar-content">Joined {{ usernetwork.start_date|date }} ({{usernetwork.start_date|timesince}} ago)</div>
+{% endif %}
+{% endblock %}
+
+
 {% block content_left %}
 
     {% if network %}
@@ -114,10 +121,7 @@
         <h5>Discussions</h5>
         {% include "_forum.html" %}
         
-        {% if usernetwork %}
-        <h5>Membership</h5>
-        <p>You joined this network on {{ usernetwork.start_date|date }} ({{usernetwork.start_date|timesince}} ago)</p>
-        {% endif %}
+
 
         {% with network as obj %}{% include "_social.html" %}{% endwith %}
 
