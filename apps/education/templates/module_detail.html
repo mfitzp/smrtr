@@ -39,6 +39,7 @@
             <!-- Registration form -->
             <form action="{% url module-register module_id=module.id %}" method="post">
             <input type="hidden" name="submit" value="1" />
+            {% if next %}<input type="hidden" name="next" value="{{next}}" />{% endif %}
             &nbsp;<input type="submit" value="Activate '{{module}}' &raquo;" />
             </form>
             </div>

@@ -52,7 +52,8 @@ def module_detail(request, module_id):
                 'total_members': module.users.count(),                
                 # Forum items
                 "forum": module.forum,
-                "threads": module.forum.thread_set.all()
+                "threads": module.forum.thread_set.all(),
+                'next':request.GET.get('next')
               }
 
     return render_to_response('module_detail.html', context, context_instance=RequestContext(request) )
@@ -82,8 +83,8 @@ def module_register(request, module_id):
         request.user.message_set.create(
         message=_(u"You are now studying ") + module.name)
 
-        if 'success_url' in request.POST:
-            return HttpResponseRedirect(request.POST['success_url'])
+        if 'next' in request.POST:
+            return HttpResponseRedirect(request.POST['next'])
         else:
             return module_detail(request, module_id)
 
@@ -148,8 +149,8 @@ def concept_register(request, concept_id ):
         request.user.message_set.create(
             message=concept.name + _(u" has been added to your study list"))
                         
-        if 'success_url' in request.POST:
-            return HttpResponseRedirect(request.POST['success_url'])
+        if 'next' in request.POST:
+            return HttpResponseRedirect(request.POST['next'])
         else:
             return concept_detail(request, concept_id)
 

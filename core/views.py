@@ -37,9 +37,10 @@ def home(request):
         # this is called when new modules are activated would be preferable (adding this directly
         # to the education app creates an unwanted dependency).
         if not userchallenges:
-            from challenge.utils import generate_user_challenges
-            generate_user_challenges(request.user)
-            userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
+            if usermodules: # Only generate if there are modules available
+                from challenge.utils import generate_user_challenges
+                generate_user_challenges(request.user)
+                userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
         
         # Flag True/False whether challenges exist at all for this user
         userchallengesexist = ( userchallenges.count() + userchallengescomplete.count() ) > 0

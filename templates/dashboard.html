@@ -101,12 +101,10 @@
 
     {% else %}
     <div class="focus"><h4>Welcome!</h4>
-    <table>
-        <tr id="focus"><td colspan="10">
-            <p>Once you're up and running, this box will show your current active challenges for today. To begin, just activate one of the modules
-            below.</p>
-        </td></tr>
-    </table>
+        <p>Once you're up and running, this box will show your <strong>current active challenges</strong> and resources for study. You can control
+        what subjects you get by <strong>activating and deactivating modules</strong> below.</p>
+        <p>To get started, choose a module from the list of <strong>available modules</strong> below and click to activate it!</p>
+        <p>Any time you want to study something new, just <strong>click again!</strong></p>
     </div>
     {% endif %}
 
@@ -116,7 +114,7 @@
             <div class="stackcontainer">
             {% for suggestmodule in suggestmodules %}
                 <div class="stack module">
-                <a href="{% url module-detail module_id=suggestmodule.id %}">{{ suggestmodule }}</a>
+                <a href="{% url module-register module_id=suggestmodule.id %}?next=/">{{ suggestmodule }}</a>
                 </div>
             {% endfor %}
             </div>
