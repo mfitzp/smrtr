@@ -46,7 +46,7 @@ def cron():
     
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
-    batch_generate_user_challenges()
+    batch_generate_userchallenges()
 
     # Don't ping google with sitemap when developing (be nice)
     from settings import DEBUG

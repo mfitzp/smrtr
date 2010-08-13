@@ -256,7 +256,7 @@ class UserConcept(models.Model):
     sq = models.IntegerField(editable = False, null = True)
     previous_sq = models.IntegerField(editable = False, null = True)
    
-    focus = models.IntegerField(default = 100, editable = False) # Default to 100 to ensure newlt activated are preferentially chosen
+    focus = models.IntegerField(default = 100, editable = False) # Default to 100 to ensure newly activated are preferentially chosen
     
     percent_complete = models.IntegerField(editable = False, null = False, default=0)
 

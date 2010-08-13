@@ -157,3 +157,16 @@ class UserChallenge(models.Model):
 
     #expires = models.DateTimeField(blank = True, editable = False) # Exlucde from listings after this time. If not started by this time+n, remove from listings.
 
+
+
+from django.db.models.signals import post_save
+from education.models import UserModule
+from challenge.utils import generate_userchallenges
+
+def generate_userchallenges_on_adding_usermodule(sender, **kwargs):
+    usermodule = kwargs['instance']
+    generate_userchallenges(usermodule.user, 2)
+
+post_save.connect(generate_userchallenges_on_adding_usermodule, sender=UserModule)
+
+
