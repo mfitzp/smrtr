@@ -58,14 +58,16 @@ urlpatterns = patterns('',
     url(r'^discuss/(?P<forum_id>[-\w]+)/$', 'core.views.forum_parent_redirect', name="discuss_forum"),
     (r'^discuss/', include('discuss.urls')),
     
-    #url(r'^wall/add/(?P<slug>[-\w]+)/$', 'core.views.wall_add', name="add_wall_item"),
-    #url(r'^wall/edit/(?P<id>\d+)/$', 'core.views.wall_edit', name="edit_wall_item"),
-    
     (r'^search/', include('haystack.urls')),
-    
     (r'^avatar/', include('avatar.urls')),
-    
     (r'^messages/', include('messages.urls')),
+
+
+    # Direct to template views
+    (r'^faq/$', 'django.views.generic.simple.direct_to_template', {'template': 'faq.html'}),
+    (r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'about.html'}),
+    (r'^cg/$', 'django.views.generic.simple.direct_to_template', {'template': 'cg.html'}),
+
     
     # The following are included for development purposes (i.e. can view/edit error page without creating an error ;)
     (r'^500/$', 'django.views.generic.simple.direct_to_template', {'template': '500.html'}),
@@ -75,7 +77,6 @@ urlpatterns = patterns('',
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     (r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 
-    (r'^faq/$', 'django.views.generic.simple.direct_to_template', {'template': 'faq.html'}),
     
    
 )
