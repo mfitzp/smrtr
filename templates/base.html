@@ -65,10 +65,22 @@
         </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
-        
+        <!--
+        <div id="toptabs">
+            <ul>
+                <li><a href="/about/">about</a></li>
+                <li><a href="/top5/">top 5</a></li>
+                <li><a href="/help/">?</a></li>
+            </ul>
+        </div>
+        -->
     </div>
     <!-- END Header -->
-    <div class="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% endblock %}{% if title %} &rsaquo; {{ title }}{% endif %}</div>
+    <div id="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% endblock %}{% if title %} &rsaquo; {{ title }}{% endif %}
+        <div id="toplinks">
+            <!-- <a href="/statistics">top5</a><a href="/about/">about</a> --><a href="/faq/">?</a>
+        </div>
+    </div>
     {% endif %}
 
     <!-- Content -->

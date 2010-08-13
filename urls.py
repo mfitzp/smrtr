@@ -74,6 +74,9 @@ urlpatterns = patterns('',
     # Sitemaps
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     (r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+
+    (r'^faq/$', 'django.views.generic.simple.direct_to_template', {'template': 'faq.html'}),
+    
    
 )
 

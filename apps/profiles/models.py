@@ -29,7 +29,8 @@ class UserProfile(models.Model):
             UserNetwork(user=self.user, network=Network.objects.get(pk=2)).save()
             # Auto-join General Knowledge module in smrtr Start
             # n.b. All child concepts are auto-activated by UserModule.save 
-            UserModule(user=self.user, module=Module.objects.get(pk=1) ).save()
+            # UserModule(user=self.user, module=Module.objects.get(pk=1) ).save()
+            # NOTE: No longer auto-add GK, instead step user through activating first module.
             
         super(UserProfile, self).save(force_insert, force_update)
 

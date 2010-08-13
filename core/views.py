@@ -24,8 +24,10 @@ def home(request):
 
         # User logged in, present the user dashboard
         usernetworks = request.user.usernetwork_set.all()
+
         usermodules = request.user.usermodule_set.all()
-        userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
+        
+        #userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
 
         userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
         userchallengescomplete = request.user.userchallenge_set.filter(status__exact=2)[0:3]
