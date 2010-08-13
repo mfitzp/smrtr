@@ -21,22 +21,33 @@ class Command(BaseCommand):
                 data = dict()
                 # Import from own standard CSV listing
                 if 'question' in row:
-                    pass
-                # Import from mturk format
-                else:
-                    if 'HITId' in row:
-                        # Translate to standard format (as above)
-                        data['question'] = row['Answer.question']
-                        data['correct'] = row['Answer.correct']
-                        data['incorrect'] = [
-                            row['Answer.incorrect1'],
-                            row['Answer.incorrect2'],
-                            row['Answer.incorrect3'],
-                            row['Answer.incorrect4'],
-                            ]
-                        data['tags'] = row['Answer.tags']
+                    # Translate to standard format (as above)
+                    data['question'] = row['Question']
+                    data['correct'] = row['Correct']
+                    data['incorrect'] = [
+                        row['Incorrect1'],
+                        row['Incorrect2'],
+                        row['Incorrect3'],
+                        row['Incorrect4'],
+                        ]
+                    data['tags'] = row['Tags']
 
-                        self.doimport(data)                        
+                    self.doimport(data)                        
+
+                # Import from mturk format
+                elif 'HITId' in row:
+                    # Translate to standard format (as above)
+                    data['question'] = row['Answer.question']
+                    data['correct'] = row['Answer.correct']
+                    data['incorrect'] = [
+                        row['Answer.incorrect1'],
+                        row['Answer.incorrect2'],
+                        row['Answer.incorrect3'],
+                        row['Answer.incorrect4'],
+                        ]
+                    data['tags'] = row['Answer.tags']
+
+                    self.doimport(data)                        
 
             print "Done."
             
