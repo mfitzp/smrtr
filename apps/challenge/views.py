@@ -50,7 +50,7 @@ def create(request):
             return redirect( 'challenge-do', {'challenge_id':challenge.id} ) # Redirect to challenge_do for this challenge
     
     else:
-        form = ChallengeForm(request, request.GET) 
+        form = ChallengeForm(request, request.GET or None) 
         # Provide concept-possibilities (from user's own lists)
         
 

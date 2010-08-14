@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load sq_tags %}
+{% load core_tags %}
 {% load avatar_tags %}
 {% load countries_tags %}
 
@@ -13,62 +14,77 @@
 
 {% block title %}{{profile}}{% endblock %}
 
-{% block content_title %}<h1>{{ profile }}</h1>{% endblock %}
+{% block content_title %}
+<div>
+<div id="content-title-image">{% avatar puser 48 %}</div>
+<div id="content-title-header">
+    <h1 style="display:inline">{{profile}}</h1> 
+        {# Home network #}
+        {% if profile.network %}<a href="{% url network-detail network_id=profile.network.id %}" class="network network{{ profile.network.type }}">{{ profile.network }}</a>{% endif %}
+</div>
+<div id="content-title-meta">
+Member for {{ puser.date_joined|timesince }} &#183;
+{% if profile.city or profile.country %}
+    Location <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+{% else %}Unknown{% endif %} 
+{% if profile.url %}&#183; Web <a href="{{ profile.url }}">{{ profile.url }}</a>{% endif %}
+
+</div>                    
+<div id="content-title-sq">
+    {% sqchange profile.previous_sq profile.sq %}
+</div>
+</div>  
+{% endblock %}
 
 {% block content_left %}
 
-    {% if puser %}
+    <blockquote>{{ profile.about }}</blockquote>
 
 
-        <table>
-        <tr>
-        <th rowspan="10">{% avatar puser 48 %}</th></tr>
-        
-        {% if profile.city %}
-            <tr>
-            <th>Location</th>
-            <td><a href="http://maps.google.com/maps?q={{ profile.locationquery|urlencode }}&amp;t=h" target="_blank">
-                {{ profile.city }}, <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span>
-            </a></td></tr>
-        {% endif %}
-        
-        <tr><th>Joined</th><td>{{ puser.date_joined|timesince }} ago</td></tr>
-        <tr><th>SQ</th><td>{% sqchange profile.previous_sq profile.sq %}</td></tr>
-        </table>
-
-        <blockquote>{{ profile.about }}</blockquote>
-    
-        {% ifequal puser user %}
-
-            <a href="{% url profile-edit %}">Edit your profile</a><br />
-            <a href="{% url avatar_change %}">Change your profile picture</a><br />
-            {% url admin:password_change as password_change_url %}
-            {% if password_change_url %}
-                <a href="{{ password_change_url }}">
-            {% else %}
-                <a href="{{ root_path }}password_change/">
-            {% endif %}
-            {% trans 'Change password' %}</a>
-
-
-        {% else %}
-
-            <a href="{% url messages_compose_to recipient=puser.username %}">Send me a private message</a>
-
-        {% endifequal %}
-
-    {% else %}
-        <p>No profile available.</p>
-    {% endif %}
+    <h5>Active Modules</h5>
+    <div class="stackcontainer">
+    {% for usermodule in puser.usermodule_set.all %}
+        <div class="stack module stackvertical">{% percentbar usermodule.percent_complete %}
+        <a href="{% url module-detail module_id=usermodule.module.id %}" title="{{ usermodule.percent_complete }}% complete">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a>
+        </div>
+       
+    {% endfor %}
+    </div>
 
 {% endblock %}
 
 {% block content_right %}
+
+    {% ifnotequal puser user %}
+        <h5>Contact Me</h5>
+        <a href="{% url messages_compose_to recipient=puser.username %}">Send me a private message</a>
+
+    {% endifnotequal %}
+
+    {% ifequal puser user %}
+        <h5>Manage Your Profile</h5>
+
+        <a href="{% url profile-edit %}">Edit your profile</a><br />
+        <a href="{% url avatar_change %}">Change your profile picture</a><br />
+        {% url admin:password_change as password_change_url %}
+        {% if password_change_url %}
+            <a href="{{ password_change_url }}">
+        {% else %}
+            <a href="{{ root_path }}password_change/">
+        {% endif %}
+        {% trans 'Change password' %}</a>
+
+
+    {% endifequal %}
+
+
+
+
     {% if puser %}
         <h5>Networks</h5>
             <div>
             {% for network in puser.networks.all %}
-                <span class="stack"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a></span>
+                <div class="stack network network{{ network.type }}"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></div>
             {% endfor %}
             </div>    
     {% endif %}
