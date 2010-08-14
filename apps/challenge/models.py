@@ -2,12 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count, Sum, StdDev
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
 # Smrtr
 from settings import CHALLENGE_TTC_MINIMUM, CHALLENGE_TTC_FAIRNESS_MULTIPLIER
 from questions.models import Question
 from education.models import Concept
 from network.models import Network
 from resources.models import Resource
+from education.models import UserModule
+from challenge.utils import *
 from sq.utils import * 
 # External
 import datetime
@@ -159,13 +162,12 @@ class UserChallenge(models.Model):
 
 
 
-from django.db.models.signals import post_save
-from education.models import UserModule
-from challenge.utils import generate_userchallenges
 
-def generate_userchallenges_on_adding_usermodule(sender, **kwargs):
-    usermodule = kwargs['instance']
-    generate_userchallenges(usermodule.user, 2)
+
+def generate_userchallenges_on_adding_usermodule(sender, created, **kwargs):
+    if created:
+        usermodule = kwargs['instance']
+        generate_userchallenges(usermodule.user, 2)
 
 post_save.connect(generate_userchallenges_on_adding_usermodule, sender=UserModule)
 
