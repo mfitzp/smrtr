@@ -22,12 +22,13 @@
 </div>
 <div id="content-title-meta">
 {% if network.city or network.country %}
-    Location <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
+Location 
+    <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
     {% if network.city %} {{ network.city }}{% endif %}
     {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
-{% else %}
-    {{ network.description|truncatewords:"20" }}                    
+ &#183;    
 {% endif %}
+{{ network.usernetwork_set.count }} member{{ network.usernetwork_set.count|pluralize }}
 </div>                    
 <div id="content-title-sq" title="Members of this network have a combined {% sqdescriptive network.sq %} SQ">{% sqchange 0 network.sq %}</div>
 </div>                    
