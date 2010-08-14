@@ -29,6 +29,7 @@ Location
  &#183;    
 {% endif %}
 {{ network.usernetwork_set.count }} member{{ network.usernetwork_set.count|pluralize }}
+{% if profile.url %}&#183; Web <a href="{{ profile.url }}">{{ profile.url }}</a>{% endif %}
 </div>                    
 <div id="content-title-sq" title="Members of this network have a combined {% sqdescriptive network.sq %} SQ">{% sqchange 0 network.sq %}</div>
 </div>                    
