@@ -20,7 +20,7 @@ class Command(BaseCommand):
             for row in csvReader:
                 data = dict()
                 # Import from own standard CSV listing
-                if 'question' in row:
+                if 'Question' in row:
                     # Translate to standard format (as above)
                     data['question'] = row['Question']
                     data['correct'] = row['Correct']
