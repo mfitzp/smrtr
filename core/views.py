@@ -191,7 +191,7 @@ def statistics(request):
 
     from countries.models import Country
 
-    topusers = User.objects.order_by('-userprofile__sq')[0:5]
+    topusers = User.objects.order_by('-userprofile__sq')[0:10]
     topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:5]
     topcountries = Country.objects.annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:5]
 
