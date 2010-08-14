@@ -30,6 +30,20 @@ def sqchange( prevsq, sq ):
 
     return '<span class="sq %s sq%s">%d</span>' % (change, level, sq)
 
+@register.simple_tag
+def sq( sq ):
+    """ 
+    Usage: {% sq sq %}
+            Returns colour coded sq value
+    """   
+    if sq is None:
+        return '<span class="sq">tbc</span>'
+
+    from sq.utils import sq_division
+    level = sq_division(sq)
+
+    return '<span class="sq sq%s">%d</span>' % (level, sq)
+
 
 @register.simple_tag
 def sqdifficulty( usersq, diffsq ):

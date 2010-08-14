@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load sq_tags %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% block content_title %}<h1>Top 5s</h1>{% endblock %}
+
+{% block content_left %}
+
+    <h5>Top 5 Members</h5>
+    <table>
+    {% for user in topusers %}
+        {% with user.get_profile as profile %}
+           <tr><td>{% avatar user 48 %}</td>
+           <td><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
+                Member for {{ user.date_joined|timesince }} <br />
+                {% if profile.city or profile.country %}
+                    Location <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+                {% else %}Unknown{% endif %} 
+           </td>
+           <td>{% sqchange profile.previous_sq profile.sq %}</td></tr>
+        {% endwith %}
+
+    {% endfor %}
+    </table>
+
+
+
+{% endblock %}
+
+{% block content_right %}
+
+
+    <h5>Top 5 Networks</h5>
+    <table>
+    {% for network in topnetworks %}
+       <tr><td></td>
+       <td><a href="{% url network-detail network_id=network.id %}">{{ network }}</a> <br />
+            {{ network.total_members }} total member{{ network.total_members|pluralize }} <br />
+            {% if network.city or network.country %}
+                Location <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
+                {% if network.city %} {{ network.city }}{% endif %}
+                {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
+            {% endif %}
+       </td>
+       <td>{% sqchange 100 network.sq %}</td></tr>
+    {% endfor %}
+    </table>
+
+    <h5>Top 5 Countries</h5>
+    <table>
+    {% for country in topcountries %}
+       <tr>
+       <td><img src="{{ country.iso|iso_flag }}"></span></td>
+       <td><a href="http://maps.google.com/maps?q={{ country|urlencode }}&amp;t=h" target="_blank">{{ country }}</a></span> <br />
+           {{ country.total_members }} total member{{ country.total_members|pluralize }}
+       </td>
+       <td>{% sq country.sq %}</td></tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

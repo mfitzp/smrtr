@@ -165,6 +165,7 @@ class UserChallenge(models.Model):
 
 
 def generate_userchallenges_on_adding_usermodule(sender, created, **kwargs):
+    # Check saving this userchallenge for first time (do not trigger on SQ updates/etc)
     if created:
         usermodule = kwargs['instance']
         generate_userchallenges(usermodule.user, 2)

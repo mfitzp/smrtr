@@ -39,8 +39,6 @@
             {% trans 'Welcome,' %}
             <strong><a href="{% url user-profile user_id=user.id %}">{% firstof user.first_name user.username %}</a></strong>
                 &#183;
-                <a href="{% url user-profile user_id=user.id %}">Profile</a>
-                &#183;
                 <a href="{% url messages_inbox %}">Inbox{% if messages_inbox_count %} (<strong>{{ messages_inbox_count }}</strong>){% endif %}</a>
                 &#183;
                 <a href="{% url notification_notices %}">Notifications{% if notice_unseen_count %} (<strong>{{ notice_unseen_count }}</strong>){% endif %}</a>
@@ -65,15 +63,15 @@
         </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
-        <!--
+        <
         <div id="toptabs">
             <ul>
-                <li><a href="/about/">about</a></li>
+                <li><a href="/">home</a></li>
+                <li><a href="/profile/">profile</a></li>
                 <li><a href="/top5/">top 5</a></li>
-                <li><a href="/help/">?</a></li>
             </ul>
         </div>
-        -->
+        
     </div>
     <!-- END Header -->
     <div id="breadcrumbs">{% block breadcrumbs %}<a href="/">{% trans 'Home' %}</a>{% endblock %}{% if title %} &rsaquo; {{ title }}{% endif %}

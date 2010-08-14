@@ -9,9 +9,12 @@ from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count, Avg
+
 # External
 from notification.models import Notice
 # Smrtr
+from network.models import Network
 from education.models import Module, UserModule, Concept
 from challenge.models import Challenge
 from core.forms import LoginForm
@@ -119,9 +122,6 @@ def home(request):
 def welcome(request):
 
     from django.contrib.auth.forms import AuthenticationForm
-    from education.models import Module
-    from network.models import Network
-    from django.db.models import Count
 
     topusers = User.objects.order_by('-userprofile__sq')[0:5]
     topnetworks = Network.objects.annotate(num_users=Count('usernetwork')).order_by('-num_users')[0:10]
@@ -184,5 +184,24 @@ def error500(request, template_name='500.html'):
     return http.HttpResponseServerError(t.render(Context({
         'MEDIA_URL': settings.MEDIA_URL
     })))
+
+# Display topX by user, network and countries/etc.
+# TODO: Move this out to a seperate statistics module in future
+def statistics(request):
+
+    from countries.models import Country
+
+    topusers = User.objects.order_by('-userprofile__sq')[0:5]
+    topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:5]
+    topcountries = Country.objects.annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:5]
+
+    context = RequestContext(request, {
+            'topusers': topusers,
+            'topnetworks': topnetworks,
+            'topcountries': topcountries,
+    })
+
+    return render_to_response('statistics.html', context, context_instance=RequestContext(request))
+
 
 
