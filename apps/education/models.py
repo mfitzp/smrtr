@@ -201,14 +201,14 @@ class UserConcept(models.Model):
         last_attempted = UserChallenge.objects.filter(challenge__concepts=self.concept, user=self.user).aggregate(Max('completed'))['completed__max']
 
         if last_attempted:
-            # +1 for every day passed since last attempt
-            self.focus += min( 100, ( datetime.today() - last_attempted ).days )
+            # +1 for every week passed since last attempt
+            self.focus += min( 100, ( datetime.today() - last_attempted ).days / 7 )
         else:
             self.focus = 100 # Bump new items to max focus to guarantee first attempt
             
-        if self.start_date:
-            # -1 for every week it has been active
-            self.focus -= min( 100, ( datetime.today() - self.start_date ).days / 7 )
+        # if self.start_date:
+        #     # -1 for every week it has been active
+        #     self.focus -= min( 100, ( datetime.today() - self.start_date ).days / 7 )
         
         if self.concept.sq and self.sq:    
             # +1 for every SQ point difference between the uc and the c

@@ -56,14 +56,20 @@ def classname(obj, arg=None):
         return classname
 
 @register.simple_tag
-def percentbar( num ):
+def percentbar( num, addclass=None ):
     """ 
-    Usage: {% percentbar o %} 
-            Returns div bar for percent
+    Usage: {% percentbar num %} 
+            Returns div bar for num percent
+            Addclass is extra class definitions
     """
+    if addclass:
+        c = addclass
+    else:
+        c = ''
+    
     if num > 0:
         num = max( 0, min( 100, num ) ) # Limit to 0-100
         #        return '<span class="sq %s sq%s">%d</span>' % (change, level, sq)
-        return '<div class="percent-bar" style="width:%d%%"></div>' % num         
+        return '<div class="percent-bar %s" style="width:%d%%"></div>' % (c, num)
     else:
         return ''
