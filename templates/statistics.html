@@ -37,7 +37,7 @@
     <table>
     {% for network in topnetworks %}
        <tr><td></td>
-       <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a> <br />
+       <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a> <br />
             {{ network.total_members }} total member{{ network.total_members|pluralize }} <br />
             {% if network.city or network.country %}
                 Location <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">

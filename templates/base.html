@@ -63,11 +63,12 @@
         </div>
         {% endif %}
         {% block nav-global %}{% endblock %}
-        <
         <div id="toptabs">
             <ul>
                 <li><a href="/">home</a></li>
-                <li><a href="/profile/">profile</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="/profile/">profile</a></li>
+                {% endif %}
                 <li><a href="/top5/">top 5</a></li>
             </ul>
         </div>

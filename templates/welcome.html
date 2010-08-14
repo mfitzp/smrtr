@@ -2,6 +2,7 @@
 {% load sq_tags %}
 {% load i18n %}
 {% load avatar_tags %}
+{% load countries_tags %}
 
 {% block content_title %}<h1>Welcome to smrtr!</h1>{% endblock %}
 
@@ -28,19 +29,23 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 {% endblock %}
 
 {% block content_right %}
-    <h5>smrtst Users</h5>
-
-    <div class="membership-container clearfloats">
+    <h5>Top 5 Members</h5>
+    <table>
     {% for user in topusers %}
-        <div class="membership">
-            <table>
-            <tr><td>{% avatar user 48 %}</td></tr>
-            <tr><td><small>{{ user.get_profile.fullname }}</small></td></tr>
-            <tr><td><small>{% sqchange 100 user.get_profile.sq %}</a></small></td></tr>
-            </table>
-        </div>
+        {% with user.get_profile as profile %}
+           <tr><td>{% avatar user 48 %}</td>
+           <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
+                Member for {{ user.date_joined|timesince }} <br />
+                Location 
+                {% if profile.city or profile.country %}
+                    <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+                {% else %}unknown{% endif %} 
+           </td>
+           <td>{% sqchange profile.previous_sq profile.sq %}</td></tr>
+        {% endwith %}
+
     {% endfor %}
-    </div>
+    </table>
 
     <h5>Top Challenges</h5>
 
@@ -58,7 +63,7 @@ Ideal for <strong>students</strong>, <strong>professionals</strong> or general-k
 
         <div>
         {% for network in topnetworks %}
-            <span class="stack"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a></span>
+            <div class="stack network network{{ network.type }}"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></div>
         {% endfor %}
         </div>
 
