@@ -17,10 +17,10 @@ from discuss.models import Forum
 # Below modules 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
 def module_file_path(instance=None, filename=None):
-    return os.path.join('module', str(instance.id), filename)
+    return os.path.join('education', 'module', str(instance.id), filename)
     
 def concept_file_path(instance=None, filename=None):
-    return os.path.join('concept', str(instance.id), filename)    
+    return os.path.join('education','concept', str(instance.id), filename)    
 
 # Definitions of courses available and their constituent concepts
 # Subjects are tied to a home network
