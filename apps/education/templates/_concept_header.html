@@ -1,6 +1,6 @@
 {% load sq_tags %}
 <div>
-<div id="content-title-image"></div>
+<div id="content-title-image"><img src="{% thumbnail concept.image 48x48 crop %}"></div>
 <div id="content-title-header">
     <h1 style="display:inline">{{concept}}</h1> 
         {% if concept.network %}<a href="{% url network-detail network_id=concept.network.id %}" class="network network{{ concept.network.type }}">{{ concept.network }}</a>{% endif %}
