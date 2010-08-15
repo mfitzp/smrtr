@@ -3,6 +3,7 @@
 {% load countries_tags %}
 {% load i18n %}
 {% load avatar_tags %}
+{% load thumbnail %}
 
 {% cycle 'odd' 'even' as zebra %}
 
@@ -15,7 +16,7 @@
 
 {% block content_title %}
 <div>
-<div id="content-title-image"></div>
+<div id="content-title-image"><img src="{% thumbnail network.image 48x48 %}"></div>
 <div id="content-title-header">
     <h1 style="display:inline">{{network}}</h1> {% if network.parent %}<a href="{% url network-detail network_id=network.parent.id %}" class="network network{{ network.parent.type }}">{{ network.parent }}</a>{% endif %}
     <span class="network network{{ network.type }}">{% if network.type %}{{ network.get_type_display }}{% endif %}</span>

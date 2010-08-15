@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'haystack', #http://haystacksearch.org/ http://github.com/toastdriven/django-haystack/tree/master  + xapian-haystack
     'pagination', #http://code.google.com/p/django-pagination
     'messages', #http://code.google.com/p/django-messages/downloads/list  Private messaging application
+    'easy_thumbnails', #http://github.com/SmileyChris/easy-thumbnails
 # Smrtr
     'core',
     'profiles',

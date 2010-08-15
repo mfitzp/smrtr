@@ -1,3 +1,5 @@
+import os.path
+# Django
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
@@ -30,6 +32,10 @@ STAGE_CHOICES = (
         (5, 'Tertiary'),
         (6, 'Vocational'),
     )
+
+def network_file_path(instance=None, filename=None):
+    return os.path.join('network', str(instance.id), filename)
+    
 
 # Education models contain educational structure from institution to module exam
 # INSERT INTO education_institution (name,address_1,address_2,city,state,country_id,postcode,telno,stage) SELECT SCHOOL_NAME as name,STREET as address_1, LOCALITY as address_2, TOWN as city, COUNTY as state, 'GB' as country_id, POSTCODE as postcode, CONCAT(0,TEL_STD,' ',TEL_NO) as telno,stage as stage FROM `school_list` WHERE 1
@@ -104,6 +110,7 @@ class Network(models.Model):
     parent = models.ForeignKey('Network', null = True, blank = True)
     # Modules offered on this network - reverse from module
     # modules = models.ManyToManyField('Module')
+    image = models.ImageField(max_length=255, upload_to=network_file_path, blank=True)
 
     class Meta:
         ordering = ['name']

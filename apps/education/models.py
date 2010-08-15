@@ -16,6 +16,12 @@ from discuss.models import Forum
 # Below this modules are the basis of study on that modules may have a home network, be tied to a specific network, or freely open
 # Below modules 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
+def module_file_path(instance=None, filename=None):
+    return os.path.join('module', str(instance.id), filename)
+    
+def concept_file_path(instance=None, filename=None):
+    return os.path.join('concept', str(instance.id), filename)    
+
 # Definitions of courses available and their constituent concepts
 # Subjects are tied to a home network
 class Module(models.Model):
@@ -58,7 +64,7 @@ class Module(models.Model):
 # Concepts for this module
     concepts = models.ManyToManyField('Concept', blank=True)
     
-    
+    image = models.ImageField(max_length=255, upload_to=module_file_path, blank=True)
     
 
 # Element is a defining part of a course 
@@ -98,6 +104,8 @@ class Concept(models.Model):
     
     # Resources (through conceptresource for bookmarks)
     resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
+
+    image = models.ImageField(max_length=255, upload_to=concept_file_path, blank=True)
 
 # Study models store information about user's experience with education
 # Models are ManytoMany through Models (ie they are used as the basis for linking
