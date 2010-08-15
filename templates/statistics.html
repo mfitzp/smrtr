@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load avatar_tags %}
 {% load countries_tags %}
+{% load thumbnail %}
 
 {% block content_title %}<h1>Top 5s (and a Top 10)</h1>{% endblock %}
 
@@ -36,7 +37,7 @@
     <h5>Top 5 Networks</h5>
     <table>
     {% for network in topnetworks %}
-       <tr><td></td>
+       <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
        <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a> <br />
             {{ network.total_members }} member{{ network.total_members|pluralize }} <br />
             {% if network.city or network.country %}
