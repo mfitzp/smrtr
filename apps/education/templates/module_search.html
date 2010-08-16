@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load countries_tags %}
 {% load pagination_tags %}
+{% load thumbnail %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
@@ -31,20 +32,29 @@
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
             <p class="buttonbar"><input type="submit" value="Activate selected modules &raquo;"></p>
-            <table>
             {% for result in page_obj.object_list %}
                 {% with result.object as module %}
                     {% if module %}
-                    <tr>
-                        <td><input type="checkbox" name="addmodule" value="{{ module.id }}" {% if module in request.user.modules.all %}checked disabled{% endif %}></td>
-                        <th><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></th>
-                        <td>{% if module.network %}<span class="network network{{ module.network.type }}">{{ module.network }}</span>{% endif %}</td>
-                    </tr>
+
+                <div class="object {% cycle 'odd' 'even' %}" style="width:45%; float:left; margin-right:2%; margin-bottom:5px;">
+                    <div class="object-emblems">  
+                    </div>
+                    <div class="object-checkbox"><input type="checkbox" name="addmodule" value="{{ module.id }}" {% if module in request.user.modules.all %}checked disabled{% endif %}></div>
+                    <div class="object-image"><img src="{% thumbnail module.image 48x48 crop %}"></div>
+                    <div class="object-title"><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></div>
+                    <div class="object-meta">
+                        {% if module.network %}from <a href="{% url network-detail module.network.id %}">{{ module.network }}</a>{% endif %}<br />
+                        {% if module.description %}
+                            {{ module.description|truncatewords:"25" }}
+                        {% endif %}
+                    </div>
+                </div>
+
                     {% endif %}
                 {% endwith %}
                 {% empty %}
             {% endfor %}
-            </table>                
+
         <br class="clear" />
         <p class="buttonbar"><input type="submit" value="Activate selected modules &raquo;"></p>
         </form>        
