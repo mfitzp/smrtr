@@ -68,6 +68,9 @@ class Module(models.Model):
     
     image = models.ImageField(max_length=255, upload_to=module_file_path, blank=True)
     
+    created = models.DateTimeField(auto_now_add = True)
+    updated = models.DateTimeField(auto_now = True)    
+    
 
 # Element is a defining part of a course 
 # Elements are always tied to a specific subject?? Or freely available
@@ -108,6 +111,9 @@ class Concept(models.Model):
     resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
 
     image = models.ImageField(max_length=255, upload_to=concept_file_path, blank=True)
+    
+    created = models.DateTimeField(auto_now_add = True)
+    updated = models.DateTimeField(auto_now = True)    
 
 # Study models store information about user's experience with education
 # Models are ManytoMany through Models (ie they are used as the basis for linking

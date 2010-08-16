@@ -112,6 +112,9 @@ class Network(models.Model):
     # modules = models.ManyToManyField('Module')
     image = models.ImageField(max_length=255, upload_to=network_file_path, blank=True)
 
+    created = models.DateTimeField(auto_now_add = True)
+    updated = models.DateTimeField(auto_now = True)
+    
     class Meta:
         ordering = ['name']
 

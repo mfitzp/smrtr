@@ -16,5 +16,7 @@ class NetworkIndex(SearchIndex):
         """Used when the entire index for model is updated."""
         return Network.objects.all()#.filter(pub_date__lte=datetime.datetime.now())
 
+    def get_updated_field(self):
+        return 'updated'
 
 site.register(Network, NetworkIndex)

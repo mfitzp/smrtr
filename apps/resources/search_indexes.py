@@ -11,5 +11,7 @@ class ResourceIndex(SearchIndex):
         """Used when the entire index for model is updated."""
         return Resource.objects.all()
 
+    def get_updated_field(self):
+        return 'updated'
 
 site.register(Resource, ResourceIndex)

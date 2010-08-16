@@ -12,9 +12,9 @@
 
 {% block content %}
 
-    <div class="focus"><h4>Find new modules</h4><div>
-    <p>Modules are collections of subjects you've chosen to study on <strong>smrtr</strong>.</p>    
-    <p>Normally you will find these through your networks, but if you want to do your own thing you can also find them by searching below.</p>
+    <div class="focus"><h4>Activate modules</h4><div>
+    <p>Modules are collections of subjects for study on <strong>smrtr</strong>.
+    <p>To get started, search for subjects you're interested in and activate the modules below.</p>
     <form method="get" action="?q={{query}}">
         <table>
             <tr>
@@ -43,7 +43,9 @@
                     <div class="object-image"><img src="{% thumbnail module.image 48x48 crop %}"></div>
                     <div class="object-title"><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></div>
                     <div class="object-meta">
-                        {% if module.network %}from <a href="{% url network-detail module.network.id %}">{{ module.network }}</a>{% endif %}<br />
+                        {% if module.network %}from <a href="{% url network-detail module.network.id %}">{{ module.network }}</a>{% endif %}
+                        &#183; {{ module.users.count }} member{{ module.users.count|pluralize }}
+                        <br />
                         {% if module.description %}
                             {{ module.description|truncatewords:"25" }}
                         {% endif %}

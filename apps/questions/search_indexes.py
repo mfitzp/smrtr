@@ -11,5 +11,7 @@ class QuestionIndex(SearchIndex):
         """Used when the entire index for model is updated."""
         return Question.objects.all()
 
+    def get_updated_field(self):
+        return 'updated'
 
 site.register(Question, QuestionIndex)

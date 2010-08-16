@@ -202,6 +202,8 @@ class Resource(models.Model):
     # Positional information of particular bookmarks is stored on use of resource
     # therefore single resource instance for multiple bookmarks (chapters, z-time)
     created = models.DateField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now = True)    
+
     # Assignments of the resource to a particular user
     users = models.ManyToManyField(User, through='UserResource')
     # Resource tagging to aid searching

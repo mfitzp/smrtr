@@ -49,7 +49,8 @@ class Question(models.Model):
     concepts = models.ManyToManyField(Concept, blank=True) #, related_name='questions'
     
     created = models.DateTimeField(auto_now_add = True)
-    last_updated = models.DateTimeField(auto_now = True)
+    updated = models.DateTimeField(auto_now = True)
+    
     tags = TagField()
     author = models.ForeignKey(User)
     sq = models.IntegerField(blank = True, null = True, editable = False) 
