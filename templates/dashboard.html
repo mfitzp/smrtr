@@ -97,44 +97,16 @@
     <p class="buttonbar">
        <!-- <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span> -->
         <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>
+        <span class="button"><a href="{% url module-search %}" class="register">Add modules &raquo;</a></span>       
     </p>
 
     {% else %}
     <div class="focus"><h4>Welcome!</h4>
         <p>Once you're up and running, this box will show your <strong>current active challenges</strong> and resources for study. You can control
-        what subjects you get by <strong>activating and deactivating modules</strong> below.</p>
-        <p>To get started, choose a module from the list of <strong>available modules</strong> below and click to activate it!</p>
-        <p>Any time you want to study something new, just <strong>click again!</strong></p>
+        what subjects you get by <a href="{% url module-search %}">activating and deactivating modules</a>.</p>
+        <p>To get started <a href="{% url module-search %}" class="button">Available some modules now!</a></p>
     </div>
     {% endif %}
-
-
-        <h5>Available Modules</h5>
-        {% if suggestmodules %}
-            <div class="stackcontainer">
-            {% for suggestmodule in suggestmodules %}
-                <div class="stack module">
-                <a href="{% url module-register module_id=suggestmodule.id %}?next=/">{{ suggestmodule }}</a>
-                </div>
-            {% endfor %}
-            </div>
-        {% endif %}
-        <p class="buttonbar">Don't see what you want here? 
-            <span class="button"><a href="{% url network-search %}" class="register">Join networks &raquo;</a></span>
-            <span class="button"><a href="{% url module-search %}" class="register">Add modules &raquo;</a></span>
-        </p>
-
-       {% if usermodules %}
-            <h5>Active Modules</h5>
-            <div class="stackcontainer">
-            {% for usermodule in usermodules %}
-                <div class="stack module">{% percentbar usermodule.percent_complete %}
-                <a href="{% url module-detail module_id=usermodule.module.id %}" title="{{ usermodule.percent_complete }}% complete">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a>
-                </div>
-               
-            {% endfor %}
-            </div>
-        {% endif %}
 
     </div>
 

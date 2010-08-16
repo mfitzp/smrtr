@@ -119,3 +119,16 @@ def batch_generate_userchallenges():
     for o in objects:
         generate_userchallenges(o)
 
+
+
+
+
+def generate_userchallenges_on_adding_usermodule(sender, created, **kwargs):
+    # Check saving this userchallenge for first time (do not trigger on SQ updates/etc)
+    if created:
+        usermodule = kwargs['instance']
+        generate_userchallenges(usermodule.user, 2)
+
+post_save.connect(generate_userchallenges_on_adding_usermodule, sender=UserModule)
+
+

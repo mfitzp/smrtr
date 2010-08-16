@@ -10,7 +10,6 @@ from education.models import Concept
 from network.models import Network
 from resources.models import Resource
 from education.models import UserModule
-from challenge.utils import *
 from sq.utils import * 
 # External
 import datetime
@@ -161,15 +160,5 @@ class UserChallenge(models.Model):
     #expires = models.DateTimeField(blank = True, editable = False) # Exlucde from listings after this time. If not started by this time+n, remove from listings.
 
 
-
-
-
-def generate_userchallenges_on_adding_usermodule(sender, created, **kwargs):
-    # Check saving this userchallenge for first time (do not trigger on SQ updates/etc)
-    if created:
-        usermodule = kwargs['instance']
-        generate_userchallenges(usermodule.user, 2)
-
-post_save.connect(generate_userchallenges_on_adding_usermodule, sender=UserModule)
 
 
