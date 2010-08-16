@@ -16,8 +16,8 @@ class NetworkSitemap(Sitemap):
     def items(self):
         return Network.objects.all()
 
-    # def lastmod(self, obj):
-    #    return obj.pub_date
+    def lastmod(self, obj):
+        return obj.updated
 
 class ModuleSitemap(Sitemap):
     changefreq = "weekly"
@@ -27,9 +27,9 @@ class ModuleSitemap(Sitemap):
     def items(self):
         return Module.objects.all()
 
-    # def lastmod(self, obj):
-    #    return obj.pub_date
-
+    def lastmod(self, obj):
+        return obj.updated
+        
 class ConceptSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
@@ -38,9 +38,9 @@ class ConceptSitemap(Sitemap):
     def items(self):
         return Concept.objects.all()
 
-    # def lastmod(self, obj):
-    #    return obj.pub_date
-
+    def lastmod(self, obj):
+        return obj.updated
+        
 class ChallengeSitemap(Sitemap):
     changefreq = "weekly"
     priority = 1
@@ -72,8 +72,8 @@ class QuestionSitemap(Sitemap):
         return Question.objects.all()
 
     def lastmod(self, obj):
-        return obj.last_updated
-        
+        return obj.updated
+                
 class ThreadSitemap(Sitemap):
     changefreq = "weekly"
     limit = 1000
