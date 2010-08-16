@@ -1,7 +1,7 @@
 {{ object.name }}
 {{ object.description }}
 
-{% for concept in object.concept_set.all %}
+{% for concept in object.concepts.all %}
     {{ concept.name }}
 {% endfor %}
 
