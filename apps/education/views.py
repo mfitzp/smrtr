@@ -461,6 +461,9 @@ def module_search( request,
     # RelatedSearchQuerySet().filter(content='foo').load_all()
 
     sqs = SearchQuerySet().models(Module)
+    
+    from network.utils import searchqueryset_usernetwork_boost
+    sqs = searchqueryset_usernetwork_boost( request, sqs )    
 
     if request.GET.get('q'):
         querydata = request.GET

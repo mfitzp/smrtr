@@ -25,7 +25,7 @@ class NetworkSearchForm(SearchForm):
     def search_split(self):
         # First, store the SearchQuerySet received from other processing.
         sqs = super(NetworkSearchForm, self).search()
-        
+
         # TYPE_CHOICES defines the subtypes of network available
         # Listing order is reversed (puts Other last)        
         search = list()

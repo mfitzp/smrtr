@@ -17,3 +17,16 @@ def batch_network_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
+        
+
+        
+def searchqueryset_usernetwork_boost( request, sqs ):
+    # Apply profile/local-boost
+    profile = request.user.get_profile()
+
+    boost = list()
+    # Cannot boost on phrase with spaces use (hopefully unique) iso3+code string to avoid text-clashes
+    for network in request.user.networks.all():
+        sqs = sqs.boost( ('network%d' % network.id).lower(), 2 ) # Need to boost with lowercase
+        
+    return sqs        

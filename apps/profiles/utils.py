@@ -37,3 +37,25 @@ def batch_user_normalise_sq():
     for userp in users_sq_changed:
         notification.send([userp.user], "user_sq_updated", {"user": userp.user})        
 
+
+
+def searchqueryset_profile_boost( request, sqs ):
+    # Apply profile/local-boost
+    profile = request.user.get_profile()
+
+    if profile.country:
+        sqs = sqs.boost( str('iso3'+profile.country.iso3).lower() , 20 )
+
+    boost = list()
+    # Cannot boost on phrase with spaces use (hopefully unique) iso3+code string to avoid text-clashes
+    if profile.city:
+        boost.extend( profile.city.split() ) #New York
+    if profile.state:
+        boost.extend( profile.state.split() ) #New Mexico
+
+    for b in boost:
+        sqs = sqs.boost( b.lower(), 2 ) # Need to boost with lowercase
+        
+    return sqs
+
+

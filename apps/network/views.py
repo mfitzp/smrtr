@@ -135,6 +135,9 @@ def search( request,
 
     sqs = SearchQuerySet().models(Network)
 
+    from profiles.utils import searchqueryset_profile_boost
+    sqs = searchqueryset_profile_boost( request, sqs )
+    
     if request.GET.get('q'):
         querydata = request.GET
     else:

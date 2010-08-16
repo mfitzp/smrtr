@@ -7,8 +7,6 @@ from network.models import Network
 class NetworkIndex(SearchIndex):
     text = CharField(document=True, use_template=True) #name, description 
     
-    address = CharField(use_template=True) #city, state, postcode, country name (for text search)
-
     type = IntegerField(model_attr='type', null = True) #type of network
     stage = IntegerField(model_attr='stage', null = True) #stage of network
        

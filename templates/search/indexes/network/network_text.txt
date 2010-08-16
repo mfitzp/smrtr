@@ -8,3 +8,21 @@
 {% for concept in object.concept_set.all %}
     {{ concept.name }}
 {% endfor %}
+
+{{ object.city }}
+{{ object.state }}
+{{ object.country }}
+{# Create non-clashing string for countrycode #}
+iso3{{ object.country.iso3 }}
+
+
+{# Allow localisation of courses based on parent institution location #}
+{% if object.parent %}
+    {% with object.parent as network %}
+        {{ network.city }}
+        {{ network.state }}
+        {{ network.country }}
+        {# Create non-clashing string for countrycode #}
+        iso3{{ network.country.iso3 }}
+    {% endwith %}
+{% endif %}

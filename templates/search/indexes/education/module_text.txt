@@ -6,3 +6,6 @@
 {% endfor %}
 
 {{ object.network }}
+{# id for boosting #}
+network{{ object.network.id }} 
+

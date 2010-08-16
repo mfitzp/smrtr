@@ -54,7 +54,6 @@ Member for {{ puser.date_joined|timesince }} &#183;
 {% endblock %}
 
 {% block content_right %}
-
     {% ifnotequal puser user %}
         <h5>Contact Me</h5>
         <a href="{% url messages_compose_to recipient=puser.username %}">Send me a private message</a>

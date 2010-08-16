@@ -72,8 +72,7 @@ class QuestionSitemap(Sitemap):
         return Question.objects.all()
 
     def lastmod(self, obj):
-        return obj.updated
-                
+        return obj.updated        
 class ThreadSitemap(Sitemap):
     changefreq = "weekly"
     limit = 1000
