@@ -11,8 +11,8 @@ class ModuleIndex(SearchIndex):
         """Used when the entire index for model is updated."""
         return Module.objects.all()
         
-    def get_updated_field(self):
-        return 'updated'
+    #def get_updated_field(self):
+    #    return 'updated'
         
 class ConceptIndex(SearchIndex):
     text = CharField(document=True, use_template=True) #name, description 
