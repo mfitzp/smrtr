@@ -36,7 +36,7 @@
                 {% with result.object as module %}
                     {% if module %}
 
-                <div class="object {% cycle 'odd' 'even' %}" style="width:45%; float:left; margin-right:2%; margin-bottom:5px;">
+                <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme">
                     <div class="object-emblems">  
                     </div>
                     <div class="object-checkbox"><input type="checkbox" name="addmodule" value="{{ module.id }}" {% if module in request.user.modules.all %}checked disabled{% endif %}></div>
