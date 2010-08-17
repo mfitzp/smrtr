@@ -3,5 +3,5 @@
 {% load sq_tags %}
 
 {% block notice %}
-Your SQ is now {% sqchange 100 user.get_profile.sq %} ({% sqdescriptive user.get_profile.sq %})
+Your SQ is now {% sqchange user.get_profile.previous_sq user.get_profile.sq %} ({% sqdescriptive user.get_profile.sq %})
 {% endblock %}
