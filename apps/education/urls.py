@@ -9,8 +9,6 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-
-
     # Topic instance
     # url(r'^ci(?P<coursei_id>\d+)/$', 'education.views.coursei_detail',  name='coursei-detail'  ),
 
