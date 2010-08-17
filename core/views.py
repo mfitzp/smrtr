@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.db.models import Q, F
-from django.db.models import Avg, Max, Min, Count
+from django.db.models import Avg, Max, Min, Count, Sum
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -196,13 +196,9 @@ def statistics(request):
 
     topusers_smart = User.objects.order_by('-userprofile__sq')[0:5]
     
-    
-    # Retrieve records for past 6 months
-    start_date = datetime.now() - timedelta(weeks=26)
-    end_date = datetime.now()    
-    topusers_correct = User.objects.filter(userquestionattempt__created__range=(start_date,end_date)).annotate(
-                        percent_correct=Avg('userquestionattempt__percent_correct')
-                    ).order_by('-percent_correct')[0:5]
+    topusers_knowledge = User.objects.annotate(
+                        knowledge_rating=Sum('userconcept__percent_complete')
+                    ).order_by('-knowledge_rating')[0:5]
 
     
 
@@ -211,7 +207,7 @@ def statistics(request):
 
     context = RequestContext(request, {
             'topusers_smart': topusers_smart,
-            'topusers_correct': topusers_correct,
+            'topusers_knowledge': topusers_knowledge,
 
             'topnetworks': topnetworks,
             'topcountries': topcountries,
