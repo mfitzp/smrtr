@@ -19,7 +19,10 @@
         {% for userchallenge in userchallenges %}
         
             {% if forloop.first %}
-            <div id="challenges-focus">
+            <div id="challenges-focus" class="emblem-trigger-new">
+            <div class="object-emblems"> 
+                <div class="emblem-new" title="New challenge"></div> 
+            </div>
             <div id="challenges-focus-image"><img src="{% thumbnail userchallenge.image 48x48 crop %}"></div>
                 <h5>{{ userchallenge }}</h5>         
                 <p>{{ userchallenge.challenge }}</p>
@@ -47,8 +50,9 @@
                     </span>
             </div></div>
             {% else %}
-                <div class="object {% cycle 'odd' 'even' %}">
-                    <div class="object-emblems">  
+                <div class="object {% cycle 'odd' 'even' %} {% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
+                    <div class="object-emblems"> 
+                        <div class="emblem-new" title="New challenge"></div> 
                     </div>
                     <div class="object-image"><img src="{% thumbnail userchallenge.image 48x48 crop %}"></div>
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a><br />
