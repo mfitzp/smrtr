@@ -1,10 +1,13 @@
+import datetime
+# Django
 from django.conf import settings
 from django import http
 from django.template import Context, RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.db.models import Q
+from django.db.models import Q, F
+from django.db.models import Avg, Max, Min, Count
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -192,7 +195,11 @@ def statistics(request):
     from countries.models import Country
 
     topusers_smart = User.objects.order_by('-userprofile__sq')[0:5]
-    topusers_active = User.objects.annotate(answers=Count('userquestionattempt')).order_by('-answers')[0:5]
+    topusers_active = User.objects.annotate(
+                        percent_correct=Avg('userquestionattempt__percent_correct')
+                    ).order_by('-percent_correct')[0:5]
+
+    
 
     topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:5]
     topcountries = Country.objects.annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:5]

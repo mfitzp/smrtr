@@ -39,7 +39,7 @@
                     <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
                 {% else %}unknown{% endif %} 
            </td>
-           <td>{{ user.answers }}</td></tr>
+           <td>{{ user.percent_correct }}</td></tr>
         {% endwith %}
 
     {% endfor %}
