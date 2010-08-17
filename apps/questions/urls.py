@@ -19,7 +19,7 @@ urlpatterns = patterns('',
      (r'^(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Question.objects.all() } ),
 
      # Non-user specific (no need for instance data)
-     url(r'^c(?P<concept_id>\d+)/latest', 'questions.views.latest_questions_module', name='latest-questions-concept' ),
+     url(r'^c(?P<concept_id>\d+)/latest', 'questions.views.latest_questions_topic', name='latest-questions-concept' ),
 
 
 )

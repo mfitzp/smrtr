@@ -15,7 +15,7 @@ from django.db.models import Count, Avg
 from notification.models import Notice
 # Smrtr
 from network.models import Network
-from education.models import Module, UserModule, Concept
+from education.models import Topic, UserTopic, Concept
 from challenge.models import Challenge
 from core.forms import LoginForm
 from discuss.models import *
@@ -28,7 +28,7 @@ def home(request):
         # User logged in, present the user dashboard
         usernetworks = request.user.usernetwork_set.all()
 
-        usermodules = request.user.usermodule_set.all()
+        usertopics = request.user.usertopic_set.all()
         
         #userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
 
@@ -37,10 +37,10 @@ def home(request):
         # If no userchallenges available, attempt to populate
         # FIXME: This is going to fire on every dashboard load until the user has some challenge
         # it's relatively quick/smart but still clunky. An 'event' trigger mechanism whereby
-        # this is called when new modules are activated would be preferable (adding this directly
+        # this is called when new topics are activated would be preferable (adding this directly
         # to the education app creates an unwanted dependency).
         if not userchallenges:
-            if usermodules: # Only generate if there are modules available
+            if usertopics: # Only generate if there are topics available
                 from challenge.utils import generate_userchallenges
                 generate_userchallenges(request.user)
                 userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
@@ -48,11 +48,11 @@ def home(request):
         # Flag True/False whether challenges exist at all for this user
         userchallengesexist = ( userchallenges.count() + userchallengescomplete.count() ) > 0
         
-        # Get next activated concepts (available by modules reverse SQ), retrieving 5
-        # Gets all concepts that are available (on user's modules) but not active
+        # Get next activated concepts (available by topics reverse SQ), retrieving 5
+        # Gets all concepts that are available (on user's topics) but not active
         # Later limit by 'dependencies on individual entries'
-        # suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(module__usermodule__user=request.user).order_by('-sq')[0:3]
-        suggestmodules = Module.objects.exclude(usermodule__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')
+        # suggestconcepts = Concept.objects.exclude(userconcept__user=request.user).filter(topic__usertopic__user=request.user).order_by('-sq')[0:3]
+        suggesttopics = Topic.objects.exclude(usertopic__user=request.user).filter(network__usernetwork__user=request.user).order_by('-sq')
 
         notices = Notice.objects.notices_for(request.user, on_site=True)
 
@@ -61,7 +61,7 @@ def home(request):
         # topusers = User.objects.order_by('-userprofile__sq')[0:5]
 
         # Front page wallitems (wi) combine the user's accessible wall posts from 
-        # user profile, networks, courses and modules (& friends later)
+        # user profile, networks, courses and topics (& friends later)
         
         # Posts to SYSTEM wall *ALWAYS* appear
         threads = Forum.objects.get(pk=1).thread_set.select_related()
@@ -70,17 +70,17 @@ def home(request):
         # Like +1, Comment +1 or +2
         # Personal rating/comment more weight than others (*2) e.g 
         
-        # NOTE: Can  weight each network, module, concept by limiting
+        # NOTE: Can  weight each network, topic, concept by limiting
         # the max number of posts got from each at this point,
         # e.g. pull 5 from each concept, 10 from each network will *2 favour network posts
         
-        # Posts on user's networks, courses, modules
+        # Posts on user's networks, courses, topics
         for un in usernetworks:
             threads = threads | un.network.forum.thread_set.select_related()
           
         # These need to be limited to active only
-        for um in usermodules:
-            threads = threads | um.module.forum.thread_set.select_related()
+        for um in usertopics:
+            threads = threads | um.topic.forum.thread_set.select_related()
                     
         # Filter out to show only *other* users - may not want this as comments/etc. on user's 
         # own posts will be missed? Depends on the profile/dashboard interaction - future
@@ -94,11 +94,11 @@ def home(request):
 
         i = RequestContext(request, {
             'usernetworks': usernetworks,
-            'usermodules': usermodules,
+            'usertopics': usertopics,
     #            'userconcepts': userconcepts,
             # Suggest
     #            'suggestconcepts' : suggestconcepts,
-            'suggestmodules' : suggestmodules,
+            'suggesttopics' : suggesttopics,
             # Challenges
             'userchallengesexist': userchallengesexist,
             'userchallenges': userchallenges,
@@ -151,7 +151,7 @@ def welcome(request):
 
 
 # Take a forum id and redirect to the 'home' for that forum
-# which will be on a network, course, module, or user profile
+# which will be on a network, course, topic, or user profile
 # This could probably be better handled with a template tag to generate the url preventing the redirects?
 def forum_parent_redirect( request, forum_id ):
     forum = get_object_or_404( Forum, pk=forum_id )
@@ -164,11 +164,11 @@ def forum_parent_redirect( request, forum_id ):
         return redirect('network-detail', network_id=forum.network.id)
 
     try:
-        forum.module
+        forum.topic
     except:
         pass
     else:
-        return redirect('module-detail', module_id=forum.module.id)
+        return redirect('topic-detail', topic_id=forum.topic.id)
 
 
 def error500(request, template_name='500.html'):
@@ -186,7 +186,7 @@ def error500(request, template_name='500.html'):
     })))
 
 # Display topX by user, network and countries/etc.
-# TODO: Move this out to a seperate statistics module in future
+# TODO: Move this out to a seperate statistics topic in future
 def statistics(request):
 
     from countries.models import Country

@@ -19,18 +19,18 @@ def resources_tagged(request,tag_id):
     return render_to_response('resource_tag_list.html', {'tag': tag, 'resources': resources}, context_instance=RequestContext(request))
 
 
-def module_userresources(request, modulei_id):
+def topic_userresources(request, topici_id):
     
-    modulei = get_object_or_404(ModuleInstance, pk=modulei_id)
-    module = modulei.module # Prefetch
+    topici = get_object_or_404(TopicInstance, pk=topici_id)
+    topic = topici.topic # Prefetch
     
-    # If the user is registered on this module pull record
+    # If the user is registered on this topic pull record
     try:
-        usermodule = modulei.usermodule_set.get( user=request.user )
+        usertopic = topici.usertopic_set.get( user=request.user )
     except:
-        usermodule = list()
+        usertopic = list()
         
-    resources = Resource.objects.all().filter(question__modules=module, userresource__user=request.user).distinct()
+    resources = Resource.objects.all().filter(question__topics=topic, userresource__user=request.user).distinct()
     
-    return render_to_response('module_userresources.html', {'module': module, 'modulei':modulei, 'usermodule':usermodule, 'resources': resources}, context_instance=RequestContext(request))
+    return render_to_response('topic_userresources.html', {'topic': topic, 'topici':topici, 'usertopic':usertopic, 'resources': resources}, context_instance=RequestContext(request))
      

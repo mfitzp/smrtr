@@ -5,29 +5,29 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; Module
+    &raquo; Topic
     &raquo;
-    {% if module.name %}
-        {{ module.name }}
+    {% if topic.name %}
+        {{ topic.name }}
         &raquo; Edit
     {% else %}
-        Create new module
+        Create new topic
     {% endif %}    
 {% endblock %}
 
 {% block title %}
-    {% if module.name %}
-        Edit '{{ module.name }}'
+    {% if topic.name %}
+        Edit '{{ topic.name }}'
     {% else %}
-        Create new module
+        Create new topic
     {% endif %}
 {% endblock %}
 
 {% block content_title %}
-    {% if module.name %}
-        {% include "_module_header.html" %}
+    {% if topic.name %}
+        {% include "_topic_header.html" %}
     {% else %}
-        <h1>Create new module</h1>
+        <h1>Create new topic</h1>
     {% endif %}
 {% endblock %}
 

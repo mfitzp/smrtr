@@ -11,7 +11,7 @@ from education.models import *
 from challenge.models import *
 
 # Check if challenges exist for a given user and if not, generate
-# Challenges are combinations of concepts (from the same module, from user's perspective)
+# Challenges are combinations of concepts (from the same topic, from user's perspective)
 # Once a combination has been identified as most beneficial for the user, look for existing
 # challenges the user has not attempted. Allows for multi-user competition, and cross-course competition
 # Called on login to ensure always X challenges available, can be re-run on demand
@@ -27,7 +27,7 @@ def generate_userchallenges(user, number = None):
 
     if number > 0: # Save db hits if generating nothing at all
     
-        # Iterate concepts, combine into module-groups, maximum of 3 (configurable?), then stack up to post-process
+        # Iterate concepts, combine into topic-groups, maximum of 3 (configurable?), then stack up to post-process
         # leftovers are carried over if < 5 total challenges generated (configurable?)
 
         final = list()
@@ -38,20 +38,20 @@ def generate_userchallenges(user, number = None):
         # Iterate userconcepts 
         try:
             for userconcept in userconcepts:
-                # Find modules the user is studying this concept on
-                modules = userconcept.concept.module_set.filter(usermodule__user=user)
-                # Add this concept to the module stacks
-                for module in modules:
+                # Find topics the user is studying this concept on
+                topics = userconcept.concept.topic_set.filter(usertopic__user=user)
+                # Add this concept to the topic stacks
+                for topic in topics:
                     # If started add to existing stack, otherwise create new
                     try:
-                        build[module.id].append(userconcept.concept.id)
+                        build[topic.id].append(userconcept.concept.id)
                     except:
-                        build[module.id] = [ userconcept.concept.id ]
+                        build[topic.id] = [ userconcept.concept.id ]
                         
                     # If we manage to build a list of 3, add to the final list
-                    if len(build[module.id]) == 3:
-                        final.append([module.id, build[module.id]])
-                        build[module.id] = list()
+                    if len(build[topic.id]) == 3:
+                        final.append([topic.id, build[topic.id]])
+                        build[topic.id] = list()
 
                     if len(final) == number:
                         raise StopIteration() # We have enough in the final list, drop out of nested loop
@@ -68,14 +68,14 @@ def generate_userchallenges(user, number = None):
         except StopIteration:
             pass
             
-        # Now we have a list of lists containing the module id and the concept ids
+        # Now we have a list of lists containing the topic id and the concept ids
         # [[16L, [68L, 70L, 78L]], [16L, [69L]], [305L, [99L]], [293L, [97L, 90L]]]
-        # Iterate top list (module keyed)
+        # Iterate top list (topic keyed)
         
         #TODO: Look for already existing, open, challenges to allow for multi-player as default
         for mlist in final:
             # For clarity
-            module_id = mlist[0]
+            topic_id = mlist[0]
             concept_ids = mlist[1]
             # Look for existing challenges matching (exact) this set of concepts
             # Make sure the user has not previously attempted the challenge
@@ -109,7 +109,7 @@ def generate_userchallenges(user, number = None):
             userchallenge.user = user
             userchallenge.save()
 
-# Calculate SQ for the usercourse records with most recently updated usermodules
+# Calculate SQ for the usercourse records with most recently updated usertopics
 def batch_generate_userchallenges():
 
     # Random 100 users
@@ -123,12 +123,12 @@ def batch_generate_userchallenges():
 
 
 
-def generate_userchallenges_on_adding_usermodule(sender, created, **kwargs):
+def generate_userchallenges_on_adding_usertopic(sender, created, **kwargs):
     # Check saving this userchallenge for first time (do not trigger on SQ updates/etc)
     if created:
-        usermodule = kwargs['instance']
-        generate_userchallenges(usermodule.user, 2)
+        usertopic = kwargs['instance']
+        generate_userchallenges(usertopic.user, 2)
 
-post_save.connect(generate_userchallenges_on_adding_usermodule, sender=UserModule)
+post_save.connect(generate_userchallenges_on_adding_usertopic, sender=UserTopic)
 
 

@@ -37,7 +37,7 @@ def network_file_path(instance=None, filename=None):
     return os.path.join('network', str(instance.id), filename)
     
 
-# Education models contain educational structure from institution to module exam
+# Education models contain educational structure from institution to topic exam
 # INSERT INTO education_institution (name,address_1,address_2,city,state,country_id,postcode,telno,stage) SELECT SCHOOL_NAME as name,STREET as address_1, LOCALITY as address_2, TOWN as city, COUNTY as state, 'GB' as country_id, POSTCODE as postcode, CONCAT(0,TEL_STD,' ',TEL_NO) as telno,stage as stage FROM `school_list` WHERE 1
 class Network(models.Model):
     def __unicode__(self):
@@ -108,8 +108,8 @@ class Network(models.Model):
     forum = models.OneToOneField(Forum, editable = False, null = True)
     # Parent network, courses at universities, or any other hierarchies stuff
     parent = models.ForeignKey('Network', null = True, blank = True)
-    # Modules offered on this network - reverse from module
-    # modules = models.ManyToManyField('Module')
+    # Topics offered on this network - reverse from topic
+    # topics = models.ManyToManyField('Topic')
     image = models.ImageField(max_length=255, upload_to=network_file_path, blank=True)
 
     created = models.DateTimeField(auto_now_add = True)

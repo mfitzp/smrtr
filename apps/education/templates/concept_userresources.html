@@ -3,20 +3,20 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    {% if usermodule %}
-        &raquo; <a href="{% url coursei-detail coursei_id=usermodule.usercourse.coursei.id %}">{{ modulei.course }}</a>
+    {% if usertopic %}
+        &raquo; <a href="{% url coursei-detail coursei_id=usertopic.usercourse.coursei.id %}">{{ topici.course }}</a>
     {% else %}
-        &raquo; <a href="{% url course-detail course_id=modulei.course.id %}">{{ modulei.course }}</a>
+        &raquo; <a href="{% url course-detail course_id=topici.course.id %}">{{ topici.course }}</a>
     {% endif %}
-    &raquo; <a href="{% url modulei-detail modulei_id=modulei.id %}">{{ modulei }}</a>
+    &raquo; <a href="{% url topici-detail topici_id=topici.id %}">{{ topici }}</a>
     &raquo; Resources
 {% endblock %}
 
 
 {% block content %}
 
-    {% if module %}
-        <h1>{{ module }}</h1>
+    {% if topic %}
+        <h1>{{ topic }}</h1>
 
         {% if resources %}
                 <table>
@@ -36,7 +36,7 @@
         {% endif %}
 
     {% else %}
-        <p>Module does not exist.</p>
+        <p>Topic does not exist.</p>
     {% endif %}
 
 {% endblock %}

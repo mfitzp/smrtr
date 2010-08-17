@@ -20,8 +20,8 @@ def cron():
     
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update concept SQ..."
     batch_concept_update_sq()    
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update module SQ..."
-    batch_module_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update topic SQ..."
+    batch_topic_update_sq()
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update network SQ..."
     batch_network_update_sq()
 
@@ -32,8 +32,8 @@ def cron():
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept SQ..."
     batch_userconcept_update_sq()
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user module SQ..."
-    batch_usermodule_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user topic SQ..."
+    batch_usertopic_update_sq()
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
     batch_userconcept_update_focus()
@@ -41,8 +41,8 @@ def cron():
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept percent complete..."
     batch_userconcept_update_percent_complete()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user module percent complete..."
-    batch_usermodule_update_percent_complete()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user topic percent complete..."
+    batch_usertopic_update_percent_complete()
     
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."

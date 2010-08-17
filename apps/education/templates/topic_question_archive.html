@@ -2,10 +2,10 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    {% if module.network %}
-    &raquo; <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
+    {% if topic.network %}
+    &raquo; <a href="{% url network-detail network_id=topic.network.id %}">{{ topic.network }}</a>
     {% endif %}
-    &raquo; <a href="{% url module-detail module_id=module.id %}">{{ module }}</a>
+    &raquo; <a href="{% url topic-detail topic_id=topic.id %}">{{ topic }}</a>
     &raquo; Questions
 {% endblock %}
 
@@ -13,7 +13,7 @@
 
     {% if questions %}
         <table>
-        <caption>Latest Questions in {{module}}</caption>
+        <caption>Latest Questions in {{topic}}</caption>
         <tr><th scope="column">Question Name</th><th scope="column">Posted</th></tr>
         {% for question in questions %}
             <tr>

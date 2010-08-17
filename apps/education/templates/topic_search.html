@@ -5,16 +5,16 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; Module
+    &raquo; Topic
     &raquo; Search
 {% endblock %}
 
 
 {% block content %}
 
-    <div class="focus"><h4>Activate modules</h4><div>
-    <p>Modules are collections of subjects for study on <strong>smrtr</strong>.
-    <p>To get started, search for subjects you're interested in and activate the modules below.</p>
+    <div class="focus"><h4>Activate topics</h4><div>
+    <p>Topics are collections of subjects for study on <strong>smrtr</strong>.
+    <p>To get started, search for subjects you're interested in and activate the topics below.</p>
     <form method="get" action="?q={{query}}">
         <table>
             <tr>
@@ -31,23 +31,23 @@
         {% if query %}
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
-            <p class="buttonbar"><input type="submit" value="Activate selected modules &raquo;"></p>
+            <p class="buttonbar"><input type="submit" value="Activate selected topics &raquo;"></p>
             {% for result in page_obj.object_list %}
-                {% with result.object as module %}
-                    {% if module %}
+                {% with result.object as topic %}
+                    {% if topic %}
 
                 <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme">
                     <div class="object-emblems">  
                     </div>
-                    <div class="object-checkbox"><input type="checkbox" name="addmodule" value="{{ module.id }}" {% if module in request.user.modules.all %}checked disabled{% endif %}></div>
-                    <div class="object-image"><img src="{% thumbnail module.image 48x48 crop %}"></div>
-                    <div class="object-title"><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></div>
+                    <div class="object-checkbox"><input type="checkbox" name="addtopic" value="{{ topic.id }}" {% if topic in request.user.topics.all %}checked disabled{% endif %}></div>
+                    <div class="object-image"><img src="{% thumbnail topic.image 48x48 crop %}"></div>
+                    <div class="object-title"><a href="{% url topic-detail topic_id=topic.id %}">{{ topic }}</a></div>
                     <div class="object-meta">
-                        {% if module.network %}from <a href="{% url network-detail module.network.id %}">{{ module.network }}</a>{% endif %}
-                        &#183; {{ module.users.count }} member{{ module.users.count|pluralize }}
+                        {% if topic.network %}from <a href="{% url network-detail topic.network.id %}">{{ topic.network }}</a>{% endif %}
+                        &#183; {{ topic.users.count }} member{{ topic.users.count|pluralize }}
                         <br />
-                        {% if module.description %}
-                            {{ module.description|truncatewords:"25" }}
+                        {% if topic.description %}
+                            {{ topic.description|truncatewords:"25" }}
                         {% endif %}
                     </div>
                 </div>
@@ -58,17 +58,17 @@
             {% endfor %}
 
         <br class="clear" />
-        <p class="buttonbar"><input type="submit" value="Activate selected modules &raquo;"></p>
+        <p class="buttonbar"><input type="submit" value="Activate selected topics &raquo;"></p>
         </form>        
 
-        <!-- <p>Don't find your module listed? <a href="#">Create it!</a></p> -->
+        <!-- <p>Don't find your topic listed? <a href="#">Create it!</a></p> -->
 
         {% else %}
             {# Show some example queries to run, maybe query syntax, something else? #}
         {% endif %}
 
         {% if next %}
-            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any modules &raquo;</a></span></p>
+            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any topics &raquo;</a></span></p>
         {% endif %}
 
 

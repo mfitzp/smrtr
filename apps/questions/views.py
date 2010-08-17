@@ -14,13 +14,13 @@ def question_detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render_to_response('question_detail.html', {'question': question}, context_instance=RequestContext(request))
 
-def latest_questions_module(request, module_id):
+def latest_questions_topic(request, topic_id):
     
-    module = get_object_or_404(Module, pk=module_id)
+    topic = get_object_or_404(Topic, pk=topic_id)
 
-    questions = module.question_set.order_by('last_updated')
+    questions = topic.question_set.order_by('last_updated')
 
-    return render_to_response('module_question_archive.html', {'module': module, 'questions': questions})
+    return render_to_response('topic_question_archive.html', {'topic': topic, 'questions': questions})
 
 def questions_tagged(request,tag_id):
     tag = Tag.objects.get(pk=tag_id)

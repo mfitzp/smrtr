@@ -20,90 +20,90 @@ from haystack.query import SearchQuerySet
 
 # MODULE VIEWS
 
-# Get an module id and present a page showing detail
-# if user is registered on the module, provide a additional information
-def module_detail(request, module_id):
+# Get an topic id and present a page showing detail
+# if user is registered on the topic, provide a additional information
+def topic_detail(request, topic_id):
 
-    module = get_object_or_404(Module, pk=module_id)
+    topic = get_object_or_404(Topic, pk=topic_id)
 
     # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
     
     try:
-        # usermodules "you are studying this module at..."
-        usermodule = UserModule.objects.get(module=module, user=request.user)
+        # usertopics "you are studying this topic at..."
+        usertopic = UserTopic.objects.get(topic=topic, user=request.user)
     except:
-        usermodule = list()
-        module.concepts_filtered = module.concepts.all().order_by('name')
+        usertopic = list()
+        topic.concepts_filtered = topic.concepts.all().order_by('name')
     else:
         # Generate filter list of concepts with associated user data
-        module.concepts_filtered = list()
+        topic.concepts_filtered = list()
         
-        for concept in module.concepts.all().order_by('name'):
+        for concept in topic.concepts.all().order_by('name'):
             if concept in request.user.concepts.all():
                 concept.userconcept = request.user.userconcept_set.get( concept = concept )
             else:
                 pass
-            module.concepts_filtered.append(concept)
+            topic.concepts_filtered.append(concept)
                     
 
-    context = { 'module': module, 
-                'usermodule': usermodule,
-                'members': module.users.order_by('-usermodule__start_date')[0:12],
-                'total_members': module.users.count(),                
+    context = { 'topic': topic, 
+                'usertopic': usertopic,
+                'members': topic.users.order_by('-usertopic__start_date')[0:12],
+                'total_members': topic.users.count(),                
                 # Forum items
-                "forum": module.forum,
-                "threads": module.forum.thread_set.all(),
+                "forum": topic.forum,
+                "threads": topic.forum.thread_set.all(),
                 'next':request.GET.get('next')
               }
 
-    return render_to_response('module_detail.html', context, context_instance=RequestContext(request) )
+    return render_to_response('topic_detail.html', context, context_instance=RequestContext(request) )
 
 
 # Get an insititution id and present a page showing detail
-# if user is registered at the module, provide a tailored page
+# if user is registered at the topic, provide a tailored page
 @login_required
-def module_register(request, module_id):
+def topic_register(request, topic_id):
 
-    module = get_object_or_404(Module, pk=module_id)
+    topic = get_object_or_404(Topic, pk=topic_id)
 
     if request.method == 'POST':
-        um = UserModule()
+        um = UserTopic()
         um.user = request.user
         
-        # Find user record for parent network, must be registered on the network to register for module
+        # Find user record for parent network, must be registered on the network to register for topic
         # try:
-            # FIXME: Note this is trying only to check if member of modules 'home' network not any it may have been assigned to
-        #    usernetwork = request.user.usernetwork_set.get(network = module.network)
+            # FIXME: Note this is trying only to check if member of topics 'home' network not any it may have been assigned to
+        #    usernetwork = request.user.usernetwork_set.get(network = topic.network)
         # except:
             # Error
         #    pass
 
-        um.module = module
+        um.topic = topic
         um.save()
         request.user.message_set.create(
-        message=_(u"You are now studying ") + module.name)
+        message=_(u"You are now studying ") + topic.name)
 
         if 'next' in request.POST:
             return HttpResponseRedirect(request.POST['next'])
         else:
-            return module_detail(request, module_id)
+            return topic_detail(request, topic_id)
 
-    return module_detail(request, module_id)
-
-
-# Get an module id and present a page showing detail
-# if user is registered on the module, provide a additional information
-def module_providers(request, module_id):
-    module = get_object_or_404(Module, pk=module_id)
-    providers = module.networks.all()
-    return render_to_response('module_providers.html', {'module': module, 'providers': providers}, context_instance=RequestContext(request))
+    return topic_detail(request, topic_id)
 
 
-# Get an module id and present a page showing detail
-# if user is registered on the module, provide a additional information
+# Get an topic id and present a page showing detail
+# if user is registered on the topic, provide a additional information
+def topic_providers(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id)
+    providers = topic.networks.all()
+    return render_to_response('topic_providers.html', {'topic': topic, 'providers': providers}, context_instance=RequestContext(request))
+
+
+# Get an topic id and present a page showing detail
+# if user is registered on the topic, provide a additional information
 def concept_providers(request, concept_id):
     concept = get_object_or_404(Concept, pk=concept_id)
-    providers = concept.module_set.all()
+    providers = concept.topic_set.all()
     return render_to_response('concept_providers.html', {'concept': concept, 'providers': providers}, context_instance=RequestContext(request))
 
 
@@ -133,7 +133,7 @@ def concept_detail(request, concept_id):
     return render_to_response('concept_detail.html', context, context_instance=RequestContext(request))
 
 # Register for this concept
-# pass in moduleinstance for context to pull of usermodule record (specific)
+# pass in topicinstance for context to pull of usertopic record (specific)
 @login_required
 def concept_register(request, concept_id ):
 
@@ -213,55 +213,55 @@ def concept_edit(request, concept_id):
 
 
 
-# Create a new module
+# Create a new topic
 @login_required
-def module_create(request):
+def topic_create(request):
 
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http403
                 
     if request.POST:
-        form = ModuleForm(request, request.POST)       
+        form = TopicForm(request, request.POST)       
 
         if form.is_valid(): # All validation rules pass
-            module = form.save()
-            return redirect(module.get_absolute_url()) # Redirect to default view for the concept
+            topic = form.save()
+            return redirect(topic.get_absolute_url()) # Redirect to default view for the concept
     else:
-        form = ModuleForm(request, request.GET) # Allow prepopulate  
+        form = TopicForm(request, request.GET) # Allow prepopulate  
    
     context = { 
         'form': form,
-        'module': None,
+        'topic': None,
     }
     
-    return render_to_response("module_edit.html", context, context_instance=RequestContext(request)) 
+    return render_to_response("topic_edit.html", context, context_instance=RequestContext(request)) 
     
     
 
-# Edit a module
+# Edit a topic
 @login_required
-def module_edit(request, module_id):
+def topic_edit(request, topic_id):
 
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http403
 
-    module = get_object_or_404(Module, pk=module_id)
+    topic = get_object_or_404(Topic, pk=topic_id)
                     
     if request.POST:
-        form = ModuleForm(request, request.POST, instance=module)       
+        form = TopicForm(request, request.POST, instance=topic)       
 
         if form.is_valid(): # All validation rules pass
-            module = form.save()
-            return redirect(module.get_absolute_url()) # Redirect to default view for the concept
+            topic = form.save()
+            return redirect(topic.get_absolute_url()) # Redirect to default view for the concept
     else:
-        form = ModuleForm(request, instance=module) # Allow prepopulate  
+        form = TopicForm(request, instance=topic) # Allow prepopulate  
    
     context = { 
         'form': form,
-        'module': module,
+        'topic': topic,
     }
     
-    return render_to_response("module_edit.html", context, context_instance=RequestContext(request))   
+    return render_to_response("topic_edit.html", context, context_instance=RequestContext(request))   
   
 
 
@@ -407,7 +407,7 @@ def concept_resources(request, concept_id):
     
     concept = get_object_or_404(Concept, pk=concept_id)
     
-    # If the user is registered on this module pull record
+    # If the user is registered on this topic pull record
     try:
         userconcept = concept.userconcept_set.get( user=request.user )
     except:
@@ -432,27 +432,27 @@ def concept_resources(request, concept_id):
 
     
     
-# Presents a search mechanism to find modules to activate (optionally) (free text and tags)
+# Presents a search mechanism to find topics to activate (optionally) (free text and tags)
 @login_required
-def module_search( request, 
-                    template_name='module_search.html',
+def topic_search( request, 
+                    template_name='topic_search.html',
                     next=None ):
     
-    from education.forms import ModuleSearchForm
+    from education.forms import TopicSearchForm
     
-    if request.POST.get('addmodule'):
+    if request.POST.get('addtopic'):
         
-        mids = request.POST.getlist('addmodule')
+        mids = request.POST.getlist('addtopic')
         
         for mid in mids:
-            module = Module.objects.get(pk=mid)
-            usermodule = UserModule( user=request.user, module=module  )
+            topic = Topic.objects.get(pk=mid)
+            usertopic = UserTopic( user=request.user, topic=topic  )
             try:
-                usermodule.save()
+                usertopic.save()
             except:
-                messages.warning(request, _(u"You have already activated %s" % module.name ) )
+                messages.warning(request, _(u"You have already activated %s" % topic.name ) )
             else:
-                messages.success(request, _(u"You have activated %s" % module.name ) )
+                messages.success(request, _(u"You have activated %s" % topic.name ) )
         if next:
             return redirect( next )
 
@@ -460,7 +460,7 @@ def module_search( request,
     results = []
     # RelatedSearchQuerySet().filter(content='foo').load_all()
 
-    sqs = SearchQuerySet().models(Module)
+    sqs = SearchQuerySet().models(Topic)
     
     from network.utils import searchqueryset_usernetwork_boost
     sqs = searchqueryset_usernetwork_boost( request, sqs )    
@@ -470,7 +470,7 @@ def module_search( request,
     else:
         querydata = {'q':' '} #Default search return all
         
-    form = ModuleSearchForm(querydata, searchqueryset=sqs, load_all=True )
+    form = TopicSearchForm(querydata, searchqueryset=sqs, load_all=True )
 
     if form.is_valid():
         query = form.cleaned_data['q']

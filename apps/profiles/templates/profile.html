@@ -41,11 +41,11 @@ Member for {{ puser.date_joined|timesince }} &#183;
     <blockquote>{{ profile.about }}</blockquote>
 
 
-    <h5>Active Modules</h5>
+    <h5>Active Topics</h5>
     <div class="stackcontainer">
-    {% for usermodule in puser.usermodule_set.all %}
-        <div class="stack module stackvertical">{% percentbar usermodule.percent_complete %}
-        <a href="{% url module-detail module_id=usermodule.module.id %}" title="{{ usermodule.percent_complete }}% complete">{{ usermodule }} ({% sqchange usermodule.previous_sq usermodule.sq %})</a>
+    {% for usertopic in puser.usertopic_set.all %}
+        <div class="stack topic stackvertical">{% percentbar usertopic.percent_complete %}
+        <a href="{% url topic-detail topic_id=usertopic.topic.id %}" title="{{ usertopic.percent_complete }}% complete">{{ usertopic }} ({% sqchange usertopic.previous_sq usertopic.sq %})</a>
         </div>
        
     {% endfor %}

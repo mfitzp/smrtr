@@ -6,55 +6,55 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    {% if module.network %}
-    &raquo; <a href="{% url network-detail network_id=module.network.id %}">{{ module.network }}</a>
+    {% if topic.network %}
+    &raquo; <a href="{% url network-detail network_id=topic.network.id %}">{{ topic.network }}</a>
     {% endif %}
-    &raquo; {{ module }}
+    &raquo; {{ topic }}
 {% endblock %}
 
-{% block title %}{{module}}{% endblock %}
+{% block title %}{{topic}}{% endblock %}
 
-{% block content_title %}{% include "_module_header.html" %}{% endblock %}
+{% block content_title %}{% include "_topic_header.html" %}{% endblock %}
 
 {% block progressbar %}
-{% if usermodule %}
-{% percentbar usermodule.percent_complete %}
-<div id="progressbar-content" title="{{ usermodule.percent_complete }}% complete">Active {{ usermodule.start_date|timesince }} </div>
-<div id="progressbar-sq" title="Your module SQ is {{ userconcept.sq }}">{% sqchange usermodule.previous_sq usermodule.sq %}</div>
+{% if usertopic %}
+{% percentbar usertopic.percent_complete %}
+<div id="progressbar-content" title="{{ usertopic.percent_complete }}% complete">Active {{ usertopic.start_date|timesince }} </div>
+<div id="progressbar-sq" title="Your topic SQ is {{ userconcept.sq }}">{% sqchange usertopic.previous_sq usertopic.sq %}</div>
 {% endif %}
 {% endblock %}
 
 {% block content_left %}
 
-    {% if module %}
+    {% if topic %}
 
-        <blockquote>{{ module.description }}</blockquote>
+        <blockquote>{{ topic.description }}</blockquote>
 
-        {% if usermodule %}
+        {% if usertopic %}
             
         {% else %}
             <div class="focus">
-            <h4>Activate module</h4>
-            <p>Activate this module to start studying!</p>
+            <h4>Activate topic</h4>
+            <p>Activate this topic to start studying!</p>
             <!-- Registration form -->
-            <form action="{% url module-register module_id=module.id %}" method="post">
+            <form action="{% url topic-register topic_id=topic.id %}" method="post">
             <input type="hidden" name="submit" value="1" />
             {% if next %}<input type="hidden" name="next" value="{{next}}" />{% endif %}
-            &nbsp;<input type="submit" value="Activate '{{module}}' &raquo;" />
+            &nbsp;<input type="submit" value="Activate '{{topic}}' &raquo;" />
             </form>
             </div>
         {% endif %}
 
-        {% if module.concepts %}
+        {% if topic.concepts %}
         <h5>Concepts</h5>
         <table>
-            {% if module.concepts_filtered %}
-                {% for concept in module.concepts_filtered %}
+            {% if topic.concepts_filtered %}
+                {% for concept in topic.concepts_filtered %}
                     <tr class="{% cycle zebra %}">
                         <td colspan="2"><a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a></td>
                         <td>
                         </td>
-                        {% if usermodule %}
+                        {% if usertopic %}
                             {% if concept.userconcept %}
                                 {% if concept.userconcept.is_active %}
                                     <td><a href="#" class="active">Active</a></td>
@@ -86,5 +86,5 @@
 <h5>Discussion</h5>
 {% include "_forum.html" %}
 
-{% with module as obj %}{% include "_social.html" %}{% endwith %}
+{% with topic as obj %}{% include "_social.html" %}{% endwith %}
 {% endblock %}

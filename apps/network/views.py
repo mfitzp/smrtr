@@ -26,19 +26,19 @@ def detail(request, network_id):
         usernetwork = network.usernetwork_set.get( user=request.user )
     except:
         usernetwork = list()
-        network.modules_filtered = network.modules.all().order_by('name')
+        network.topics_filtered = network.topics.all().order_by('name')
     else:
-        # Generate filter list of modules with associated user data
-        # If user registered attach usermodule linker and prepend (top list)
+        # Generate filter list of topics with associated user data
+        # If user registered attach usertopic linker and prepend (top list)
         # else append (bottom list)
-        network.modules_filtered = list()
+        network.topics_filtered = list()
         
-        for module in network.modules.all().order_by('name'):
-            if module in request.user.modules.all():
-                module.usermodule = request.user.usermodule_set.get( module = module )
+        for topic in network.topics.all().order_by('name'):
+            if topic in request.user.topics.all():
+                topic.usertopic = request.user.usertopic_set.get( topic = topic )
             else:
                 pass
-            network.modules_filtered.append(module)
+            network.topics_filtered.append(topic)
              
 
     context = { 'network': network, 

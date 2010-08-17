@@ -97,14 +97,14 @@
     <p class="buttonbar">
        <!-- <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span> -->
         <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>
-        <span class="button"><a href="{% url module-search %}" class="register">Add modules &raquo;</a></span>       
+        <span class="button"><a href="{% url topic-search %}" class="register">Add topics &raquo;</a></span>       
     </p>
 
     {% else %}
     <div class="focus"><h4>Welcome!</h4>
         <p>Once you're up and running, this box will show your <strong>current active challenges</strong> and resources for study. You can control
-        what subjects you get by <a href="{% url module-search %}">activating and deactivating modules</a>.</p>
-        <p>To get started <a href="{% url module-search %}" class="button">Available some modules now!</a></p>
+        what subjects you get by <a href="{% url topic-search %}">activating and deactivating topics</a>.</p>
+        <p>To get started <a href="{% url topic-search %}" class="button">Available some topics now!</a></p>
     </div>
     {% endif %}
 

@@ -11,23 +11,23 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
 
-    # Module instance
+    # Topic instance
     # url(r'^ci(?P<coursei_id>\d+)/$', 'education.views.coursei_detail',  name='coursei-detail'  ),
 
-    # Module instance 
-    # url(r'^mi(?P<modulei_id>\d+)/$', 'education.views.modulei_detail',  name='modulei-detail'  ),
+    # Topic instance 
+    # url(r'^mi(?P<topici_id>\d+)/$', 'education.views.topici_detail',  name='topici-detail'  ),
 
-    # Module generic
-    url(r'^module/(?P<module_id>\d+)/$', 'education.views.module_detail',  name='module-detail'  ),
-    url(r'^module/(?P<module_id>\d+)/providers/$', 'education.views.module_providers',  name='module-providers'  ),
-    url(r'^module/(?P<module_id>\d+)/register/$', 'education.views.module_register',  name='module-register'  ),
+    # Topic generic
+    url(r'^topic/(?P<topic_id>\d+)/$', 'education.views.topic_detail',  name='topic-detail'  ),
+    url(r'^topic/(?P<topic_id>\d+)/providers/$', 'education.views.topic_providers',  name='topic-providers'  ),
+    url(r'^topic/(?P<topic_id>\d+)/register/$', 'education.views.topic_register',  name='topic-register'  ),
 
-    # Module creation and editing
-    url(r'^module/create/$', 'education.views.module_create',  name='module-create'  ),
-    url(r'^module/(?P<module_id>\d+)/edit/$', 'education.views.module_edit',  name='module-edit'  ),
-    url(r'^module/(?P<module_id>\d+)/concepts/add/$', 'education.views.module_detail',  name='module-add-concepts'  ),
+    # Topic creation and editing
+    url(r'^topic/create/$', 'education.views.topic_create',  name='topic-create'  ),
+    url(r'^topic/(?P<topic_id>\d+)/edit/$', 'education.views.topic_edit',  name='topic-edit'  ),
+    url(r'^topic/(?P<topic_id>\d+)/concepts/add/$', 'education.views.topic_detail',  name='topic-add-concepts'  ),
 
-    url(r'^module/search/$', 'education.views.module_search',  name='module-search'  ),
+    url(r'^topic/search/$', 'education.views.topic_search',  name='topic-search'  ),
 
 
     # Concept generic

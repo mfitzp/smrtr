@@ -1,15 +1,15 @@
 import datetime
 from haystack.indexes import *
 from haystack import site
-from education.models import Module, Concept
+from education.models import Topic, Concept
 
 
-class ModuleIndex(SearchIndex):
+class TopicIndex(SearchIndex):
     text = CharField(document=True, use_template=True) #name, description 
    
     def get_queryset(self):
         """Used when the entire index for model is updated."""
-        return Module.objects.all()
+        return Topic.objects.all()
         
     def get_updated_field(self):
         return 'updated'
@@ -24,5 +24,5 @@ class ConceptIndex(SearchIndex):
     def get_updated_field(self):
         return 'updated'
 
-site.register(Module, ModuleIndex)
+site.register(Topic, TopicIndex)
 site.register(Concept, ConceptIndex)

@@ -22,7 +22,7 @@ from haystack.query import SearchQuerySet
 
 # Create a new challenge
 # Challenges are lists of questions to be attempted: they can be 
-# built from concepts, modules, tags, etc. (passed in as parameters)
+# built from concepts, topics, tags, etc. (passed in as parameters)
 # Challenges may be public or private, and solo or group
 # Scoring can be individual or network based (e.g. university vs. university, course vs. course)
 @login_required
@@ -226,7 +226,7 @@ def do_submit(request, challenge_id):
     else:
         totals['percent'] = 0
 
-    # Recalculate SQ values for this module/usermodule_set  
+    # Recalculate SQ values for this topic/usertopic_set  
     # NOTE: May need to remove this is load too great?
     userchallenge.update_sq()
     userchallenge.save()

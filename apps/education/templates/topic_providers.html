@@ -6,16 +6,16 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; <a href="{% url module-detail module_id=module.id %}">{{ module }}</a>
+    &raquo; <a href="{% url topic-detail topic_id=topic.id %}">{{ topic }}</a>
     &raquo; Providers
 {% endblock %}
 
-{% block content_title %}{% block content_title %}{% include "_module_header.html" %}{% endblock %}{% endblock %}
+{% block content_title %}{% block content_title %}{% include "_topic_header.html" %}{% endblock %}{% endblock %}
 
 {% block content %}
 
     {% if providers %}
-        <p>This module is available for study on the following networks:</p>
+        <p>This topic is available for study on the following networks:</p>
         <table>
         {% for network in providers %}
             <tr>

@@ -9,7 +9,7 @@ from questions.models import Question
 from education.models import Concept
 from network.models import Network
 from resources.models import Resource
-from education.models import UserModule
+from education.models import UserTopic
 from sq.utils import * 
 # External
 import datetime

@@ -15,32 +15,32 @@ from datetime import datetime, timedelta, date as _date
 from discuss.models import Forum
 
 # Network = Course now e.g. 'Network' for AQA Biology
-# Below this modules are the basis of study on that modules may have a home network, be tied to a specific network, or freely open
-# Below modules 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
+# Below this topics are the basis of study on that topics may have a home network, be tied to a specific network, or freely open
+# Below topics 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
-def module_file_path(instance=None, filename=None):
-    return os.path.join('education', 'module', str(instance.id), filename)
+def topic_file_path(instance=None, filename=None):
+    return os.path.join('education', 'topic', str(instance.id), filename)
     
 def concept_file_path(instance=None, filename=None):
     return os.path.join('education','concept', str(instance.id), filename)    
 
 # Definitions of courses available and their constituent concepts
 # Subjects are tied to a home network
-class Module(models.Model):
+class Topic(models.Model):
     def __unicode__(self):
         return self.name
         
     def get_absolute_url(self):
-        return reverse('module-detail',kwargs={'module_id':str(self.id)})
+        return reverse('topic-detail',kwargs={'topic_id':str(self.id)})
                 
     # Auto-add a new wall object when creating new Course
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
-            super(Module, self).save(force_insert, force_update)
+            super(Topic, self).save(force_insert, force_update)
             self.forum = Forum.objects.create(title=self.name)
             self.networks.add(self.network) # Make link to 'offer' this network
                           
-        super(Module, self).save(force_insert, force_update)
+        super(Topic, self).save(force_insert, force_update)
 
     def update_sq(self):
         # update
@@ -49,11 +49,11 @@ class Module(models.Model):
 
     # Home network for e.g. company-specific subjects
     network = models.ForeignKey(Network, blank = True, null = True) 
-    # Networks offering this module
-    networks = models.ManyToManyField(Network, related_name='modules')
+    # Networks offering this topic
+    networks = models.ManyToManyField(Network, related_name='topics')
     
     # Users
-    users = models.ManyToManyField(User, through='UserModule', related_name='modules')
+    users = models.ManyToManyField(User, through='UserTopic', related_name='topics')
     
     name = models.CharField(max_length=75)
 
@@ -63,10 +63,10 @@ class Module(models.Model):
 
     forum = models.OneToOneField(Forum, editable = False, null = True)
 
-# Concepts for this module
+# Concepts for this topic
     concepts = models.ManyToManyField('Concept', blank=True)
     
-    image = models.ImageField(max_length=255, upload_to=module_file_path, blank=True)
+    image = models.ImageField(max_length=255, upload_to=topic_file_path, blank=True)
     
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)    
@@ -75,7 +75,7 @@ class Module(models.Model):
 # Element is a defining part of a course 
 # Elements are always tied to a specific subject?? Or freely available
 # If an individual concept is self-contained area of study e.g. 'thermodynamics' (that's possibly a bit big)
-# may be allocated widely, module components?
+# may be allocated widely, topic components?
 class Concept(models.Model):
     def __unicode__(self):
         return self.name
@@ -119,19 +119,19 @@ class Concept(models.Model):
 # Models are ManytoMany through Models (ie they are used as the basis for linking
 # other models together, while appending additional information
 
-class UserModule(models.Model):
+class UserTopic(models.Model):
     def __unicode__(self):
-        return self.module.name
+        return self.topic.name
         
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
-            # Auto-activate all child concepts for this module
-            for concept in self.module.concepts.all():
+            # Auto-activate all child concepts for this topic
+            for concept in self.topic.concepts.all():
                 try:
                     UserConcept(user=self.user, concept=concept).save()
                 except:
                     pass
-        super(UserModule, self).save(force_insert, force_update)
+        super(UserTopic, self).save(force_insert, force_update)
 
     # Additional information
     def year_of_study(self):
@@ -140,16 +140,16 @@ class UserModule(models.Model):
         return ( self.end_date == None ) or ( self.end_date > _date.today() )
     def update_sq(self):
         self.previous_sq = self.sq
-        self.sq = UserConcept.objects.filter(user=self.user, concept__module = self.module).aggregate(Avg('sq'))['sq__avg']
+        self.sq = UserConcept.objects.filter(user=self.user, concept__topic = self.topic).aggregate(Avg('sq'))['sq__avg']
         self.save()
     def update_percent_complete(self):
-        percent_complete = UserConcept.objects.filter(user=self.user, concept__module = self.module).aggregate(Avg('percent_complete'))['percent_complete__avg']
+        percent_complete = UserConcept.objects.filter(user=self.user, concept__topic = self.topic).aggregate(Avg('percent_complete'))['percent_complete__avg']
         # Don't save if null (i.e. no value yet on any concepts)
         if percent_complete:
             self.percent_complete = percent_complete
             self.save()
         
-    # Users on this module in this specific context (network:course)
+    # Users on this topic in this specific context (network:course)
     def members_class(self):
         return User.objects.filter( usercourse__coursei__course=self.course(), 
                                     usernetwork__network=self.network()
@@ -164,7 +164,7 @@ class UserModule(models.Model):
         return User.objects.filter(usercourse__coursei__course=self.coursei.course)
 
     user = models.ForeignKey(User)
-    module = models.ForeignKey(Module)
+    topic = models.ForeignKey(Topic)
 
     start_date = models.DateTimeField(auto_now_add = True)
     end_date = models.DateTimeField(null = True)
@@ -175,7 +175,7 @@ class UserModule(models.Model):
     percent_complete = models.IntegerField(editable = False, null = False, default=0)
 
     class Meta:
-        unique_together = ("user", "module")
+        unique_together = ("user", "topic")
 
 class UserConcept(models.Model):
     def __unicode__(self):
@@ -184,9 +184,9 @@ class UserConcept(models.Model):
     def network(self):
         return self.usercourse.coursei.network
     def course(self):
-        return self.modulei.course
-    def module(self):
-        return self.modulei.module
+        return self.topici.course
+    def topic(self):
+        return self.topici.topic
     # Additional information
     def week_of_study(self):
         return ( ( _date.today() - self.start_date  ).days / 7 ) + 1
@@ -248,20 +248,20 @@ class UserConcept(models.Model):
             self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
             self.save()
         
-    # Users on this module in this specific context (network:course:module)
+    # Users on this topic in this specific context (network:course:topic)
     def members_class(self):
-        return User.objects.filter( usermodule__modulei__module=self.module(), 
+        return User.objects.filter( usertopic__topici__topic=self.topic(), 
                                     usercourse__coursei__course=self.course(), 
                                     usernetwork__network=self.network()
                                     ).distinct()
-    # Users on this module on any of this user's networks (user(*):course:module
+    # Users on this topic on any of this user's networks (user(*):course:topic
     def members_network(self):
-        return User.objects.filter( usermodule__modulei__module=self.module(), 
+        return User.objects.filter( usertopic__topici__topic=self.topic(), 
                                     usernetwork__network__usernetwork__user=self.user
                                     ).distinct()
-    # Users on this module in any context (*:*:module)
+    # Users on this topic in any context (*:*:topic)
     def members_global(self):
-        return User.objects.filter( usermodule__modulei__module=self.module() )
+        return User.objects.filter( usertopic__topici__topic=self.topic() )
     
     user = models.ForeignKey(User)
     concept = models.ForeignKey(Concept)

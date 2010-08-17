@@ -1,8 +1,8 @@
 {{ object.name }}
 {{ object.description }}
 
-{% for module in object.modules.all %}
-    {{ module.name }}
+{% for topic in object.topics.all %}
+    {{ topic.name }}
 {% endfor %}
 
 {% for concept in object.concept_set.all %}

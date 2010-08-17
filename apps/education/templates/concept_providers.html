@@ -15,18 +15,18 @@
 {% block content %}
 
     {% if providers %}
-        <p>This concept is available for study on the following modules:</p>
+        <p>This concept is available for study on the following topics:</p>
         <table>
-        {% for module in providers %}
+        {% for topic in providers %}
             <tr>
-                <th><a href="{% url module-detail module_id=module.id %}" class="module">{{ module }}</a></th>
+                <th><a href="{% url topic-detail topic_id=topic.id %}" class="topic">{{ topic }}</a></th>
             </tr>
 
         {% endfor %}
         </table>                
         
     {% else %}
-        <p>No modules are currently offering this concept for study.</p>
+        <p>No topics are currently offering this concept for study.</p>
     {% endif %}
 
 {% endblock %}

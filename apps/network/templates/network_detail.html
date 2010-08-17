@@ -65,27 +65,27 @@ Location
         {% endif %}        
         
         
-        {% if network.modules_filtered %}
-            <h5>Modules</h5>
+        {% if network.topics_filtered %}
+            <h5>Topics</h5>
             <table>
-            {% for module in network.modules_filtered %}
+            {% for topic in network.topics_filtered %}
                 <tr class="{% cycle zebra %}">
-                    <td colspan="2"><a href="{% url module-detail module_id=module.id %}">{{ module }}</a></td>
+                    <td colspan="2"><a href="{% url topic-detail topic_id=topic.id %}">{{ topic }}</a></td>
                     <td>
-                    {% ifnotequal module.network network %}
-                        <a href="{% url network-detail network_id=module.network.id %}" class="network network{{ module.network.type }}">{{ module.network }}</a>
+                    {% ifnotequal topic.network network %}
+                        <a href="{% url network-detail network_id=topic.network.id %}" class="network network{{ topic.network.type }}">{{ topic.network }}</a>
                     {% endifnotequal %}
                     </td>
                     {% if usernetwork %}
-                        {% if module.usermodule %}
-                            {% if module.usermodule.is_active %}
+                        {% if topic.usertopic %}
+                            {% if topic.usertopic.is_active %}
                                 <td><a href="#" class="active">Active</a></td>
                             {% else %}
                                 <td><span class="complete">Completed</span></td>
                             {% endif %}
                             
                         {% else %}
-                            <td><a href="{% url module-register module_id=module.id %}" class="inactive">Activate</a></td>
+                            <td><a href="{% url topic-register topic_id=topic.id %}" class="inactive">Activate</a></td>
                         {% endif %}
                     {% else %}<td></td>{% endif %}
                 </tr>

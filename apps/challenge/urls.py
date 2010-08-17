@@ -10,7 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     # Create new challenge: pass definition parameters on query-string
-    # concept_ids, module_ids, home_network, privacy
+    # concept_ids, topic_ids, home_network, privacy
     # Pass skip_config=true to bypass editing (useful for quick personal challenges: note user can invite another user at any time)    
     url(r'^create/$', 'challenge.views.create', name='challenge-create' ),
     url(r'^generate/$', 'challenge.views.generate', name='challenge-generate' ),

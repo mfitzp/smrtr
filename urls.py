@@ -12,7 +12,7 @@ handler500 = 'core.views.error500' # Override default handler to pass MEDIA_URL
 sitemaps = {
     # Structure
     'networks': NetworkSitemap,
-    'modules': ModuleSitemap, 
+    'topics': TopicSitemap, 
     'concepts': ConceptSitemap,
     # Content
     'questions': QuestionSitemap, 
