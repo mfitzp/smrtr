@@ -31,7 +31,6 @@
         {% if query %}
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
-            <p class="buttonbar"><input type="submit" value="Activate selected topics &raquo;"></p>
             {% for result in page_obj.object_list %}
                 {% with result.object as topic %}
                     {% if topic %}
