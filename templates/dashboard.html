@@ -60,7 +60,7 @@
                     <div class="object-meta">
                         <span class="users">{{ userchallenge.challenge.userchallenge_set.count }} challenger{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span>
                         &#183; Difficulty {% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}
-                        &#183; Expires {{ userchallenge.challenge.created|timesince }}
+                        &#183; Duration <span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span>
                     </div>
                     <div class="object-buttons">
                         {% ifequal userchallenge.status 0 %}
