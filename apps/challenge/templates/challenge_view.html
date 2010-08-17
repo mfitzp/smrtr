@@ -35,11 +35,6 @@
 {% block content_left %}
 
     {% if challenge %}
-    
-        <table>
-            <tr><th>Questions</th><td>{{ challenge.total_questions }}</td></tr>    
-            <tr><th>Duration</th><td>{% duration challenge.time_to_complete %}</td></tr>
-        </table>
 
         <blockquote>{{ challenge.description }}</blockquote>
 
