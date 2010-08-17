@@ -31,6 +31,7 @@
         {% if query %}
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
+            <div style="margin-top:1em;">
             {% for result in page_obj.object_list %}
                 {% with result.object as topic %}
                     {% if topic %}
@@ -55,7 +56,7 @@
                 {% endwith %}
                 {% empty %}
             {% endfor %}
-
+            </div>
         <br class="clear" />
         <p class="buttonbar"><input type="submit" value="Activate selected topics &raquo;"></p>
         </form>        
