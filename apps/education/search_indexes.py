@@ -11,8 +11,8 @@ class TopicIndex(SearchIndex):
         """Used when the entire index for model is updated."""
         return Topic.objects.all()
         
-    def get_updated_field(self):
-        return 'updated'
+    #def get_updated_field(self):
+    #    return 'updated'
         
 class ConceptIndex(SearchIndex):
     text = CharField(document=True, use_template=True) #name, description 
