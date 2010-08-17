@@ -5,13 +5,13 @@
 {% load countries_tags %}
 {% load thumbnail %}
 
-{% block content_title %}<h1>Top 5s (and a Top 10)</h1>{% endblock %}
+{% block content_title %}<h1>Top 5s</h1>{% endblock %}
 
 {% block content_left %}
 
-    <h5>Top 10 Members</h5>
+    <h5>Top 5 Smartest Members</h5>
     <table>
-    {% for user in topusers %}
+    {% for user in topusers_smart %}
         {% with user.get_profile as profile %}
            <tr><td>{% avatar user 48 %}</td>
            <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
@@ -26,6 +26,24 @@
 
     {% endfor %}
     </table>
+    
+    <h5>Top 5 Most Active Members</h5>
+    <table>
+    {% for user in topusers_active %}
+        {% with user.get_profile as profile %}
+           <tr><td>{% avatar user 48 %}</td>
+           <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
+                Member for {{ user.date_joined|timesince }} <br />
+                Location 
+                {% if profile.city or profile.country %}
+                    <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+                {% else %}unknown{% endif %} 
+           </td>
+           <td>{{ user.answers }}</td></tr>
+        {% endwith %}
+
+    {% endfor %}
+    </table>    
 
 
 
@@ -34,7 +52,7 @@
 {% block content_right %}
 
 
-    <h5>Top 5 Networks</h5>
+    <h5>Top 5 Smartest Networks</h5>
     <table>
     {% for network in topnetworks %}
        <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
@@ -50,7 +68,7 @@
     {% endfor %}
     </table>
 
-    <h5>Top 5 Countries</h5>
+    <h5>Top 5 Smartest Countries</h5>
     <table>
     {% for country in topcountries %}
        <tr>
