@@ -195,7 +195,12 @@ def statistics(request):
     from countries.models import Country
 
     topusers_smart = User.objects.order_by('-userprofile__sq')[0:5]
-    topusers_correct = User.objects.annotate(
+    
+    
+    # Retrieve records for past 6 months
+    start_date = datetime.now() - timedelta(weeks=26)
+    end_date = datetime.now()    
+    topusers_correct = User.objects.filter(userquestionattempt__created__range=(start_date,end_date)).annotate(
                         percent_correct=Avg('userquestionattempt__percent_correct')
                     ).order_by('-percent_correct')[0:5]
 
