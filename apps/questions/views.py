@@ -18,7 +18,7 @@ def latest_questions_topic(request, topic_id):
     
     topic = get_object_or_404(Topic, pk=topic_id)
 
-    questions = topic.question_set.order_by('last_updated')
+    questions = topic.question_set.order_by('updated')
 
     return render_to_response('topic_question_archive.html', {'topic': topic, 'questions': questions})
 

@@ -15,7 +15,7 @@ urlpatterns = patterns('',
      url(r'^tag/(?P<tag_id>\d+)/$', 'questions.views.questions_tagged', name='questions-tagged' ),
 
 
-     url(r'^all$', 'django.views.generic.date_based.archive_index', { 'queryset': Question.objects.all(), 'date_field': 'last_updated' }, name='latest-questions' ),
+     url(r'^all$', 'django.views.generic.date_based.archive_index', { 'queryset': Question.objects.all(), 'date_field': 'updated' }, name='latest-questions' ),
      (r'^(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', { 'queryset': Question.objects.all() } ),
 
      # Non-user specific (no need for instance data)
