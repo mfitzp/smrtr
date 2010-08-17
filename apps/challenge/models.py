@@ -93,7 +93,10 @@ class Challenge(models.Model):
 
 class UserChallenge(models.Model):
     def __unicode__(self):
-        return self.topic.name
+        if self.topic:
+            return self.topic.name
+        else:
+            return self.challenge.name
 
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
