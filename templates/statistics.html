@@ -27,9 +27,9 @@
     {% endfor %}
     </table>
     
-    <h5>Top 5 Most Active Members</h5>
+    <h5>Top 5 Most Correct Members</h5>
     <table>
-    {% for user in topusers_active %}
+    {% for user in topusers_correct %}
         {% with user.get_profile as profile %}
            <tr><td>{% avatar user 48 %}</td>
            <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
