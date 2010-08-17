@@ -7,22 +7,36 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Challenge
-    &raquo; {{ challenge.name }}
+    &raquo; {% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}
 {% endblock %}
 
 {% block title %}{{challenge}}{% endblock %}
 
-{% block content_title %}<h1>{{ challenge.name }}</h1>{% endblock %}
+{% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
+
+{% block progressbar %}
+{% if userchallenge %}
+<div id="progressbar-content" title="{{ userchallenge.percent_complete }}% complete">
+{{ userchallenge.get_status_display }}
+{% if userchallenge.status == 1 %}{{ userchallenge.started|timesince }} ago{% endif %}
+{% if userchallenge.status == 2 %}{{ userchallenge.completed|timesince }} ago{% endif %}
+{% if userchallenge.topic %}
+&#183; Applies to your <a href="{% url topic-detail topic_id=userchallenge.topic.id %}">{{ userchallenge.topic }}</a> topic 
+    {% if userchallenge.topic.network %}
+        from <a href="{% url network-detail network_id=userchallenge.topic.network.id %}">{{ userchallenge.topic.network }}</a>
+    {% endif %}
+{% endif %}
+</div>
+<div id="progressbar-sq" title="Your concept SQ is {{ userchallenge.sq }}">{% sqchange userchallenge.previous_sq userchallenge.sq %}</div>
+{% endif %}
+{% endblock %}
+
 
 {% block content_left %}
 
     {% if challenge %}
     
         <table>
-            <tr><th>SQ</th><td>{% sqchange 100 challenge.sq %} ({{ challenge.minsq }}-{{ challenge.maxsq }}) 
-                {% if request.user.get_profile %}{% sqdifficulty challenge.sq request.user.get_profile.sq %}
-                {% else %}None{% endif %}
-            </td></tr>
             <tr><th>Questions</th><td>{{ challenge.total_questions }}</td></tr>    
             <tr><th>Duration</th><td>{% duration challenge.time_to_complete %}</td></tr>
         </table>

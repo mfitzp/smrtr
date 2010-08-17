@@ -1,0 +1,28 @@
+{% load sq_tags %}
+{% load thumbnail %}
+{% load core_tags %}
+
+<div>
+    <div id="content-title-image">
+        {% if userchallenge %}
+            <img src="{% thumbnail userchallenge.image 48x48 crop %}">
+        {% else %}
+            <img src="{% thumbnail challenge.image 48x48 crop %}">
+        {% endif %}
+    </div>
+    <div id="content-title-header">
+        <h1 style="display:inline">
+            {% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}
+        </h1> 
+    </div>
+    <div id="content-title-meta">
+        {{challenge}}
+        &#183; <span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span> for {{ userchallenge.challenge.total_questions }} question{{ userchallenge.challenge.total_questions|pluralize }}
+    </div>                    
+    <div id="content-title-sq">
+        {% if request.user.get_profile %}{% sqdifficulty challenge.sq request.user.get_profile.sq %}
+        {% else %}{% sqdifficulty challenge.sq 100 %}{% endif %}
+    </div>
+    
+</div>  
+
