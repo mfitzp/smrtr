@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load avatar_tags %}
 {% load core_tags %}
+{% load thumbnail %}
 
 {% cycle 'odd' 'even' as zebra%}
 
@@ -14,13 +15,14 @@
 
     {% if userchallengesexist %}
         <div class="focus nopad"><h4>Challenges</h4>
-        <table id="challenges">
+        <div id="challenges">
         {% for userchallenge in userchallenges %}
         
             {% if forloop.first %}
-            <tr><td colspan="10" class="challenge_focus">
-            <h5>{{ userchallenge }}</h5>         
-            <blockquote>{{ userchallenge.challenge.description }}</blockquote>
+            <div id="challenges-focus">
+            <div id="challenges-focus-image"><img src="{% thumbnail userchallenge.image 48x48 crop %}"></div>
+                <h5>{{ userchallenge }}</h5>         
+                <p>{{ userchallenge.challenge }}</p>
             <table>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
@@ -43,17 +45,20 @@
                         {% endifequal %}
                     {% endifequal %}
                     </span>
-            </div>
-            </td></tr>
-
+            </div></div>
             {% else %}
-
-                <tr class="{% cycle zebra %}">
-                    <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
-                    <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
-                    <td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td>
-                    <td>{{ userchallenge.last_access|timesince }}</td>
-                    <td style="text-align:right; vertical-align:middle;">    
+                <div class="object {% cycle 'odd' 'even' %}">
+                    <div class="object-emblems">  
+                    </div>
+                    <div class="object-image"><img src="{% thumbnail userchallenge.image 48x48 crop %}"></div>
+                    <div class="object-title"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a><br />
+                    <small>{{ userchallenge.challenge }}</small></div>
+                    <div class="object-meta">
+                        <span class="users">{{ userchallenge.challenge.userchallenge_set.count }} challenger{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span>
+                        &#183; Difficulty {% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}
+                        &#183; Expires {{ userchallenge.challenge.created|timesince }}
+                    </div>
+                    <div class="object-buttons">
                         {% ifequal userchallenge.status 0 %}
                         <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
                         {% else %}
@@ -61,16 +66,17 @@
                                 <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
                             {% endifequal %}
                         {% endifequal %}
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 
+
             {% endif %}
             
         {% empty %}
         
             <tr id="focus"><td colspan="10">
             <div style="position:relative">
-            <h5>Challenge Complete!</h5>
+            <h5>Challenges Complete!</h5>
             <p>Congratulations, you've completed your assigned challenges for today!</p>
             <p><a href="{{ SMRTR_FREE_TIME_URL }}" target="_blank">Have a well-earned rest</a>, <a href="">study</a> or <a href="{% url challenge-generate %}">get some more?</a></p>
             </div>
@@ -80,7 +86,7 @@
             
         {% endfor %}
         
-
+        <table>
        {% for userchallenge in userchallengescomplete %}
         
             <tr class="{% cycle zebra %}">
@@ -92,8 +98,8 @@
             </tr>
             
         {% endfor %}        
-    </table>
-    </div>
+       </table>
+    </div></div>
     <p class="buttonbar">
        <!-- <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span> -->
         <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>

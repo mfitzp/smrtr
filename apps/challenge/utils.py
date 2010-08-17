@@ -106,6 +106,8 @@ def generate_userchallenges(user, number = None):
             # now shows up in the user's list. Magic.
             userchallenge = UserChallenge()
             userchallenge.challenge = challenge
+            if topic_id:
+                userchallenge.topic = Topic.objects.get(pk=topic_id)
             userchallenge.user = user
             userchallenge.save()
 

@@ -247,9 +247,9 @@ def do_submit(request, challenge_id):
 
 @login_required
 def generate(request):
-    from challenge.utils import generate_user_challenges
+    from challenge.utils import generate_userchallenges
     # Generate challenges for the active user, redirect to homepage
-    generate_user_challenges(request.user)
+    generate_userchallenges(request.user)
     return redirect('home')
 
 

@@ -9,11 +9,14 @@ from questions.models import Question
 from education.models import Concept
 from network.models import Network
 from resources.models import Resource
-from education.models import UserTopic
+from education.models import Topic, UserTopic
 from sq.utils import * 
 # External
 import datetime
 import math
+
+def challenge_file_path(instance=None, filename=None):
+    return os.path.join('challenge', str(instance.id), filename)
 
 # Challenges are tests of questions, on a particular topic/etc. created and pre-filled with 
 # questions on creation. Once created exists until expire date passed
@@ -83,12 +86,14 @@ class Challenge(models.Model):
     # Auto-populated from total of question expected-duration times
     time_to_complete = models.IntegerField(editable = False, null = True )
 
+    image = models.ImageField(max_length=255, upload_to=challenge_file_path, blank=True)
+
     #privacy = Public, Network, Private
 
 
 class UserChallenge(models.Model):
     def __unicode__(self):
-        return self.challenge.name
+        return self.topic.name
 
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
@@ -98,7 +103,6 @@ class UserChallenge(models.Model):
         #self.expires = datetime.datetime.now() + datetime.timedelta(weeks=1) # Default expires in 1 week
             
         super(UserChallenge, self).save(force_insert, force_update)
-
         
     def update_sq(self):
         # Get user's attempts on this challenges's questions 
@@ -128,15 +132,27 @@ class UserChallenge(models.Model):
         #    # uc.update_sq(): Leave SQ recalculation to cron updates
         #    uc.save()
         
+    # Helpers for templates
     def is_new(self):
         return self.status == 0
     def is_active(self):
         return self.status == 1
     def is_complete(self):
         return self.status == 2
+
+    # Provide image for the userchallenge, based on the challenge (if exists), or the user's topic for this challenge
+    def image(self):
+        if self.challenge.image:
+            return self.challenge.image
+        else:
+            return self.topic.image
+
         
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
+    
+    # User's topic this was recommended based on (users can attempt same challenge via different topics)
+    topic = models.ForeignKey(Topic, editable = False, null = True)
 
     STATUS_CHOICES = (
             (0, 'New'),
