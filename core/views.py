@@ -35,7 +35,7 @@ def home(request):
         
         #userconcepts = request.user.userconcept_set.filter(focus__gt=0).order_by('-focus')
 
-        userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status')[0:5]
+        userchallenges = request.user.userchallenge_set.filter(status__lt=2).order_by('status') # Show all
         userchallengescomplete = request.user.userchallenge_set.filter(status__exact=2)[0:3]
         # If no userchallenges available, attempt to populate
         # FIXME: This is going to fire on every dashboard load until the user has some challenge
