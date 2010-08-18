@@ -27,9 +27,9 @@
     {% endfor %}
     </table>
     
-    <h5>Top 5 Knowledgeable Members</h5>
+    <h5>Top 5 Active Members</h5>
     <table>
-    {% for user in topusers_knowledge %}
+    {% for user in topusers_active %}
         {% with user.get_profile as profile %}
            <tr><td>{% avatar user 48 %}</td>
            <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
@@ -39,7 +39,7 @@
                     <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
                 {% else %}unknown{% endif %} 
            </td>
-           <td>{{ user.knowledge_rating|floatformat:"0" }}</td></tr>
+           <td>{{ user.activity_rating|floatformat:"0" }}</td></tr>
         {% endwith %}
 
     {% endfor %}
