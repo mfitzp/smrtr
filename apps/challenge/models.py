@@ -38,7 +38,8 @@ class Challenge(models.Model):
         # If no name has been set, auto-generate
         if self.name == '':
             if self.concepts.all():
-                self.name = self.concepts.all()[0:1].name
+                c = self.concepts.all()[0:1]
+                self.name = c.name
 
         # If no description has been set, auto-generate
         if self.description == '':
