@@ -127,8 +127,7 @@ def welcome(request):
     from django.contrib.auth.forms import AuthenticationForm
 
     topusers = User.objects.order_by('-userprofile__sq')[0:5]
-    topnetworks = Network.objects.annotate(num_users=Count('usernetwork')).order_by('-num_users')[0:10]
-    topchallenges = Challenge.objects.annotate(num_users=Count('userchallenge')).order_by('-num_users')[0:5]
+    topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:5]
     
     authentication_form = AuthenticationForm
 
@@ -143,7 +142,6 @@ def welcome(request):
             # Top
             'topusers': topusers,
             'topnetworks': topnetworks,
-            'topchallenges': topchallenges,
     })
 
     return render_to_response('welcome.html', context, context_instance=RequestContext(request))

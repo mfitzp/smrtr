@@ -3,33 +3,21 @@
 {% load i18n %}
 {% load avatar_tags %}
 {% load countries_tags %}
-
-{% block content_title %}<h1>Welcome to smrtr!</h1>{% endblock %}
+{% load thumbnail %}
 
 {% block content_left %}
-<div class="boxout"><div>
+<div class="focus"><h4>Welcome to smrtr!</h4><div class="focus-body">
 <p><strong><a href="http://smrtr.org">smrtr</a></strong> is a free 
 collaborative learning, quiz and study community.</p>
 <p>Choose <strong>subjects</strong>, take <strong>quizzes</strong>, <strong>track progress</strong> and receive recommended <strong>study media</strong> to build your knowledge.</p>
 <p>Ideal for <strong>students</strong>, <strong>professionals</strong> or general <strong>know-it-alls</strong> alike!</p>
 <p><strong><a href="{% url registration_register %}">Sign up now &raquo;</a></strong></p>
-</div></div>
-<div class="boxoutbottom"><a href="{% url registration_register %}" style="color:white">Get smrtr!</a></div>
+</div>
+<div class="focusbottom"><a href="{% url registration_register %}" style="color:white">Get smrtr!</a></div>
+</div>
 
-<br /><br />
-<h5>Existing Member?</h5>
-<p>Welcome back! Enter your username and password below:
-<form action="/accounts/login/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Login &raquo;" />
-</form>
-</p>
-<p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password?</a></p>
-
-{% endblock %}
-
-{% block content_right %}
-    <h5>Top 5 Members</h5>
+<div style="width:48%; float:left; margin-left:1%">
+    <h5>Top 5 Smartest Members</h5>
     <table>
     {% for user in topusers %}
         {% with user.get_profile as profile %}
@@ -46,25 +34,38 @@ collaborative learning, quiz and study community.</p>
 
     {% endfor %}
     </table>
+</div>
+<div style="width:48%; float:left; margin-left:1%">
+    <h5>Top 5 Smartest Networks</h5>
+    <table>
+    {% for network in topnetworks %}
+       <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
+       <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a> <br />
+            {{ network.total_members }} member{{ network.total_members|pluralize }} <br />
+            {% if network.city or network.country %}
+                Location <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
+                {% if network.city %} {{ network.city }}{% endif %}
+                {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
+            {% endif %}
+       </td>
+       <td>{% sqchange 100 network.sq %}</td></tr>
+    {% endfor %}
+    </table>
+</div>
 
-    <h5>Top Challenges</h5>
 
-        <table>
-        {% for challenge in topchallenges %}
-            <tr class="{% cycle 'odd' 'even' %}">
-                <td class="dbcurriculumconcept"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></td>
-                <td><span class="users">{{ challenge.userchallenge_set.count }}</span></td>
-                <td style="text-align:right">{% sqchange 100 challenge.sq %} </td>
-            </tr>
-        {% endfor %}
-        </table>
+{% endblock %}
 
-    <h5>Top Networks</h5>
+{% block content_right %}
 
-        <div>
-        {% for network in topnetworks %}
-            <div class="stack network network{{ network.type }}"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></div>
-        {% endfor %}
-        </div>
+<h5>Existing Member?</h5>
+<p>Welcome back! Enter your username and password below:
+<form action="/accounts/login/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Login &raquo;" />
+</form>
+</p>
+<p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password?</a></p>
+
 
 {% endblock %}

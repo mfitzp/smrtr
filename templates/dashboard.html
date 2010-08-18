@@ -14,11 +14,12 @@
     <!-- <h5>Current Focus [ <span style="background-color:#eee">CHALLENGE</a> | STUDY ]</h5> -->
 
     {% if userchallengesexist %}
-        <div class="focus nopad"><h4>Challenges</h4>
+        <div class="focus"><h4>Challenges</h4>
         <div id="challenges">
         {% for userchallenge in userchallenges %}
         
             {% if forloop.first %}
+            <div class="focusbody">
             <div id="challenges-focus" class="emblem-trigger-new">
             <div class="object-emblems"> 
                 <div class="emblem-new" title="New challenge"></div> 
@@ -47,7 +48,7 @@
                         {% endifequal %}
                     {% endifequal %}
                     </span>
-            </div></div>
+            </div></div></div>
             {% else %}
                 <div class="object {% cycle 'odd' 'even' %} {% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
                     <div class="object-emblems"> 
