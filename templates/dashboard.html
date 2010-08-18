@@ -98,7 +98,7 @@
         
             <tr class="{% cycle zebra %}">
                 <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a>
-                <br /><small>{{ userchallenge.challenge }}</small>
+                <br /><small>{{ userchallenge.challenge.description }}</small>
                 </td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                 <td style="text-align:right">{% sqchange userchallenge.previous_sq userchallenge.sq %} </td>
