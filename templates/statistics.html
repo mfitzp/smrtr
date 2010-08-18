@@ -5,11 +5,12 @@
 {% load countries_tags %}
 {% load thumbnail %}
 
-{% block content_title %}<h1>Top 10s</h1>{% endblock %}
+{% block title %}Top 10s{% endblock %}
 
 {% block content_left %}
-
-    <h5>Top 10 Smartest Members</h5>
+    <div class="focus">
+    <h4>Top 10 Smartest Members</h4>
+    <div class="focus-body-low">
     <table>
     {% for user in topusers_smart %}
         {% with user.get_profile as profile %}
@@ -26,8 +27,11 @@
 
     {% endfor %}
     </table>
-    <hr />
-    <h5>Top 10 Active Members</h5>
+    </div></div>
+
+    <div class="focus">
+    <h4>Top 10 Active Members</h4>
+    <div class="focus-body-low">
     <table>
     {% for user in topusers_active %}
         {% with user.get_profile as profile %}
@@ -44,7 +48,7 @@
 
     {% endfor %}
     </table>    
-
+    </div></div>
 
 
 {% endblock %}
@@ -52,7 +56,9 @@
 {% block content_right %}
 
 
-    <h5>Top 10 Smartest Networks</h5>
+    <div class="focus">
+    <h4>Top 10 Smartest Networks</h4>
+    <div class="focus-body-low">
     <table>
     {% for network in topnetworks %}
        <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
@@ -67,8 +73,11 @@
        <td>{% sqchange 100 network.sq %}</td></tr>
     {% endfor %}
     </table>
-    <hr />
-    <h5>Top 10 Smartest Countries</h5>
+    </div></div>
+    
+    <div class="focus">
+    <h4>Top 10 Smartest Countries</h4>
+    <div class="focus-body-low">    
     <table>
     {% for country in topcountries %}
        <tr>
@@ -79,5 +88,6 @@
        <td>{% sq country.sq %}</td></tr>
     {% endfor %}
     </table>
+    </div></div>
 
 {% endblock %}

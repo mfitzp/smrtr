@@ -23,9 +23,10 @@
         {% if profile.network %}<a href="{% url network-detail network_id=profile.network.id %}" class="network network{{ profile.network.type }}">{{ profile.network }}</a>{% endif %}
 </div>
 <div id="content-title-meta">
-Member for {{ puser.date_joined|timesince }} &#183;
+Member for {{ puser.date_joined|timesince }} 
+&#183; Location 
 {% if profile.city or profile.country %}
-    Location <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+<a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
 {% else %}Unknown{% endif %} 
 {% if profile.url %}&#183; Web <a href="{{ profile.url }}">{{ profile.url }}</a>{% endif %}
 

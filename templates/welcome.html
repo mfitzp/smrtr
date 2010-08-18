@@ -15,10 +15,12 @@ collaborative learning, quiz and study community.</p>
 </div>
 <div class="focusbottom"><a href="{% url registration_register %}" style="color:white">Get smrtr!</a></div>
 </div>
+<br />
 
-<div style="width:48%; float:left; margin-left:1%">
-    <h5>Top 10 Smartest Members</h5>
-    <table>
+    <div class="focus">
+    <h4>Top 5 Smartest Members</h4>
+    <div class="focus-body-low">    
+   <table>
     {% for user in topusers %}
         {% with user.get_profile as profile %}
            <tr><td>{% avatar user 48 %}</td>
@@ -34,9 +36,11 @@ collaborative learning, quiz and study community.</p>
 
     {% endfor %}
     </table>
-</div>
-<div style="width:48%; float:left; margin-left:1%">
-    <h5>Top 10 Smartest Networks</h5>
+    </div></div>
+
+   <div class="focus">
+    <h4>Top 5 Smartest Networks</h4>
+    <div class="focus-body-low">  
     <table>
     {% for network in topnetworks %}
        <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
@@ -51,13 +55,13 @@ collaborative learning, quiz and study community.</p>
        <td>{% sqchange 100 network.sq %}</td></tr>
     {% endfor %}
     </table>
-</div>
-
+    </div></div>
 
 {% endblock %}
 
 {% block content_right %}
 
+<div style="margin-top:4em;">
 <h5>Existing Member?</h5>
 <p>Welcome back! Enter your username and password below:
 <form action="/accounts/login/" method="post">{% csrf_token %}
@@ -66,6 +70,7 @@ collaborative learning, quiz and study community.</p>
 </form>
 </p>
 <p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password?</a></p>
+</div>
 
 
 {% endblock %}
