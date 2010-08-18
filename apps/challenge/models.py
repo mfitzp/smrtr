@@ -37,24 +37,28 @@ class Challenge(models.Model):
         # The following checked and autopopulated if neccessary on every save in case edits remove
         # If no name has been set, auto-generate
         if self.name == '':
-            if self.concepts.all():
-                c = list(self.concepts.all()[0:1])
-                self.name = c[0].name
+            self.generate_name()
 
         # If no description has been set, auto-generate
         if self.description == '':
-            c = list()
-            for concept in self.concepts.all():
-                c.append( concept.name )
-                self.description = ', '.join( c )
-
+            self.generate_description()
             
         super(Challenge, self).save(force_insert, force_update)        
-
-
         
     def get_absolute_url(self):
         return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
+
+    def generate_name(self):
+        if self.concepts.all():
+            c = list(self.concepts.all()[0:1])
+            self.name = c[0].name
+            
+    def generate_description(self):
+        c = list()
+        self.description = ''
+        for concept in self.concepts.all():
+            c.append( concept.name )
+            self.description = ', '.join( c )
 
     def generate_questions(self): # Update questions for this challenge, using config settings on the model
         # Limit:
