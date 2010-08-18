@@ -37,8 +37,8 @@ class Challenge(models.Model):
         # The following checked and autopopulated if neccessary on every save in case edits remove
         # If no name has been set, auto-generate
         if self.name == '':
-            if c = self.concepts.all():
-                self.name = c.name
+            if self.concepts.all():
+                self.name = self.concepts.all()[0:1].name
 
         # If no description has been set, auto-generate
         if self.description == '':
