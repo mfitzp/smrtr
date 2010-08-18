@@ -32,13 +32,13 @@
 <p class="notice">This thread is closed, you cannot reply.</p>
 {% else %}
 
-<h5>Reply to topic</h5>
+<h5>Post your reply</h5>
 {% if form.errors %}<ul>{{ form.errors.as_ul }}</ul>{% endif %}
 <form method="post" action="{% url discuss_reply thread_id=thread.id %}">
 <table>
 {{ form.as_table }}
 </table>
-<input type='submit' value='Post' />
+<input type="submit" value="Post message &raquo;" />
 </form>
 
 {% endif %}
