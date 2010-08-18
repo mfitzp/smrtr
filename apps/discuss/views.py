@@ -55,10 +55,10 @@ def newthread(request, forum_id):
 def thread(request, thread_id):
 
     thread = get_object_or_404(Thread, pk=thread_id)
-    
     context = {
         'forum': thread.forum,
         'thread': thread, 
+        'form': PostForm() 
     }
 
     return render_to_response('thread.html', context, context_instance=RequestContext(request))

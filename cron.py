@@ -35,16 +35,15 @@ def cron():
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user topic SQ..."
     batch_usertopic_update_sq()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
-    batch_userconcept_update_focus()
-    
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept percent complete..."
     batch_userconcept_update_percent_complete()
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user topic percent complete..."
     batch_usertopic_update_percent_complete()
-    
 
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
+    batch_userconcept_update_focus()
+    
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
     batch_generate_userchallenges()
 
