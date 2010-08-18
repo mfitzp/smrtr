@@ -29,7 +29,7 @@
             <table>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
-            <tr><th>Duration</th><td><span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span> for {{ userchallenge.challenge.total_questions }} questions</td></tr>
+            <tr><th>Duration</th><td><span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span> for {{ userchallenge.challenge.total_questions }} question{{ userchallenge.challenge.total_questions|pluralize }}</td></tr>
             <tr><th>Expires</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
             </table>
             <div class="buttonbox">
@@ -63,6 +63,7 @@
                         &#183; Duration <span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span>
                     </div>
                     <div class="object-buttons">
+                        <span class="minibutton"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
                         {% ifequal userchallenge.status 0 %}
                         <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
                         {% else %}

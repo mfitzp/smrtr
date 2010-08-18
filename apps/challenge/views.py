@@ -231,7 +231,6 @@ def do_submit(request, challenge_id):
     userchallenge.update_sq()
     userchallenge.save()
 
-
     context = {
         'challenge': challenge,
         'userchallenge': userchallenge, 

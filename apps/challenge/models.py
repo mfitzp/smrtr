@@ -25,6 +25,33 @@ class Challenge(models.Model):
     def __unicode__(self):
         return self.name
         
+    def save(self, force_insert=False, force_update=False):
+        if self.id is None: #is new
+            super(Challenge, self).save(force_insert, force_update)
+            
+            # Now populate question lists based on current settings
+            self.generate_questions()
+            self.total_resources = Resource.objects.filter(concept__challenge=self).count()
+            
+   
+        # The following checked and autopopulated if neccessary on every save in case edits remove
+        # If no name has been set, auto-generate
+        if self.name == '':
+            if c = self.concepts.all():
+                self.name = c.name
+
+        # If no description has been set, auto-generate
+        if self.description == '':
+            c = list()
+            for concept in self.concepts.all():
+                c.append( concept.name )
+                self.description = ', '.join( c )
+
+            
+        super(Challenge, self).save(force_insert, force_update)        
+
+
+        
     def get_absolute_url(self):
         return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
 
@@ -51,14 +78,7 @@ class Challenge(models.Model):
             # Round up to nearest minute
             self.time_to_complete = math.ceil( time_to_complete / 60 ) * 60 # Round to nearest minute
             self.save()
-        
-    # Auto-generate a name from the current list of concepts
-    def generate_name(self):
-        c = list()
-        for concept in self.concepts.all():
-            c.append( concept.name )
-        self.name = ', '.join( c )
-        
+       
     name = models.CharField(max_length=100)
     description = models.TextField(blank = True)
 
@@ -69,7 +89,9 @@ class Challenge(models.Model):
     # Challenge definition: used to build the above questions
     # Only used when editing/updating list, not outputting questions
     concepts = models.ManyToManyField(Concept) # Concepts to source questions from
-    total_questions = models.IntegerField(blank = True, null = True, default = 20) # Number of questions
+    total_questions = models.IntegerField(blank = True, default = 20) # Number of questions
+    total_resources = models.IntegerField(blank = True, default = 0) # Number of resources (show prepare link?)
+
     targetsq = models.IntegerField(blank = False, null = False, default = 100) # Target SQ for questions (Qs chosen will be as close to this as possible)
     # config_types = models.MultipleChoiceField(choices=questiontypes) # Types of questions (mcq, etc-not available yet)
 

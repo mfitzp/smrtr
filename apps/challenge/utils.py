@@ -90,16 +90,18 @@ def generate_userchallenges(user, number = None):
             else:
                 challenge = Challenge()
                 challenge.user = user
+                # Set name to the module name of the user this is created for
+                # likely to give better name than the 'first concept' default (see model save definition)
+                if topic_id:
+                    challenge.name = Topic.objects.get(pk=topic_id)
                 challenge.save()
                     
                 # Iterate concepts
                 # mlist[1] is the list-within ie. [68,70,78] above
                 for concept_id in concept_ids:
                     challenge.concepts.add(Concept.objects.get(pk=concept_id))            
-            
-                challenge.generate_name()
-                # Now populate question lists based on current settings
-                challenge.generate_questions()
+
+                # Saving generates a name (if unset) and adds questions            
                 challenge.save()
 
             # We have the challenge created, now generate the userchallenge to link and assign
