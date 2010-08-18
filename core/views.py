@@ -126,8 +126,8 @@ def welcome(request):
 
     from django.contrib.auth.forms import AuthenticationForm
 
-    topusers = User.objects.order_by('-userprofile__sq')[0:5]
-    topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:5]
+    topusers = User.objects.order_by('-userprofile__sq')[0:10]
+    topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:10]
     
     authentication_form = AuthenticationForm
 
@@ -192,19 +192,19 @@ def statistics(request):
 
     from countries.models import Country
 
-    topusers_smart = User.objects.order_by('-userprofile__sq')[0:5]
+    topusers_smart = User.objects.order_by('-userprofile__sq')[0:10]
     
     # Retrieve records for past month
     start_date = datetime.now() - timedelta(weeks=4)
     end_date = datetime.now()
 
     topusers_active = User.objects.filter(userquestionattempt__created__range=(start_date,end_date)).annotate(
-                        activity_rating=Count('userquestionattempt')).order_by('-activity_rating')[0:5]
+                        activity_rating=Count('userquestionattempt')).order_by('-activity_rating')[0:10]
 
     
 
-    topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:5]
-    topcountries = Country.objects.annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:5]
+    topnetworks = Network.objects.annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:10]
+    topcountries = Country.objects.annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:10]
 
     context = RequestContext(request, {
             'topusers_smart': topusers_smart,

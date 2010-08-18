@@ -5,11 +5,11 @@
 {% load countries_tags %}
 {% load thumbnail %}
 
-{% block content_title %}<h1>Top 5s</h1>{% endblock %}
+{% block content_title %}<h1>Top 10s</h1>{% endblock %}
 
 {% block content_left %}
 
-    <h5>Top 5 Smartest Members</h5>
+    <h5>Top 10 Smartest Members</h5>
     <table>
     {% for user in topusers_smart %}
         {% with user.get_profile as profile %}
@@ -26,8 +26,8 @@
 
     {% endfor %}
     </table>
-    
-    <h5>Top 5 Active Members</h5>
+    <hr />
+    <h5>Top 10 Active Members</h5>
     <table>
     {% for user in topusers_active %}
         {% with user.get_profile as profile %}
@@ -52,7 +52,7 @@
 {% block content_right %}
 
 
-    <h5>Top 5 Smartest Networks</h5>
+    <h5>Top 10 Smartest Networks</h5>
     <table>
     {% for network in topnetworks %}
        <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
@@ -67,8 +67,8 @@
        <td>{% sqchange 100 network.sq %}</td></tr>
     {% endfor %}
     </table>
-
-    <h5>Top 5 Smartest Countries</h5>
+    <hr />
+    <h5>Top 10 Smartest Countries</h5>
     <table>
     {% for country in topcountries %}
        <tr>

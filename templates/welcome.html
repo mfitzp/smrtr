@@ -17,7 +17,7 @@ collaborative learning, quiz and study community.</p>
 </div>
 
 <div style="width:48%; float:left; margin-left:1%">
-    <h5>Top 5 Smartest Members</h5>
+    <h5>Top 10 Smartest Members</h5>
     <table>
     {% for user in topusers %}
         {% with user.get_profile as profile %}
@@ -36,7 +36,7 @@ collaborative learning, quiz and study community.</p>
     </table>
 </div>
 <div style="width:48%; float:left; margin-left:1%">
-    <h5>Top 5 Smartest Networks</h5>
+    <h5>Top 10 Smartest Networks</h5>
     <table>
     {% for network in topnetworks %}
        <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
