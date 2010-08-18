@@ -15,7 +15,7 @@
 
     {% if userchallengesexist %}
         <div class="focus"><h4>Challenges</h4>
-        <div id="challenges">
+        
         {% for userchallenge in userchallenges %}
         
             {% if forloop.first %}
@@ -108,7 +108,8 @@
             
         {% endfor %}        
        </table>
-    </div></div>
+    </div>
+    
     <p class="buttonbar">
        <!-- <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span> -->
         <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>
