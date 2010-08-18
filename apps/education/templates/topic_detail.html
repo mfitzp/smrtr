@@ -33,8 +33,7 @@
         {% if usertopic %}
             
         {% else %}
-            <div class="focus">
-            <h4>Activate topic</h4>
+            <div class="focus"><h4>Activate topic</h4><div class="focus-body">
             <p>Activate this topic to start studying!</p>
             <!-- Registration form -->
             <form action="{% url topic-register topic_id=topic.id %}" method="post">
@@ -42,7 +41,7 @@
             {% if next %}<input type="hidden" name="next" value="{{next}}" />{% endif %}
             &nbsp;<input type="submit" value="Activate '{{topic}}' &raquo;" />
             </form>
-            </div>
+            </div></div>
         {% endif %}
 
         {% if topic.concepts %}

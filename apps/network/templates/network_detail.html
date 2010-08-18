@@ -53,15 +53,14 @@ Location
         
         {% if usernetwork %}
         {% else %}
-            <div class="focus">
-            <h4>Join network</h4>
+            <div class="focus"><h4>Join network</h4><div class="focus-body">
             <p>Join this network for access to courses and other members.</p>
             <!-- Registration form -->
             <form action="{% url network-register network_id=network.id %}" method="post">
             <input type="hidden" name="submit" value="1" />
             &nbsp;<input type="submit" value="Join '{{network}}' network &raquo;" />
             </form>
-            </div>
+            </div></div>
         {% endif %}        
         
         

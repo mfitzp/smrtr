@@ -32,15 +32,14 @@
 
         {% else %}
 
-            <div class="focus">
-            <h4>Activate concept</h4>
+            <div class="focus"><h4>Activate concept</h4><div class="focus-body">
             <p>Activate this concept to start studying!</p>
             <!-- Registration form -->
             <form action="{% url concept-register concept_id=concept.id concept_id=concept.id%}" method="post">
             <input type="hidden" name="submit" value="1" />
             &nbsp;<input type="submit" value="Activate '{{concept}}' &raquo;" />
             </form>
-            </div>
+            </div></div>
 
         {% endif %}
 
