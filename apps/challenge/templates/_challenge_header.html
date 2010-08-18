@@ -18,6 +18,7 @@
     <div id="content-title-meta">
         {{challenge}}
         &#183; <span class="clock">{% duration challenge.time_to_complete %}</span> for {{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }}
+        &#183; {{ challenge.total_resources }} resource{{ challenge.total_resources|pluralize }}
     </div>                    
     <div id="content-title-sq">
         {% if request.user.get_profile %}{% sqdifficulty challenge.sq request.user.get_profile.sq %}
