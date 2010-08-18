@@ -52,7 +52,7 @@
                 {% endif %}
                 {% trans 'Log out' %}</a>
             {% endblock %}   
-            </td><td rowspan="2">{% avatar user 48 %}</td></tr>
+            </td><td rowspan="2">{% avatar user 50 %}</td></tr>
             <tr><td id="user-tools-panel-stats">
                 <span title="{% sqdescriptive user.get_profile.sq %}">{% sqchange user.get_profile.previous_sq user.get_profile.sq %}</span>
                 <span class="challenges" title="You have completed {{ user.userchallenge_set.count }} challenges">{{ user.userchallenge_set.count }}</span>

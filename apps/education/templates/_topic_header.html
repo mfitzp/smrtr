@@ -1,7 +1,7 @@
 {% load sq_tags %}
 {% load thumbnail %}
 <div>
-<div id="content-title-image"><img src="{% thumbnail topic.image 48x48 crop %}"></div>
+<div id="content-title-image"><img src="{% thumbnail topic.image 50x50 crop %}"></div>
 <div id="content-title-header">
     <h1 style="display:inline">{{topic}}</h1> 
         {% if topic.network %}<a href="{% url network-detail network_id=topic.network.id %}" class="network network{{ topic.network.type }}">{{ topic.network }}</a>{% endif %}

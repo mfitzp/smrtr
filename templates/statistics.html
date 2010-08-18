@@ -14,7 +14,7 @@
     <table>
     {% for user in topusers_smart %}
         {% with user.get_profile as profile %}
-           <tr><td>{% avatar user 48 %}</td>
+           <tr><td>{% avatar user 50 %}</td>
            <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
                 Member for {{ user.date_joined|timesince }} <br />
                 Location 
@@ -35,7 +35,7 @@
     <table>
     {% for user in topusers_active %}
         {% with user.get_profile as profile %}
-           <tr><td>{% avatar user 48 %}</td>
+           <tr><td>{% avatar user 50 %}</td>
            <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a> <br />
                 Member for {{ user.date_joined|timesince }} <br />
                 Location 
@@ -61,7 +61,7 @@
     <div class="focus-body-low">
     <table>
     {% for network in topnetworks %}
-       <tr><td><img src="{% thumbnail network.image 48x48 crop %}"></td>
+       <tr><td><img src="{% thumbnail network.image 50x50 crop %}"></td>
        <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}" class="network network{{ network.type }}">{{ network }}</a> <br />
             {{ network.total_members }} member{{ network.total_members|pluralize }} <br />
             {% if network.city or network.country %}

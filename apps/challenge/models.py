@@ -1,3 +1,6 @@
+import datetime
+import math
+# Django
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count, Sum, StdDev
@@ -12,8 +15,7 @@ from resources.models import Resource
 from education.models import Topic, UserTopic
 from sq.utils import * 
 # External
-import datetime
-import math
+from easy_thumbnails.fields import ThumbnailerImageField
 
 def challenge_file_path(instance=None, filename=None):
     return os.path.join('challenge', str(instance.id), filename)
@@ -113,7 +115,7 @@ class Challenge(models.Model):
     # Auto-populated from total of question expected-duration times
     time_to_complete = models.IntegerField(editable = False, null = True )
 
-    image = models.ImageField(max_length=255, upload_to=challenge_file_path, blank=True)
+    image = ThumbnailerImageField(max_length=255, upload_to=challenge_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
 
     #privacy = Public, Network, Private
 

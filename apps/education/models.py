@@ -1,18 +1,19 @@
 import os.path
+from datetime import datetime, timedelta, date as _date
 # Django
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 from django.core.urlresolvers import reverse
-# Spenglr
+# Smrtr
 from network.models import Network,UserNetwork
 from resources.models import Resource
 from sq.utils import * 
+from discuss.models import Forum
 # External
 from countries.models import Country
-from datetime import datetime, timedelta, date as _date
-# Smrtr
-from discuss.models import Forum
+from easy_thumbnails.fields import ThumbnailerImageField
+
 
 # Network = Course now e.g. 'Network' for AQA Biology
 # Below this topics are the basis of study on that topics may have a home network, be tied to a specific network, or freely open
@@ -66,7 +67,7 @@ class Topic(models.Model):
 # Concepts for this topic
     concepts = models.ManyToManyField('Concept', blank=True)
     
-    image = models.ImageField(max_length=255, upload_to=topic_file_path, blank=True)
+    image = ThumbnailerImageField(max_length=255, upload_to=topic_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
     
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)    
@@ -110,7 +111,7 @@ class Concept(models.Model):
     # Resources (through conceptresource for bookmarks)
     resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
 
-    image = models.ImageField(max_length=255, upload_to=concept_file_path, blank=True)
+    image = ThumbnailerImageField(max_length=255, upload_to=concept_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
     
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)    

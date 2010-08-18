@@ -40,7 +40,7 @@
                     <div class="object-emblems">  
                     </div>
                     <div class="object-checkbox"><input type="checkbox" name="addtopic" value="{{ topic.id }}" {% if topic in request.user.topics.all %}checked disabled{% endif %}></div>
-                    <div class="object-image"><img src="{% thumbnail topic.image 48x48 crop %}"></div>
+                    <div class="object-image"><img src="{% thumbnail topic.image 50x50 crop %}"></div>
                     <div class="object-title"><a href="{% url topic-detail topic_id=topic.id %}">{{ topic }}</a></div>
                     <div class="object-meta">
                         {% if topic.network %}from <a href="{% url network-detail topic.network.id %}">{{ topic.network }}</a>{% endif %}
