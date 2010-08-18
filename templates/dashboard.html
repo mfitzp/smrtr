@@ -33,13 +33,8 @@
             <tr><th>Expires</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
             </table>
             <div class="buttonbox">
-                {% if userchallenge.challenge.total_resources > 0 %}
-                    <span class="button button_hi">
-                    <a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}" class="startlink">Prepare</a>
-                    </span>&nbsp;
-                {% endif %}
 
-                    {% if userchallenge.challenge.total_resources == 0 %}
+                    {% if userchallenge.challenge.total_resources > 0 %}
                         <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
                     {% endif %}
 
