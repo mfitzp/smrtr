@@ -22,7 +22,7 @@
                     <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
                 {% else %}unknown{% endif %} 
            </td>
-           <td>{% sqchange profile.previous_sq profile.sq %}</td></tr>
+           <td>{% sqchange profile.previous_sq profile.sq %}<br />{% sqdescriptive profile.sq %}</td></tr>
         {% endwith %}
 
     {% endfor %}
@@ -70,7 +70,7 @@
                 {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
             {% endif %}
        </td>
-       <td>{% sqchange 100 network.sq %}</td></tr>
+       <td>{% sqchange 100 network.sq %}<br />{% sqdescriptive network.sq %}</td></tr>
     {% endfor %}
     </table>
     </div></div>
@@ -85,7 +85,7 @@
        <td style="line-height:1.5em;"><a href="http://maps.google.com/maps?q={{ country|urlencode }}&amp;t=h" target="_blank">{{ country }}</a></span> <br />
            {{ country.total_members }} member{{ country.total_members|pluralize }}
        </td>
-       <td>{% sq country.sq %}</td></tr>
+       <td>{% sq country.sq %}<br />{% sqdescriptive country.sq %}</td></tr>
     {% endfor %}
     </table>
     </div></div>
