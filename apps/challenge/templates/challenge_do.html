@@ -89,19 +89,6 @@
 
     {% if challenge %}
 
-        <table>
-            <tr><th>SQ</th><td>
-                {% if userchallenge %}
-                    {% sqchange 100 userchallenge.sq %}
-                {% endif %}
-                
-                {% sqdifficulty request.user.get_profile.sq challenge.sq %}
-            </td></tr>
-            <tr><th>Time Limit</th><td>{% duration challenge.time_to_complete %}</td></tr>
-        </table>
-
-        <blockquote>{{ challenge.description }}</blockquote>
-
         {% if questions %}
         
             <form action="{% url challenge-do-submit challenge_id=challenge.id %}" method="POST" id="timerform">
