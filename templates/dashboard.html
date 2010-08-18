@@ -63,6 +63,9 @@
                         &#183; Duration <span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span>
                     </div>
                     <div class="object-buttons">
+                        {% if userchallenge.challenge.total_resources > 0 %}
+                            <span class="minibutton"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
+                        {% endif %}
                         {% ifequal userchallenge.status 0 %}
                         <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
                         {% else %}

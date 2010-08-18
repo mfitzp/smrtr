@@ -31,7 +31,7 @@ class Challenge(models.Model):
             
             # Now populate question lists based on current settings
             self.generate_questions()
-            self.total_resources = Resource.objects.filter(concept__challenge=self).count()
+            self.total_resources = Resource.objects.filter(concepts__challenge=self).count()
             
    
         # The following checked and autopopulated if neccessary on every save in case edits remove
