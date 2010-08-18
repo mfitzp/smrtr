@@ -25,7 +25,7 @@
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail userchallenge.image 48x48 crop %}"></div>
                 <h5>{{ userchallenge }}</h5>         
-                <p>{{ userchallenge.challenge }}</p>
+                <p>{{ userchallenge.challenge.description }}</p>
             <table>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
             <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="object-image"><img src="{% thumbnail userchallenge.image 48x48 crop %}"></div>
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a><br />
-                    <small>{{ userchallenge.challenge }}</small></div>
+                    <small>{{ userchallenge.challenge.description }}</small></div>
                     <div class="object-meta">
                         <span class="users">{{ userchallenge.challenge.userchallenge_set.count }} challenger{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span>
                         &#183; Difficulty {% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}
