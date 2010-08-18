@@ -38,7 +38,11 @@
                     <a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}" class="startlink">Prepare</a>
                     </span>&nbsp;
                 {% endif %}
-            
+
+                    {% if userchallenge.challenge.total_resources == 0 %}
+                        <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
+                    {% endif %}
+
                     <span class="button button_hi">
                     {% ifequal userchallenge.status 0 %}
                     <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start Challenge</a>
