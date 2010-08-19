@@ -2,6 +2,7 @@
 {% load sq_tags %}
 {% load avatar_tags %}
 {% load adminmedia %}
+{% load facebook_tags %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
@@ -22,6 +23,7 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer.playlist-3.0.8.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}flowplayer/flowplayer.coralcdn.js"></script>
 {% endblock %}
+{% facebook_js %}
 </head>
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
@@ -129,5 +131,7 @@
 </div>
 <!-- END Container -->
 {% block extrabase %}{% endblock %}
+
+{% initialize_facebook_connect %}
 </body>
 </html>

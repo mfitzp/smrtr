@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', 'core.views.home', name='home'),
+    
     url(r'^top10/$', 'core.views.statistics', name='statistics'),
     # Override the account/login view, to provide additional info
     # url(r'^accounts/login/$', 'core.views.login', name='login'),
@@ -63,6 +64,8 @@ urlpatterns = patterns('',
     (r'^avatar/', include('avatar.urls')),
     (r'^messages/', include('messages.urls')),
 
+
+    (r'^facebook/connect/', include('facebookconnect.urls')),
 
     # Direct to template views
     (r'^faq/$', 'django.views.generic.simple.direct_to_template', {'template': 'faq.html'}),

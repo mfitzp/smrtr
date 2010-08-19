@@ -4,6 +4,7 @@
 {% load avatar_tags %}
 {% load countries_tags %}
 {% load thumbnail %}
+{% load facebook_tags %}
 
 {% block content_left %}
 <div class="focus"><h4>Welcome to smrtr!</h4><div class="focus-body">
@@ -72,5 +73,7 @@ collaborative learning, quiz and study community.</p>
 <p><a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password?</a></p>
 </div>
 
+<h5>Login and share</h5>
+{% show_connect_button %}
 
 {% endblock %}

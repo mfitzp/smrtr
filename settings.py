@@ -58,23 +58,31 @@ SECRET_KEY = 'u2y=71bj-k%-iubxq+gvtwo7__7#b2gr^^4ug)a4*uzy^c7d#m'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
 )
 
+
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'facebook.djangofb.FacebookMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'facebookconnect.middleware.FacebookConnectMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.csrf.CsrfResponseMiddleware', 
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'core.http.Http403Middleware',
-    #'core.middleware.RequireLoginMiddleware',
+
 )
 
-ROOT_URLCONF = 'urls'
+AUTHENTICATION_BACKENDS = (
+    'facebookconnect.models.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
+
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -113,6 +121,8 @@ INSTALLED_APPS = (
     'pagination', #http://code.google.com/p/django-pagination
     'messages', #http://code.google.com/p/django-messages/downloads/list  Private messaging application
     'easy_thumbnails', #http://github.com/SmileyChris/easy-thumbnails
+    'facebook',
+    'facebookconnect',
 # Smrtr
     'core',
     'profiles',
@@ -143,7 +153,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 AUTH_PROFILE_MODULE = "profiles.userprofile"
 
 ACCOUNT_ACTIVATION_DAYS = 5
-#LOGIN_PATH = '/accounts/' # All paths under here are still accessible when logged out - allows login/registration
+
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
@@ -160,6 +170,21 @@ FLOWPLAYER_CONFIG = {
                     }
 
 COUNTRIES_FLAG_PATH = 'img/flags/%s.png'
+
+# Facebook integration (pyFacebook/Facebook connect)
+
+DUMMY_FACEBOOK_INFO = {
+    'uid':0,
+    'name':'(Private)',
+    'first_name':'(Private)',
+    'pic_square_with_logo':'http://www.facebook.com/pics/t_silhouette.gif',
+    'affiliations':None,
+    'status':None,
+    'proxied_email':None,
+}
+
+FACEBOOK_API_KEY = '8a9ee5c03273946d28d7368048d7d536'
+FACEBOOK_INTERNAL = True
 
 # Smrtr constants
 
