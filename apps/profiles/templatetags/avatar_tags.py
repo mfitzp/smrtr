@@ -28,7 +28,7 @@ def avatar( user, size=50 ):
     
     elif hasattr(user, 'facebook_profile'):
         # If user has come in via facebook use their facebook image     
-        url = facebook_avatar_url( user, size )
+        url = facebook_avatar_url( user ) # Size is not used by facebook standard square, resized by html
         
     else:
         # Use gravatar as backup (with backup to local default url if no gravatar user)
@@ -45,7 +45,7 @@ def avatar_from_provider( user, size=50, provider='profile'):
 
     elif provider=='facebook':
         # If user has come in via facebook use their facebook image     
-        url = facebook_avatar_url( user, size )
+        url = facebook_avatar_url( user )
         
     elif provider=='gravatar':
         # Use gravatar as backup (with backup to local default url if no gravatar user)
@@ -63,9 +63,10 @@ def profile_avatar_url( user, size=50 ):
     return escape( thumbnail.url )
 
 
-def facebook_avatar_url( user, size=50 ):
+def facebook_avatar_url( user ):
+
     fb = user.facebook_profile
-    return escape( "http://graph.facebook.com/%s/picture?type=%s" % (fb.username, size) )
+    return escape( "http://graph.facebook.com/%s/picture?type=square" % (fb.username) )
 
 def gravatar_url( user, size=50 ):
 
