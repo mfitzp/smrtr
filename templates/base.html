@@ -34,7 +34,7 @@
     <!-- Header -->
     <div id="header">
         <div id="branding"><a href="/"><img src="{{ MEDIA_URL }}img/smrtr.png"></a></div>
-        {% if user.is_authenticated %}
+        {% if user.get_profile %}
         <div id="user-tools">
             <table id="user-tools-panel">
             <tr><td id="user-tools-panel-top">
