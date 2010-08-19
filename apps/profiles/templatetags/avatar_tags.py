@@ -67,7 +67,7 @@ def facebook_avatar_url( user, size=50 ):
     if hasattr(user.facebook_profile,'pic_square_with_logo'):
         return user.facebook_profile.pic_square_with_logo
     else:
-        return ""
+        return getattr(settings, 'AVATAR_DEFAULT_URL', '')
 
 def gravatar_url( user, size=50 ):
 
