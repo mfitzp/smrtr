@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load sq_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ profile }}
+{% endblock %}
+
+{% block content_left %}
+<div class="focus"><h4>Looking good</h4><div class="focus-body">
+<p>By default <strong>smrtr</strong> will use any avatar image you upload to identify you throughout the site.
+However, if you choose not to upload an image we will try and get one via the <a href="http://gravatar.com" target="_blank">Gravatar</a> service.</p>
+{% if request.user.facebook_profile %}
+    <p>If you have logged in via <a href="http://www.facebook.com" target="_blank">Facebook</a> we'll use that image in preference to gravatar, but you can
+    still upload your own to use on <strong>smrtr</strong>!</p>
+{% endif %}       
+
+    <table style="text-align:center">
+    <tr>
+        <td>{% avatar request.user %}</td>
+
+    {% if profile.avatar %}
+        <td>{% avatar_from_provider request.user 50 'profile' %}</td>    
+    {% endif %}        
+        
+    {% if request.user.facebook_profile %}
+        <td>{% avatar_from_provider request.user 50 'facebook' %}<br />Current</td>    
+    {% endif %}       
+     
+        <td>{% avatar_from_provider request.user 50 'gravatar' %}</td>
+    </tr> 
+    <tr>
+        <th>Current</th>
+
+    {% if profile.avatar %}<th>Uploaded</th>{% endif %}        
+    {% if request.user.facebook_profile %}<th>Facebook</th>{% endif %}        
+
+        <th>Gravatar</th>
+    </tr>
+    
+</table>
+
+    <h5>Upload New Avatar</h5>
+    <form action="{% url avatar-change %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+    <tr><th>{{ form.avatar.label }}</th><td>{{ form.avatar }}</td></tr>
+    {% if profile.avatar %}
+        <tr><th></th><td>{{ form.delete.label }}: {{ form.delete }}</td>
+            
+    {% endif %}     
+    </table>
+
+    
+<p style="text-align:right"><input type="submit" value="Save changes &raquo;" /></p>
+    </form>
+</div></div>
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+{% endblock %}
