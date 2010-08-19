@@ -65,7 +65,7 @@ Member for {{ puser.date_joined|timesince }}
         <h5>Manage Your Profile</h5>
 
         <a href="{% url profile-edit %}">Edit your profile</a><br />
-        <a href="{% url avatar_change %}">Change your profile picture</a><br />
+        <a href="{% url avatar-change %}">Change your profile picture</a><br />
         {% url admin:password_change as password_change_url %}
         {% if password_change_url %}
             <a href="{{ password_change_url }}">

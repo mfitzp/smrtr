@@ -18,11 +18,10 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['about', 'city', 'state', 'country']
+        fields = ['about', 'city', 'state', 'country','avatar']
         
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
-        
 
 

@@ -22,7 +22,7 @@ def profile(request):
 
     if request.method == 'POST': # If the form has been submitted...
         uform = UserForm(request.POST, instance=user) # A form bound to the POST data
-        pform = ProfileForm(request.POST, instance=profile) # A form bound to the POST data
+        pform = ProfileForm(request.POST, request.FILES, instance=profile) # A form bound to the POST data
         if pform.is_valid() and uform.is_valid(): # All validation rules pass
             user = uform.save()
             user.save()

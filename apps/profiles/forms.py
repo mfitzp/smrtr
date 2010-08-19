@@ -21,10 +21,22 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-
+        # Hide avatar, seperate form/view
+        fields = ['about', 'city', 'state', 'postcode', 'country', 'telno', 'url']
+ 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
+
+class AvatarForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ['avatar']
         
+    def __init__(self, *args, **kwargs):
+        super(AvatarForm, self).__init__(*args, **kwargs)        
+        
+    delete = forms.BooleanField(required=False,label='Delete current upload')
 
 

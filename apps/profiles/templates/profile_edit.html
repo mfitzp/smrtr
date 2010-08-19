@@ -12,15 +12,15 @@
 {% endblock %}
 
 {% block content_left %}
-<div class="focus"><h4>Introduce yourself</h4>
-    <form action="{% url profile-edit %}" method="post">
+<div class="focus"><h4>Introduce yourself</h4><div class="focus-body">
+    <form action="{% url profile-edit %}" method="post" enctype="multipart/form-data">
     <table>
     {{ uform.as_table }}
     {{ pform.as_table }}
     </table>
 <p style="text-align:right"><input type="submit" value="Next &raquo;" /></p>
     </form>
-</div>
+</div></div>
 <p class="notice">Information you enter will be visible on your personal profile page.</p>
 {% endblock %}
 

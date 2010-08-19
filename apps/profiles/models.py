@@ -1,3 +1,5 @@
+import os.path
+# Django
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -7,8 +9,12 @@ from django.core.urlresolvers import reverse
 from countries.models import Country
 from datetime import date as date, datetime, timedelta
 from notification import models as notification
+from easy_thumbnails.fields import ThumbnailerImageField
 # Spenglr
 from sq.utils import * 
+
+def avatar_file_path(instance=None, filename=None):
+    return os.path.join('avatar', str(instance.user.username), filename)
 
 class UserProfile(models.Model):
     def __unicode__(self):
@@ -73,6 +79,8 @@ class UserProfile(models.Model):
     sq = models.IntegerField(blank = False, null=True, editable = False) # Normalised (to whole population) SQ
     previous_sq = models.IntegerField(blank = False, null=True, editable = False) # Previous value of SQ
     calculated_sq = models.IntegerField(blank = False, null=True, editable = False) # Direct calculated SQ
+    
+    avatar = ThumbnailerImageField(max_length=255, upload_to=avatar_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
     
 def create_profile(sender, **kw):
     user = kw["instance"]

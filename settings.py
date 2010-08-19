@@ -63,9 +63,10 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'facebook.djangofb.FacebookMiddleware',
+    #'facebook.djangofb.FacebookMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'facebookconnect.middleware.FacebookMiddleware',
     'facebookconnect.middleware.FacebookConnectMiddleware',
 
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,8 +78,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'facebookconnect.models.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'facebookconnect.models.FacebookBackend',
 )
 
 
@@ -110,7 +111,7 @@ INSTALLED_APPS = (
     #'atomformat',   # http://github.com/pinax/atom-format (place atomformat.py in externals/, no subdir, not actually an INSTALLED_APP
 # Externals
     'registration', #http://www.bitbucket.org/ubernostrum/django-registration/wiki/
-    'avatar', #http://github.com/rhec/django-avatar/ This version supports overriding the default gravatar
+    #'avatar', #http://github.com/rhec/django-avatar/ This version supports overriding the default gravatar
               #Original at: switch on fix #http://github.com/ericflo/django-avatar #'gravatar', #http://code.google.com/p/django-gravatar/
     'tagging',
     #'friends', #http://github.com/jtauber/django-friends WATCHING THIS FOR READINESS
@@ -121,7 +122,7 @@ INSTALLED_APPS = (
     'pagination', #http://code.google.com/p/django-pagination
     'messages', #http://code.google.com/p/django-messages/downloads/list  Private messaging application
     'easy_thumbnails', #http://github.com/SmileyChris/easy-thumbnails
-    'facebook',
+    #'facebook',
     'facebookconnect',
 # Smrtr
     'core',
@@ -138,8 +139,8 @@ INSTALLED_APPS = (
 )
 
 CACHE_BACKEND = 'dummy:///'
-CACHE_MIDDLEWARE_SECONDS = 60
-CACHE_MIDDLEWARE_KEY_PREFIX = 'smrtr_'
+#CACHE_MIDDLEWARE_SECONDS = 60
+#CACHE_MIDDLEWARE_KEY_PREFIX = 'smrtr_'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
@@ -183,6 +184,7 @@ DUMMY_FACEBOOK_INFO = {
     'proxied_email':None,
 }
 
+FACEBOOK_APP_ID = '140532149315828'
 FACEBOOK_API_KEY = '8a9ee5c03273946d28d7368048d7d536'
 FACEBOOK_INTERNAL = True
 
@@ -234,7 +236,6 @@ except ImportError:
 # The following paths are dependent on setting correct base MEDIA/MEDIAADMIN urls in localsettings
 # External avatar app setting (storage under /media/avatar)
 AVATAR_DEFAULT_URL = MEDIA_URL + "img/default_avatar.png"
-AVATAR_GRAVATAR_BACKUP_DEFAULT = MEDIA_URL + "img/default_avatar.png"
 
 # Flowplayer (audio/video output)
 FLOWPLAYER_URL = MEDIA_URL + "flowplayer/flowplayer-3.2.2.swf"

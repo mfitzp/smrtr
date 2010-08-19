@@ -61,7 +61,7 @@ urlpatterns = patterns('',
     (r'^discuss/', include('discuss.urls')),
     
     (r'^search/', include('haystack.urls')),
-    (r'^avatar/', include('avatar.urls')),
+    # (r'^avatar/', include('avatar.urls')), Removed, now using custom avatar (in proviles) providing fb support
     (r'^messages/', include('messages.urls')),
 
 
