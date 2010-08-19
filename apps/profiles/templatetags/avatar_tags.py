@@ -63,7 +63,7 @@ def profile_avatar_url( user, size=50 ):
     return escape(thumbnail.url)
 
 
-def fb_avatar_url( user, size=50 ):
+def facebook_avatar_url( user, size=50 ):
  
     return user.facebook_profile.pic_square_with_logo
 
