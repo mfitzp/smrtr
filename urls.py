@@ -64,7 +64,7 @@ urlpatterns = patterns('',
     # (r'^avatar/', include('avatar.urls')), Removed, now using custom avatar (in proviles) providing fb support
     (r'^messages/', include('messages.urls')),
 
-
+    #(r'^facebook/connect/ChannelFile.htm', 'django.views.generic.simple.direct_to_template', {'template': 'fbchannel.html'}),
     (r'^facebook/connect/', include('facebookconnect.urls')),
 
     # Direct to template views
