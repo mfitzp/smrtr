@@ -167,8 +167,9 @@ def do_submit(request, challenge_id):
 
     userchallenge.complete() #Complete (get ourselves a duration value)
     time_to_complete = userchallenge.completed - userchallenge.started
-    time_to_complete_each = round( time_to_complete.seconds / challenge.total_questions, 0 )    
-
+    time_to_complete_each = max( 5, time_to_complete.seconds / challenge.total_questions) # Minimum 5 seconds per question
+    time_to_complete_each = round( time_to_complete_each , 0 ) # Remove decimals
+    
     # Iterate over all POST keys and pull out the question answer question-n fields
     for key in request.POST.keys():
 
