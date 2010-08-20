@@ -48,20 +48,19 @@
             <br style="clear:both;" />
         {% endif %}
 
-        {% if userchallenge %}
-            <h5>Performance</h5>    
-
-        {% else %}
-
-            <h5>Get Started</h5>
-            <p class="buttonbar"><span class="button"><a href="{% url challenge-do challenge_id=challenge.id %}">Start this challenge now...</a></span></p>
-
-        {% endif %}
-
-            <h5>Preparation</h5>
-            <p class="buttonbar"><span class="button"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Prepare for this challenge...</a></span></p>
-
-
+        <h5>Get Started</h5>
+            {% if userchallenge.challenge.total_resources > 0 %}
+                <span class="button"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
+            {% endif %}
+            
+            {% ifequal userchallenge.status 0 %}
+            <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
+            {% else %}
+                {% ifequal userchallenge.status 1 %}                    
+                    <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
+                {% endifequal %}
+            {% endifequal %}
+            
     {% else %}
         <p>No challenge information available.</p>
     {% endif %}
