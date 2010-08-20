@@ -72,7 +72,7 @@ class Challenge(models.Model):
                 concepts__challenge=self,
 #                sq__gte=self.sq + 20,
 #                sq__lte=self.sq - 20
-                ).order_by('?')[0:self.total_questions]
+                ).order_by('?') #[0:self.total_questions]
         self.total_questions = self.questions.count() # Update total questions to the actual value
 
         if self.total_questions > 0:
