@@ -125,6 +125,12 @@ Location
         {% with network as obj %}{% include "_social.html" %}{% endwith %}
 
         <h5>Manage</h5>
-        <form method="post" action="{% url network-set-home network_id=network.id %}"><input type="submit" value="Set as home network" {% if network == user.get_profile.network %}disabled{% endif %}></form>
-
+        {% if network == user.get_profile.network %}
+            <span class="button button_disabled"><span class="active">This is your home network</span></span>
+        {% else %}
+            <form method="post" action="{% url network-set-home network_id=network.id %}">
+                <input type="submit" value="Set as home network">
+            </form>
+        {% endif %}
+        
         {% endblock %}

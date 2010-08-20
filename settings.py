@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     'sq',
     'challenge',
     'welcome',
-    'discuss',
+    #'discuss',
     #'facebook',
 )
 
