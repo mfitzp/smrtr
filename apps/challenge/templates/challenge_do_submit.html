@@ -18,8 +18,9 @@
         <p>You answered <strong>{{totals.correct}} out of {{totals.answered}}</strong> ( {{totals.percent}}% ) questions correctly.</p>
         {% if questions %}
             {% for question in questions %}
-            <div class="question-block">
-            <div class="question dropcap_light">Q
+            <div class="focus focus-bigtop-light"><h4>A</h4><div class="focus-body-low">
+            <div class="question-number">{{ forloop.counter }}</div>
+            <div class="question">
                 {{ question.content }}
             </div>
                 <ul class="answers">
@@ -35,7 +36,7 @@
                     {% endifequal %}
                 {% endfor %}
                 </ul>
-            </div>
+            </div></div>
             {% endfor %}
         {% else %}
             <p>No questions available.</p>

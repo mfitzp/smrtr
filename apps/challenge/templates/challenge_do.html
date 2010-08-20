@@ -10,7 +10,7 @@
         timer = false;
         clock = {{ challenge.time_to_complete }};
         
-        function make_plural(word, value){
+       T function make_plural(word, value){
             if(value == 1){
                 return word;
             } else {
@@ -85,7 +85,7 @@
 
 {% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
 
-{% block content_left %}
+{% block content %}
 
     {% if challenge %}
 
@@ -96,16 +96,19 @@
             <div id="timer"><div id="timertext">&nbsp;</div></div>
 
             {% for question in questions %}
-            <div class="question-block">
-            
-            <div class="question dropcap">Q{{ question.content }}</div>
+            <div class="focus focus-bigtop"><h4>Q</h4><div class="focus-body-low">
+            <div class="question-number">{{ forloop.counter }}</div>
+            <div class="question">
+                {{ question.content }}
+            </div>
                 <ul class="answers">
                 {% for answer in question.answers_shuffled %}
                     <li class="question_answer"><input name="questions-{{question.id}}" type="radio" value="{{ answer.id }}"> {{ answer.content }}</li>
                 {% endfor %}
                     <li class="question_answer hidden"><input name="questions-{{question.id}}" type="radio" value="0" checked="true"> I don't know</li>
                 </ul>
-            </div>
+                
+            </div></div>
             {% endfor %}
 
             <input type="submit" value="Submit" id="timerformsubmit" onclick="stop_timer()">
@@ -121,5 +124,5 @@
 {% endblock %}
 
 {% block content_right %}
-    {% include "_challengers.html" %}  
+
 {% endblock %} 
