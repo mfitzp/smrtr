@@ -8,9 +8,8 @@
         {% if wall %}
         <div class="form-toggle">    
             <div id="post-to-wall">
-                <form method="post" class="uniForm" action="{% url add_wall_item wall.slug %}">
+                <form method="post" class="uniForm" action="{% if wall_is_home %}{% url add_wall_item_from_home wall.slug %}{% else %}{% url add_wall_item wall.slug %}{% endif %}">
                     {% csrf_token %}
-                    <input type="hidden" name="success_url" value="{{ request.META.REQUEST_URI }}" />
                     <textarea id="id_posting" rows="1" cols="50" name="posting" style="width:98%"></textarea>
                     <p>Sharing via <a href="{% url wall_home wall.slug %}">{{ wall }}</a></p>
                     <div style="text-align:right; margin-top:-2em;"><input type="submit" value="{% trans 'Share' %} &raquo;" /></div>

@@ -62,6 +62,7 @@ urlpatterns = patterns('',
     (r'^messages/', include('messages.urls')),
 
     url(r'^wall/(?P<wall_slug>[-\w]+)/$', 'core.views.wall_home_redirect', name="wall_home_redirect"),
+    url(r'^wall/add/(?P<slug>[-\w]+)/from-home/$', 'wall.views.add', {'success_url':'/'}, name="add_wall_item_from_home" ),
     (r'^wall/', include('wall.urls')),
 
     (r'^forum/', include('forum.urls')),

@@ -94,6 +94,7 @@ def home(request):
             # Combined wallitems available to this user, limited to 10 max
             'wallitems': wallitems[0:10],
             'wall': wall,
+            'wall_is_home': True,
         })
         
         return render_to_response('dashboard.html', i, context_instance=RequestContext(request))
