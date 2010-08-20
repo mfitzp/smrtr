@@ -56,13 +56,13 @@
         
         function start_timer(){
             /* Pulse timer every 1 second */
-            /* timer = window.setInterval("countdowntimer()", 1000); */
+            timer = window.setInterval("countdowntimer()", 1000);
             document.getElementById('timertext').innerHTML = seconds_to_hms( clock );
             return true;
         }
 
         function stop_timer(){
-            /* Pulse timer every 1 second */
+            /* Stop timer */
             window.clearInterval( timer );
             document.getElementById('timerformsubmit').disabled=true;
             return true;
@@ -141,11 +141,11 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Challenge    
-    &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a>
+    &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}</a>
     &raquo; Questions
 {% endblock %}
 
-{% block title %}{{ challenge.name }}{% endblock %}
+{% block title %}{% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}{% endblock %}
 
 {% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
 
