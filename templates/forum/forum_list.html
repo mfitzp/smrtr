@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Forums
+{% endblock %}
+
+{% block title %}Forums{% endblock %}
+
+{% block content_title %}<h1>Forums</h1>{% endblock %}
+
+{% block content %}
+<table id="djangoForumList">
+<tr>
+<th>Forum</th>
+<th>Topics</th>
+<th>Posts</th>
+<th>Latest</th>
+<th>Freshness</th>
+</tr>
+{% for forum in object_list %}
+<tr class="{% cycle 'odd' 'even' %}">
+<td class="djangoForumListDetails">
+    <p><strong><a href='{{ forum.get_absolute_url }}'>{{ forum.title }}</a></strong></p>
+    <p>{{ forum.description }}</p>
+</td>
+
+<td class="djangoForumCount">{{ forum.threads }}</td>
+<td class="djangoForumCount">{{ forum.posts }}</td>
+
+{% with forum.forum_latest_post as latest_post %}
+<td>
+{% if latest_post %}    
+    <a href="{% url user-profile user_id=latest_post.author.id %}">{{ latest_post.author.get_profile.fullname }}</a>
+    <br />(<a href='{{ latest_post.get_absolute_url }}'>view</a>)
+{% else %}
+    {% trans "No Posts" %}
+{% endif %}
+</td>
+<td class="djangoForumListLastPost">
+{% if latest_post %}
+    <a href='{{ latest_post.get_absolute_url }}'>{{ latest_post.time|timesince }}</a>
+{% else %}
+    {% trans "No Posts" %}
+{% endif %}
+</td>
+{% endwith %}
+</tr>
+{% endfor %}
+</table>
+{% if request.user.is_authenticated %}
+    <p class="buttonbar"><span class="button"><a href="{% url forum_subscriptions %}">{% trans "Update Subscriptions" %} &raquo;</a></span></p>
+{% endif %}
+{% endblock %}

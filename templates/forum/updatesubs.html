@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Update Thread Subscriptions" %}{% endblock %}
+{% block content_title %}<h1>{% trans "Update Thread Subscriptions" %}</h1>{% endblock %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url forum_index %}">Forums</a>
+    &raquo; Update subscriptions
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+{% if not subs %}
+<p>{% trans "No subscriptions." %}</p>
+{% else %}
+<form method='post' action='./'>
+<table id='djangoForumThreadList'>
+{% for s in subs %}
+<tr class="{% cycle 'odd' 'even' %} {% if s.thread.sticky %}emblem-trigger-sticky{% endif %} {% if s.thread.closed %}emblem-trigger-closed{% endif %}">
+<td style="width:16px;">
+<div class="emblem-new"></div>
+<div class="emblem-sticky"></div>
+<div class="emblem-closed"></div>
+</td>
+<td><a href='{{ s.thread.forum.get_absolute_url }}'>{{ s.thread.forum.title }}</a></td>
+<td><a href='{{ s.thread.get_absolute_url }}'>{{ s.thread.title|escape }}</a></td>
+<td><input type='checkbox' checked='checked' name='{{ s.thread.id }}' /></td>
+</tr>
+{% endfor %}
+</table>
+
+<p class="buttonbar">
+    {% if next %}<span class="button"><a href="{{ next }}">{% trans "Cancel" %}</a></span>{% endif %}
+    <input type="submit" value="{% trans 'Update Subscriptions' %} &raquo;" name="updatesubs" />
+</p>
+</form>
+{% endif %}
+
+
+
+{% else %}
+<p>{% trans "Please login to update your forum subscriptions." %}</p>
+{% endif %}
+
+{% endblock %}

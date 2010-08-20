@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url forum_index %}">Forums</a>
+    {% for title, url in thread.forum.get_url_name %} &raquo; <a href='{{ url }}'>{{ title }}</a>{% endfor %} &raquo; <a href='{{ thread.get_absolute_url }}'>{{ thread.title|escape }}</a> ({{ thread.posts }} {% blocktrans count thread.posts as counter %}post{% plural %}posts{% endblocktrans %})
+{% endblock %}
+
+{% block title %}{{ thread.title|escape }} ({{ forum.title }}){% endblock %}
+
+{% block content_title %}<h1>{{thread.title}}</h1>{% endblock %}
+
+{% block content_left %}
+
+{% for post in post_list %}
+
+<div class="postitem">
+    <div class="postitem-image"><a href="{% url user-profile user_id=post.author.id %}">{% avatar post.author 48 %}</a></div>
+    <div class="postitem-body"> {{ post.body_html|safe }}</div>
+    <div class="threaditem-meta">
+        Posted by <a href="{% url user-profile user_id=post.author.id %}">{{ post.author.get_profile.fullname }}</a>, {{ post.time|timesince }} ago<br />
+    </div>
+    <br class="clear" />
+</div>
+
+{% endfor %}
+
+{% if thread.closed %}
+
+    <p class="notice">This topic is closed, you cannot reply.</p>
+
+{% else %}
+
+    <h5>{% trans "Post a Reply" %}</h5>
+    {% if thread.closed %}
+        <p>{% trans "Sorry, this topic is closed. No further replies are permitted." %}</p>
+    {% else %}
+        {% if user.is_authenticated %}
+            <form method='post' action='reply/'>
+            {{ form.as_p }}
+            <input type='submit' value='{% trans "Submit" %}' />
+            </form>
+        {% else %}
+            <p>{% trans "Please login to post a reply." %}</p>
+        {% endif %}
+    {% endif %}
+
+{% endif %}
+
+
+{% if is_paginated %}
+<ul>
+  <li class="djangoForumPagination"><a href="?page=1">{% trans "First" %}</a></li>
+{% for page_number in paginator.page_range %}
+  <li class="djangoForumPagination"><a href="?page={{ page_number }}">{{ page_number }}</a></li>  
+{% endfor %}
+  <li class="djangoForumPagination"><a href="?page={{ paginator.num_pages }}">{% trans "Last" %}</a></li>  
+</ul>
+{% endif %}
+
+
+{% endblock %}
+
+{% block content_right %}
+
+
+{% if request.user.is_authenticated %}
+<h5>Subscriptions</h5>
+<p><a href="{% url forum_subscriptions %}?next={{ request.path }}">{% trans "Update Subscriptions" %}</a></p>
+{% endif %}
+
+<h5>About</h5>
+<p>Latest post {{ thread.latest_post_time|timesince }} ago by <a href="{% url user-profile user_id=thread.thread_latest_post.author.id %}">{{ thread.latest_post.author.get_profile }}</a>
+<h5>Tags</h5>
+{% with thread.get_tags as tags %}{% include "_tags.html" %}{% endwith %}
+
+{% with thread as obj %}{% include "_social.html" %}{% endwith %}
+{% endblock %}
+
