@@ -23,7 +23,7 @@
             <div class="wallitem">
                 <div class="wallitem-item">
                     <div class="wallitem-image"><a href="{% url user-profile user_id=item.author.id %}">{% avatar item.author 48 %}</a></div>
-                    <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags|markdown }}</div>
+                    <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
                     <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
                     <div class="wallitem-actions"><a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a><!-- &#183; <a href="">Like</a> --></div>
                 </div>
