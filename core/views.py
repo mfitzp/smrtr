@@ -194,8 +194,8 @@ def statistics(request):
     topusers_smart = User.objects.order_by('-userprofile__sq')[0:10]
     
     # Retrieve records for past month
-    start_date = datetime.now() - timedelta(weeks=4)
-    end_date = datetime.now()
+    start_date = datetime.datetime.now() - datetime.timedelta(weeks=4)
+    end_date = datetime.datetime.now()
 
     topusers_active = User.objects.filter(userquestionattempt__created__range=(start_date,end_date)).annotate(
                         activity_rating=Count('userquestionattempt')).order_by('-activity_rating')[0:10]
