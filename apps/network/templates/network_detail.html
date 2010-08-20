@@ -120,11 +120,11 @@ Location
         {% endblock %}
 
         {% block content_right %}
-        <h5>Discussions</h5>
-        {% include "_forum.html" %}
-        
-
+        {% include "_wall.html" %}
 
         {% with network as obj %}{% include "_social.html" %}{% endwith %}
+
+        <h5>Manage</h5>
+        <form method="post" action="{% url network-set-home network_id=network.id %}"><input type="submit" value="Set as home network" {% if network == user.get_profile.network %}disabled{% endif %}></form>
 
         {% endblock %}

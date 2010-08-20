@@ -90,10 +90,6 @@ def generate_userchallenges(user, number = None):
             else:
                 challenge = Challenge()
                 challenge.user = user
-                # Set name to the module name of the user this is created for
-                # likely to give better name than the 'first concept' default (see model save definition)
-                if topic_id:
-                    challenge.name = Topic.objects.get(pk=topic_id)
                 challenge.save()
                     
                 # Iterate concepts

@@ -50,9 +50,9 @@ def topic_detail(request, topic_id):
                 'usertopic': usertopic,
                 'members': topic.users.order_by('-usertopic__start_date')[0:12],
                 'total_members': topic.users.count(),                
-                # Forum items
-                "forum": topic.forum,
-                "threads": topic.forum.thread_set.all(),
+                # Wall items
+                "wall": topic.wall,
+                "wallitems": topic.wall.wallitem_set.all(),
                 'next':request.GET.get('next')
               }
 
@@ -125,9 +125,9 @@ def concept_detail(request, concept_id):
                 'userconcept': userconcept, 
                 'members': concept.users.order_by('-userconcept__start_date')[0:12],
                 'total_members': concept.users.count(),                
-                # Forum items
-                "forum": concept.forum,
-                "threads": concept.forum.thread_set.all()
+                # Wall items
+                "wall": concept.wall,
+                "wallitems": concept.wall.wallitem_set.all()
             }
 
     return render_to_response('concept_detail.html', context, context_instance=RequestContext(request))

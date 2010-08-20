@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 from django.core.urlresolvers import reverse
 # Smrtr
-from discuss.models import Forum
 # Externals
 from countries.models import Country
 from easy_thumbnails.fields import ThumbnailerImageField
+from wall.models import Wall
 
 
 # Network = Course now e.g. 'Network' for AQA Biology
@@ -52,7 +52,7 @@ class Network(models.Model):
         if self.id is None: #is new
             # Need to save the parent object first to guarantee unique slug
             super(Network, self).save(force_insert, force_update)
-            self.forum = Forum.objects.create(title=self.name)
+            self.wall = Wall.objects.create(name=self.name, slug='network-' + str(self.id))
         super(Network, self).save(force_insert, force_update)
         
     def get_absolute_url(self):
@@ -106,7 +106,7 @@ class Network(models.Model):
     # SQ average of members, rates network intelligence 
     sq = models.IntegerField(blank = True, null = True, editable = False)
     # Optional wall for this object
-    forum = models.OneToOneField(Forum, editable = False, null = True)
+    wall = models.OneToOneField(Wall, editable = False, null = True)
     # Parent network, courses at universities, or any other hierarchies stuff
     parent = models.ForeignKey('Network', null = True, blank = True)
     # Topics offered on this network - reverse from topic

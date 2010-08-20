@@ -12,6 +12,7 @@ from notification import models as notification
 from easy_thumbnails.fields import ThumbnailerImageField
 # Spenglr
 from sq.utils import * 
+from network.models import Network, UserNetwork
 
 def avatar_file_path(instance=None, filename=None):
     return os.path.join('avatar', str(instance.user.username), filename)
@@ -82,6 +83,9 @@ class UserProfile(models.Model):
     
     avatar = ThumbnailerImageField(max_length=255, upload_to=avatar_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
     
+    # User's 'home network'
+    network = models.ForeignKey(Network, null=True, editable = False)
+    
 def create_profile(sender, **kw):
     user = kw["instance"]
     if kw["created"]:
@@ -89,3 +93,13 @@ def create_profile(sender, **kw):
         up.save()
 
 post_save.connect(create_profile, sender=User)
+
+
+def join_network(sender, **kw):
+    usernetwork = kw["instance"]
+    if kw["created"]:
+        profile = usernetwork.user.get_profile()
+        profile.network = usernetwork.network
+        profile.save()
+
+post_save.connect(join_network, sender=UserNetwork)

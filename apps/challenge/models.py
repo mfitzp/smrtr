@@ -16,6 +16,7 @@ from education.models import Topic, UserTopic
 from sq.utils import * 
 # External
 from easy_thumbnails.fields import ThumbnailerImageField
+from wall.models import Wall
 
 def challenge_file_path(instance=None, filename=None):
     return os.path.join('challenge', str(instance.id), filename)
@@ -30,20 +31,21 @@ class Challenge(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Challenge, self).save(force_insert, force_update)
-            
             # Now populate question lists based on current settings
             self.generate_questions()
             self.total_resources = Resource.objects.filter(concepts__challenge=self).count()
-            
    
-        # The following checked and autopopulated if neccessary on every save in case edits remove
-        # If no name has been set, auto-generate
-        if self.name == '':
-            self.generate_name()
+            # The following checked and autopopulated if neccessary on every save in case edits remove
+            # If no name has been set, auto-generate
+            if self.name == '':
+                self.generate_name()
 
-        # If no description has been set, auto-generate
-        if self.description == '':
-            self.generate_description()
+            # If no description has been set, auto-generate
+            if self.description == '':
+                self.generate_description()
+
+            # Attach a wall
+            self.wall = Wall.objects.create( name=self.name, slug='challenge-' + str(self.id) )
             
         super(Challenge, self).save(force_insert, force_update)        
         
@@ -51,9 +53,7 @@ class Challenge(models.Model):
         return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
 
     def generate_name(self):
-        if self.concepts.all():
-            c = list(self.concepts.all()[0:1])
-            self.name = c[0].name
+        self.name = "Challenge #%d" % self.id
             
     def generate_description(self):
         c = list()
@@ -116,6 +116,8 @@ class Challenge(models.Model):
     time_to_complete = models.IntegerField(editable = False, null = True )
 
     image = ThumbnailerImageField(max_length=255, upload_to=challenge_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
+
+    wall = models.OneToOneField(Wall, editable = False, null = True)
 
     #privacy = Public, Network, Private
 

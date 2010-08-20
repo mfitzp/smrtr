@@ -45,8 +45,8 @@ def detail(request, network_id):
                 'usernetwork': usernetwork, 
                 'members': network.members.order_by('-usernetwork__start_date')[0:12],
                 'total_members': network.members.count(),                
-                "forum": network.forum,
-                "threads": network.forum.thread_set.all()
+                "wall": network.wall,
+                "wallitems":  network.wall.wallitem_set.all()
               }
 
     return render_to_response('network_detail.html', context, context_instance=RequestContext(request))
@@ -120,6 +120,7 @@ def search( request,
         for nid in nids:
             network = Network.objects.get(pk=nid)
             usernetwork = UserNetwork( user=request.user, network=network  )
+            usernetwork.save()
             try:
                 usernetwork.save()
             except:
@@ -161,6 +162,19 @@ def search( request,
     
     return render_to_response(template_name, context, context_instance=RequestContext(request))    
     
+    
+# Set the home network for a user
+@login_required
+def set_home(request, network_id):
+    
+    if request.POST:
+        network = get_object_or_404(Network, pk=network_id)
+        profile = request.user.get_profile()
+
+        profile.network = network
+        profile.save()
+
+    return redirect('network-detail', network_id=network.id)    
     
         
 

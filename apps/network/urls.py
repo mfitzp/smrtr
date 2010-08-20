@@ -14,13 +14,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    #url(r'^all$', 'django.views.generic.list_detail.object_list', { 'queryset': Network.objects.all(), 'paginate_by': 25, 'template_name':'network_list.html' }, name='network-list'   ),
-
     url(r'^(?P<network_id>\d+)/$', 'network.views.detail', name='network-detail'  ),
     url(r'^(?P<network_id>\d+)/register/$', 'network.views.register', name='network-register'  ),
     url(r'^(?P<network_id>\d+)/members/$', 'network.views.members', name='network-members'  ),
-    
-    #url(r'^search/$', SearchView(form_class=NetworkSearchForm, template='network_search.html', searchqueryset=SearchQuerySet().models(Network)), name='network-search'),
+    url(r'^(?P<network_id>\d+)/homesweethome/$', 'network.views.set_home', name='network-set-home'  ),
     
 
     url(r'^search/$', 'network.views.search', name='network-search' ),    

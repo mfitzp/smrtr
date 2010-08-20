@@ -79,6 +79,10 @@ def detail(request, challenge_id):
         # List of previous/other challengers on this challenge
         'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
         'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
+        
+        # Wall
+        "wall": challenge.wall,
+        "wallitems": challenge.wall.wallitem_set.all(),
         }
 
     return render_to_response('challenge_view.html', context, context_instance=RequestContext(request))

@@ -16,7 +16,7 @@
     {% if userchallengesexist %}
         <div class="focus"><h4>Challenges</h4>
         
-        {% for userchallenge in userchallenges %}
+        {% for userchallenge in userchallengesactive %}
         
             {% if forloop.first %}
             <div class="focusbody">
@@ -120,7 +120,7 @@
     <div class="focus"><h4>Welcome!</h4><div class="focus-body">
         <p>Once you're up and running, this box will show your <strong>current active challenges</strong> and resources for study. You can control
         what topics you get by <strong>activating and deactivating</strong> them.</p>
-        <p>To get started <a href="{% url topic-search %}" class="button">Activate some topics now &raquo;</a></p>
+        <p>To get started <span class="button button_hi"><a href="{% url topic-search %}?next=/">Activate some topics now &raquo;</a></span></p>
     </div></div>
     {% endif %}
 
@@ -130,9 +130,8 @@
 
     {% block content_right %}
         
-        <h5>Discussions</h5>        
         
-        {% include "_forum.html" %}  
+        {% include "_wall.html" %}  
 
         <h5>Networks</h5>
         {% if usernetworks %}

@@ -1,26 +1,33 @@
 {% load avatar_tags %}
 {% load i18n %}
 {% load comments %}
+{% load markup %}
+
+<h5>Activity Feed</h5>
 
         {% if wall %}
         <div class="form-toggle">    
             <div id="post-to-wall">
                 <form method="post" class="uniForm" action="{% url add_wall_item wall.slug %}">
+                    {% csrf_token %}
                     <input type="hidden" name="success_url" value="{{ request.META.REQUEST_URI }}" />
                     <textarea id="id_posting" rows="1" cols="50" name="posting" style="width:98%"></textarea>
-                    <div style="text-align:right"><input type="submit" value="{% trans 'Submit' %}" /></div>
+                    <p>Sharing via <a href="{% url wall_home wall.slug %}">{{ wall }}</a></p>
+                    <div style="text-align:right; margin-top:-2em;"><input type="submit" value="{% trans 'Share' %} &raquo;" /></div>
                 </form>
             </div>
             
         </div>
         {% endif %}
-        
+
         {% for item in wallitems %}
             <div class="wallitem">
-                <div class="wallitem-image"><a href="{% url user-profile user_id=item.author.id %}">{% avatar item.author 48 %}</a></div>
-                <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags }}</div>
-                <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
-                <div class="wallitem-actions"><a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a> &#183; <a href="">Like</a></div>
+                <div class="wallitem-item">
+                    <div class="wallitem-image"><a href="{% url user-profile user_id=item.author.id %}">{% avatar item.author 48 %}</a></div>
+                    <div class="wallitem-body"><a href="{% url user-profile user_id=item.author.id %}" class="wallitem-author">{{ item.author.get_profile.fullname }}</a> {{ item.body|striptags|markdown }}</div>
+                    <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
+                    <div class="wallitem-actions"><a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a><!-- &#183; <a href="">Like</a> --></div>
+                </div>
                 {% get_comment_list for item as comment_list %}
                 <div id="wallitem-comments-{{ item.id }}" class="wallitem-comments" {% if comment_list %}{% else %}style="display:none"{% endif %}>
                 {% if comment_list %}

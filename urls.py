@@ -56,13 +56,16 @@ urlpatterns = patterns('',
     (r'^questions/', include('questions.urls')),
 
     (r'^notification/', include('notification.urls')),
-
-    url(r'^discuss/(?P<forum_id>[-\w]+)/$', 'core.views.forum_parent_redirect', name="discuss_forum"),
-    (r'^discuss/', include('discuss.urls')),
-    
+   
     (r'^search/', include('haystack.urls')),
     # (r'^avatar/', include('avatar.urls')), Removed, now using custom avatar (in proviles) providing fb support
     (r'^messages/', include('messages.urls')),
+
+    url(r'^wall/(?P<wall_slug>[-\w]+)/$', 'core.views.wall_home_redirect', name="wall_home_redirect"),
+    (r'^wall/', include('wall.urls')),
+
+    (r'^forum/', include('forum.urls')),
+
 
     #(r'^facebook/connect/ChannelFile.htm', 'django.views.generic.simple.direct_to_template', {'template': 'fbchannel.html'}),
     (r'^facebook/connect/', include('facebookconnect.urls')),

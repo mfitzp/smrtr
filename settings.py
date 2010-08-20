@@ -124,6 +124,8 @@ INSTALLED_APPS = (
     'easy_thumbnails', #http://github.com/SmileyChris/easy-thumbnails
     #'facebook',
     'facebookconnect',
+    'forum',
+    'wall',
 # Smrtr
     'core',
     'profiles',

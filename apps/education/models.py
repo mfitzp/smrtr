@@ -9,10 +9,10 @@ from django.core.urlresolvers import reverse
 from network.models import Network,UserNetwork
 from resources.models import Resource
 from sq.utils import * 
-from discuss.models import Forum
 # External
 from countries.models import Country
 from easy_thumbnails.fields import ThumbnailerImageField
+from wall.models import Wall
 
 
 # Network = Course now e.g. 'Network' for AQA Biology
@@ -38,7 +38,8 @@ class Topic(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Topic, self).save(force_insert, force_update)
-            self.forum = Forum.objects.create(title=self.name)
+
+            self.wall = Wall.objects.create(name=self.name, slug='topic-' + str(self.id))
             self.networks.add(self.network) # Make link to 'offer' this network
                           
         super(Topic, self).save(force_insert, force_update)
@@ -62,7 +63,7 @@ class Topic(models.Model):
 
     sq = models.IntegerField(editable = False, null = True)
 
-    forum = models.OneToOneField(Forum, editable = False, null = True)
+    wall = models.OneToOneField(Wall, editable = False, null = True)
 
 # Concepts for this topic
     concepts = models.ManyToManyField('Concept', blank=True)
@@ -87,7 +88,7 @@ class Concept(models.Model):
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Concept, self).save(force_insert, force_update)
-            self.forum = Forum.objects.create(title=self.name)
+            self.wall = Wall.objects.create(name=self.name, slug='concept-' + str(self.id))
         super(Concept, self).save(force_insert, force_update)
 
     def update_sq(self):
@@ -106,7 +107,7 @@ class Concept(models.Model):
     total_questions = models.IntegerField(default = 0) # Number of questions
     sq = models.IntegerField(editable = False, null = True)
 
-    forum = models.OneToOneField(Forum, editable = False, null = True)
+    wall = models.OneToOneField(Wall, editable = False, null = True)
     
     # Resources (through conceptresource for bookmarks)
     resources = models.ManyToManyField(Resource, through='ConceptResource', related_name='concepts')
