@@ -72,9 +72,18 @@ def detail(request, challenge_id):
     except:
         userchallenge = None          
 
+    topusers = User.objects.filter(userchallenge__challenge=challenge).order_by('-userprofile__sq')[0:10]
+    topnetworks = Network.objects.filter(usernetwork__user__userchallenge__challenge=challenge).annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:10]
+    topcountries = Country.objects.filter(userprofile__user__userchallenge__challenge=challenge).annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:10]
+
     context = {
         'challenge': challenge,
         'userchallenge':userchallenge,
+        
+        # Statistics
+        'topusers': topusers,
+        'topnetworks': topnetworks,
+        'topcountries': topcountries,
         
         # List of previous/other challengers on this challenge
         'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],

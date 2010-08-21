@@ -3,6 +3,9 @@
 {% load sq_tags %}
 {% load pagination_tags %}
 {% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+{% load thumbnail %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
@@ -34,8 +37,6 @@
 
 {% block content_left %}
 
-    {% if challenge %}
-
         <blockquote>{{ challenge.description }}</blockquote>
 
         {% if challenge.concepts %}
@@ -49,22 +50,58 @@
         {% endif %}
 
         <h5>Get Started</h5>
-            {% if userchallenge.challenge.total_resources > 0 %}
-                <p>Welcome to your new challenge. As a new challenger you may 
-                <span class="button"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
-            {% endif %}
-            
+           
+           <div class="buttonbar">
             {% ifequal userchallenge.status 0 %}
-            <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
+                <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
             {% else %}
-                {% ifequal userchallenge.status 1 %}                    
-                    <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
+                {% ifequal userchallenge.status 1 %}  
+                <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
                 {% endifequal %}
             {% endifequal %}
-            
-    {% else %}
-        <p>No challenge information available.</p>
-    {% endif %}
+
+            {% if userchallenge.challenge.total_resources > 0 %}
+                <span class="button"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
+            {% endif %}
+            </div>
+
+ 
+        <h5>Top 10 Members</h5>
+        <table style="width:100%;">
+        {% for user in topusers %}
+            {% with user.get_profile as profile %}
+               <tr class="{% cycle 'odd' 'even' %}"><td style="width:32px;">{% avatar user 32 %}</td>
+               <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
+                    <small>
+                        {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
+                        <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
+                    </small></td>
+               <td>{% sqchange profile.previous_sq profile.sq %}&nbsp;{% sqdescriptive profile.sq %}</td></tr>
+            {% endwith %}
+
+        {% endfor %}
+        </table>
+ 
+    <h5>Top 10 Networks</h5>
+    <table style="width:100%;">
+    {% for network in topnetworks %}
+       <tr class="{% cycle 'odd' 'even' %}"><td style="width:32px;"><img src="{% thumbnail network.image 32x32 crop %}"></td>
+       <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a><br />
+       {% if network.country %}<img src="{{ network.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ network.country|urlencode }}&amp;t=h" target="_blank">{{ network.country }}</a> &#183; {% endif %}
+       {{ network.total_members }} member{{ network.total_members|pluralize }}
+       </td>
+       <td>{% sqchange 100 network.sq %}&nbsp;{% sqdescriptive network.sq %}</td></tr>
+    {% endfor %}
+    </table>
+    
+    <h5>Top 10 Countries</h5>
+    <table style="width:100%;">
+    {% for country in topcountries %}
+       <tr class="{% cycle 'odd' 'even' %}"><td style="width:16px;"><img src="{{ country.iso|iso_flag }}"></span></td>
+       <td style="line-height:1.5em;"><a href="http://maps.google.com/maps?q={{ country|urlencode }}&amp;t=h" target="_blank">{{ country }}</a></td>
+       <td>{% sq country.sq %}&nbsp;{% sqdescriptive country.sq %}</td></tr>
+    {% endfor %}
+    </table>
  
 {% endblock %}
 
