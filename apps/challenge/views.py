@@ -267,7 +267,7 @@ def do_submit(request, challenge_id):
                                             })
 
     # Are we first to complete?
-    challengers = challenge.userchallenge_set.filter(status=2).exclude(completed=None).order_by('-completed')
+    challengers = challenge.userchallenge_set.filter(status=2).exclude(completed=None).order_by('completed')
     if challengers:
         if challengers[0].user == request.user:
             add_extended_wallitem(challenge.wall,userchallenge.user,template_name='challenge_1stcomplete.html',extra_context={
