@@ -259,7 +259,7 @@ def do_submit(request, challenge_id):
     from wallextend.models import add_extended_wallitem
 
     # Did user get 100%? If so send a message
-    if totals['percent'] = 100:
+    if totals['percent'] == 100:
         add_extended_wallitem(challenge.wall,request.user,template_name='challenge_100pc.html',extra_context={
                                             'body':'got 100%!',
                                             'challenge': challenge,
