@@ -177,8 +177,6 @@ class UserChallenge(models.Model):
         for concept in concepts:
             topic = topic.filter(concepts=concept)
         
-        print topic
-        
         if topic:
            t = topic[0] # Get 1 only
            self.topic = t
