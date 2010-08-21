@@ -47,7 +47,7 @@ def create(request):
             # Create userchallenge for the creating user (will need one anyway) and save
             UserChallenge(user=request.user, challenge=challenge).save()
             
-            return redirect( 'challenge-do', {'challenge_id':challenge.id} ) # Redirect to challenge_do for this challenge
+            return redirect( 'challenge-do', challenge_id=challenge.id ) # Redirect to challenge_do for this challenge
     
     else:
         form = ChallengeForm(request, request.GET or None) 
