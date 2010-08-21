@@ -14,7 +14,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Avg
 # External
-from wall.models import Wall
+from wall.models import Wall, WallItem
 from wall.forms import WallItemForm
 # Smrtr
 from network.models import Network
@@ -125,6 +125,7 @@ def welcome(request):
             # Top
             'topusers': topusers,
             'topnetworks': topnetworks,
+            'wallitems': WallItem.objects.select_related()[0:5]
     })
 
     return render_to_response('welcome.html', context, context_instance=RequestContext(request))

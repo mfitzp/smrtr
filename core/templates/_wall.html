@@ -31,7 +31,9 @@
                         {% endif %}
                     </div>
                     <div class="wallitem-meta">{{ item.created_at|timesince }} ago on <a href="{% url wall_home item.wall.slug %}">{{ item.wall.name }}</a></div>
+                    {% if request.user.is_authenticated %}
                     <div class="wallitem-actions"><a href="#" onClick="document.getElementById('wallitem-comments-{{ item.id }}').style.display='block'; return false;">Comment</a><!-- &#183; <a href="">Like</a> --></div>
+                    {% endif %}
                 </div>
                 {% get_comment_list for item as comment_list %}
                 <div id="wallitem-comments-{{ item.id }}" class="wallitem-comments" {% if comment_list %}{% else %}style="display:none"{% endif %}>
@@ -45,6 +47,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
+                {% if request.user.is_authenticated %}                
                 <div class="comment">
                     {% get_comment_form for item as form %}
                     <form action="{% comment_form_target %}" method="POST">
@@ -57,6 +60,7 @@
                     <div style="text-align:right"><input type="submit" name="submit" class="submit-post" value="Post" /></div>
                     </form>
                 </div>
+                {% endif %}
                 </div>
 
             </div>
