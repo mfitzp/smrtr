@@ -50,6 +50,7 @@
 
         <h5>Get Started</h5>
             {% if userchallenge.challenge.total_resources > 0 %}
+                <p>Welcome to your new challenge. As a new challenger you may 
                 <span class="button"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
             {% endif %}
             

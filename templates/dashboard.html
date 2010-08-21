@@ -25,7 +25,7 @@
                 <div class="emblem-new" title="New challenge"></div> 
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail userchallenge.image 50x50 crop %}"></div>
-                <h5>{{ userchallenge }}</h5>         
+                <h5><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></h5>         
                 <p>{{ userchallenge.challenge.description }}</p>
             <table>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
