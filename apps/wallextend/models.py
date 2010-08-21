@@ -29,7 +29,7 @@ class WallItemExtend(models.Model):
     
 
 # Add an extended wallitem to specified Wall, using defined template and supplied extra_context
-def add_extended_wallitem( wall, author, template_name='default.html',extra_context={}):
+def add_extended_wallitem( wall, author, created_at=None,template_name='default.html',extra_context={}):
 
 
         # Default context variables for the wallitem
@@ -45,6 +45,8 @@ def add_extended_wallitem( wall, author, template_name='default.html',extra_cont
         try:
             # Create the standard WallItem
             wi = WallItem(wall=wall,body=body, author=author)
+            if created_at:
+                wi.created_ad = created_at
             wi.save()
         except:
             pass
