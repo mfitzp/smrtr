@@ -14,9 +14,11 @@ class Command(BaseCommand):
 
         from wallextend.models import add_extended_wallitem
 
-        challenges = Challenge.objects.filter(userchallenge__status=2)
+        challenges = Challenge.objects.filter(userchallenge__status=2).exclude(userchallenge__completed=None)
+        
         for challenge in challenges:
             userchallenge = challenge.userchallenge_set.order_by('-completed')[0]
+            
             add_extended_wallitem(challenge.wall,userchallenge.user,template_name='challenge_1stcomplete.html',extra_context={
                                                     'body':'is the first to complete!',
                                                     'challenge': challenge,
