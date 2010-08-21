@@ -132,7 +132,8 @@ class UserChallenge(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
-            #TODO: If topic is not set, try and find an appropriate topic for the user (search user's topics for matching on challenge concepts)
+            if self.topic is None:
+                self.generate_topic()
 
             super(UserChallenge, self).save(force_insert, force_update)
             self.update_sq()
@@ -169,6 +170,17 @@ class UserChallenge(models.Model):
         #    uc.last_attempt = datetime.datetime.now()
         #    # uc.update_sq(): Leave SQ recalculation to cron updates
         #    uc.save()
+
+    def generate_topic(self):
+        topic = Topic.objects.filter(usertopic__user=self.user) # Only topics we're doing
+        concepts = self.challenge.concepts.all()
+        for concept in concepts:
+            topic = topic.filter(concepts=concept)
+        
+        if topic:
+           t = topic[0] # Get 1 only
+           self.topic = t
+
         
     # Helpers for templates
     def is_new(self):
@@ -180,7 +192,7 @@ class UserChallenge(models.Model):
         
     def time_taken(self):
         return self.completed - self.started
-       
+        
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
     

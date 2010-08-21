@@ -111,6 +111,7 @@ def generate_userchallenges(user, number = None):
 
             # We have the challenge created, now generate the userchallenge to link and assign
             # now shows up in the user's list. Magic.
+            userchallenge.topic = None
             userchallenge.challenge = challenge
             userchallenge.user = user
             userchallenge.save()
