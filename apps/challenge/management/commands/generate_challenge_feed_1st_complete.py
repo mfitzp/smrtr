@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
         from wallextend.models import add_extended_wallitem
 
-        challenges = Challenge.objects.filter(userchallenge__status=2).exclude(userchallenge__completed=None)
+        challenges = Challenge.objects.filter(userchallenge__status=2)
         
         for challenge in challenges:
             userchallenge = challenge.userchallenge_set.order_by('-completed')[0]
