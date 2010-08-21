@@ -5,11 +5,12 @@ from education.models import Topic, Concept
 from challenge.models import Challenge
 from profiles.models import UserProfile
 from questions.models import Question
-from discuss.models import Thread, Post
+# External
+from thread.models import Thread, Post
 
 
 class NetworkSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "monthly"
     priority = 1
     limit = 1000
 
@@ -20,7 +21,7 @@ class NetworkSitemap(Sitemap):
         return obj.updated
 
 class TopicSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "monthly"
     priority = 0.5
     limit = 1000
    
@@ -53,7 +54,7 @@ class ChallengeSitemap(Sitemap):
         return obj.created
 
 class UserProfileSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "monthly"
     priority = 0.5
     limit = 1000
 
@@ -84,7 +85,7 @@ class ThreadSitemap(Sitemap):
         return Thread.objects.all()
 
     def lastmod(self, obj):
-        return obj.latest_post_created
+        return obj.latest_post_time
         
 class PostSitemap(Sitemap):
     changefreq = "never"
@@ -95,5 +96,5 @@ class PostSitemap(Sitemap):
         return Post.objects.all()
 
     def lastmod(self, obj):
-        return obj.created               
+        return obj.time               
 
