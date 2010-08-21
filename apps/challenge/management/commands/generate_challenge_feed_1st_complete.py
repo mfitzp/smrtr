@@ -19,7 +19,7 @@ class Command(BaseCommand):
         for challenge in challenges:
             userchallenge = challenge.userchallenge_set.order_by('-completed')[0]
             
-            add_extended_wallitem(challenge.wall,userchallenge.user,created_at=userchallenge.created,template_name='challenge_1stcomplete.html',extra_context={
+            add_extended_wallitem(challenge.wall,userchallenge.user,created_at=userchallenge.completed,template_name='challenge_1stcomplete.html',extra_context={
                                                     'body':'is the first to complete!',
                                                     'challenge': challenge,
                                                     'userchallenge': userchallenge,
