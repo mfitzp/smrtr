@@ -75,7 +75,12 @@ def generate_userchallenges(user, number = None):
         #TODO: Look for already existing, open, challenges to allow for multi-player as default
         for mlist in final:
             # For clarity
+            userchallenge = UserChallenge()
+
             topic_id = mlist[0]
+            if topic_id:
+                userchallenge.topic = Topic.objects.get(pk=topic_id)
+
             concept_ids = mlist[1]
             # Look for existing challenges matching (exact) this set of concepts
             # Make sure the user has not previously attempted the challenge
@@ -90,6 +95,10 @@ def generate_userchallenges(user, number = None):
             else:
                 challenge = Challenge()
                 challenge.user = user
+                # Use the generating user's name for the challenge name/image from their topics
+                # Should be 'sensible' needs to be 'something' to keep consistency between users
+                challenge.name = userchallenge.topic.name
+                challenge.image = userchallenge.topic.image
                 challenge.save()
                     
                 # Iterate concepts
@@ -102,10 +111,7 @@ def generate_userchallenges(user, number = None):
 
             # We have the challenge created, now generate the userchallenge to link and assign
             # now shows up in the user's list. Magic.
-            userchallenge = UserChallenge()
             userchallenge.challenge = challenge
-            if topic_id:
-                userchallenge.topic = Topic.objects.get(pk=topic_id)
             userchallenge.user = user
             userchallenge.save()
 

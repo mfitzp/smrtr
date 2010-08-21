@@ -10,5 +10,9 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         for challenge in Challenge.objects.all():
-            challenge.generate_name()
-            challenge.save()
+            ucs=challenge.userchallenge_set.exclude(topic=None)
+            if ucs:
+                uc = ucs[0]
+                challenge.name = uc.topic.name
+                challenge.image = uc.topic.image
+                challenge.save()

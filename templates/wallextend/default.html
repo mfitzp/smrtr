@@ -1,0 +1,15 @@
+{% extends "wallextend/base_wallitem.html" %}
+{% load thumbnail %}
+
+{% block wallitem_image %}
+    {% if object.image %}<img src="{% thumbnail object.image 32x32 crop %}">{% endif %}
+{% endblock %}
+
+{% block wallitem_title %}
+    <a href="{{ object.get_absolute_url }}">{{ title }}</a><br />
+    {{ message }}
+{% endblock %}
+
+{% block wallitem_meta %}
+    {{ meta }}
+{% endblock %}

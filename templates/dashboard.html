@@ -17,25 +17,26 @@
         <div class="focus"><h4>Challenges</h4>
         
         {% for userchallenge in userchallengesactive %}
-        
+            {% with userchallenge.challenge as challenge %}
+            
             {% if forloop.first %}
             <div class="focusbody">
             <div id="challenges-focus" class="emblem-trigger-new">
             <div class="object-emblems"> 
                 <div class="emblem-new" title="New challenge"></div> 
             </div>
-            <div id="challenges-focus-image"><img src="{% thumbnail userchallenge.image 50x50 crop %}"></div>
-                <h5><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></h5>         
-                <p>{{ userchallenge.challenge.description }}</p>
+            <div id="challenges-focus-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
+                <h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>         
+                <p>{{ challenge.description }}</p>
             <table>
             <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
-            <tr><th>Challengers</th><td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }} member{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span></td></tr>
-            <tr><th>Duration</th><td><span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span> for {{ userchallenge.challenge.total_questions }} question{{ userchallenge.challenge.total_questions|pluralize }}</td></tr>
-            <tr><th>Expires</th><td>{{ userchallenge.challenge.created|timesince }}</td></tr>
+            <tr><th>Challengers</th><td><span class="users">{{ challenge.userchallenge_set.count }} member{{ challenge.userchallenge_set.count|pluralize }}</span></td></tr>
+            <tr><th>Duration</th><td><span class="clock">{% duration challenge.time_to_complete %}</span> for {{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }}</td></tr>
+            <tr><th>Expires</th><td>{{ challenge.created|timesince }}</td></tr>
             </table>
             <div class="buttonbox">
 
-                    {% if userchallenge.challenge.total_resources > 0 %}
+                    {% if challenge.total_resources > 0 %}
                         <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
                     {% endif %}
 
@@ -55,12 +56,12 @@
                         <div class="emblem-new" title="New challenge"></div> 
                     </div>
                     <div class="object-image"><img src="{% thumbnail userchallenge.image 50x50 crop %}"></div>
-                    <div class="object-title"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a><br />
-                    <small>{{ userchallenge.challenge.description }}</small></div>
+                    <div class="object-title"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ challenge }}</a><br />
+                    <small>{{ challenge.description }}</small></div>
                     <div class="object-meta">
-                        <span class="users">{{ userchallenge.challenge.userchallenge_set.count }} challenger{{ userchallenge.challenge.userchallenge_set.count|pluralize }}</span>
+                        <span class="users">{{ challenge.userchallenge_set.count }} challenger{{ challenge.userchallenge_set.count|pluralize }}</span>
                         &#183; Difficulty {% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}
-                        &#183; Duration <span class="clock">{% duration userchallenge.challenge.time_to_complete %}</span>
+                        &#183; Duration <span class="clock">{% duration challenge.time_to_complete %}</span>
                     </div>
                     <div class="object-buttons">
                         {% if userchallenge.challenge.total_resources > 0 %}
@@ -78,19 +79,17 @@
                 
 
             {% endif %}
-            
+
+            {% endwith %}            
         {% empty %}
         
             <tr id="focus"><td colspan="10">
-            <div style="position:relative">
-            <h5>Challenges Complete!</h5>
+            <div class="focus-body" style="position:relative">
             <p>Congratulations, you've completed your assigned challenges for today!</p>
-            <p><a href="{{ SMRTR_FREE_TIME_URL }}" target="_blank">Have a well-earned rest</a>, <a href="">study</a> or <a href="{% url challenge-generate %}">get some more?</a></p>
+            <p><a href="{{ SMRTR_FREE_TIME_URL }}" target="_blank">Have a well-earned rest</a>, or <a href="{% url challenge-generate %}">get some more?</a></p>
             </div>
             </td></tr>         
-   
-         
-            
+
         {% endfor %}
         
         <table>

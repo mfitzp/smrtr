@@ -128,13 +128,12 @@ class Challenge(models.Model):
 
 class UserChallenge(models.Model):
     def __unicode__(self):
-        if self.topic:
-            return self.topic.name
-        else:
-            return self.challenge.name
+        return self.challenge.name
 
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
+            #TODO: If topic is not set, try and find an appropriate topic for the user (search user's topics for matching on challenge concepts)
+
             super(UserChallenge, self).save(force_insert, force_update)
             self.update_sq()
             
@@ -162,6 +161,7 @@ class UserChallenge(models.Model):
         # Set values for completion
         self.status = 2
         self.completed = datetime.datetime.now()
+        
         # TODO: Does it make more sense to update a latest_attempt here to determine concept focus or to determine it dynamic at focus-calculation time
         # Update associated userconcepts with last_attempt (now) 
         # for concept in self.challenge.concepts:
@@ -177,15 +177,10 @@ class UserChallenge(models.Model):
         return self.status == 1
     def is_complete(self):
         return self.status == 2
-
-    # Provide image for the userchallenge, based on the challenge (if exists), or the user's topic for this challenge
-    def image(self):
-        if self.challenge.image:
-            return self.challenge.image
-        else:
-            return self.topic.image
-
         
+    def time_taken(self):
+        return self.completed - self.started
+       
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
     

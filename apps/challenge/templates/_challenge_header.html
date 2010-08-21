@@ -4,13 +4,9 @@
 
 <div>
     <div id="content-title-image">
-        {% if userchallenge %}
-            <img src="{% thumbnail userchallenge.image 50x50 crop %}">
-        {% else %}
-            <img src="{% thumbnail challenge.image 50x50 crop %}">
-        {% endif %}
+        <img src="{% thumbnail challenge.image 50x50 crop %}">
     </div>
-    <div id="content-title-header"><h1 style="display:inline">{% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}</h1></div>
+    <div id="content-title-header"><h1 style="display:inline">{{challenge}}</h1></div>
     <div id="content-title-meta">
         {{challenge}}
         &#183; <span class="clock">{% duration challenge.time_to_complete %}</span> for {{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }}

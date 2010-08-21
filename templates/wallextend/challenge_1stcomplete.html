@@ -1,0 +1,18 @@
+{% extends "wallextend/base_wallitem.html" %}
+{% load thumbnail %}
+{% load core_tags %}
+{% load sq_tags %}
+
+{% block wallitem_image %}
+    {% if challenge.image %}<img src="{% thumbnail challenge.image 32x32 crop %}">{% endif %}
+{% endblock %}
+
+{% block wallitem_title %}
+    <a href="{{ challenge.get_absolute_url }}">{{ challenge }}</a><br />
+    {{ challenge.description }}
+{% endblock %}
+
+{% block wallitem_meta %}
+{{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }} in <span class="clock">{% duration userchallenge.time_taken %}</span>
+&#183; {% sqchange userchallenge.previous_sq userchallenge.sq %}
+{% endblock %}

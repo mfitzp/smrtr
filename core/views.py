@@ -21,7 +21,7 @@ from network.models import Network
 from education.models import Topic, UserTopic, Concept
 from challenge.models import Challenge
 from core.forms import LoginForm
-
+from wallextend.models import add_extended_wallitem
 
 def home(request):
 

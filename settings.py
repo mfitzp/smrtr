@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'sq',
     'challenge',
     'welcome',
+    'wallextend', # Extended wall models/functions to support media/etc. on the wall
     #'discuss',
     #'facebook',
 )

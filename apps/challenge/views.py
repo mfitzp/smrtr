@@ -256,6 +256,26 @@ def do_submit(request, challenge_id):
     userchallenge.update_sq()
     userchallenge.save()
 
+    from wallextend.models import add_extended_wallitem
+
+    # Are we 100%?
+    add_extended_wallitem(challenge.wall,request.user,template_name='challenge_100pc.html',extra_context={
+                                        'body':'got 100%!',
+                                        'challenge': challenge,
+                                        'userchallenge': userchallenge,
+                                        })
+
+    # Are we first to complete?
+    challengers = challenge.userchallenge_set.filter(status=2).exclude(completed=None).order_by('-completed')
+    if challengers:
+        if challengers[0].user == request.user:
+            add_extended_wallitem(challenge.wall,userchallenge.user,template_name='challenge_1stcomplete.html',extra_context={
+                                                    'body':'is the first to complete!',
+                                                    'challenge': challenge,
+                                                    'userchallenge': userchallenge,
+                                                    })
+
+
     context = {
         'challenge': challenge,
         'userchallenge': userchallenge, 
@@ -265,9 +285,16 @@ def do_submit(request, challenge_id):
         # List of previous/other challengers on this challenge
         'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
         'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
+        
+        
+        # Wall
+        "wall": challenge.wall,
+        "wallitems": challenge.wall.wallitem_set.all(),        
         }
 
     return render_to_response('challenge_do_submit.html', context, context_instance=RequestContext(request))
+
+
 
 @login_required
 def generate(request):
