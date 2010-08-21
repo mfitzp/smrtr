@@ -11,6 +11,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         for uc in UserChallenge.objects.filter(topic=None):
+            print uc
             uc.generate_topic()
             uc.save
             
