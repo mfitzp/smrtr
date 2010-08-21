@@ -53,7 +53,11 @@ class Challenge(models.Model):
         return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
 
     def generate_name(self):
-        self.name = "Challenge #%d" % self.id
+        c = list()
+        self.name = ''
+        for concept in self.concepts.all()[0:3]: #Shortname
+            c.append( concept.name )
+            self.name = ', '.join( c )
             
     def generate_description(self):
         c = list()
