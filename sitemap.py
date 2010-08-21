@@ -6,7 +6,7 @@ from challenge.models import Challenge
 from profiles.models import UserProfile
 from questions.models import Question
 # External
-from thread.models import Thread, Post
+from forum.models import Thread, Post
 
 
 class NetworkSitemap(Sitemap):
