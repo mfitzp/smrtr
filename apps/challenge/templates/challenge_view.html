@@ -68,7 +68,8 @@
  
         <h5>Top 10 Members</h5>
         <table style="width:100%;">
-        {% for user in topusers %}
+        {% for userchallenge in topusers %}
+            {% with userchallenge.user as user %}
             {% with user.get_profile as profile %}
                <tr class="{% cycle 'odd' 'even' %}"><td style="width:32px;">{% avatar user 32 %}</td>
                <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
@@ -76,9 +77,9 @@
                         {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
                         <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
                     </small></td>
-               <td>{% sqchange profile.previous_sq profile.sq %}&nbsp;{% sqdescriptive profile.sq %}</td></tr>
+               <td>{% sq userchallenge.sq %}&nbsp;{% sqdescriptive userchallenge.sq %}</td></tr>
             {% endwith %}
-
+            {% endwith %}
         {% endfor %}
         </table>
  
@@ -90,7 +91,7 @@
        {% if network.country %}<img src="{{ network.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ network.country|urlencode }}&amp;t=h" target="_blank">{{ network.country }}</a> &#183; {% endif %}
        {{ network.total_members }} member{{ network.total_members|pluralize }}
        </td>
-       <td>{% sqchange 100 network.sq %}&nbsp;{% sqdescriptive network.sq %}</td></tr>
+       <td>{% sqchange 100 network.ncsq %}&nbsp;{% sqdescriptive network.ncsq %}</td></tr>
     {% endfor %}
     </table>
     
@@ -108,8 +109,6 @@
 {% block content_right %}
 
     {% include "_wall.html" %}
-    
-    {% include "_challengers.html" %}  
     
 {% with challenge as obj %}{% include "_social.html" %}{% endwith %} 
 {% endblock %} 

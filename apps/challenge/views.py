@@ -71,10 +71,21 @@ def detail(request, challenge_id):
         userchallenge = challenge.userchallenge_set.get( user=request.user )
     except:
         userchallenge = None          
+    
+    topusers = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
 
-    topusers = User.objects.filter(userchallenge__challenge=challenge).order_by('-userprofile__sq')[0:10]
-    topnetworks = Network.objects.filter(usernetwork__user__userchallenge__challenge=challenge).annotate( total_members=Count('usernetwork') ).order_by('-sq')[0:10]
-    topcountries = Country.objects.filter(userprofile__user__userchallenge__challenge=challenge).annotate( total_members=Count('userprofile'), sq=Avg('userprofile__sq') ).order_by('-sq')[0:10]
+    topnetworks = Network.objects.filter(
+                                            usernetwork__user__userchallenge__challenge=challenge
+                                        ).annotate( 
+                                            total_members=Count('usernetwork'), ncsq=Avg('usernetwork__user__userchallenge__sq') 
+                                        ).order_by('-ncsq')[0:10]
+    
+
+    topcountries = Country.objects.filter(
+                                            userprofile__user__userchallenge__challenge=challenge
+                                         ).annotate( 
+                                            total_members=Count('userprofile'), sq=Avg('userprofile__user__userchallenge__sq') 
+                                         ).order_by('-sq')[0:10]
 
     context = {
         'challenge': challenge,
