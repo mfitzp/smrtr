@@ -78,14 +78,14 @@ def detail(request, challenge_id):
                                             usernetwork__user__userchallenge__challenge=challenge
                                         ).annotate( 
                                             total_members=Count('usernetwork'), ncsq=Avg('usernetwork__user__userchallenge__sq') 
-                                        ).order_by('-ncsq')[0:10]
+                                        ).exclude(ncsq=None).order_by('-ncsq')[0:10]
     
 
     topcountries = Country.objects.filter(
                                             userprofile__user__userchallenge__challenge=challenge
                                          ).annotate( 
                                             total_members=Count('userprofile'), sq=Avg('userprofile__user__userchallenge__sq') 
-                                         ).order_by('-sq')[0:10]
+                                         ).exclude(sq=None).order_by('-sq')[0:10]
 
     context = {
         'challenge': challenge,
