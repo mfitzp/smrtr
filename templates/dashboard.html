@@ -125,13 +125,6 @@
 
     </div>
 
-    {% endblock %}
-
-    {% block content_right %}
-        
-        
-        {% include "_wall.html" %}  
-
         <h5>Networks</h5>
         {% if usernetworks %}
             <div class="stackcontainer">
@@ -146,5 +139,11 @@
         {% endif %}
         <p class="buttonbar"><span class="button"><a href="{% url network-search %}" class="register">Join networks &raquo;</a></span></p>
 
+
+    {% endblock %}
+
+    {% block content_right %}
+        
+        {% include "_wall.html" %}  
 
     {% endblock %}
