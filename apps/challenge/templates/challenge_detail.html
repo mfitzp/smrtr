@@ -64,7 +64,6 @@
                         {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
                         <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
                     </small></td>
-               <td style="text-align:center;vertical-align:middle;"><span class="percent">{{ userchallenge.percent_correct }}%</span></td>
                <td style="text-align:center;vertical-align:middle;"><strong>{% sqchange userchallenge.previous_sq userchallenge.sq %}</strong></td></tr>
             {% endwith %}
             {% endwith %}
