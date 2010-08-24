@@ -195,7 +195,7 @@ class UserChallenge(models.Model):
 
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
-    challengeset = models.ForeignKey('ChallengeSet')
+    challengeset = models.ForeignKey('ChallengeSet', null=True)
 
     start_date = models.DateTimeField(auto_now_add = True)
     end_date = models.DateTimeField(null = True)
