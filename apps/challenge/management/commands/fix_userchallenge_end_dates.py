@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for userchallenge in UserChallenge.objects.exclude(end_date=None):
             o = UserChallengeSet.objects.filter(user=userchallenge.user, challengeset__challenge=userchallenge.challenge).exclude(completed=None).aggregate(Max('completed'))
-            
+            print o
             if o:
                 if o['completed__max'] is not None:
                     userchallenge.end_date = o['completed__max']
