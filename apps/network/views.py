@@ -10,7 +10,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 # Smrtr
-from education.models import *
+from challenge.models import *
+#from education.models import *
 from core.http import Http403  
 # External
 from haystack.query import SearchQuerySet, RelatedSearchQuerySet
@@ -26,19 +27,19 @@ def detail(request, network_id):
         usernetwork = network.usernetwork_set.get( user=request.user )
     except:
         usernetwork = list()
-        network.topics_filtered = network.topics.all().order_by('name')
+        network.challenges_filtered = network.challenges.all().order_by('name')
     else:
-        # Generate filter list of topics with associated user data
-        # If user registered attach usertopic linker and prepend (top list)
+        # Generate filter list of challenges with associated user data
+        # If user registered attach userchallenge linker and prepend (top list)
         # else append (bottom list)
-        network.topics_filtered = list()
+        network.challenges_filtered = list()
         
-        for topic in network.topics.all().order_by('name'):
-            if topic in request.user.topics.all():
-                topic.usertopic = request.user.usertopic_set.get( topic = topic )
+        for challenge in network.challenges.all().order_by('name'):
+            if challenge in request.user.challenges.all():
+                challenge.userchallenge = request.user.userchallenge_set.get( challenge = challenge )
             else:
                 pass
-            network.topics_filtered.append(topic)
+            network.challenges_filtered.append(challenge)
              
 
     context = { 'network': network, 

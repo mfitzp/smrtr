@@ -4,9 +4,8 @@ from django.db.models import Avg, Max, Min, Count
 from django.core.urlresolvers import reverse
 import datetime
 # Smrtr
-from settings import QUESTION_TTC_MINIMUM
+import questions
 from resources.models import Resource
-from education.models import Concept
 from sq.utils import * 
 # Externals
 from tagging.fields import TagField
@@ -16,6 +15,8 @@ from tagging.models import Tag
 Update tags on question models from tagging_taggeditem table
 UPDATE questions_question AS q, (SELECT xti.object_id as id, GROUP_CONCAT(name ) AS tags FROM `tagging_tag` AS xt INNER JOIN `tagging_taggeditem` AS xti ON xt.id=xti.tag_id GROUP BY xti.object_id) AS qt SET q.tags = qt.tags WHERE q.id = qt.id
 """
+
+QUESTION_TTC_MINIMUM = 5 # Minimume time in seconds for a question time limit
 
 class Question(models.Model):
     def __unicode__(self):
@@ -46,8 +47,7 @@ class Question(models.Model):
             self.save()
             
     content = models.TextField()
-    concepts = models.ManyToManyField(Concept, blank=True) #, related_name='questions'
-    
+   
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)
     

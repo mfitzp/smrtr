@@ -1,21 +1,32 @@
 from django import forms
 from django.contrib.admin import widgets                                       
-# Spenglr
-from challenge.models import *
-from education.models import *
+# Smrtr
+from network.models import Network
+from challenge.models import Challenge
 # External
-# from haystack.forms import SearchForm
+from haystack.forms import SearchForm
 
 
 class ChallengeForm(forms.ModelForm):
 
-    description = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'textarea'}))
-
     class Meta:
         model = Challenge
-        fields = ['name', 'description', 'concepts','total_questions']
+        fields = ['name', 'description', 'network', 'concepts']
 
     def __init__(self, request, *args, **kwargs):
         super(ChallengeForm, self).__init__(*args, **kwargs)    
-        if request:
-            self.fields['concepts'] = forms.ModelMultipleChoiceField(label='Concepts',queryset=Concept.objects.filter(userconcept__user=request.user)) # Only networks the user is on
+        if request: # If passed only show networks the user is on
+            self.fields['network'].queryset = Network.objects.filter(usernetwork__user=request.user) 
+            self.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user) 
+
+  
+class ChallengeSearchForm(SearchForm):
+
+    def search(self):
+        sqs = super(ChallengeSearchForm, self).search()
+        return sqs
+        
+
+    def __init__(self, *args, **kwargs):
+        super(ChallengeSearchForm, self).__init__(*args, **kwargs)
+       

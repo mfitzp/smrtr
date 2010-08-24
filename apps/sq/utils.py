@@ -13,7 +13,7 @@ import math
 def sq_lobf( n, x, y, xx, xy ):
 
     # Line of best fit: y = mx + b 5
-    # See: http://people.hofstra.edu/stefan_waner/realworld/calctopic1/regression.html
+    # See: http://people.hofstra.edu/stefan_waner/realworld/calcchallenge1/regression.html
     denominator = ( n * xx ) - ( math.pow( x, 2 ) )
     
 

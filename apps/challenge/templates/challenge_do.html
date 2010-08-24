@@ -8,124 +8,14 @@
         var timer,clock,current_question,last_question
         
         timer = false;
-        clock = {{ challenge.time_to_complete }};
+        clock = {{ challengeset.time_to_complete }};
       
         current_question=1;
         last_question={{ questions.count }};
-      
-        
-        function make_plural(word, value){
-            if(value == 1){
-                return word;
-            } else {
-                return word + 's';
-            }
-        }
-        
-        function seconds_to_hms(seconds){
-        
-            var str = '';
-        
-            var tm = new Date(seconds*1000)
-            var h = tm.getUTCHours();
-            var m = tm.getUTCMinutes();
-            var s = tm.getUTCSeconds();
-            
-            if(h != 0){ str += ' ' + h + make_plural( ' hour', h ); }
-            if(m != 0){ str += ' ' + m + make_plural( ' minute', m ); }
-            if(s != 0){ str += ' ' + s + make_plural( ' second', s ); }
-            
-            return str;
-        }
-    
-        function countdowntimer(){
-            clock--;
-            
-            if(clock == 0){
-                document.getElementById('timertext').innerHTML = 'Time up!';
-                stop_timer()
-                document.getElementById('timerform').submit();
-            } else {
-                document.getElementById('timertext').innerHTML = seconds_to_hms( clock );
-            }
-            
-            if(clock == 30){ document.getElementById('timertext').className += " timewarning";
-            } else if(clock == 10){ document.getElementById('timertext').className += " timeup"; }
-            
-        }
-        
-        function start_timer(){
-            /* Pulse timer every 1 second */
-            timer = window.setInterval("countdowntimer()", 1000);
-            document.getElementById('timertext').innerHTML = seconds_to_hms( clock );
-            return true;
-        }
-
-        function stop_timer(){
-            /* Stop timer */
-            window.clearInterval( timer );
-            document.getElementById('timerformsubmit').disabled=true;
-            return true;
-        }
         
          $(document).ready(function() {
-            var a
-            // Initialise questions (show first only)
-            for(a=1;a<=last_question;a++){
-                if(a==1){ $("#question-" + a).addClass("question-current"); }
-                else    { $("#question-" + a).addClass("hide");  } 
-                
-                $("#question-" + a).find("li").each(function(i) {
-                        $(this).change(function() {
-                            window.setTimeout("next_question()", 100);
-                        })        
-                })
-            }
-            
-            $("#nextprevious").removeClass("hide");
-           
+            initialise_questions();
          });
-
-        function next_question(){
-            if(current_question < last_question){
-                var next_question = current_question + 1;
-                
-                $("#question-" + next_question).addClass("question-next");  
-
-                $("#question-" + next_question).fadeIn('fast', function() { 
-                    $(this).removeClass().addClass("question-current"); 
-                    })
-                    
-                $("#question-" + current_question).fadeOut('fast');                
-
-                //$("#question-" + current_question).addClass("hide");        
-                current_question++;
-
-                if( current_question > 1 ){ $("#button-previous").removeAttr('disabled'); }
-                if( current_question == last_question ){ $("#button-next").attr('disabled', true); }
-            }
-        }
-        
-        function previous_question(){
-            if(current_question > 1){
-                var previous_question = current_question - 1;
-                
-                $("#question-" + previous_question).removeClass().addClass("question-next");  
-              
-                $("#question-" + previous_question).fadeIn('fast', function() { 
-                    $(this).removeClass().addClass("question-current");  
-                    })
-                    
-                $("#question-" + current_question).fadeOut('fast');
-
-                //$("#question-" + current_question).addClass("hide");        
-                current_question--;      
-
-                if( current_question == 1 ){ $("#button-previous").attr('disabled', true); }
-                if( current_question < last_question ){ $("#button-next").removeAttr('disabled'); }
-
-            }
-        }
         
      </script>   
 {% endblock %}
@@ -150,8 +40,6 @@
 {% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
 
 {% block content %}
-
-    {% if challenge %}
 
         {% if questions %}
         
@@ -188,10 +76,6 @@
         {% else %}
             <p>No questions available.</p>
         {% endif %}
-
-    {% else %}
-        <p>Topic does not exist.</p>
-    {% endif %}
 
 {% endblock %}
 

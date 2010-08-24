@@ -6,7 +6,7 @@ setup_environ(settings)
 from django.contrib.sitemaps import ping_google
 # Smrtr
 from questions.utils import *
-from education.utils import *
+from concept.utils import *
 from challenge.utils import *
 from profiles.utils import *
 from network.utils import *
@@ -20,8 +20,8 @@ def cron():
     
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update concept SQ..."
     batch_concept_update_sq()    
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update topic SQ..."
-    batch_topic_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update challenge SQ..."
+    batch_challenge_update_sq()
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update network SQ..."
     batch_network_update_sq()
 
@@ -32,20 +32,18 @@ def cron():
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept SQ..."
     batch_userconcept_update_sq()
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user topic SQ..."
-    batch_usertopic_update_sq()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user challenge SQ..."
+    batch_userchallenge_update_sq()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept percent complete..."
-    batch_userconcept_update_percent_complete()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept statistics..."
+    batch_userconcept_update_statistics()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user topic percent complete..."
-    batch_usertopic_update_percent_complete()
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user challenge statistics..."
+    batch_userchallenge_update_statistics()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
-    batch_userconcept_update_focus()
-    
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Generating challenges..."
-    batch_generate_userchallenges()
+    # Concept focus is now calculated on completion of challengsets
+    # print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
+    # batch_userconcept_update_focus()
 
     # Don't ping google with sitemap when developing (be nice)
     from settings import DEBUG

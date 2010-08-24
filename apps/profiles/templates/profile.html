@@ -42,11 +42,11 @@ Member for {{ puser.date_joined|timesince }}
     <blockquote>{{ profile.about }}</blockquote>
 
 
-    <h5>Active Topics</h5>
+    <h5>Active Challenges</h5>
     <div class="stackcontainer">
-    {% for usertopic in puser.usertopic_set.all %}
-        <div class="stack topic stackvertical">{% percentbar usertopic.percent_complete %}
-        <a href="{% url topic-detail topic_id=usertopic.topic.id %}" title="{{ usertopic.percent_complete }}% complete">{{ usertopic }} ({% sqchange usertopic.previous_sq usertopic.sq %})</a>
+    {% for userchallenge in puser.userchallenge_set.all %}
+        <div class="stack challenge stackvertical">{% percentbar userchallenge.percent_complete %}
+        <a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}" title="{{ userchallenge.percent_complete }}% complete">{{ userchallenge }} ({% sqchange userchallenge.previous_sq userchallenge.sq %})</a>
         </div>
        
     {% endfor %}

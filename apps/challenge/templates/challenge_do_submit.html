@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load avatar_tags %}
+{% load core_tags %}
+{% load sq_tags %}
+{% load countries_tags %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
@@ -15,7 +19,34 @@
 {% block content_left %}
 
     {% if challenge %}
-        <p>You answered <strong>{{totals.correct}} out of {{totals.answered}}</strong> ( {{totals.percent}}% ) questions correctly.</p>
+        <div class="focus"><h4>
+        {% if percent_correct > 50 %}Well done!{% else %}
+            {% if percent_correct > 30 %}Oh well!{% else %}
+            Uh oh!{% endif %}
+        {% endif %}
+        </h4>
+        <div class="focus-body">
+            <p>You answered  <span class="percent">{{totals.percent}}%</span> (<strong>{{totals.correct}} out of {{totals.answered}}</strong>) questions correctly.</p>
+            <p>{% if percent_correct > 50 %}On a winning streak?{% else %}Want to redeem yourself?{% endif %}
+            You can try <a href="{% url challenge-do challenge_id=challenge.id %}">more of the same</a>,
+            <a href="{% url challenge-prepare challenge_id=challenge.id %}">do a bit of studying</a>
+            or <a href="{% url home %}">try something completely different</a>.</p>
+            
+            {% with userchallenge.challengeset as challengeset %}
+            <div class="minifocus"><h5>Next Goal</h5>
+                {% include "_challengeset_meta.html" %}
+            </div>  
+            {% endwith %}
+            <div class="buttonbox">
+                <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}?next={{ challenge.get_absolute_url|urlencode }}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
+                <span class="button button_hi"><a href="{% url home %}">I'm done!</a></span>
+                <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
+                <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Next goal</a></span>
+
+            </div>
+               
+                    
+        </div></div>
         {% if questions %}
             {% for question in questions %}
             <div class="focus focus-bigtop-light"><h4>A</h4><div class="focus-body-low">
@@ -50,6 +81,22 @@
 
 {% block content_right %}
 
-    {% include "_wall.html" %}
+        <h5>Leaderboard</h5>
+        <table style="width:100%;">
+        {% for challengetsetattempt in challengers %}
+            {% with challengetsetattempt.user as user %}
+            {% with user.get_profile as profile %}
+               <tr class="{% cycle 'odd' 'even' %}"><td style="width:32px;">{% avatar user 32 %}</td>
+               <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
+                    <small>
+                        {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
+                        <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
+                    </small></td>
+               <td style="text-align:center;vertical-align:middle;"><span class="percent">{{ userchallenge.percent_correct }}%</span></td>
+               <td style="text-align:center;vertical-align:middle;"><strong>{% sqchange userchallenge.previous_sq userchallenge.sq %}</strong></td></tr>
+            {% endwith %}
+            {% endwith %}
+        {% endfor %}
+        </table>
 
 {% endblock %} 

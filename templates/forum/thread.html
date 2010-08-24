@@ -29,13 +29,13 @@
 
 {% if thread.closed %}
 
-    <p class="notice">This topic is closed, you cannot reply.</p>
+    <p class="notice">This challenge is closed, you cannot reply.</p>
 
 {% else %}
 
     <h5>{% trans "Post a Reply" %}</h5>
     {% if thread.closed %}
-        <p>{% trans "Sorry, this topic is closed. No further replies are permitted." %}</p>
+        <p>{% trans "Sorry, this challenge is closed. No further replies are permitted." %}</p>
     {% else %}
         {% if user.is_authenticated %}
             <form method='post' action='reply/'>

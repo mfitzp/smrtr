@@ -1,6 +1,6 @@
 from django.contrib import admin
-# Spenglr
-from education.models import *
+# Smrtr
+from network.models import *
 
 
 class NetworkAdmin(admin.ModelAdmin):

@@ -1,132 +1,262 @@
+# Django
 from django.db import models
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext as _
+from django.http import HttpResponse,HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage
-from django.http import Http404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-import datetime
-# Spenglr
-from education.models import *
+from django.core import serializers
+from django.template.loader import render_to_string
+from django.utils import simplejson as json
+# Smrtr
+from challenge.models import *
+from challenge.forms import *
+
 from network.models import *
 from questions.models import *
-from challenge.models import *
 from resources.models import *
-from challenge.forms import *
+from core.http import Http403
 # External
 from haystack.query import SearchQuerySet
+
+# MODULE VIEWS
+
+# Get an challenge id and present a page showing detail
+# if user is registered on the challenge, provide a additional information
+def detail(request, challenge_id):
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+
+    # If the user is registered at this institution, pull up their record for custom output (course listings, etc.)
+    
+    try:
+        # userchallenges "you are studying this challenge at..."
+        userchallenge = UserChallenge.objects.get(challenge=challenge, user=request.user)
+    except:
+        userchallenge = list()
+        challenge.concepts_filtered = challenge.concepts.all().order_by('name')
+    else:
+        # Generate filter list of concepts with associated user data
+        challenge.concepts_filtered = list()
+        
+        for concept in challenge.concepts.all().order_by('name'):
+            if concept in request.user.concepts.all():
+                concept.userconcept = request.user.userconcept_set.get( concept = concept )
+            else:
+                pass
+            challenge.concepts_filtered.append(concept)
+                    
+
+    context = { 'challenge': challenge, 
+                'userchallenge': userchallenge,
+                'userchallenges': challenge.userchallenge_set.order_by('-sq')[0:12],
+                'total_members': challenge.users.count(),                
+                # Wall items
+                "wall": challenge.wall,
+                "wallitems": challenge.wall.wallitem_set.all(),
+                'next':request.GET.get('next')
+              }
+
+    return render_to_response('challenge_detail.html', context, context_instance=RequestContext(request) )
+
+
+# Get an insititution id and present a page showing detail
+# if user is registered at the challenge, provide a tailored page
+@login_required
+def register(request, challenge_id):
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+
+    if request.method == 'POST':
+        um = UserChallenge()
+        um.user = request.user
+        
+        # Find user record for parent network, must be registered on the network to register for challenge
+        # try:
+            # FIXME: Note this is trying only to check if member of challenges 'home' network not any it may have been assigned to
+        #    usernetwork = request.user.usernetwork_set.get(network = challenge.network)
+        # except:
+            # Error
+        #    pass
+
+        um.challenge = challenge
+        um.save()
+        request.user.message_set.create(
+        message=_(u"You are now studying ") + challenge.name)
+
+        if 'next' in request.POST:
+            return HttpResponseRedirect(request.POST['next'])
+        else:
+            return challenge_detail(request, challenge_id)
+
+    return challenge_detail(request, challenge_id)
+
+
+# Get an challenge id and present a page showing detail
+# if user is registered on the challenge, provide a additional information
+def providers(request, challenge_id):
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    providers = challenge.networks.all()
+    return render_to_response('challenge_providers.html', {'challenge': challenge, 'providers': providers}, context_instance=RequestContext(request))
+
 
 
 
 # Create a new challenge
-# Challenges are lists of questions to be attempted: they can be 
-# built from concepts, topics, tags, etc. (passed in as parameters)
-# Challenges may be public or private, and solo or group
-# Scoring can be individual or network based (e.g. university vs. university, course vs. course)
 @login_required
 def create(request):
+
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http403
                 
     if request.POST:
-    
         form = ChallengeForm(request, request.POST)       
-        form.fields['concepts'].queryset = Concept.objects.filter(userconcept__user=request.user)
-                
-        if form.is_valid(): # All validation rules pass
-            
-            # Update challenge instance object and save
-            challenge = form.save(commit=False)
-            challenge.user = request.user
-            challenge.save()
-            form.save_m2m()
-            
-            # Now populate question lists based on current settings
-            challenge.generate_questions()
-            
-            # Create userchallenge for the creating user (will need one anyway) and save
-            UserChallenge(user=request.user, challenge=challenge).save()
-            
-            return redirect( 'challenge-do', challenge_id=challenge.id ) # Redirect to challenge_do for this challenge
-    
-    else:
-        form = ChallengeForm(request, request.GET or None) 
-        # Provide concept-possibilities (from user's own lists)
-        
 
+        if form.is_valid(): # All validation rules pass
+            challenge = form.save()
+            return redirect(challenge.get_absolute_url()) # Redirect to default view for the concept
+    else:
+        form = ChallengeForm(request, request.GET) # Allow prepopulate  
+   
     context = { 
         'form': form,
+        'challenge': None,
     }
     
-    return render_to_response("challenge_edit.html", context, context_instance=RequestContext(request))    
- 
+    return render_to_response("challenge_edit.html", context, context_instance=RequestContext(request)) 
+    
+    
 
-def detail(request, challenge_id):
+# Edit a challenge
+@login_required
+def edit(request, challenge_id):
+
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http403
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    #TODO: Access grant/deny
-    
-    # If the user has a challenge record retrieve it, or create a new one
-    try:
-        userchallenge = challenge.userchallenge_set.get( user=request.user )
-    except:
-        userchallenge = None          
-    
-    topusers = challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10]
+                    
+    if request.POST:
+        form = ChallengeForm(request, request.POST, instance=challenge)       
 
-    topnetworks = Network.objects.filter(
-                                            usernetwork__user__userchallenge__challenge=challenge
-                                        ).annotate( 
-                                            total_members=Count('usernetwork'), ncsq=Avg('usernetwork__user__userchallenge__sq') 
-                                        ).exclude(ncsq=None).order_by('-ncsq')[0:10]
-    
-
-    topcountries = Country.objects.filter(
-                                            userprofile__user__userchallenge__challenge=challenge
-                                         ).annotate( 
-                                            total_members=Count('userprofile'), sq=Avg('userprofile__user__userchallenge__sq') 
-                                         ).exclude(sq=None).order_by('-sq')[0:10]
-
-    context = {
+        if form.is_valid(): # All validation rules pass
+            challenge = form.save()
+            return redirect(challenge.get_absolute_url()) # Redirect to default view for the concept
+    else:
+        form = ChallengeForm(request, instance=challenge) # Allow prepopulate  
+   
+    context = { 
+        'form': form,
         'challenge': challenge,
-        'userchallenge':userchallenge,
+    }
+    
+    return render_to_response("challenge_edit.html", context, context_instance=RequestContext(request))   
+  
+   
+    
+# Presents a search mechanism to find challenges to activate (optionally) (free text and tags)
+@login_required
+def search( request, 
+                    template_name='challenge_search.html',
+                    next=None ):
+    
+    from challenge.forms import ChallengeSearchForm
+    
+    if request.POST.get('addchallenge'):
         
-        # Statistics
-        'topusers': topusers,
-        'topnetworks': topnetworks,
-        'topcountries': topcountries,
+        mids = request.POST.getlist('addchallenge')
         
-        # List of previous/other challengers on this challenge
-        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
-        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
-        
-        # Wall
-        "wall": challenge.wall,
-        "wallitems": challenge.wall.wallitem_set.all(),
-        }
+        for mid in mids:
+            challenge = Challenge.objects.get(pk=mid)
+            userchallenge = UserChallenge( user=request.user, challenge=challenge  )
+            try:
+                userchallenge.save()
+            except:
+                messages.warning(request, _(u"You have already activated %s" % challenge.name ) )
+            else:
+                messages.success(request, _(u"You have activated %s" % challenge.name ) )
+        if next:
+            return redirect( next )
 
-    return render_to_response('challenge_view.html', context, context_instance=RequestContext(request))
+    query = ''
+    results = []
+    # RelatedSearchQuerySet().filter(content='foo').load_all()
+
+    sqs = SearchQuerySet().models(Challenge)
+    
+    from network.utils import searchqueryset_usernetwork_boost
+    sqs = searchqueryset_usernetwork_boost( request, sqs )    
+
+    if request.GET.get('q'):
+        querydata = request.GET
+    else:
+        querydata = {'q':' '} #Default search return all
+        
+    form = ChallengeSearchForm(querydata, searchqueryset=sqs, load_all=True )
+
+    if form.is_valid():
+        query = form.cleaned_data['q']
+        results = form.search()
+        
+    paginator = Paginator(list(results), 10)
+        
+    try:
+        page_obj = paginator.page(int(request.GET.get('page', 1)))
+    except (ValueError, EmptyPage, InvalidPage): 
+        raise Http404("No such page of results!")    
+        
+    
+    context = { 
+        'form': form,
+        'query': query,
+        'results': results,
+        'next' : next,
+        'page_obj': page_obj,
+        'paginator': paginator,
+    }
+    
+    return render_to_response(template_name, context, context_instance=RequestContext(request))    
+
+
+
+
+
+
+
 
 
 @login_required
 def prepare(request, challenge_id):
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    #TODO: Access grant/deny
     
-    # If the user has a challenge record retrieve it, or create a new one
     try:
         userchallenge = challenge.userchallenge_set.get( user=request.user )
     except:
-        userchallenge = None          
+        userchallenge = UserChallenge()
+        userchallenge.user = request.user
+        userchallenge.challenge = challenge
+        # A challengeset should be generated automatically on save and set
+        userchallenge.save()
+        
+    challengeset = userchallenge.challengeset
+
+    if userchallenge.challengeset is None:
+        # Something is wrong, we can't get a challengeset for this user, redirect to challenge page
+        return redirect('challenge-detail', challenge_id=challenge_id)
         
     context = {
-        'challenge': challenge,
-        'userchallenge':userchallenge,
+        'challenge': challenge, 
+        'challengeset': userchallenge.challengeset, 
+        'userchallenge':userchallenge, 
         # List of resources for this challenge's concepts
-        'audiovideo': Resource.audiovideo.filter(concepts__challenge=challenge),
-        'books': Resource.books.filter(concepts__challenge=challenge),
-        'links': Resource.links.filter(concepts__challenge=challenge),
+        'audiovideo': Resource.audiovideo.filter(concepts__challengeset=challengeset),
+        'books': Resource.books.filter(concepts__challengeset=challengeset),
+        'links': Resource.links.filter(concepts__challengeset=challengeset),
         }
 
     return render_to_response('challenge_prepare.html', context, context_instance=RequestContext(request))
@@ -137,38 +267,37 @@ def prepare(request, challenge_id):
 def do(request, challenge_id):
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    #TODO: Access grant/deny
-        
-    # If the user has a challenge record retrieve it, or create a new one
+
     try:
-        #TODO: If user has not 'completed' the challenge, allow through, otherwise redirect to viewing
-        #UserChallenges should be closed on completion,re-attempts (if allowed)
         userchallenge = challenge.userchallenge_set.get( user=request.user )
     except:
         userchallenge = UserChallenge()
         userchallenge.user = request.user
         userchallenge.challenge = challenge
-        userchallenge.start()
-        userchallenge.save()              
-    else:
-        if userchallenge.is_complete(): #Complete
-            return redirect('challenge-detail', challenge_id=challenge_id)
-        
-        #if userchallenge.is_new(): #New
-        userchallenge.start()
+        # A challengeset should be generated automatically on save and set
         userchallenge.save()
+        
+    challengeset = userchallenge.challengeset
 
-    questions = challenge.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
-
+    if userchallenge.challengeset is None:
+        # Something is wrong, we can't get a challengeset for this user, redirect to challenge page
+        return redirect('challenge-detail', challenge_id=challenge_id)
+    
+    try:
+        UserChallengeSet(user=request.user, challengeset=challengeset).save()
+    except:
+        userchallengeset = UserChallengeSet.objects.get(user=request.user, challengeset=challengeset)
+        if userchallengeset.completed:
+            return redirect('challenge-detail', challenge_id=challenge_id)
+        # else has been started but failed for some reason (Continue)
+        
+    questions = challengeset.questions.all()[:10] # Returns all questions (NOT random, randomised in generation) 
     
     context = {
         'challenge': challenge, 
+        'challengeset': userchallenge.challengeset, 
         'userchallenge':userchallenge, 
         'questions': questions,
-
-        # List of previous/other challengers on this challenge
-        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
-        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         }
 
     return render_to_response('challenge_do.html', context, context_instance=RequestContext(request))
@@ -180,18 +309,14 @@ def do_submit(request, challenge_id):
     questions = list()
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
+    userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user )
+    challengeset = userchallenge.challengeset
 
-    # If the user is registered on this concept pull record
-    try:
-        userchallenge = challenge.userchallenge_set.get( user=request.user )
-    except:
-        # Not found
-        #FIXME: Should this be another error code? Access denied
-        raise Http404
+    userchallengeset = get_object_or_404(UserChallengeSet, challengeset=challengeset, user=request.user )
+    userchallengeset.complete()
 
-    userchallenge.complete() #Complete (get ourselves a duration value)
-    time_to_complete = userchallenge.completed - userchallenge.started
-    time_to_complete_each = max( 5, time_to_complete.seconds / challenge.total_questions) # Minimum 5 seconds per question
+    time_to_complete = userchallengeset.completed - userchallengeset.started
+    time_to_complete_each = max( 5, time_to_complete.seconds / challengeset.total_questions) # Minimum 5 seconds per question
     time_to_complete_each = round( time_to_complete_each , 0 ) # Remove decimals
     
     # Iterate over all POST keys and pull out the question answer question-n fields
@@ -251,41 +376,39 @@ def do_submit(request, challenge_id):
     else:
         totals['percent'] = 0
 
-    # Recalculate SQ values for this topic/usertopic_set  
+    # Recalculate SQ values for this challenge/userchallenge_set  
     # NOTE: May need to remove this is load too great?
-    userchallenge.update_sq()
-    userchallenge.save()
+    # userchallengeset.update_sq()
+    userchallengeset.percent_correct = totals['percent']
+    userchallengeset.save()
 
-    from wallextend.models import add_extended_wallitem
+    # Update concept statistics and focus
+    for userconcept in UserConcept.objects.get(concept__challengeset=challengeset):
+        userconcept.update_statistics()
+        userconcept.update_focus(last_attempted = userchallengeset.completed ) # Pass in now to save the last_attempted lookup
+        
+    # Update the userchallenge statistics
+    userchallenge.update_statistics()
+        
+    # We've completed this one, so get a new one ready for next time    
+    userchallenge.generate_challengeset()
 
-    # Did user get 100%? If so send a message
-    if totals['percent'] == 100:
-        add_extended_wallitem(challenge.wall,request.user,template_name='challenge_100pc.html',extra_context={
-                                            'body':'got 100%!',
-                                            'challenge': challenge,
-                                            'userchallenge': userchallenge,
-                                            })
-
-    # Are we first to complete?
-    challengers = challenge.userchallenge_set.filter(status=2).exclude(completed=None).order_by('completed')
-    if challengers:
-        if challengers[0].user == request.user:
-            add_extended_wallitem(challenge.wall,userchallenge.user,template_name='challenge_1stcomplete.html',extra_context={
-                                                    'body':'is the first to complete!',
-                                                    'challenge': challenge,
-                                                    'userchallenge': userchallenge,
-                                                    })
-
+    challengers = challengeset.userchallengeset_set.order_by('-percent_correct')
 
     context = {
         'challenge': challenge,
         'userchallenge': userchallenge, 
+
+        'challengeset': challengeset,
+        'userchallengeset': userchallengeset,
+        'challengers':challengers,
+
         'questions': questions, 
         'totals': totals,
         
         # List of previous/other challengers on this challenge
-        'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
-        'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
+        #'challengers_done':challenge.userchallenge_set.filter(status=2).order_by('-sq')[0:10],
+        #'challengers_todo':challenge.userchallenge_set.exclude(status=2).order_by('-sq')[0:10],
         
         
         # Wall
@@ -298,10 +421,37 @@ def do_submit(request, challenge_id):
 
 
 @login_required
-def generate(request):
-    from challenge.utils import generate_userchallenges
-    # Generate challenges for the active user, redirect to homepage
-    generate_userchallenges(request.user)
-    return redirect('home')
+def newset(request, challenge_id):
+
+    if request.POST:
+        challenge = get_object_or_404(Challenge, pk=challenge_id)
+        userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
+
+        userchallenge.generate_challengeset(exclude_current_challengeset=True)
+        
+        next = request.GET.get('next')
+
+        if next:
+            return redirect(next)
+        else:
+            return redirect('home')
+        
+@login_required
+def newset_ajax(request, challenge_id):
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
+    userchallenge.generate_challengeset(exclude_current_challengeset=True)
+
+    result = { 
+        'id':challenge_id,
+        'content':render_to_string('_challengeset_meta.html', { 'challengeset':userchallenge.challengeset, 'userchallenge':userchallenge } ) 
+        }       
+
+    response = HttpResponse()
+    json.dump(result, response)
+    
+    return response
+
 
 

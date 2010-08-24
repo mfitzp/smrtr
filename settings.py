@@ -130,11 +130,11 @@ INSTALLED_APPS = (
     'core',
     'profiles',
     'network',
-    'education',
+    'challenge',
+    'concept',
     'questions',
     'resources',
     'sq',
-    'challenge',
     'welcome',
     'wallextend', # Extended wall models/functions to support media/etc. on the wall
     #'discuss',
@@ -200,14 +200,7 @@ SQ_LOWER_LIMIT = 0
 SQ_READOFF_MARK = 50
 SQ_PINNING_WEIGHT = 0.1
 
-# Challenges
 
-CHALLENGES_MIN_ACTIVE = 5
-
-CHALLENGE_TTC_MINIMUM = 60 # Minimum time in seconds for a challenge time limit
-CHALLENGE_TTC_FAIRNESS_MULTIPLIER = 1.5 # Multiple avg by this value to get 'fair' limit
-
-QUESTION_TTC_MINIMUM = 5 # Minimume time in seconds for a question time limit
 
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'

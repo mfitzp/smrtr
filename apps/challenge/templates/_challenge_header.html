@@ -1,21 +1,24 @@
 {% load sq_tags %}
 {% load thumbnail %}
-{% load core_tags %}
-
 <div>
-    <div id="content-title-image">
-        <img src="{% thumbnail challenge.image 50x50 crop %}">
-    </div>
-    <div id="content-title-header"><h1 style="display:inline">{{challenge}}</h1></div>
-    <div id="content-title-meta">
-        {{challenge}}
-        &#183; <span class="clock">{% duration challenge.time_to_complete %}</span> for {{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }}
-        &#183; {{ challenge.total_resources }} resource{{ challenge.total_resources|pluralize }}
-    </div>                    
-    <div id="content-title-sq">
-        {% if request.user.get_profile %}{% sqdifficulty challenge.sq request.user.get_profile.sq %}
-        {% else %}{% sqdifficulty challenge.sq 100 %}{% endif %}
-    </div>
-    
+<div id="content-title-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
+<div id="content-title-header">
+    <h1 style="display:inline">{{challenge}}</h1> 
+        {% if challenge.network %}<a href="{% url network-detail network_id=challenge.network.id %}" class="network network{{ challenge.network.type }}">{{ challenge.network }}</a>{% endif %}
+</div>
+<div id="content-title-meta">
+{% if challenge.network %}
+    Available from <a href="{% url network-detail network_id=challenge.network.id %}">{{ challenge.network }}</a>
+    {% ifnotequal challenge.networks.count 1 %}
+        and <a href="{% url challenge-providers challenge_id=challenge.id %}">{{ challenge.networks.count|add:"-1" }} other network{{ challenge.networks.count|pluralize }}</a>
+    {% endifnotequal %}
+{% else %}
+    Available from <a href="{% url challenge-providers challenge_id=challenge.id %}">{{ challenge.networks.count }} network{{ challenge.networks.count|pluralize }}</a>                
+{% endif %}
+</div>                    
+<div id="content-title-sq">
+    {% if request.user.get_profile %}{% sqdifficulty challenge.sq request.user.get_profile.sq %}
+    {% else %}{% sqdifficulty challenge.sq 100 %}{% endif %}
+</div>
 </div>  
 

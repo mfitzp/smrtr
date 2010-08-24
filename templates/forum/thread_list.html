@@ -39,7 +39,7 @@
 <table id='djangoForumThreadList'>
 <tr>
 <td></td>
-<th>Topic</th>
+<th>Challenge</th>
 <th>Posts</th>
 <th>Views</th>
 <th>Latest</th>
@@ -77,7 +77,7 @@
 </ul>
 {% endif %}
 
-<h5>{% trans "Start A New Topic" %}</h5>
+<h5>{% trans "Start A New Challenge" %}</h5>
 {% if user.is_authenticated %}
 <form method='post' action='new/'>
 {{ form.as_p }}

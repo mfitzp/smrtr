@@ -1,5 +1,5 @@
 {% load i18n %}
-{{ body }}
+{% block wallitem_body %}{{ body }}{% endblock %}
 <div class="wallitemextend">
     <div class="wallitemextend-image">{% block wallitem_image %}{% endblock %}</div>
     <div class="wallitemextend-title">{% block wallitem_title %}{% endblock %}</div>

@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 # Smrtr
 from network.models import Network
-from education.models import Topic, Concept
+from concept.models import Concept
 from challenge.models import Challenge
 from profiles.models import UserProfile
 from questions.models import Question
@@ -20,13 +20,13 @@ class NetworkSitemap(Sitemap):
     def lastmod(self, obj):
         return obj.updated
 
-class TopicSitemap(Sitemap):
+class ChallengeSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
     limit = 1000
    
     def items(self):
-        return Topic.objects.all()
+        return Challenge.objects.all()
 
     def lastmod(self, obj):
         return obj.updated

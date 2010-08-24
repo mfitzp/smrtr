@@ -6,8 +6,12 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Challenge
+    &raquo;
     {% if challenge.name %}
-        &raquo; {{ challenge.name }}
+        {{ challenge.name }}
+        &raquo; Edit
+    {% else %}
+        Create new challenge
     {% endif %}    
 {% endblock %}
 
@@ -20,13 +24,11 @@
 {% endblock %}
 
 {% block content_title %}
-<h1>
     {% if challenge.name %}
-        Edit '{{ challenge.name }}'
+        {% include "_challenge_header.html" %}
     {% else %}
-        Create new challenge
+        <h1>Create new challenge</h1>
     {% endif %}
-</h1>
 {% endblock %}
 
 {% block content %}

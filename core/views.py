@@ -18,8 +18,9 @@ from wall.models import Wall, WallItem
 from wall.forms import WallItemForm
 # Smrtr
 from network.models import Network
-from education.models import Topic, UserTopic, Concept
-from challenge.models import Challenge
+from challenge.models import Challenge, UserChallenge
+from concept.models import Concept
+
 from core.forms import LoginForm
 from wallextend.models import add_extended_wallitem
 
@@ -29,22 +30,24 @@ def home(request):
 
         # User logged in, present the user dashboard
         usernetworks = request.user.usernetwork_set.all()
-        usertopics = request.user.usertopic_set.all()
         userchallenges = request.user.userchallenge_set.all()
         
-        userchallengesactive = userchallenges.filter(status__lt=2).order_by('status') # Show all
-        userchallengescomplete = userchallenges.filter(status__exact=2).order_by('-completed')[0:3]
+        userchallengesactive = userchallenges.filter(percent_complete__lt=100) #.order_by('status') # Show all
+        userchallengescomplete = userchallenges.filter(percent_complete__exact=100).order_by('-end_date')[0:3]
+
+        uc = UserChallenge.objects.get(pk=107)
+        uc.generate_challengeset()
 
         # If no userchallenges available, attempt to populate
         # FIXME: This is going to fire on every dashboard load until the user has some challenge
         # it's relatively quick/smart but still clunky. An 'event' trigger mechanism whereby
-        # this is called when new topics are activated would be preferable (adding this directly
+        # this is called when new challenges are activated would be preferable (adding this directly
         # to the education app creates an unwanted dependency).
-        if not userchallenges:
-            if usertopics: # Only generate if there are topics available
-                from challenge.utils import generate_userchallenges
-                generate_userchallenges(request.user)
-                userchallengesactive = request.user.userchallenge_set.filter(status__lt=2).order_by('status')
+        #if not userchallenges:
+        #    if userchallenges: # Only generate if there are challenges available
+        #        from challenge.utils import generate_userchallenges
+        #        generate_userchallenges(request.user)
+        #        userchallengesactive = request.user.userchallenge_set.filter(status__lt=2).order_by('status')
         
         # Flag True/False whether challenges exist at all for this user
         userchallengesexist = ( userchallengesactive.count() + userchallengescomplete.count() ) > 0
@@ -53,7 +56,7 @@ def home(request):
         # Like +1, Comment +1 or +2
         # Personal rating/comment more weight than others (*2) e.g 
         
-        # NOTE: Can  weight each network, topic, concept by limiting
+        # NOTE: Can  weight each network, challenge, concept by limiting
         # the max number of posts got from each at this point,
         # e.g. pull 5 from each concept, 10 from each network will *2 favour network posts
         
@@ -66,14 +69,7 @@ def home(request):
                 wallitems = wallitems | un.network.wall.wallitem_set.select_related()
           
         # These need to be limited to active only
-        for ut in usertopics: 
-            if ut.topic.wall:
-                wallitems = wallitems | ut.topic.wall.wallitem_set.select_related()
-            
-        # These need to be limited to active only
-        # filter: User has started/attempted the challenge
-        # TODO: Challenge has not expired (once expiry added to challenges)
-        for uc in userchallenges:
+        for uc in userchallengesactive:
             if uc.challenge.wall:
                 wallitems = wallitems | uc.challenge.wall.wallitem_set.select_related()            
 
@@ -136,7 +132,7 @@ def welcome(request):
 
 
 # Take a wall id and redirect to the 'home' for that forum
-# which will be on a network, course, topic, or user profile
+# which will be on a network, course, challenge, or user profile
 # This could probably be better handled with a template tag to generate the url preventing the redirects?
 def wall_home_redirect( request, wall_slug ):
     wall = get_object_or_404( Wall, slug=wall_slug )
@@ -149,11 +145,11 @@ def wall_home_redirect( request, wall_slug ):
         return redirect( wall.network.get_absolute_url() )
         
     try:
-        wall.topic
+        wall.challenge
     except:
         pass
     else:
-        return redirect( wall.topic.get_absolute_url() )
+        return redirect( wall.challenge.get_absolute_url() )
         
     try:
         wall.concept
@@ -187,7 +183,7 @@ def error500(request, template_name='500.html'):
     })))
 
 # Display topX by user, network and countries/etc.
-# TODO: Move this out to a seperate statistics topic in future
+# TODO: Move this out to a seperate statistics challenge in future
 def statistics(request):
 
     from countries.models import Country

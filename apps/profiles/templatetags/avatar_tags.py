@@ -60,13 +60,13 @@ def profile_avatar_url( user, size=50 ):
 
     # Thumbnail uploaded image to correct size
     thumbnail = get_thumbnailer(user.get_profile().avatar).get_thumbnail( dict(size=(size, size), crop=True ) )
-    return escape( thumbnail.url )
+    return thumbnail.url
 
 
 def facebook_avatar_url( user ):
 
     fb = user.facebook_profile
-    return escape( "http://graph.facebook.com/%s/picture?type=square" % (fb.username) )
+    return  "http://graph.facebook.com/%s/picture?type=square" % escape(fb.username)
 
 def gravatar_url( user, size=50 ):
 

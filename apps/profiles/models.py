@@ -31,13 +31,13 @@ class UserProfile(models.Model):
             # Auto-join networks smrtr Start and smrtr Study
             # FIXME: To provide seperation between apps, this probably should be moved out to signal triggers
             from network.models import Network, UserNetwork
-            from education.models import Topic, UserTopic
+            from education.models import Challenge, UserChallenge
             UserNetwork(user=self.user, network=Network.objects.get(pk=1)).save()
             UserNetwork(user=self.user, network=Network.objects.get(pk=2)).save()
-            # Auto-join General Knowledge topic in smrtr Start
-            # n.b. All child concepts are auto-activated by UserTopic.save 
-            # UserTopic(user=self.user, topic=Topic.objects.get(pk=1) ).save()
-            # NOTE: No longer auto-add GK, instead step user through activating first topic.
+            # Auto-join General Knowledge challenge in smrtr Start
+            # n.b. All child concepts are auto-activated by UserChallenge.save 
+            # UserChallenge(user=self.user, challenge=Challenge.objects.get(pk=1) ).save()
+            # NOTE: No longer auto-add GK, instead step user through activating first challenge.
             
         super(UserProfile, self).save(force_insert, force_update)
 

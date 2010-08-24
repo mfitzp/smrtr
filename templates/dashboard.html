@@ -18,62 +18,62 @@
         
         {% for userchallenge in userchallengesactive %}
             {% with userchallenge.challenge as challenge %}
-            
+            {% with userchallenge.challengeset as challengeset %}
             {% if forloop.first %}
-            <div class="focusbody">
-            <div id="challenges-focus" class="emblem-trigger-new">
+            <div id="challenges-focus" class="{% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
+            <div class="focus-body">
+
             <div class="object-emblems"> 
                 <div class="emblem-new" title="New challenge"></div> 
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
-                <h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>         
-                <p>{{ challenge.description }}</p>
-            <table>
-            <tr><th>Difficulty</th><td>{% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}</td></tr>
-            <tr><th>Challengers</th><td><span class="users">{{ challenge.userchallenge_set.count }} member{{ challenge.userchallenge_set.count|pluralize }}</span></td></tr>
-            <tr><th>Duration</th><td><span class="clock">{% duration challenge.time_to_complete %}</span> for {{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }}</td></tr>
-            <tr><th>Expires</th><td>{{ challenge.created|timesince }}</td></tr>
-            </table>
+            <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>
+                <p>{{ challenge.description|truncatewords:"15" }}</p>
+            </div>
+            <div class="progressbarcontainer">{% percentbar userchallenge.percent_complete %}</div>
+            
+            <div class="minifocus"><h5>Next Goal</h5>
+                {% include "_challengeset_meta.html" %}
+            </div>      
+                     
             <div class="buttonbox">
 
-                    {% if challenge.total_resources > 0 %}
+                    <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
+                    {% if challengeset.total_resources > 0 %}
                         <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
                     {% endif %}
 
-                    <span class="button button_hi">
-                    {% ifequal userchallenge.status 0 %}
-                    <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start Challenge</a>
-                    {% else %}
-                        {% ifequal userchallenge.status 1 %}                    
-                            <a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue Challenge</a>                        
-                        {% endifequal %}
-                    {% endifequal %}
-                    </span>
-            </div></div></div>
+                        <span class="button button_hi"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %} Challenge</a></span>
+
+            </div>
+         
+            </div></div>
+
             {% else %}
                 <div class="object {% cycle 'odd' 'even' %} {% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
                     <div class="object-emblems"> 
                         <div class="emblem-new" title="New challenge"></div> 
                     </div>
-                    <div class="object-image"><img src="{% thumbnail userchallenge.image 50x50 crop %}"></div>
-                    <div class="object-title"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ challenge }}</a><br />
-                    <small>{{ challenge.description }}</small></div>
+                    <div class="object-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
+                    <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
+                    <div class="object-content">                    
+                        <small>{{ challenge.description|truncatewords:"5" }}</small>
+                        <div class="progressbarcontainer">{% percentbar userchallenge.percent_complete %}</div>
+                    </div>
                     <div class="object-meta">
-                        <span class="users">{{ challenge.userchallenge_set.count }} challenger{{ challenge.userchallenge_set.count|pluralize }}</span>
-                        &#183; Difficulty {% sqdifficulty userchallenge.sq userchallenge.challenge.sq %}
-                        &#183; Duration <span class="clock">{% duration challenge.time_to_complete %}</span>
+                        {% include "_challengeset_meta.html" %}
                     </div>
                     <div class="object-buttons">
-                        {% if userchallenge.challenge.total_resources > 0 %}
-                            <span class="minibutton"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span><br />
+                        <div>
+                        <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/sm_refresh.png" title="I don't like the look of this!"></form>
+
+                        {% if challengeset.total_resources > 0 %}
+                            <span class="minibutton"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
                         {% endif %}
-                        {% ifequal userchallenge.status 0 %}
-                        <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
-                        {% else %}
-                            {% ifequal userchallenge.status 1 %}                    
-                                <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="continuelink">Continue</a></span>
-                            {% endifequal %}
-                        {% endifequal %}
+
+                            <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %}</a></span>
+
+                        </div>
                     </div>
                 </div>
                 
@@ -81,6 +81,7 @@
             {% endif %}
 
             {% endwith %}            
+            {% endwith %}                        
         {% empty %}
         
             <tr id="focus"><td colspan="10">
@@ -110,16 +111,15 @@
     </div>
     
     <p class="buttonbar">
-       <!-- <span class="button"><a href="" class="register">Show all available challenges &raquo;</a></span> -->
-        <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span>
-        <span class="button"><a href="{% url topic-search %}" class="register">Activate more topics &raquo;</a></span>       
+        <!-- <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span> -->
+        <span class="button"><a href="{% url challenge-search %}" class="register">Add challenges &raquo;</a></span>       
     </p>
 
     {% else %}
     <div class="focus"><h4>Welcome!</h4><div class="focus-body">
         <p>Once you're up and running, this box will show your <strong>current active challenges</strong> and resources for study. You can control
-        what topics you get by <strong>activating and deactivating</strong> them.</p>
-        <p>To get started <span class="button button_hi"><a href="{% url topic-search %}?next=/">Activate some topics now &raquo;</a></span></p>
+        what challenges you get by <strong>activating and deactivating</strong> them.</p>
+        <p>To get started <span class="button button_hi"><a href="{% url challenge-search %}?next=/">Add challenges now &raquo;</a></span></p>
     </div></div>
     {% endif %}
 
