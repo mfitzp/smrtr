@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 
 # Smrtr
 from challenge.models import *
-#from education.models import *
 from core.http import Http403  
 # External
 from haystack.query import SearchQuerySet, RelatedSearchQuerySet

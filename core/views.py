@@ -35,17 +35,6 @@ def home(request):
         userchallengesactive = userchallenges.filter(percent_complete__lt=100) #.order_by('status') # Show all
         userchallengescomplete = userchallenges.filter(percent_complete__exact=100).order_by('-end_date')[0:3]
 
-        # If no userchallenges available, attempt to populate
-        # FIXME: This is going to fire on every dashboard load until the user has some challenge
-        # it's relatively quick/smart but still clunky. An 'event' trigger mechanism whereby
-        # this is called when new challenges are activated would be preferable (adding this directly
-        # to the education app creates an unwanted dependency).
-        #if not userchallenges:
-        #    if userchallenges: # Only generate if there are challenges available
-        #        from challenge.utils import generate_userchallenges
-        #        generate_userchallenges(request.user)
-        #        userchallengesactive = request.user.userchallenge_set.filter(status__lt=2).order_by('status')
-        
         # Flag True/False whether challenges exist at all for this user
         userchallengesexist = ( userchallengesactive.count() + userchallengescomplete.count() ) > 0
         

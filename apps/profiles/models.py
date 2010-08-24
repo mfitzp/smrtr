@@ -31,7 +31,7 @@ class UserProfile(models.Model):
             # Auto-join networks smrtr Start and smrtr Study
             # FIXME: To provide seperation between apps, this probably should be moved out to signal triggers
             from network.models import Network, UserNetwork
-            from education.models import Challenge, UserChallenge
+            from challenge.models import Challenge, UserChallenge
             UserNetwork(user=self.user, network=Network.objects.get(pk=1)).save()
             UserNetwork(user=self.user, network=Network.objects.get(pk=2)).save()
             # Auto-join General Knowledge challenge in smrtr Start

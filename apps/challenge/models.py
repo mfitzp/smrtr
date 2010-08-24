@@ -79,9 +79,7 @@ class Challenge(models.Model):
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)    
    
-# Study models store information about user's experience with education
-# Models are ManytoMany through Models (ie they are used as the basis for linking
-# other models together, while appending additional information
+
 
 class UserChallenge(models.Model):
     def __unicode__(self):

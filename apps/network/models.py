@@ -38,8 +38,6 @@ def network_file_path(instance=None, filename=None):
     return os.path.join('network', str(instance.id), filename)
     
 
-# Education models contain educational structure from institution to challenge exam
-# INSERT INTO education_institution (name,address_1,address_2,city,state,country_id,postcode,telno,stage) SELECT SCHOOL_NAME as name,STREET as address_1, LOCALITY as address_2, TOWN as city, COUNTY as state, 'GB' as country_id, POSTCODE as postcode, CONCAT(0,TEL_STD,' ',TEL_NO) as telno,stage as stage FROM `school_list` WHERE 1
 class Network(models.Model):
     def __unicode__(self):
         return self.name

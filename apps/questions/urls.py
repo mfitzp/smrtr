@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import *
 # Smrtr
-#from education.models import *
 from questions.models import *
 
 # Uncomment the next two lines to enable the admin:

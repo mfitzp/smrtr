@@ -306,7 +306,7 @@ def challenge_search( request,
                     template_name='challenge_search.html',
                     next=None ):
     
-    from education.forms import ChallengeSearchForm
+    from challenge.forms import ChallengeSearchForm
     
     if request.POST.get('addchallenge'):
         
