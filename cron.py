@@ -35,15 +35,15 @@ def cron():
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user challenge SQ..."
     batch_userchallenge_update_sq()
 
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept statistics..."
-    batch_userconcept_update_statistics()
-
-    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user challenge statistics..."
-    batch_userchallenge_update_statistics()
-
-    # Concept focus is now calculated on completion of challengsets
-    # print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
-    # batch_userconcept_update_focus()
+    # Following are now calculated on completion of challenges
+    # print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept statistics..."
+    # batch_userconcept_update_statistics()
+    # print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user challenge statistics..."
+    # batch_userchallenge_update_statistics()
+    
+    # Still calculate this on cron as focus can change overtime
+    print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept focus..."
+    batch_userconcept_update_focus()
 
     # Don't ping google with sitemap when developing (be nice)
     from settings import DEBUG
