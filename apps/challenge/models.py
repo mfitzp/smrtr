@@ -145,7 +145,7 @@ class UserChallenge(models.Model):
         concepts = Concept.objects.filter(userconcept__user=self.user).filter(challenge=self.challenge).exclude(total_questions=0).order_by('-userconcept__focus','?')
 
         # Generate something without the current challengeset's concepts in it ('I don't like this' link)
-        if exclude_current_challengeset and self.challengeset: # Don't attempt to exclude if it's None
+        if ( exclude_current_challengeset == True ) and ( self.challengeset is not None ): # Don't attempt to exclude if it's None        
             for concept in self.challengeset.concepts.all():
                 concepts = concepts.exclude(pk=concept.id)              
 
@@ -155,7 +155,6 @@ class UserChallenge(models.Model):
             # Cannot generate so assign None (locks out attempts)
             self.challengeset = None
             self.save()
-            assert False, concepts
             return False
 
         # Look for already existing matching challengeset's the user has 
