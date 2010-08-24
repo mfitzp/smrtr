@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load countries_tags %}
+{% load pagination_tags %}
+{% load thumbnail %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; Challenge
+    &raquo; Search
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="focus"><h4>Get new challenges</h4><div class="focus-body">
+    <p>Challenges are collections of subjects for study on <strong>smrtr</strong>.
+    <p>To get started, search for subjects you're interested in and activate the challenges below.</p>
+    <form method="get" action="?q={{query}}">
+        <table>
+            <tr>
+                <th style="vertical-align:middle;"><label for="id_q">{{ form.q.label }}</th>
+                    <td>{{ form.q.errors }} {{ form.q }}</td>
+                <td>
+                    <input type="submit" value="Search">
+                </td>
+            </tr>
+        </table>            <form method="post" action=".">
+    </form>
+    </div></div>
+
+        {% if query %}
+            <form method="post" action="?q={{query}}">
+            <input type="hidden" name="q" value="{{ query }}">
+            <div style="margin-top:1em;">
+            {% for result in page_obj.object_list %}
+                {% with result.object as challenge %}
+                    {% if challenge %}
+
+                <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme">
+                    <div class="object-emblems">  
+                    </div>
+                    <div class="object-checkbox"><input type="checkbox" name="addchallenge" value="{{ challenge.id }}" {% if challenge in request.user.challenges.all %}checked disabled{% endif %}></div>
+                    <div class="object-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
+                    <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
+                    {% if challenge.description %}<div class="object-content">{{ challenge.description|truncatewords:"25" }}</div>{% endif %}
+                    <div class="object-meta">
+                        {% if challenge.network %}from <a href="{% url network-detail challenge.network.id %}">{{ challenge.network }}</a>{% endif %}
+                        &#183; {{ challenge.users.count }} member{{ challenge.users.count|pluralize }}
+                    </div>
+                </div>
+
+                    {% endif %}
+                {% endwith %}
+                {% empty %}
+            {% endfor %}
+            </div>
+        <br class="clear" />
+        <p class="buttonbar"><input type="submit" value="Activate selected challenges &raquo;"></p>
+        </form>        
+
+        <!-- <p>Don't find your challenge listed? <a href="#">Create it!</a></p> -->
+
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+
+        {% if next %}
+            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any challenges &raquo;</a></span></p>
+        {% endif %}
+
+
+        {% paginate %}
+{% endblock %}

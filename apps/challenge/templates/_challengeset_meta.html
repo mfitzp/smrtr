@@ -1,0 +1,8 @@
+{% load core_tags %}
+{% load sq_tags %}
+
+<div id="challenge-{{ challengeset.challenge.id }}-challengeset-meta">
+{% if challengeset.description %}<span class="concepts">{{ challengeset.description|truncatewords:"20"}}</span><br/>{% endif %}
+<span class="clock">{% duration challengeset.time_to_complete %}</span> for {{ challengeset.total_questions }} question{{ challengeset.total_questions|pluralize }}
+&#183; {% sqdifficulty userchallenge.sq challengeset.sq %}
+</div>

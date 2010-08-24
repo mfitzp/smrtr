@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load sq_tags %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    {% if challenge.network %}
+    &raquo; <a href="{% url network-detail network_id=challenge.network.id %}">{{ challenge.network }}</a>
+    {% endif %}
+    &raquo; {{ challenge }}
+{% endblock %}
+
+{% block title %}{{challenge}}{% endblock %}
+
+{% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
+{% block progressbar %}{% include "_challenge_progress.html" %}{% endblock %}
+
+{% block content_left %}
+
+    {% if challenge %}
+
+        <blockquote>{{ challenge.description }}</blockquote>
+
+        {% if userchallenge %}
+        <div style="margin-top:20px;">
+            {% with userchallenge.challengeset as challengeset %}
+            <div class="minifocus"><h5>Next Goal</h5>
+                {% include "_challengeset_meta.html" %}
+            </div>  
+            {% endwith %}
+            <div class="buttonbox">
+                <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}?next={{ challenge.get_absolute_url|urlencode }}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
+                <span class="button"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
+                <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %} Challenge</a></span>
+            </div>
+       </div>
+       
+        {% else %}
+            <div class="focus"><h4>Activate challenge</h4><div class="focus-body">
+            <p>Activate this challenge to start studying!</p>
+            <!-- Registration form -->
+            <form action="{% url challenge-register challenge_id=challenge.id %}" method="post">
+            <input type="hidden" name="submit" value="1" />
+            {% if next %}<input type="hidden" name="next" value="{{next}}" />{% endif %}
+            &nbsp;<input type="submit" value="Activate '{{challenge}}' &raquo;" />
+            </form>
+            </div></div>
+        {% endif %}
+
+
+
+        <h5>Leaderboard</h5>
+        <table style="width:100%;">
+        {% for userchallenge in userchallenges %}
+            {% with userchallenge.user as user %}
+            {% with user.get_profile as profile %}
+               <tr class="{% cycle 'odd' 'even' %}"><td style="width:32px;">{% avatar user 32 %}</td>
+               <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
+                    <small>
+                        {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
+                        <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
+                    </small></td>
+               <td style="text-align:center;vertical-align:middle;"><span class="percent">{{ userchallenge.percent_correct }}%</span></td>
+               <td style="text-align:center;vertical-align:middle;"><strong>{% sqchange userchallenge.previous_sq userchallenge.sq %}</strong></td></tr>
+            {% endwith %}
+            {% endwith %}
+        {% endfor %}
+        </table>
+
+
+        {% if challenge.concepts %}
+        <h5>Concepts</h5>
+
+        <div class="stackcontainer">
+        {% for concept in challenge.concepts_filtered %}
+            <div class="stack concept">{% percentbar concept.userconcept.percent_complete %}
+            <a href="{% url concept-detail concept_id=concept.id %}" class="{% if concept.userconcept.is_active %}active{% endif %}" title="{{ concept.userconcept.percent_complete }}% complete">{{ concept }}</a>
+            </div>
+        {% endfor %}
+        </div>                
+            
+        {% endif %}
+
+
+    {% else %}
+        <p>No curriculum information available.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+
+{% with challenge as obj %}{% include "_social.html" %}{% endwith %}
+{% endblock %}

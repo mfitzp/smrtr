@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load flowplayer_tags %}
+{% load countries_tags %}
+{% load pagination_tags %}
+{% load sq_tags %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; <a href="{% url concept-detail concept_id=concept.id %}">{{ concept }}</a>
+    &raquo; Providers
+{% endblock %}
+
+{% block content_title %}<h1>{{concept}} Providers</h1>{% endblock %}
+
+{% block content %}
+
+    {% if providers %}
+        <p>This concept is available for study on the following challenges:</p>
+        <table>
+        {% for challenge in providers %}
+            <tr>
+                <th><a href="{% url challenge-detail challenge_id=challenge.id %}" class="challenge">{{ challenge }}</a></th>
+            </tr>
+
+        {% endfor %}
+        </table>                
+        
+    {% else %}
+        <p>No challenges are currently offering this concept for study.</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    {% if challenge.network %}
+    &raquo; <a href="{% url network-detail network_id=challenge.network.id %}">{{ challenge.network }}</a>
+    {% endif %}
+    &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a>
+    &raquo; Questions
+{% endblock %}
+
+{% block content %}
+
+    {% if questions %}
+        <table>
+        <caption>Latest Questions in {{challenge}}</caption>
+        <tr><th scope="column">Question Name</th><th scope="column">Posted</th></tr>
+        {% for question in questions %}
+            <tr>
+                <td><a href="/questions/{{ question.id }}">{{ question|truncatewords:15 }}</a></td>
+                <td>{{ question.last_updated|timesince }} ago</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No questions available.</p>
+    {% endif %}
+
+{% endblock %}
