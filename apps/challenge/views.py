@@ -283,8 +283,6 @@ def do(request, challenge_id):
         # Something is wrong, we can't get a challengeset for this user, redirect to challenge page
         return redirect('challenge-detail', challenge_id=challenge_id)
     
-    UserChallengeSet(user=request.user, challengeset=challengeset).save()
-    
     try:
         UserChallengeSet(user=request.user, challengeset=challengeset).save()
     except:
