@@ -104,7 +104,7 @@ class UserConcept(models.Model):
         # - Lowest score (users SQ on this concept vs. SQ of the concept itself): lower = increased likelihood
         # TODO: Should be last_attempt updated whenever this concept is attempted as part of a challenge
 
-        if last_attempted = None:
+        if last_attempted == None:
             last_attempted = self.concept.challengeset_set.filter(userchallengeset__user=self.user).aggregate(completed__max=Max('userchallengeset__completed'))['completed__max']
             #last_attempted = self.challenge_set.UserChallenge.objects.filter(challenge__concepts=self.concept, user=self.user).aggregate(Max('completed'))['completed__max']
 
