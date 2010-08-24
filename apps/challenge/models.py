@@ -136,14 +136,6 @@ class UserChallenge(models.Model):
                             add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_100pc.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
                 self.save()
-
-        # Don't save if null (i.e. no value yet on any concepts)
-        if percent_complete:
-            self.percent_complete = percent_complete
-            
-
-            self.save()
-
             
     def generate_challengeset(self, exclude_current_challengeset=None):
     
