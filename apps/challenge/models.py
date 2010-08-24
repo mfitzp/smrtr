@@ -124,6 +124,8 @@ class UserChallenge(models.Model):
                     if self.end_date == None:
                         self.end_date = datetime.datetime.now()
                 
+                        from wallextend.models import add_extended_wallitem
+                
                         # Are we first?
                         first = self.challenge.userchallenge_set.filter(percent_complete=100).order_by('end_date')[0]
                         if self.user == first.user:
