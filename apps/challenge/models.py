@@ -119,30 +119,25 @@ class UserChallenge(models.Model):
                 
                 # Send notifications
                 if self.percent_complete == 100:
-                    self.end_date = now()
-
-                    if self.percent_correct == 100:
-                            add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_100pc.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
-                    
-                    # Are we first?
-                    if self.user == self.challenge.userchallenge_set.filter(percent_complete=100).order_by('completed')[0]:
+    
+                    # Have we only just completed?
+                    if self.end_date == None:
+                        self.end_date = datetime.datetime.now()
+                
+                        # Are we first?
+                        if self.user == self.challenge.userchallenge_set.filter(percent_complete=100).order_by('completed')[0]:
                             add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_1stcomplete.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
-                self.save()
+                        # Did we ace it?
+                        if self.percent_correct == 100:
+                                add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_100pc.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
-    def update_percent_correct(self):
+                self.save()
 
         # Don't save if null (i.e. no value yet on any concepts)
         if percent_complete:
             self.percent_complete = percent_complete
             
-            # Send notifications
-            if self.percent_complete == 100:
-                self.end_date = now()
-                
-                # Are we first?
-                if self.user == self.challenge.userchallenge_set.filter(percent_complete=100).order_by('completed')[0]:
-                    add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_1stcomplete.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
             self.save()
 
