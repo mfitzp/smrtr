@@ -152,6 +152,7 @@ class UserChallenge(models.Model):
         if concepts:
             concepts = concepts[0:3] # Top 3 concepts (by focus)
         else:
+            self.challengeset = None
             return False
 
         # Look for already existing matching challengeset's the user has 
