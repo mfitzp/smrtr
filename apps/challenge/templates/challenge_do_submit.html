@@ -7,11 +7,11 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Challenge    
-    &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}</a>
+    &raquo; <a href="{% url challenge-detail challenge_id=challenge.id %}">{{challenge}}</a>
     &raquo; Questions Answered
 {% endblock %}
 
-{% block title %}{% if userchallenge %}{{userchallenge}}{% else %}{{challenge}}{% endif %}{% endblock %}
+{% block title %}{{challenge}}{% endblock %}
 
 {% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
 

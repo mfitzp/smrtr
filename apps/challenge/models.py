@@ -213,7 +213,7 @@ class UserChallenge(models.Model):
 
 class ChallengeSet(models.Model):
     def __unicode__(self):
-        return self.name
+        return self.challenge.name
         
     def get_absolute_url(self):
         return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
