@@ -125,7 +125,7 @@ class UserChallenge(models.Model):
                         self.end_date = datetime.datetime.now()
                 
                         # Are we first?
-                        first = self.challenge.userchallenge_set.filter(percent_complete=100).order_by('completed')[0]
+                        first = self.challenge.userchallenge_set.filter(percent_complete=100).order_by('end_date')[0]
                         if self.user == first.user:
                             add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_1stcomplete.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
