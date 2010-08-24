@@ -383,7 +383,7 @@ def do_submit(request, challenge_id):
     userchallengeset.save()
 
     # Update concept statistics and focus
-    for userconcept in UserConcept.objects.get(concept__challengeset=challengeset):
+    for userconcept in UserConcept.objects.filter(concept__challengeset=challengeset):
         userconcept.update_statistics()
         userconcept.update_focus(last_attempted = userchallengeset.completed ) # Pass in now to save the last_attempted lookup
         
