@@ -155,6 +155,7 @@ class UserChallenge(models.Model):
             # Cannot generate so assign None (locks out attempts)
             self.challengeset = None
             self.save()
+            assert False, concepts
             return False
 
         # Look for already existing matching challengeset's the user has 

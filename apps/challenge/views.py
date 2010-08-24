@@ -423,17 +423,18 @@ def do_submit(request, challenge_id):
 @login_required
 def newset(request, challenge_id):
 
-    challenge = get_object_or_404(Challenge, pk=challenge_id)
-    userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
+    if request.POST:
+        challenge = get_object_or_404(Challenge, pk=challenge_id)
+        userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
 
-    userchallenge.generate_challengeset(exclude_current_challengeset=True)
-    
-    next = request.GET.get('next')
+        userchallenge.generate_challengeset(exclude_current_challengeset=True)
+        
+        next = request.GET.get('next')
 
-    if next:
-        return redirect(next)
-    else:
-        return redirect('home')
+        if next:
+            return redirect(next)
+        else:
+            return redirect('home')
         
 @login_required
 def newset_ajax(request, challenge_id):
