@@ -28,7 +28,7 @@
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
             <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>
-                <p>{{ challenge.description|truncatewords:"15" }}</p>
+                <p>{{ challenge.description|truncatewords:"15" }}&nbsp;</p>
             </div>
             <div class="progressbarcontainer">{% percentbar userchallenge.percent_complete %}</div>
             
@@ -57,7 +57,7 @@
                     <div class="object-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
                     <div class="object-content">                    
-                        <small>{{ challenge.description|truncatewords:"10" }}</small>
+                        <small>{{ challenge.description|truncatewords:"10" }}&nbsp;</small>
                         <div class="progressbarcontainer">{% percentbar userchallenge.percent_complete %}</div>
                     </div>
                     <div class="object-meta">
