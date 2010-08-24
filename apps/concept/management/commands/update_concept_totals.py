@@ -10,4 +10,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for concept in Concept.objects.all():
             concept.total_questions = concept.questions.count()
+            concept.total_questions = concept.resources.count()
             concept.save()
