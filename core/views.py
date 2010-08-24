@@ -65,8 +65,8 @@ def home(request):
             if un.network.wall:
                 wallitems = wallitems | un.network.wall.wallitem_set.select_related()
           
-        # These need to be limited to active only
-        for uc in userchallengesactive:
+        # These need to be limited in some way?
+        for uc in userchallenges:
             if uc.challenge.wall:
                 wallitems = wallitems | uc.challenge.wall.wallitem_set.select_related()            
 
