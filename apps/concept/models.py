@@ -22,7 +22,7 @@ from wall.models import Wall
 # Below challenges 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
 def concept_file_path(instance=None, filename=None):
-    return os.path.join('education','concept', str(instance.id), filename)    
+    return os.path.join('concept', str(instance.id), filename)    
 
 # Element is a defining part of a course 
 # Elements are always tied to a specific subject?? Or freely available

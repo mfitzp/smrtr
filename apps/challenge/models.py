@@ -30,7 +30,7 @@ CHALLENGE_TTC_FAIRNESS_MULTIPLIER = 1.5 # Multiple avg by this value to get 'fai
 # Below challenges 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
 def challenge_file_path(instance=None, filename=None):
-    return os.path.join('education', 'challenge', str(instance.id), filename)
+    return os.path.join('challenge', str(instance.id), filename)
  
 # Definitions of courses available and their constituent concepts
 # Subjects are tied to a home network
