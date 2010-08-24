@@ -145,7 +145,7 @@ class UserChallenge(models.Model):
         concepts = Concept.objects.filter(userconcept__user=self.user).filter(challenge=self.challenge).exclude(total_questions=0).order_by('-userconcept__focus','?')
 
         # Generate something without the current challengeset's concepts in it ('I don't like this' link)
-        if exclude_current_challengeset:
+        if exclude_current_challengeset and self.challengeset: # Don't attempt to exclude if it's None
             for concept in self.challengeset.concepts.all():
                 concepts = concepts.exclude(pk=concept.id)              
 

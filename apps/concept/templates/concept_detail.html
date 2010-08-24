@@ -46,7 +46,7 @@
 
         <h5>Questions & Resources</h5>
         <p>
-            There are <strong>{{ concept.question_set.count }} question{{ concept.question_set.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> available for {{ concept }}. You can help yourself and others by <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Questions</a> or <a href="{% url concept-add-resources concept_id=concept.id %}" class="questionlink">Adding Resources</a> now.
+            There are <strong>{{ concept.questions.count }} question{{ concept.questions.count|pluralize }}</strong> and <strong>{{ concept.resources.count }} resource{{ concept.resources.count|pluralize }}</strong> available for {{ concept }}. You can help yourself and others by <a href="{% url concept-add-questions concept_id=concept.id %}" class="questionlink">Adding Questions</a> or <a href="{% url concept-add-resources concept_id=concept.id %}" class="questionlink">Adding Resources</a> now.
         </p>
 
         {% include "_memberships.html" %}
