@@ -1,5 +1,5 @@
 import os.path
-from datetime import date as _date
+import datetime
 # Django
 from django.db import models
 from django.contrib.auth.models import User

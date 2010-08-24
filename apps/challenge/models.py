@@ -99,7 +99,7 @@ class UserChallenge(models.Model):
         super(UserChallenge, self).save(force_insert, force_update)
 
     def is_active(self):
-        return ( self.end_date == None ) or ( self.end_date > _date.today() )
+        return ( self.end_date == None ) or ( self.end_date > datetime.datetime.today() )
 
     def update_sq(self):
         self.previous_sq = self.sq
