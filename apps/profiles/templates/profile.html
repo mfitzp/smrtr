@@ -48,7 +48,7 @@ Member for {{ puser.date_joined|timesince }}
         <div class="stack challenge stackvertical">
         {% percentbar userchallenge.percent_complete %}
         {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}    
-        <a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}" title="{{ userchallenge.percent_correct }}% at {{ userchallenge.percent_complete }}% complete">{{ userchallenge }} ({% sqchange userchallenge.previous_sq userchallenge.sq %})</a>
+        <a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}" title="{{ userchallenge.percent_correct|default_if_none:'tbc' }}% at {{ userchallenge.percent_complete }}% complete">{{ userchallenge }} ({% sqchange userchallenge.previous_sq userchallenge.sq %})</a>
         </div>
        
     {% endfor %}

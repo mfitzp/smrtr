@@ -32,8 +32,8 @@ def home(request):
         usernetworks = request.user.usernetwork_set.all()
         userchallenges = request.user.userchallenge_set.all()
         
-        userchallengesactive = userchallenges.filter(percent_complete__lt=100) #.order_by('status') # Show all
-        userchallengescomplete = userchallenges.filter(percent_complete__exact=100).order_by('-end_date')[0:3]
+        userchallengesactive = userchallenges.filter(percent_complete__lt=100).filter(percent_correct__lt=100) #.order_by('status') # Show all
+        userchallengescomplete = userchallenges.filter(percent_complete__exact=100).filter(percent_correct__lt=100).order_by('-end_date')[0:3]
 
         # Flag True/False whether challenges exist at all for this user
         userchallengesexist = ( userchallengesactive.count() + userchallengescomplete.count() ) > 0
