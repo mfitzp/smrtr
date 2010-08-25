@@ -18,7 +18,7 @@ class WallItemExtend(models.Model):
         db_table = 'wall_wallitem_extend'
 
     def __unicode__(self):
-        return self.wallitem
+        return str(self.id)
     
     wallitem = models.OneToOneField(WallItem, primary_key=True, related_name='extend')
     
