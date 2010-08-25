@@ -30,7 +30,10 @@
             <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>
                 <p>{{ challenge.description|truncatewords:"15" }}&nbsp;</p>
             </div>
-            <div class="progressbarcontainer">{% percentbar userchallenge.percent_complete %}</div>
+            <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct at {{ userchallenge.percent_complete }}% complete">
+                {% percentbar userchallenge.percent_complete %}
+                {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}
+            </div>
             
             <div class="minifocus"><h5>Next Goal</h5>
                 {% include "_challengeset_meta.html" %}
@@ -58,7 +61,10 @@
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
                     <div class="object-content">                    
                         <small>{{ challenge.description|truncatewords:"10" }}&nbsp;</small>
-                        <div class="progressbarcontainer">{% percentbar userchallenge.percent_complete %}</div>
+                        <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct at {{ userchallenge.percent_complete }}% complete">
+                            {% percentbar userchallenge.percent_complete %}
+                            {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}
+                        </div>
                     </div>
                     <div class="object-meta">
                         {% include "_challengeset_meta.html" %}
@@ -87,7 +93,7 @@
             <tr id="focus"><td colspan="10">
             <div class="focus-body" style="position:relative">
             <p>Congratulations, you've completed your assigned challenges for today!</p>
-            <p><a href="{{ SMRTR_FREE_TIME_URL }}" target="_blank">Have a well-earned rest</a>, or <a href="{% url challenge-generate %}">get some more?</a></p>
+            <p>Have a well-earned rest, or <a href="{% url challenge-generate %}">get some more?</a></p>
             </div>
             </td></tr>         
 

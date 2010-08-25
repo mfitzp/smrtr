@@ -3,7 +3,8 @@
 
 {% if userchallenge %}
 {% percentbar userchallenge.percent_complete %}
-<div id="progressbar-content" title="{{ userchallenge.percent_complete }}% complete">
+{% percentbar userchallenge.percent_complete_correct 'pc-correct' %}
+<div id="progressbar-content" title="{{ userchallenge.percent_correct }}% at {{ userchallenge.percent_complete }}% complete">
     {% if userchallenge.end_date %}
         Completed {{ userchallenge.end_date|timesince }}
     {% else %}

@@ -155,7 +155,7 @@ class UserConcept(models.Model):
 
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):
-        return percent_complete * (percent_correct/100)
+        return self.percent_complete * ( float(self.percent_correct)/100 )
     
     user = models.ForeignKey(User)
     concept = models.ForeignKey(Concept)
