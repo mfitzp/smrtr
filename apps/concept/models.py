@@ -115,7 +115,6 @@ class UserConcept(models.Model):
             #last_attempted = self.challenge_set.UserChallenge.objects.filter(challenge__concepts=self.concept, user=self.user).aggregate(Max('completed'))['completed__max']
 
         if last_attempted:
-            print last_attempted
             # +1 for every hour passed since last attempt
             self.focus = ( datetime.datetime.now() - last_attempted ).seconds / 3600
         else:

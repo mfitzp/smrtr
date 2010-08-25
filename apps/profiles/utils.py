@@ -19,6 +19,7 @@ def batch_user_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this user
+        o.save()
 
 def batch_user_normalise_sq():
 
