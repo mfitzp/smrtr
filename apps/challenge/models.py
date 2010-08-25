@@ -192,7 +192,10 @@ class UserChallenge(models.Model):
             
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):
-        return self.percent_complete * ( float(self.percent_correct)/100 )
+        if self.percent_correct:
+            return self.percent_complete * ( float(self.percent_correct)/100 )
+        else:
+            return 0
     
     def time_to_complete(self):
         return self.end_date - self.start_date
