@@ -12,6 +12,12 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
+
+    uc = UserConcept.objects.get(user__id=1,concept__id=85)
+    uc.update_statistics()
+
+
+    return
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
     batch_question_update_sq()
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question ttc..."

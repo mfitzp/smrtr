@@ -140,10 +140,15 @@ class UserConcept(models.Model):
             self.percent_complete = (self.concept.total_questions / questions_attempted) * 100
             # Limit 0-100 (in case the total_questions count is off)
             self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
+            
+            tally = 0
+            for question in self.concept.questions.all():
+                latest = question.userquestionattempt_set.filter(user=self.user).latest('created')
+                tally += latest.percent_correct
+            
+            self.percent_correct = tally / questions_attempted
 
-            # Find the maximum user has scored on each question, and average these results
-            self.percent_correct = self.concept.questions.filter(userquestionattempt__user=self.user).annotate(pc=Max('userquestionattempt__percent_correct'),attempts=Count('id')).aggregate(Avg('pc'))['pc__avg']
-
+            print self.percent_correct
 
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):
