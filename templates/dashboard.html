@@ -7,6 +7,19 @@
 
 {% cycle 'odd' 'even' as zebra%}
 
+{% block extrahead %}
+    {{ block.super }}
+    <alink href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <script>
+          $(document).ready(function() {
+            $('#tabs').tabs();
+          });
+
+     </script>   
+{% endblock %}
+
 {% block content_left %}
 
     <div id="dashboard">
@@ -15,7 +28,17 @@
 
     {% if userchallengesexist %}
         <div class="focus"><h4>Challenges</h4>
-        
+
+        <div id="tabs">
+            <ul class="uitabsp">
+                <li><a href="#challenges-active"><span>All</span></a></li>
+                <li><a href="#challenges-complete"><span>Questions</span></a></li>
+                <li><a href="#challenges-complete"><span>Revise</span></a></li>
+                <li><a href="#challenges-complete"><span>Complete</span></a></li>
+            </ul>
+
+          <div id="challenges-active" class="ui-tabs-hide">
+
         {% for userchallenge in userchallengesactive %}
             {% with userchallenge.challenge as challenge %}
             {% with userchallenge.challengeset as challengeset %}
@@ -98,7 +121,9 @@
             </td></tr>         
 
         {% endfor %}
-        
+        </div>
+        <div id="challenges-complete" class="ui-tabs-hide">
+
         <table>
        {% for userchallenge in userchallengescomplete %}
         
@@ -114,6 +139,8 @@
             
         {% endfor %}        
        </table>
+       </div>
+       </div>
     </div>
     
     <p class="buttonbar">
