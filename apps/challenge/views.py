@@ -91,9 +91,9 @@ def register(request, challenge_id):
         if 'next' in request.POST:
             return HttpResponseRedirect(request.POST['next'])
         else:
-            return challenge_detail(request, challenge_id)
+            return redirect('challenge-detail', challenge_id=challenge.id)
 
-    return challenge_detail(request, challenge_id)
+    return redirect('challenge-detail', challenge_id=challenge.id)
 
 
 # Get an challenge id and present a page showing detail

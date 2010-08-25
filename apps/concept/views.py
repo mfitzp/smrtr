@@ -72,10 +72,9 @@ def register(request, concept_id ):
         if 'next' in request.POST:
             return HttpResponseRedirect(request.POST['next'])
         else:
-            return concept_detail(request, concept_id)
+            return redirect('concept-detail', concept_id=concept.id)
 
-    return concept_detail(request, concept_id)
-
+    return redirect('concept-detail', concept_id=concept.id)
     
 
     
