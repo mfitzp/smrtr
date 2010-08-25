@@ -10,10 +10,10 @@
 {% block extrahead %}
     {{ block.super }}
     <script>
-          $(document).ready(function() {
-            $('#tabs').tabs();
-            $('#tabs-bar').removeClass('hidden');
-          });
+          //$(document).ready(function() {
+          //  $('#tabs').tabs();
+          //  $('#tabs-bar').removeClass('hidden');
+          //});
 
      </script>   
 {% endblock %}
@@ -119,8 +119,9 @@
 
         {% endfor %}
         </div>
+        {% if userchallengescomplete %}
         <div id="challenges-complete">
-
+        <div class="focus-body">
         <table>
        {% for userchallenge in userchallengescomplete %}
         
