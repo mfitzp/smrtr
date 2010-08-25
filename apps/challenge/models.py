@@ -102,8 +102,13 @@ class UserChallenge(models.Model):
     def delete(self, *args, **kwargs):
         # Clean up removing concepts that the user is *only* studying on this challenge
         #concepts = UserConcept.objects.filter(user=self.user).exclude( ~Q(concept__challenge=self.challenge) )
-
-
+        userconcepts = UserConcept.objects.filter(user=self.user).filter(concept__challenge=self.challenge).filter(
+                concept__challenge__userchallenge__user=self.user
+            ).annotate(n=Count('concept__challenge__userchallenge')).filter(n=1)
+            
+        for uc in userconcepts:
+            uc.delete()
+            
         super(UserChallenge, self).delete(*args, **kwargs)
 
 

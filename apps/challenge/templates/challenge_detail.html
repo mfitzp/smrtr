@@ -93,6 +93,14 @@
 
 {% block content_right %}
 {% include "_wall.html" %}
-
 {% with challenge as obj %}{% include "_social.html" %}{% endwith %}
+
+{% if userchallenge %}
+<h5>Management</h5>
+<form action="{% url challenge-unregister challenge_id=challenge.id %}" method="post">
+<input type="submit" value="Remove yourself from this challenge" onclick="confirm('Are you sure you want to stop this challenge?')">
+</form>
+{% endif %}
+
 {% endblock %}
+
