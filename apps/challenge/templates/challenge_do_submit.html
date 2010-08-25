@@ -27,7 +27,7 @@
         </h4>
         <div class="focus-body">
             <p>You answered  <span class="percent">{{totals.percent}}%</span> (<strong>{{totals.correct}} out of {{totals.answered}}</strong>) questions correctly.</p>
-            <p>{% if percent_correct > 50 %}On a winning streak?{% else %}Want to redeem yourself?{% endif %}
+            <p>{% if totals.percent > 50 %}On a winning streak?{% else %}Want to redeem yourself?{% endif %}
             You can try <a href="{% url challenge-do challenge_id=challenge.id %}">more of the same</a>,
             <a href="{% url challenge-prepare challenge_id=challenge.id %}">do a bit of studying</a>
             or <a href="{% url home %}">try something completely different</a>.</p>
