@@ -17,7 +17,7 @@ def batch_challenge_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
-
+        o.save()
 
 # Calculate SQ for the userchallenge records with most recently answered questions
 def batch_userchallenge_update_sq():
@@ -28,6 +28,7 @@ def batch_userchallenge_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
+        o.save()
 
 # Calculate SQ for the userchallenge records with most recently answered questions
 def batch_userchallenge_update_statistics():
@@ -38,4 +39,4 @@ def batch_userchallenge_update_statistics():
 
     for o in objects:
         o.update_statistics() # Call SQ recalculation for this course               
-
+        o.save()

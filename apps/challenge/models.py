@@ -94,8 +94,9 @@ class UserChallenge(models.Model):
                 except:
                     pass
 
-            # Get primary challengeset for this (cannot be Null)
+            # Get first challengeset
             self.generate_challengeset()
+            
         super(UserChallenge, self).save(force_insert, force_update)
 
     def is_active(self):
@@ -104,7 +105,6 @@ class UserChallenge(models.Model):
     def update_sq(self):
         self.previous_sq = self.sq
         self.sq = UserConcept.objects.filter(user=self.user, concept__challenge = self.challenge).aggregate(Avg('sq'))['sq__avg']
-        self.save()
 
     def update_statistics(self):
         values = UserConcept.objects.filter(user=self.user, concept__challenge = self.challenge).aggregate(percent_complete=Avg('percent_complete'),percent_correct=Avg('percent_correct'))
@@ -133,7 +133,6 @@ class UserChallenge(models.Model):
                         if self.percent_correct == 100:
                             add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_100pc.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
-                self.save()
             
     def generate_challengeset(self, exclude_current_challengeset=None):
     
@@ -152,7 +151,6 @@ class UserChallenge(models.Model):
         else:
             # Cannot generate so assign None (locks out attempts)
             self.challengeset = None
-            self.save()
             return False
 
         # Look for already existing matching challengeset's the user has 
@@ -177,7 +175,6 @@ class UserChallenge(models.Model):
 
         # We have the challengeset found/generated. Now add it to the userchallenge object            
         self.challengeset = challengeset
-        self.save()
             
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):

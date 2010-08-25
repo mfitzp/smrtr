@@ -93,7 +93,7 @@ class UserConcept(models.Model):
         data = self.concept.questions.exclude(sq=None).filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
         self.previous_sq = self.sq
         self.sq = sq_calculate(data, 'desc') # Descending data set  
-        self.save()
+
     # Update user's focus value for this concept
     # this is used to include in auto-challenges,etc.
     def update_focus(self, last_attempted=None):
@@ -127,8 +127,7 @@ class UserConcept(models.Model):
             
         # Limit 0-100
         self.focus = max( min( self.focus, 100 ), 0 )
-        
-        self.save()
+
         
     def update_statistics(self):
         # We get a list of all attempts, 1 record per question attempted. The count of these is the total attempted questions (magic)
@@ -142,7 +141,7 @@ class UserConcept(models.Model):
 
             # Find the maximum user has scored on each question, and average these results
             self.percent_correct = self.concept.questions.filter(userquestionattempt__user=self.user).annotate(pc=Max('userquestionattempt__percent_correct'),attempts=Count('id')).aggregate(Avg('pc'))['pc__avg']
-            self.save()
+
 
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):

@@ -72,19 +72,11 @@ def register(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
 
     if request.method == 'POST':
-        um = UserChallenge()
-        um.user = request.user
-        
-        # Find user record for parent network, must be registered on the network to register for challenge
-        # try:
-            # FIXME: Note this is trying only to check if member of challenges 'home' network not any it may have been assigned to
-        #    usernetwork = request.user.usernetwork_set.get(network = challenge.network)
-        # except:
-            # Error
-        #    pass
+        uc = UserChallenge()
+        uc.user = request.user
+        uc.challenge = challenge
+        uc.save()
 
-        um.challenge = challenge
-        um.save()
         request.user.message_set.create(
         message=_(u"You are now studying ") + challenge.name)
 
@@ -387,11 +379,12 @@ def do_submit(request, challenge_id):
         userconcept.update_statistics()
         userconcept.update_focus(last_attempted = userchallengeset.completed ) # Pass in now to save the last_attempted lookup
         
-    # Update the userchallenge statistics
-    userchallenge.update_statistics()
-        
     # We've completed this one, so get a new one ready for next time    
     userchallenge.generate_challengeset()
+
+    # Update the userchallenge statistics
+    userchallenge.update_statistics()
+    userchallenge.save()
 
     challengers = challengeset.userchallengeset_set.order_by('-percent_correct')
 
@@ -429,7 +422,8 @@ def newset(request, challenge_id):
         userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
 
         userchallenge.generate_challengeset(exclude_current_challengeset=True)
-        
+        userchallenge.save()
+            
         next = request.GET.get('next')
 
         if next:
@@ -443,6 +437,7 @@ def newset_ajax(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
     userchallenge.generate_challengeset(exclude_current_challengeset=True)
+    userchallenge.save()
 
     result = { 
         'id':challenge_id,

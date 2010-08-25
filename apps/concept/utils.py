@@ -17,7 +17,7 @@ def batch_concept_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
-
+        o.save()
 
 
 # Calculate SQ for the usercourse records with most recently updated userchallenges
@@ -29,7 +29,7 @@ def batch_userconcept_update_sq():
 
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
-        
+        o.save()        
                                
 def batch_userconcept_update_focus():
 
@@ -39,7 +39,7 @@ def batch_userconcept_update_focus():
 
     for o in objects:
         o.update_focus() # Call focus recalculation for this course
-        
+        o.save()        
         
 def batch_userconcept_update_statistics():
 
@@ -49,6 +49,6 @@ def batch_userconcept_update_statistics():
 
     for o in objects:
         o.update_statistics() # Call focus recalculation for this course 
-        
+        o.save()        
 
 
