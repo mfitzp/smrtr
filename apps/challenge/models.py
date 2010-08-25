@@ -138,9 +138,9 @@ class UserChallenge(models.Model):
                 
                         from wallextend.models import add_extended_wallitem
                 
-                        # Are we first?
-                        first = self.challenge.userchallenge_set.filter(percent_complete=100).order_by('end_date')[0]
-                        if self.user == first.user:
+                        # Are we first? (i.e. are there no others)
+                        no_of_others = self.challenge.userchallenge_set.filter(percent_complete=100).order_by('end_date').count()
+                        if no_of_others == 0:
                             add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_1stcomplete.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
 
                         # Did we ace it?

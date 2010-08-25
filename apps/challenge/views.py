@@ -392,6 +392,7 @@ def do_submit(request, challenge_id):
     # Update concept statistics and focus
     for userconcept in UserConcept.objects.filter(concept__challengeset=challengeset):
         userconcept.update_statistics()
+        # Update SQ here?
         userconcept.update_focus(last_attempted = userchallengeset.completed ) # Pass in now to save the last_attempted lookup
         
     # We've completed this one, so get a new one ready for next time    
