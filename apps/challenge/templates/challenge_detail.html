@@ -26,18 +26,18 @@
         <blockquote>{{ challenge.description }}</blockquote>
 
         {% if userchallenge %}
-        <div style="margin-top:20px;">
             {% with userchallenge.challengeset as challengeset %}
             <div class="minifocus"><h5>Next Goal</h5>
                 {% include "_challengeset_meta.html" %}
             </div>  
-            {% endwith %}
             <div class="buttonbox">
                 <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}?next={{ challenge.get_absolute_url|urlencode }}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
+                {% if challengeset %}{% if challengeset.total_resources > 0 %}                
                 <span class="button"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
+                {% endif %}{% endif %}
                 <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %} Challenge</a></span>
             </div>
-       </div>
+            {% endwith %}
        
         {% else %}
             <div class="focus"><h4>Activate challenge</h4><div class="focus-body">
