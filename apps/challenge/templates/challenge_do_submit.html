@@ -20,8 +20,8 @@
 
     {% if challenge %}
         <div class="focus"><h4>
-        {% if percent_correct > 50 %}Well done!{% else %}
-            {% if percent_correct > 30 %}Oh well!{% else %}
+        {% if totals.percent > 50 %}Well done!{% else %}
+            {% if totals.percent > 30 %}Oh well!{% else %}
             Uh oh!{% endif %}
         {% endif %}
         </h4>
