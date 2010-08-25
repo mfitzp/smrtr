@@ -41,8 +41,8 @@
                 <span class="button button_hi"><a href="{% url home %}">I'm done!</a></span>
                 {% if challengeset %}{% if challengeset.total_resources > 0 %}                
                 <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
-                <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Next goal</a></span>
                 {% endif %}{% endif %}
+                <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Next goal</a></span>
             </div>
             {% endwith %}
                
