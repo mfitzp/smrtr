@@ -42,7 +42,7 @@ def detail(request, challenge_id):
     # Generate filter list of concepts with associated user data
     challenge.concepts_filtered = list()
     
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         for concept in challenge.concepts.all().order_by('name'):
             if concept in request.user.concepts.all():
                 concept.userconcept = request.user.userconcept_set.get( concept = concept )
