@@ -100,14 +100,15 @@ class UserChallenge(models.Model):
         super(UserChallenge, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
+        
         # Clean up removing concepts that the user is *only* studying on this challenge
-        #concepts = UserConcept.objects.filter(user=self.user).exclude( ~Q(concept__challenge=self.challenge) )
-        userconcepts = UserConcept.objects.filter(user=self.user).filter(concept__challenge=self.challenge).filter(
-                concept__challenge__userchallenge__user=self.user
-            ).annotate(n=Count('concept__challenge__userchallenge')).filter(n=1)
-            
-        for uc in userconcepts:
-            uc.delete()
+        userconcepts = UserConcept.objects.filter(
+                    user=self.user,
+                    concept__challenge=self.challenge ,
+                    ).exclude (
+                        #FIXME: This is fugly, but using 'not' doest work as excludes current challenge
+                        concept__challenge__id__lt=self.challenge.id ).exclude( concept__challenge__id__gt=self.challenge.id,
+                    ).delete()
             
         super(UserChallenge, self).delete(*args, **kwargs)
 
