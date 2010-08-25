@@ -45,8 +45,10 @@ Member for {{ puser.date_joined|timesince }}
     <h5>Active Challenges</h5>
     <div class="stackcontainer">
     {% for userchallenge in puser.userchallenge_set.all %}
-        <div class="stack challenge stackvertical">{% percentbar userchallenge.percent_complete %}
-        <a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}" title="{{ userchallenge.percent_complete }}% complete">{{ userchallenge }} ({% sqchange userchallenge.previous_sq userchallenge.sq %})</a>
+        <div class="stack challenge stackvertical">
+        {% percentbar userchallenge.percent_complete %}
+        {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}    
+        <a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}" title="{{ userchallenge.percent_correct }}% at {{ userchallenge.percent_complete }}% complete">{{ userchallenge }} ({% sqchange userchallenge.previous_sq userchallenge.sq %})</a>
         </div>
        
     {% endfor %}
