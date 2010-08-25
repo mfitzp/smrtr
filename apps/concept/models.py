@@ -79,7 +79,7 @@ class UserConcept(models.Model):
             #If there are no questions on this concept, we're 100% complete as soon as we start
             if self.concept.total_questions == 0:
                 self.percent_complete=100
-        super(Concept, self).save(force_insert, force_update)        
+        super(UserConcept, self).save(force_insert, force_update)        
         
     # Shortcuts through tree
     def network(self):
