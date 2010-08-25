@@ -1,5 +1,6 @@
 import os.path 
 import sys
+import datetime
 
 # Django settings for smrtr project.
 
@@ -195,12 +196,9 @@ FACEBOOK_INTERNAL = True
 
 # +/1 Range between levels of difficulty
 SQ_FAIR_RANGE = 20
-SQ_UPPER_LIMIT = 200
-SQ_LOWER_LIMIT = 0
-SQ_READOFF_MARK = 50
 SQ_PINNING_WEIGHT = 0.1
-
-
+# Number of weeks of history to include in SQ calculation
+SQ_CALCULATE_HISTORY = datetime.timedelta(weeks=26) 
 
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
@@ -208,12 +206,6 @@ HAYSTACK_DEFAULT_OPERATOR = 'AND'
 HAYSTACK_INCLUDE_SPELLING = True
 
 HAYSTACK_XAPIAN_PATH = os.path.dirname(os.path.abspath(__file__)) + '/search_index'
-
-# Some global urls for redirecting users nicely, error, 'finished', etc.
-SMRTR_FREE_TIME_URL = 'http://amanita-design.net/samorost-2/'
-SMRTR_HAVE_BREAK_URL = 'http://www.popcap.com/games/free/pvz?mid=pvz_pcweb_en_full'
-
-
 
 # Email settings: user/pass combination is stored in local settings for security
 EMAIL_HOST = 'smtp.webfaction.com'

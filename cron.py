@@ -12,7 +12,6 @@ from profiles.utils import *
 from network.utils import *
 
 def cron():
-
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
     batch_question_update_sq()
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question ttc..."
@@ -32,6 +31,7 @@ def cron():
 
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user concept SQ..."
     batch_userconcept_update_sq()
+
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update user challenge SQ..."
     batch_userchallenge_update_sq()
 

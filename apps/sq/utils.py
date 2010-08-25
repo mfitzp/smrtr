@@ -3,6 +3,10 @@ from django.db.models import Avg, Max, Min, Count
 # Python standard
 import math
 
+SQ_UPPER_LIMIT = 200
+SQ_LOWER_LIMIT = 0
+SQ_READOFF_MARK = 50
+
 # Generates a SQ line of best fit and returns a mid-point intercept
 # Should only be called via calculate_SQ
 #
@@ -35,13 +39,13 @@ def sq_lobf( n, x, y, xx, xy ):
     # If we end up with an "infinite" SQ top-round it off
     # @xxx: This should not happen if we are pinning correctly. CHECK!
     if m == 0:
-        return settings.SQ_UPPER_LIMIT
+        return SQ_UPPER_LIMIT
 
-    sq = ( settings.SQ_READOFF_MARK - b ) / m
+    sq = ( SQ_READOFF_MARK - b ) / m
     # SQ Boundary Limits for realism.
     # @xxx: These should not be reached in reality (or *rarely*). CHECK!
-    sq = max( sq, settings.SQ_LOWER_LIMIT );
-    sq = min( sq, settings.SQ_UPPER_LIMIT );
+    sq = max( sq, SQ_LOWER_LIMIT );
+    sq = min( sq, SQ_UPPER_LIMIT );
     
     return int(sq);
 

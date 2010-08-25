@@ -1,5 +1,7 @@
 import os.path
+import datetime
 # Django
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
@@ -7,7 +9,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 # Externals
 from countries.models import Country
-from datetime import date as date, datetime, timedelta
 from notification import models as notification
 from easy_thumbnails.fields import ThumbnailerImageField
 # Spenglr
@@ -57,8 +58,8 @@ class UserProfile(models.Model):
         # Only calculate if questions have been attempted
         if self.user.userquestionattempt_set.count() > 0:
             # Retrieve records for past 6 months
-            start_date = datetime.now() - timedelta(weeks=26)
-            end_date = datetime.now()
+            end_date = datetime.datetime.now()
+            start_date = end_date - settings.SQ_CALCULATE_HISTORY
             # Get for specified date range, exclude questions without SQ values
             data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
             self.calculated_sq = sq_calculate(data, 'desc') # Descending data set

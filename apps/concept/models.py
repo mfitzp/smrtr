@@ -1,6 +1,7 @@
 import os.path
-from datetime import datetime, timedelta, date as _date
+import datetime
 # Django
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
@@ -80,9 +81,9 @@ class UserConcept(models.Model):
         return self.challengei.challenge
     # Additional information
     def week_of_study(self):
-        return ( ( _date.today() - self.start_date  ).days / 7 ) + 1
+        return ( ( datetime.datetime.today() - self.start_date  ).days / 7 ) + 1
     def is_active(self):
-        return ( self.end_date == None ) or ( self.end_date > _date.today() )
+        return ( self.end_date == None ) or ( self.end_date > datetime.datetime.today() )
     # Update user's SQ value on this concept
     def update_sq(self):
         # Get user's attempts on this concept's questions 
@@ -90,7 +91,12 @@ class UserConcept(models.Model):
         # x = qSQ (question's SQ)
         # y = percent_correct
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.concept.questions.exclude(sq=None).filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+        # Old calc:         data = self.concept.questions.exclude(sq=None).filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+
+        end_date = datetime.datetime.now()
+        start_date = end_date - settings.SQ_CALCULATE_HISTORY
+        data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).filter(question__concepts=self.concept).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
+
         self.previous_sq = self.sq
         self.sq = sq_calculate(data, 'desc') # Descending data set  
 
@@ -109,21 +115,18 @@ class UserConcept(models.Model):
             #last_attempted = self.challenge_set.UserChallenge.objects.filter(challenge__concepts=self.concept, user=self.user).aggregate(Max('completed'))['completed__max']
 
         if last_attempted:
-            # +1 for every week passed since last attempt
-            self.focus += min( 100, ( datetime.today() - last_attempted ).days / 7 )
+            print last_attempted
+            # +1 for every hour passed since last attempt
+            self.focus = ( datetime.datetime.now() - last_attempted ).seconds / 3600
         else:
             self.focus = 100 # Bump new items to max focus to guarantee first attempt
-            
-        # if self.start_date:
-        #     # -1 for every week it has been active
-        #     self.focus -= min( 100, ( datetime.today() - self.start_date ).days / 7 )
-        
+             
         if self.concept.sq and self.sq:    
-            # +1 for every SQ point difference between the uc and the c
-            self.focus +=  self.concept.sq - self.sq
+            # +1 for every 1/2 SQ point difference between the uc and the c
+            self.focus +=  ( self.concept.sq - self.sq )/2
 
         # If done all the questions, ask them less often        
-        self.focus -= self.percent_complete
+        self.focus -= self.percent_complete / 10 # 100% complete = -10 focus
             
         # Limit 0-100
         self.focus = max( min( self.focus, 100 ), 0 )

@@ -1,8 +1,10 @@
+import datetime
+# Django
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import Avg, Max, Min, Count
 from django.core.urlresolvers import reverse
-import datetime
 # Smrtr
 import questions
 from resources.models import Resource
@@ -36,7 +38,10 @@ class Question(models.Model):
     def update_sq(self):
         # Get all user's attempts at this question
         # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
-        data = self.userquestionattempt_set.values('user_sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('user_sq'))
+        end_date = datetime.datetime.now()
+        start_date = end_date - settings.SQ_CALCULATE_HISTORY
+        
+        data = self.userquestionattempt_set.filter(created__range=(start_date,end_date)).values('user_sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('user_sq'))
         self.sq = sq_calculate(data, 'asc') # Ascending data set
         self.save()
         
