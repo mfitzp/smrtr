@@ -9,12 +9,10 @@
 
 {% block extrahead %}
     {{ block.super }}
-    <alink href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
     <script>
           $(document).ready(function() {
             $('#tabs').tabs();
+            $('#tabs-bar').removeClass('hidden');
           });
 
      </script>   
@@ -29,10 +27,14 @@
     {% if userchallengesexist %}
         <div class="focus"><h4>Challenges</h4>
 
-        <div id="tabs">
-
-
-          <div id="challenges-active" class="ui-tabs-hide">
+        <div id="tabs" class="ui-tabs">
+        <!--
+            <ul id="tabs-bar" class="tabs hidden">
+                <li><a href="#challenges-active"><span>Active</span></a></li>
+                <li><a href="#challenges-complete"><span>Complete</span></a></li>
+            </ul>
+-->
+          <div id="challenges-active">
 
         {% for userchallenge in userchallengesactive %}
             {% with userchallenge.challenge as challenge %}
@@ -117,7 +119,7 @@
 
         {% endfor %}
         </div>
-        <div id="challenges-complete" class="ui-tabs-hide">
+        <div id="challenges-complete">
 
         <table>
        {% for userchallenge in userchallengescomplete %}
