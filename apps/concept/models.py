@@ -4,12 +4,12 @@ import datetime
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Avg, Max, Min, Count
+from django.db.models import Avg, Max, Min, Count, Q
 from django.core.urlresolvers import reverse
 # Smrtr
 from network.models import Network,UserNetwork
 from resources.models import Resource
-from questions.models import Question
+from questions.models import Question,UserQuestionAttempt
 #from challenge.models import UserChallenge
 from sq.utils import * 
 # External
@@ -141,14 +141,17 @@ class UserConcept(models.Model):
             # Limit 0-100 (in case the total_questions count is off)
             self.percent_complete = max( min( self.percent_complete, 100 ), 0 )
             
-            tally = 0
-            for question in self.concept.questions.all():
-                latest = question.userquestionattempt_set.filter(user=self.user).latest('created')
-                tally += latest.percent_correct
-            
-            self.percent_correct = tally / questions_attempted
+            # Get all questions with latest attempt date
+            questions = self.concept.questions.filter(userquestionattempt__user=self.user).annotate(latest=Max('userquestionattempt__created'))
+            # Build Q object to get all the latest attempts
+            q = Q()
+            for question in questions:
+                #print question.id, question.latest
+                q = q | Q( question=question, created=question.latest)
 
-            print self.percent_correct
+            avg = UserQuestionAttempt.objects.filter(q, user=self.user).aggregate(avg=Avg('percent_correct'))
+            if avg:
+                self.percent_correct = avg['avg']
 
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):
