@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^(?P<challenge_id>\d+)/$', 'challenge.views.detail',  name='challenge-detail'  ),
     url(r'^(?P<challenge_id>\d+)/providers/$', 'challenge.views.providers',  name='challenge-providers'  ),
     url(r'^(?P<challenge_id>\d+)/register/$', 'challenge.views.register',  name='challenge-register'  ),
+    url(r'^(?P<challenge_id>\d+)/unregister/$', 'challenge.views.unregister',  name='challenge-unregister'  ),
 
     # Challenge creation and editing
     url(r'^create/$', 'challenge.views.create',  name='challenge-create'  ),

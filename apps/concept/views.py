@@ -78,7 +78,6 @@ def register(request, concept_id ):
     
 
     
-
 # Create a new concept
 @login_required
 def create(request):

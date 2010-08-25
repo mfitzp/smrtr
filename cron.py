@@ -2,7 +2,7 @@ from django.core.management import setup_environ
 import settings
 import datetime
 setup_environ(settings)
-
+from django.db.models import Avg, Max, Min, Count, Q
 from django.contrib.sitemaps import ping_google
 # Smrtr
 from questions.utils import *
@@ -13,6 +13,11 @@ from network.utils import *
 
 def cron():
 
+    concepts = UserConcept.objects.filter(user__id=1).filter(concept__challenge__id=293).exclude( ~Q(concept__challenge__id=293) )
+    for c in concepts:
+        print c.id, c.concept.id, c.concept.name
+
+    return
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
     batch_question_update_sq()
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question ttc..."

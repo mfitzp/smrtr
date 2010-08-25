@@ -64,8 +64,6 @@ def detail(request, challenge_id):
     return render_to_response('challenge_detail.html', context, context_instance=RequestContext(request) )
 
 
-# Get an insititution id and present a page showing detail
-# if user is registered at the challenge, provide a tailored page
 @login_required
 def register(request, challenge_id):
 
@@ -86,6 +84,24 @@ def register(request, challenge_id):
             return redirect('challenge-detail', challenge_id=challenge.id)
 
     return redirect('challenge-detail', challenge_id=challenge.id)
+
+# Remove a user from the specified challenge
+@login_required
+def unregister(request, challenge_id):
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user)
+
+    if request.method == 'POST':
+        userchallenge.delete()
+
+        if 'next' in request.POST:
+            return HttpResponseRedirect(request.POST['next'])
+        else:
+            return redirect('challenge-detail', challenge_id=challenge.id)
+
+    return redirect('challenge-detail', challenge_id=challenge.id)
+
 
 
 # Get an challenge id and present a page showing detail

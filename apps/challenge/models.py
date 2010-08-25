@@ -85,7 +85,7 @@ class UserChallenge(models.Model):
     def __unicode__(self):
         return self.challenge.name
         
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         if self.id is None: #is new
             # Auto-activate all child concepts for this challenge
             for concept in self.challenge.concepts.all():
@@ -97,7 +97,15 @@ class UserChallenge(models.Model):
             # Get first challengeset
             self.generate_challengeset()
             
-        super(UserChallenge, self).save(force_insert, force_update)
+        super(UserChallenge, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Clean up removing concepts that the user is *only* studying on this challenge
+        #concepts = UserConcept.objects.filter(user=self.user).exclude( ~Q(concept__challenge=self.challenge) )
+
+
+        super(UserChallenge, self).delete(*args, **kwargs)
+
 
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > datetime.datetime.today() )
