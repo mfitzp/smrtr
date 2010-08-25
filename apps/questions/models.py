@@ -16,7 +16,7 @@ Update tags on question models from tagging_taggeditem table
 UPDATE questions_question AS q, (SELECT xti.object_id as id, GROUP_CONCAT(name ) AS tags FROM `tagging_tag` AS xt INNER JOIN `tagging_taggeditem` AS xti ON xt.id=xti.tag_id GROUP BY xti.object_id) AS qt SET q.tags = qt.tags WHERE q.id = qt.id
 """
 
-QUESTION_TTC_MINIMUM = 5 # Minimume time in seconds for a question time limit
+QUESTION_TTC_MINIMUM = 10 # Minimume time in seconds for a question time limit
 
 class Question(models.Model):
     def __unicode__(self):

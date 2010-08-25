@@ -401,6 +401,7 @@ def do_submit(request, challenge_id):
 
         'challengeset': challengeset,
         'userchallengeset': userchallengeset,
+        
         'challengers':challengers,
 
         'questions': questions, 
