@@ -13,14 +13,6 @@ from network.utils import *
 
 def cron():
 
-    userconcepts = UserConcept.objects.filter(user__id=1).filter(concept__challenge__id=305).filter(
-            concept__challenge__userchallenge__user__id=1
-            ).annotate(n=Count('concept__challenge__userchallenge')).filter(n=1)
-    
-    for uc in userconcepts:
-        print uc.id, uc.concept.id, uc.concept.name, uc.n
-
-    return
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question SQ..."
     batch_question_update_sq()
     print datetime.datetime.now().strftime(' %H:%M:%S') + ": Update question ttc..."
