@@ -72,6 +72,15 @@ class Concept(models.Model):
 class UserConcept(models.Model):
     def __unicode__(self):
         return self.concept.name
+        
+    # Auto-add a new wall object when creating new Concept
+    def save(self, force_insert=False, force_update=False):
+        if self.id is None: #is new
+            #If there are no questions on this concept, we're 100% complete as soon as we start
+            if self.concept.total_questions == 0:
+                self.percent_complete=100
+        super(Concept, self).save(force_insert, force_update)        
+        
     # Shortcuts through tree
     def network(self):
         return self.usercourse.coursei.network
@@ -152,6 +161,10 @@ class UserConcept(models.Model):
             avg = UserQuestionAttempt.objects.filter(q, user=self.user).aggregate(avg=Avg('percent_correct'))
             if avg:
                 self.percent_correct = avg['avg']
+        else:
+            if self.concept.total_questions == 0:
+                self.percent_complete=100
+                self.percent_correct = None
 
     # Used to show %correct as a portion of the percent complete bar
     def percent_complete_correct(self):
@@ -169,7 +182,7 @@ class UserConcept(models.Model):
     focus = models.IntegerField(default = 100, editable = False) # Default to 100 to ensure newly activated are preferentially chosen
     
     percent_complete = models.IntegerField(editable = False, null = False, default=0)
-    percent_correct = models.IntegerField(editable = False, null = False, default=0)
+    percent_correct = models.IntegerField(editable = False, null = True)
 
     class Meta:
         unique_together = ("user", "concept")

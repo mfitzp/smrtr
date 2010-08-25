@@ -215,7 +215,7 @@ class UserChallenge(models.Model):
     previous_sq = models.IntegerField(editable = False, null = True)
 
     percent_complete = models.IntegerField(editable = False, null = False, default=0)
-    percent_correct = models.IntegerField(editable = False, null = False, default=0)
+    percent_correct = models.IntegerField(editable = False, null = True)
 
     class Meta:
         unique_together = ("user", "challenge")

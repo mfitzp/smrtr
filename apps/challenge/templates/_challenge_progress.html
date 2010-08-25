@@ -4,7 +4,7 @@
 {% if userchallenge %}
 {% percentbar userchallenge.percent_complete %}
 {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}
-<div id="progressbar-content" title="{{ userchallenge.percent_correct }}% at {{ userchallenge.percent_complete }}% complete">
+<div id="progressbar-content" title="{{ userchallenge.percent_correct|default_if_none:'tbc' }}% at {{ userchallenge.percent_complete }}% complete">
     {% if userchallenge.end_date %}
         Completed {{ userchallenge.end_date|timesince }}
     {% else %}

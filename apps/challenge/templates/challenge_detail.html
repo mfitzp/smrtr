@@ -77,7 +77,7 @@
         <div class="stackcontainer">
         {% for concept in challenge.concepts_filtered %}
             <div class="stack concept">{% if concept.userconcept %}{% percentbar concept.userconcept.percent_complete %}{% percentbar concept.userconcept.percent_complete_correct 'pc-correct' %}{% endif %}
-            <a href="{% url concept-detail concept_id=concept.id %}" class="{% if concept.userconcept.is_active %}active{% endif %}" title="{{ concept.userconcept.percent_complete }}% complete">{{ concept }}</a>
+            <a href="{% url concept-detail concept_id=concept.id %}" class="{% if concept.userconcept.is_active %}active{% endif %}" title="{% if concept.userconcept %}{{ concept.userconcept.percent_correct|default_if_none:'tbc' }}% at {{ concept.userconcept.percent_complete }}%{% endif %}">{{ concept }}</a>
             </div>
         {% endfor %}
         </div>                

@@ -73,3 +73,6 @@ def percentbar( num, addclass=None ):
         return '<div class="percent-bar %s" style="width:%d%%"></div>' % (c, num)
     else:
         return ''
+     
+                
+

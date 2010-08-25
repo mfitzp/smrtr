@@ -18,7 +18,7 @@
 {% if userconcept %}
 {% percentbar userconcept.percent_complete %}
 {% percentbar userconcept.percent_complete_correct 'pc-correct' %}
-<div id="progressbar-content" title="{{ userconcept.percent_correct }}% at {{ userconcept.percent_complete }}% complete">{{ userconcept.start_date|timesince }} </div>
+<div id="progressbar-content" title="{{ userconcept.percent_correct|default_if_none:'tbc' }}% at {{ userconcept.percent_complete }}% complete">{{ userconcept.start_date|timesince }} </div>
 <div id="progressbar-sq" title="Your concept SQ is {{ userconcept.sq }}">{% sqchange userconcept.previous_sq userconcept.sq %}</div>
 {% endif %}
 {% endblock %}
