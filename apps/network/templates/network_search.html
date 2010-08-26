@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load countries_tags %}
 {% load pagination_tags %}
+{% load thumbnail %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
@@ -30,30 +31,33 @@
         {% if query %}
             <form method="post" action="?q={{query}}">
             <input type="hidden" name="q" value="{{ query }}">
-
-            {% for set in results %}
-            <div style="float:left; width: 49%; margin-left: 0.5%;">
-            {% if set.results %}
-                <h5 class="network network{{ set.type }}">{{ set.name }}</h5>
-                <table>
-                {% for result in set.results %}
+            <div style="margin-top:1em;">
+               {% for result in page_obj.object_list %}
+                
                     {% with result.object as network %}
-                        {% if network %}
-                        <tr>
-                            <td><input type="checkbox" name="addnetwork" value="{{ network.id }}" {% if network in request.user.networks.all %}checked disabled{% endif %}></td>
-                            <th><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></th>
-                            <td>{{ network.city }}</td>
-                            <td>{% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }} </span> {% endif %}</td>
-                        </tr>
+                    {% if network %}               
+                <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme">
+                    <div class="object-emblems">
+                    </div>
+                    <div class="object-checkbox"><input type="checkbox" name="addnetwork" value="{{ network.id }}" {% if network in request.user.networks.all %}checked disabled{% endif %}></div>
+                    <div class="object-image"><img src="{% thumbnail network.image 50x50 crop %}"></div>
+                    <div class="object-title"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></div>
+                    {% if network.description %}<div class="object-content">{{ network.description|truncatewords:"25" }}</div>{% endif %}
+                    <div class="object-meta">
+                        {% if network.city or network.country %}
+                        Location 
+                            <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
+                            {% if network.city %} {{ network.city }}{% endif %}
+                            {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
+                         &#183;    
                         {% endif %}
+                        <span class="members">{{ network.usernetwork_set.count }} member{{ network.usernetwork_set.count|pluralize }}</span>
+                    </div>
+                </div>               
+                    {% endif %}
                     {% endwith %}
-                    {% empty %}
-                {% endfor %}
-                </table>                
-            {% endif %}
-            </div>
-            
             {% endfor %}
+            </div>            
         <br class="clear" />
         <p class="buttonbar"><input type="submit" value="Join selected networks &raquo;"></p>
         </form>        
@@ -68,5 +72,5 @@
             <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not join any networks &raquo;</a></span></p>
         {% endif %}
 
-
+        {% paginate %}
 {% endblock %}

@@ -20,12 +20,12 @@ class NetworkSearchForm(SearchForm):
 
     def search(self):
         sqs = super(NetworkSearchForm, self).search()
+        sqs = sqs.order_by('-total_members','-type','score')
         return sqs
         
     def search_split(self):
         # First, store the SearchQuerySet received from other processing.
         sqs = super(NetworkSearchForm, self).search()
-
         # TYPE_CHOICES defines the subtypes of network available
         # Listing order is reversed (puts Other last)        
         search = list()

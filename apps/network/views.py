@@ -138,7 +138,7 @@ def search( request,
 
     from profiles.utils import searchqueryset_profile_boost
     sqs = searchqueryset_profile_boost( request, sqs )
-    
+
     if request.GET.get('q'):
         querydata = request.GET
     else:
@@ -148,16 +148,22 @@ def search( request,
 
     if form.is_valid():
         query = form.cleaned_data['q']
-        results = form.search_split() # Returns a list of SearchQuerySets one for each network type
+        results = form.search()[:500]
     
-    from network.models import TYPE_CHOICES
+    paginator = Paginator(results, 10)
+        
+    try:
+        page_obj = paginator.page(int(request.GET.get('page', 1)))
+    except (ValueError, EmptyPage, InvalidPage): 
+        raise Http404("No such page of results!")    
     
     context = { 
         'form': form,
         'query': query,
         'results': results,
-        'TYPE_CHOICES': TYPE_CHOICES,
         'next' : next,
+        'page_obj': page_obj,
+        'paginator': paginator,        
     }
     
     return render_to_response(template_name, context, context_instance=RequestContext(request))    

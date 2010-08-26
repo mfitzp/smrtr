@@ -9,6 +9,7 @@ class NetworkIndex(SearchIndex):
     
     type = IntegerField(model_attr='type', null = True) #type of network
     stage = IntegerField(model_attr='stage', null = True) #stage of network
+    total_members = IntegerField(null = False) 
        
     def get_queryset(self):
         """Used when the entire index for model is updated."""
@@ -16,5 +17,8 @@ class NetworkIndex(SearchIndex):
 
     def get_updated_field(self):
         return 'updated'
+        
+    def prepare_total_members(self, obj):
+        return obj.usernetwork_set.count()
 
 site.register(Network, NetworkIndex)

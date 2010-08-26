@@ -24,6 +24,7 @@ class ChallengeSearchForm(SearchForm):
 
     def search(self):
         sqs = super(ChallengeSearchForm, self).search()
+        sqs = sqs.order_by('-total_members','-type','score')        
         return sqs
         
 
