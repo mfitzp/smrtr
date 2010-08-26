@@ -168,7 +168,7 @@ class UserChallenge(models.Model):
             return False
 
         # Look for already existing matching challengeset's the user has 
-        cs = ChallengeSet.objects.exclude(userchallengeset__user=self.user)
+        cs = ChallengeSet.objects.filter(challenge=self.challenge).exclude(userchallengeset__user=self.user)
         
         for concept in concepts:
             cs = cs.filter(concepts=concept)              
