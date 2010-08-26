@@ -57,7 +57,7 @@
             <span class="members">{{ network.total_members }} member{{ network.total_members|pluralize }}</span> 
        </td>
        <td class="scoretd">{% if network.leaderboard_percent_correct %}<span class="score">{{ network.leaderboard_percent_correct|floatformat:"0" }}%</span>{% endif %}</td>
-       <td class="scoretd">{% if network.leaderboard_sq %}<span class="score">{% sq network.leaderboard_sq %}</span>{% endif %}</td>
+       <td class="scoretd">{% if network.leaderboard_sq %}<span class="score">{% sqchange network.leaderboard_previous_sq network.leaderboard_sq %}</span>{% endif %}</td>
     {% endfor %}
     </table>
     </div>
@@ -73,7 +73,7 @@
        <td style="line-height:1.5em;"><a href="http://maps.google.com/maps?q={{ country|urlencode }}&amp;t=h" target="_blank">{{ country }}</a><br />
        <span class="members">{{ country.total_members }} member{{ country.total_members|pluralize }}</span></td>
        <td class="scoretd">{% if country.leaderboard_percent_correct %}<span class="score">{{ country.leaderboard_percent_correct|floatformat:"0" }}%</span>{% endif %}</td>
-       <td class="scoretd">{% if country.leaderboard_sq %}<span class="score">{% sq country.leaderboard_sq %}</span>{% endif %}</td>
+       <td class="scoretd">{% if country.leaderboard_sq %}<span class="score">{% sqchange country.leaderboard_previous_sq country.leaderboard_sq %}</span>{% endif %}</td>
     {% endfor %}
     </table>
     </div>
