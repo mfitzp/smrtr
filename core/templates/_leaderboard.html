@@ -1,0 +1,83 @@
+{% load sq_tags %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+{% load thumbnail %}
+
+    <h5>Leaderboard</h5>
+    
+    <div id="tabs" class="ui-tabs tabscontainer">
+
+        <ul class="tabs hidden">
+            <li><a href="#leaderboard-members"><span>Members</span></a></li>
+            {% if leaderboard.networks %}<li><a href="#leaderboard-networks"><span>Networks</span></a></li>{% endif %}
+            {% if leaderboard.countries %}<li><a href="#leaderboard-countries"><span>Countries</span></a></li>{% endif %}
+        </ul>
+            
+    <div class="tabbed-content">
+
+    <div id="leaderboard-members">
+    <h5 class="tabsubstitute">Members</h5>
+    <table style="width:100%;">
+    {% for uo in leaderboard.members %}
+        {% with uo.user as user %}
+        {% with user.get_profile as profile %}
+           <tr class="{% cycle 'odd' 'even' %}">
+           <td style="width:32px;">{% avatar user 32 %}</td>
+           <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
+                <small>
+                    {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
+                    {% if profile.network %}<a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>{% endif %}
+                </small></td>
+            <td class="scoretd">{% if uo.percent_correct %}<span class="score">{{ uo.percent_correct }}%</span>{% endif %}</td>
+            <td class="scoretd">{% if uo.sq %}<span class="score">{% sqchange uo.previous_sq uo.sq %}</span>{% endif %}</td>
+            </tr>
+        {% endwith %}
+        {% endwith %}
+    {% empty %}
+    <tr><td><p>No challengers yet</p></td></tr>
+    {% endfor %}
+    </table>
+    </div>
+
+    {% if leaderboard.networks %}
+    <div id="leaderboard-networks">
+    <h5 class="tabsubstitute">Networks</h5>    
+    <table style="width:100%;">
+    {% for network in leaderboard.networks %}
+       <tr class="{% cycle 'odd' 'even' %}">
+       <td style="width:50px;"><img src="{% thumbnail network.image 50x50 crop %}"></td>
+       <td style="line-height:1.5em;"><a href="{% url network-detail network_id=network.id %}">{{ network }}</a> <br />
+            {% if network.city or network.country %}
+                Location <a href="http://maps.google.com/maps?q={{ network.locationquery|urlencode }}&amp;t=h" target="_blank">
+                {% if network.city %} {{ network.city }}{% endif %}
+                {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
+             &#183;                  
+            {% endif %} 
+            <span class="members">{{ network.total_members }} member{{ network.total_members|pluralize }}</span> 
+       </td>
+       <td class="scoretd">{% if network.leaderboard_sq %}<span class="score">{% sq network.leaderboard_sq %}</span>{% endif %}</td>
+    {% endfor %}
+    </table>
+    </div>
+    {% endif %}
+    
+    {% if leaderboard.countries %}    
+    <div id="leaderboard-countries">
+    <h5 class="tabsubstitute">Countries</h5>    
+    <table style="width:100%;">
+    {% for country in leaderboard.countries %}
+       <tr class="{% cycle 'odd' 'even' %}">
+       <td style="width:24px;"><img src="{{ country.iso|iso_flag }}"></td>
+       <td style="line-height:1.5em;"><a href="http://maps.google.com/maps?q={{ country|urlencode }}&amp;t=h" target="_blank">{{ country }}</a><br />
+       <span class="members">{{ country.total_members }} member{{ country.total_members|pluralize }}</span></td>
+       <td class="scoretd">{% if country.leaderboard_percent_correct %}<span class="score">{{ country.leaderboard_percent_correct }}%</span>{% endif %}</td>
+       <td class="scoretd">{% if country.leaderboard_sq %}<span class="score">{% sq country.leaderboard_sq %}</span>{% endif %}</td>
+    {% endfor %}
+    </table>
+    </div>
+    {% endif %}
+
+    </div>
+    
+    </div>
