@@ -24,11 +24,17 @@ def batch_userchallenge_update_sq():
 
     # Random 100 courses
     # FIXME: Fix to something more sensible
-    objects = UserChallenge.objects.order_by('?')[:100]
-
+    # Prioritise those with no SQ value
+    objects = UserChallenge.objects.exclude(percent_complete=0).exclude(percent_correct=None).filter(sq=None)[:100]
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
         o.save()
+
+    objects = UserChallenge.objects.exclude(percent_complete=0).exclude(percent_correct=None).order_by('?')[:50]
+    for o in objects:
+        o.update_sq() # Call SQ recalculation for this course
+        o.save()
+
 
 # Calculate SQ for the userchallenge records with most recently answered questions
 def batch_userchallenge_update_statistics():

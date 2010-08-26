@@ -25,11 +25,16 @@ def batch_userconcept_update_sq():
 
     # Random 100 courses
     # FIXME: Fix to something more sensible
-    objects = UserConcept.objects.order_by('?')[:100]
 
+    objects = UserConcept.objects.exclude(percent_complete=0).exclude(percent_correct=None).filter(sq=None)[:100]
     for o in objects:
         o.update_sq() # Call SQ recalculation for this course
-        o.save()        
+        o.save()
+
+    objects = UserConcept.objects.exclude(percent_complete=0).exclude(percent_correct=None).order_by('?')[:50]
+    for o in objects:
+        o.update_sq() # Call SQ recalculation for this course
+        o.save()
                                
 def batch_userconcept_update_focus():
 
