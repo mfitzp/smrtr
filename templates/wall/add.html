@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ wall }}
+    &raquo; Add
+{% endblock %}
+
+{% block title %}{{ wall }}{% endblock %}
+
+{% block content_title %}<h1>{{ wall }}</h1>{% endblock %}
+
+{% block content %}
+        {% include "_wall.html" %}  
+
+{% endblock %}
+
