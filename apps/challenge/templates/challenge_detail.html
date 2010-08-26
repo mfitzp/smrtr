@@ -52,23 +52,7 @@
         {% endif %}
 
 
-
-        <h5>Leaderboard</h5>
-        <table style="width:100%;">
-        {% for userchallenge in userchallenges %}
-            {% with userchallenge.user as user %}
-            {% with user.get_profile as profile %}
-               <tr class="{% cycle 'odd' 'even' %}"><td style="width:32px;">{% avatar user 32 %}</td>
-               <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
-                    <small>
-                        {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
-                        <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
-                    </small></td>
-               <td style="text-align:center;vertical-align:middle;"><strong>{% sqchange userchallenge.previous_sq userchallenge.sq %}</strong></td></tr>
-            {% endwith %}
-            {% endwith %}
-        {% endfor %}
-        </table>
+        {% include "_leaderboard.html" %}
 
 
         {% if challenge.concepts %}

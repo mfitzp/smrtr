@@ -29,7 +29,7 @@ Location
     {% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }}</span></a>{% endif %}
  &#183;    
 {% endif %}
-{{ network.usernetwork_set.count }} member{{ network.usernetwork_set.count|pluralize }}
+<span class="members">{{ network.usernetwork_set.count }} member{{ network.usernetwork_set.count|pluralize }}</span>
 {% if network.url %}&#183; Web <a href="{{ network.url }}">{{ network.url }}</a>{% endif %}
 </div>                    
 <div id="content-title-sq" title="Members of this network have a combined {% sqdescriptive network.sq %} SQ">{% sqchange 0 network.sq %}</div>

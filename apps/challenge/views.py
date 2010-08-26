@@ -22,6 +22,7 @@ from resources.models import *
 from core.http import Http403
 # External
 from haystack.query import SearchQuerySet
+from countries.models import Country
 
 # MODULE VIEWS
 
@@ -51,11 +52,17 @@ def detail(request, challenge_id):
             challenge.concepts_filtered.append(concept)
     else:
         challenge.concepts_filtered = challenge.concepts.all().order_by('name')
-                    
+          
+    leaderboard = {
+        'members'   : challenge.userchallenge_set.order_by('-sq')[0:5],
+        'networks'  : Network.objects.filter(usernetwork__user__userchallenge__challenge=challenge).annotate(leaderboard_sq=Avg('usernetwork__user__userchallenge__sq'),leaderboard_percent_correct=Avg('usernetwork__user__userchallenge__percent_correct'),total_members=Count('usernetwork__user__userchallenge__percent_correct')).order_by('-leaderboard_sq')[0:5],
+        'countries' : Country.objects.filter(userprofile__user__userchallenge__challenge=challenge).annotate(leaderboard_sq=Avg('userprofile__user__userchallenge__sq'),leaderboard_percent_correct=Avg('userprofile__user__userchallenge__percent_correct'),total_members=Count('userprofile__user__userchallenge__percent_correct')).order_by('-leaderboard_sq')[0:5],
+                    }          
+
 
     context = { 'challenge': challenge, 
                 'userchallenge': userchallenge,
-                'userchallenges': challenge.userchallenge_set.order_by('-sq')[0:12],
+                'leaderboard': leaderboard,
                 'total_members': challenge.users.count(),                
                 # Wall items
                 "wall": challenge.wall,
