@@ -129,7 +129,9 @@
     </div>
     
     <p class="buttonbar">
-        <!-- <span class="button"> <a href="{% url challenge-create %}" class="register">Create custom challenge &raquo;</a></span> -->
+    {% if request.user.is_superuser or request.user.is_staff %}
+         <span class="button"> <a href="{% url challenge-create %}" class="register">Create challenge &raquo;</a></span>       
+    {% endif %}
         <span class="button"><a href="{% url challenge-search %}" class="register">Add challenges &raquo;</a></span>       
     </p>
 
