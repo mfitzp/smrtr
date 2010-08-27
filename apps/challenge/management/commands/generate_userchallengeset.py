@@ -9,7 +9,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         for userchallenge in UserChallenge.objects.all():
-            if userchallenge.userchallengeset = None:
+            if userchallenge.userchallengeset == None:
                 userchallenge.generate_challengeset()
                 userchallenge.save()
 
