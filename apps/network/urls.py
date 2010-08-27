@@ -16,6 +16,8 @@ urlpatterns = patterns('',
 
     url(r'^(?P<network_id>\d+)/$', 'network.views.detail', name='network-detail'  ),
     url(r'^(?P<network_id>\d+)/register/$', 'network.views.register', name='network-register'  ),
+    url(r'^(?P<network_id>\d+)/unregister/$', 'network.views.unregister',  name='network-unregister'  ),    
+    
     url(r'^(?P<network_id>\d+)/members/$', 'network.views.members', name='network-members'  ),
     url(r'^(?P<network_id>\d+)/homesweethome/$', 'network.views.set_home', name='network-set-home'  ),
     

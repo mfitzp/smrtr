@@ -63,27 +63,41 @@ def register(request, network_id):
     if request.POST:
         un = UserNetwork()
         un.user = request.user
+        un.network = network
         
         try:
-            un.network = network
-            
+            un.save()
         except:
-            # Error when saving data, will need to redisplay form: error notifications here
-            assert False, un
-            pass
-
+            request.user.message_set.create(
+                message=_(u"You are already a member of ") + network.name)
         else:
             # Write to database 
-            un.save()
             request.user.message_set.create(
                 message=_(u"You are now a member of ") + network.name)
             if 'success_url' in request.POST:
                 return HttpResponseRedirect(request.POST['success_url'])
             else:
-                return detail(request, network_id)
+                return redirect('network-detail', network_id=network.id)
 
     return detail(request, network_id)
 
+
+# Remove a user from the specified network
+@login_required
+def unregister(request, network_id):
+
+    network = get_object_or_404(Network, pk=network_id)
+    usernetwork = get_object_or_404(UserNetwork, network=network, user=request.user)
+
+    if request.method == 'POST':
+        usernetwork.delete()
+
+        if 'next' in request.POST:
+            return HttpResponseRedirect(request.POST['next'])
+        else:
+            return redirect('network-detail', network_id=network.id)
+
+    return redirect('network-detail', network_id=network.id)
 
 
 def members(request, network_id):

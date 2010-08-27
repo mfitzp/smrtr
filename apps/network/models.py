@@ -120,6 +120,16 @@ class Network(models.Model):
 class UserNetwork(models.Model):
     def __unicode__(self):
         return self.network.name
+        
+    def delete(self, *args, **kwargs):
+        # Check if leaving home network
+        profile = self.user.get_profile()
+        if profile.network == self.network:
+            profile.network = None # Set empty
+        profile.save()
+            
+        super(UserNetwork, self).delete(*args, **kwargs)        
+        
     user = models.ForeignKey(User)
     network = models.ForeignKey(Network)
     start_date = models.DateTimeField(editable = False, auto_now_add = True) # Join date for the network

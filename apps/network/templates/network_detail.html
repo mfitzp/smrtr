@@ -132,5 +132,10 @@ Location
                 <input type="submit" value="Set as home network">
             </form>
         {% endif %}
+        {% if usernetwork %}
+        <p><form action="{% url network-unregister network_id=network.id %}" method="post">
+        <input type="submit" value="Leave network" onclick="confirm('Are you sure you want to leave this network?')">
+        </form></p>
+        {% endif %}
         
         {% endblock %}
