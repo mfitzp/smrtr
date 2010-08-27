@@ -62,7 +62,7 @@
             </div></div>
 
             {% else %}
-                <div class="object {% cycle 'odd' 'even' %} {% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
+                <div id="dashboard-challenge-{{ challenge.id }}" class="object {% cycle 'odd' 'even' %} {% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
                     <div class="object-emblems"> 
                         <div class="emblem-new" title="New challenge"></div> 
                     </div>

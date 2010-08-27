@@ -91,7 +91,7 @@
                <td style="line-height:1.5em;"><a href="{% url user-profile user_id=user.id %}">{{ profile.fullname }}</a><br />
                     <small>
                         {% if profile.country %}<img src="{{ profile.country.iso|iso_flag }}"> <a href="http://maps.google.com/maps?q={{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.country }}</a> &#183; {% endif %}
-                        <a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>
+                        {% if profile.network %}<a href="{% url network-detail network_id=profile.network.id %}">{{ profile.network }}</a>{% endif %}
                     </small></td>
                <td style="text-align:center;vertical-align:middle;"><span class="percent">{{ ucs.percent_correct|floatformat:"0" }}%</span></td>
             {% endwith %}
