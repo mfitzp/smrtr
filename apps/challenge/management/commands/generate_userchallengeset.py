@@ -8,8 +8,7 @@ class Command(BaseCommand):
     help = "Update concept total_question counts (post db import)"
     
     def handle(self, *args, **options):
-        for userchallenge in UserChallenge.objects.all():
-            if userchallenge.userchallengeset == None:
-                userchallenge.generate_challengeset()
-                userchallenge.save()
+        for userchallenge in UserChallenge.objects.filter(challengeset=None):
+            userchallenge.generate_challengeset()
+            userchallenge.save()
 
