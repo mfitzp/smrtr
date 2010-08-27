@@ -22,8 +22,8 @@ from wall.models import Wall
 
 CHALLENGES_MIN_ACTIVE = 5
 
-CHALLENGE_TTC_MINIMUM = 60 # Minimum time in seconds for a challenge time limit
-CHALLENGE_TTC_FAIRNESS_MULTIPLIER = 1.5 # Multiple avg by this value to get 'fair' limit
+CHALLENGE_TTC_MINIMUM = 180 # Minimum time in seconds for a challenge time limit
+CHALLENGE_TTC_FAIRNESS_MULTIPLIER = 3 # Multiple avg by this value to get 'fair' limit
 
 # Network = Course now e.g. 'Network' for AQA Biology
 # Below this challenges are the basis of study on that challenges may have a home network, be tied to a specific network, or freely open
