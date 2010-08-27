@@ -3,6 +3,7 @@ from django.contrib.admin import widgets
 # Smrtr
 from network.models import Network
 from challenge.models import Challenge
+from concept.models import Concept
 # External
 from haystack.forms import SearchForm
 
@@ -11,7 +12,7 @@ class ChallengeForm(forms.ModelForm):
 
     class Meta:
         model = Challenge
-        fields = ['name', 'description', 'network', 'concepts']
+        fields = ['name', 'description', 'image', 'network', 'concepts']
 
     def __init__(self, request, *args, **kwargs):
         super(ChallengeForm, self).__init__(*args, **kwargs)    

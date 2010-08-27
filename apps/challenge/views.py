@@ -54,9 +54,9 @@ def detail(request, challenge_id):
         challenge.concepts_filtered = challenge.concepts.all().order_by('name')
           
     leaderboard = {
-        'members'   : challenge.userchallenge_set.order_by('-sq')[0:5],
-        'networks'  : Network.objects.filter(usernetwork__user__userchallenge__challenge=challenge).annotate(leaderboard_previous_sq=Avg('usernetwork__user__userchallenge__previous_sq'),leaderboard_sq=Avg('usernetwork__user__userchallenge__sq'),leaderboard_percent_correct=Avg('usernetwork__user__userchallenge__percent_correct'),total_members=Count('usernetwork__user__userchallenge__percent_correct')).order_by('-leaderboard_sq')[0:5],
-        'countries' : Country.objects.filter(userprofile__user__userchallenge__challenge=challenge).annotate(leaderboard_previous_sq=Avg('userprofile__user__userchallenge__previous_sq'),leaderboard_sq=Avg('userprofile__user__userchallenge__sq'),leaderboard_percent_correct=Avg('userprofile__user__userchallenge__percent_correct'),total_members=Count('userprofile__user__userchallenge__percent_correct')).order_by('-leaderboard_sq')[0:5],
+        'members'   : challenge.userchallenge_set.exclude(percent_complete=0).order_by('-sq')[0:5],
+        'networks'  : Network.objects.exclude(usernetwork__user__userchallenge__percent_complete=0).filter(usernetwork__user__userchallenge__challenge=challenge).annotate(leaderboard_previous_sq=Avg('usernetwork__user__userchallenge__previous_sq'),leaderboard_sq=Avg('usernetwork__user__userchallenge__sq'),leaderboard_percent_correct=Avg('usernetwork__user__userchallenge__percent_correct'),total_members=Count('usernetwork__user__userchallenge__percent_correct')).order_by('-leaderboard_sq')[0:5],
+        'countries' : Country.objects.exclude(userprofile__user__userchallenge__percent_complete=0).filter(userprofile__user__userchallenge__challenge=challenge).annotate(leaderboard_previous_sq=Avg('userprofile__user__userchallenge__previous_sq'),leaderboard_sq=Avg('userprofile__user__userchallenge__sq'),leaderboard_percent_correct=Avg('userprofile__user__userchallenge__percent_correct'),total_members=Count('userprofile__user__userchallenge__percent_correct')).order_by('-leaderboard_sq')[0:5],
                     }          
 
 
@@ -135,9 +135,14 @@ def create(request):
 
         if form.is_valid(): # All validation rules pass
             challenge = form.save()
-            return redirect(challenge.get_absolute_url()) # Redirect to default view for the concept
+            challenge.save()
+            
+            # Add ourselves to the challenge
+            UserChallenge(user=request.user,challenge=challenge).save()
+            
+            return redirect(challenge.get_absolute_url()) # Redirect to default view for the challenge
     else:
-        form = ChallengeForm(request, request.GET) # Allow prepopulate  
+        form = ChallengeForm(request)
    
     context = { 
         'form': form,
