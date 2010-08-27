@@ -198,7 +198,7 @@ FACEBOOK_INTERNAL = True
 SQ_FAIR_RANGE = 20
 SQ_PINNING_WEIGHT = 0.1
 # Number of weeks of history to include in SQ calculation
-SQ_CALCULATE_HISTORY = datetime.timedelta(weeks=26) 
+SQ_CALCULATE_HISTORY = datetime.timedelta(weeks=26) # 6 months
 
 HAYSTACK_SITECONF = 'search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'

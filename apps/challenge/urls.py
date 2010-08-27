@@ -19,7 +19,6 @@ urlpatterns = patterns('',
     # Challenge creation and editing
     url(r'^create/$', 'challenge.views.create',  name='challenge-create'  ),
     url(r'^(?P<challenge_id>\d+)/edit/$', 'challenge.views.edit',  name='challenge-edit'  ),
-    url(r'^(?P<challenge_id>\d+)/concepts/add/$', 'challenge.views.detail',  name='challenge-add-concepts'  ),
 
     url(r'^search/$', 'challenge.views.search',  name='challenge-search'  ),
 
@@ -29,5 +28,7 @@ urlpatterns = patterns('',
     url(r'^(?P<challenge_id>\d+)/do/submit/$', 'challenge.views.do_submit', name='challenge-do-submit'),
     url(r'^(?P<challenge_id>\d+)/newset/$', 'challenge.views.newset', name='challenge-newset'),
     url(r'^(?P<challenge_id>\d+)/newset/ajax/$', 'challenge.views.newset_ajax', name='challenge-newset-ajax'),
+
+    url(r'^(?P<challenge_id>\d+)/concepts/add/', 'challenge.views.add_concepts', name='challenge-add-concepts' ),
 
 )

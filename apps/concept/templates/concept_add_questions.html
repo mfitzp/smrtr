@@ -30,17 +30,16 @@
     </form>
         {% if query %}
             <form method="post" action="?q={{ query }}">
-            <table>
+            <table style="width:100%;">
             {% for result in page_obj.object_list %}
             {% with result.object as question %}
             
             
                 {% if question %}
-                <tr>
-                    <td><input type="checkbox" name="addquestion" value="{{ question.id }}" {% if concept in question.concepts.all %}checked disabled{% endif %}></td>
-                    <th><a href="{{ result.object.get_absolute_url }}"></th>
+                <tr class="{% cycle 'odd' 'even' %}">
+                    <td style="width:16px;"><input type="checkbox" name="addquestion" value="{{ question.id }}" {% if concept in question.concepts.all %}checked disabled{% endif %}></td>
                     <td><a href="{% url question-detail question_id=question.id %}">{{ question.content }}</a></td>
-                    <td>{% sqchange 100 question.sq %}</td>
+                    <td style="text-align:right;">{% sqdifficulty request.user.get_profile.sq question.sq %}</td>
                 </tr>
                 {% endif %}
             {% endwith %}

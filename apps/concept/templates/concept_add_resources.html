@@ -42,13 +42,13 @@
     </form>
         {% if query %}
             <form method="post" action="?q={{ query }}">
-            <table>
+            <table style="width:100%;">
             {% for result in page_obj.object_list %}
             {% with result.object as resource %}
             
                 {% if resource %}
-                <tr>
-                    <td><input type="checkbox" name="addresource" value="{{ resource.id }}" {% if concept in resource.concepts.all %}checked disabled{% endif %}></td>
+                <tr class="{% cycle 'odd' 'even' %}">
+                    <td style="width:16px;"><input type="checkbox" name="addresource" value="{{ resource.id }}" {% if concept in resource.concepts.all %}checked disabled{% endif %}></td>
                     <td>
                     {% ifequal resource.namespace 'isbn' %}
                         <img src="{{ resource.thumbnail }}">

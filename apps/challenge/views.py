@@ -485,3 +485,68 @@ def newset_ajax(request, challenge_id):
 
 
 
+
+
+# Add concepts to the challenge
+# TODO: Provide mechanism for deletion
+#@login_required
+def add_concepts(request, challenge_id):
+    from concept.forms import ConceptSearchForm
+    
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    
+    # Get usernetwork of the concept's 'home network'
+    # must be a member of the network to add questions
+    # additional limitations may be set by the network
+
+    if request.POST.get('addconcept'):
+        
+        cids = request.POST.getlist('addconcept')
+        
+        for cid in cids:
+            challenge.concepts.add( Concept.objects.get( pk=cid ) )
+            
+        # Update total_question count for this concept
+        # used to highlight empty concepts and to exclude them from challenges
+        # challenge.total_questions = challenge.concepts.count()
+        challenge.save()
+        
+        messages.success( request, _(u"%s concepts added to %s" % ( len(cids) , challenge.name ) ) )
+        
+        #if request.POST.get('next'):
+            
+
+    if request.GET.get('q'):
+        querydata = request.GET
+    else:
+        querydata = {'q': challenge.name}
+
+    sqs = SearchQuerySet().models(Concept)
+
+    form = ConceptSearchForm(querydata, searchqueryset=sqs, load_all=True )
+    results = []
+    
+    if form.is_valid():
+        query = form.cleaned_data['q']
+        results = form.search()
+
+    paginator = Paginator(list(results), 10)
+        
+    try:
+        page_obj = paginator.page(int(request.GET.get('page', 1)))
+    except (ValueError, EmptyPage, InvalidPage): 
+        raise Http404("No such page of results!")    
+
+    context = { 
+        'form': form,
+        'page_obj': page_obj,
+        'paginator': paginator,
+        'query': query,
+        'challenge': challenge, 
+    }
+
+    return render_to_response('challenge_add_concepts.html', context, context_instance=RequestContext(request))    
+
+
+
+
