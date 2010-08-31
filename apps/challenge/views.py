@@ -164,6 +164,7 @@ def add_questions(request, challenge_id):
         # Update total_question count for this challenge
         # used to highlight empty challenges and to exclude them from challenges
         challenge.total_questions = challenge.questions.count()
+        challenge.update_statistics()
         challenge.save()
         
         messages.success( request, _(u"%s questions added to %s" % ( len(qids) , challenge.name ) ) )
