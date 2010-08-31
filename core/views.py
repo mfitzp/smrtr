@@ -33,7 +33,7 @@ def home(request):
         userpackages = request.user.userpackage_set.all()
         userchallenges = request.user.userchallenge_set.all()
         
-        userchallengesactive = userchallenges.exclude(challenge__total_questions=0).filter(focus__gt=80).order_by('-focus')[0:10]
+        userchallengesactive = userchallenges.exclude(challenge__total_questions=0).filter(focus__gt=80).order_by('-focus')[0:5]
         userchallengesinactive = userchallenges.exclude(challenge__total_questions=0).filter(focus__lt=80).order_by('-focus')[0:5]
 
         # Flag True/False whether packages exist at all for this user

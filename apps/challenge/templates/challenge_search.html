@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load countries_tags %}
 {% load pagination_tags %}
 {% load thumbnail %}
@@ -9,6 +10,7 @@
     &raquo; Search
 {% endblock %}
 
+{% cycle 'clear' '' as clearme %}
 
 {% block content %}
 
@@ -38,7 +40,7 @@
                     {% if object %}
                     {% if result.model_name = 'challenge' %}
                     {% with object as challenge %}
-                <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme">
+                <div class="object {% cycle 'odd' 'even' %} {% cycle clearme %} stackme">
                     <div class="object-emblems">  
                     </div>
                     <div class="object-checkbox"><input type="checkbox" name="addchallenge" value="{{ challenge.id }}" {% if challenge in request.user.challenges.all %}checked disabled{% endif %}></div>
@@ -55,7 +57,7 @@
                     {% endwith %}
                     {% else %}
                     {% with object as package %}                    
-                <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme emblem-trigger-package">
+                <div class="object {% cycle 'odd' 'even' %} {% cycle clearme %} stackme emblem-trigger-package">
                     <div class="object-emblems">
                     </div>
                     <div class="object-checkbox"><input type="checkbox" name="addpackage" value="{{ package.id }}" {% if package in request.user.packages.all %}checked disabled{% endif %}></div>
