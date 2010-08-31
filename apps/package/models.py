@@ -103,7 +103,8 @@ class UserPackage(models.Model):
         # Clean up removing challenges that the user is *only* studying on this package
         userchallenges = UserChallenge.objects.filter(
                     user=self.user,
-                    challenge__package=self.package ,
+                    challenge__userchallenge__user=self.user,
+                    challenge__package=self.package,
                     ).annotate(n=Count('challenge__userchallenge')).exclude(n__gt=1).delete()
         super(UserPackage, self).delete(*args, **kwargs)
 
