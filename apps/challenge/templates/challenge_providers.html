@@ -10,26 +10,23 @@
     &raquo; Providers
 {% endblock %}
 
-{% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
+{% block content_title %}<h1>{{challenge}} Providers</h1>{% endblock %}
 
 {% block content %}
 
     {% if providers %}
-        <p>This challenge is available for study on the following networks:</p>
+        <p>This challenge is available for study on the following packages:</p>
         <table>
-        {% for network in providers %}
+        {% for package in providers %}
             <tr>
-                <th><a href="{% url network-detail network_id=network.id %}">{{ network }}</a></th>
-                <td><a href="{% url network-detail network_id=network.id %}" class="network network{{network.type}}">{{ network.get_type_display }}</a></td>
-                <td>{{ network.city }}</td>
-                <td>{% if network.country %} <span class="country" style="background-image:url('{{ network.country_id|iso_flag }}')">{{ network.country }} </span> {% endif %}</td>
+                <th><a href="{% url package-detail package_id=package.id %}" class="package">{{ package }}</a></th>
             </tr>
 
         {% endfor %}
         </table>                
         
     {% else %}
-        <p>No networks are currently offering this concept for study.</p>
+        <p>No packages are currently offering this challenge for study.</p>
     {% endif %}
 
 {% endblock %}

@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %} 
     {{ block.super }}
-    &raquo; Challenge
+    &raquo; Package
     &raquo; Search
 {% endblock %}
 
@@ -13,8 +13,9 @@
 {% block content %}
 
     <div class="focus"><h4>Get challenges</h4><div class="focus-body">
-    <p>Challenges are collections of questions and resources for study on <strong>smrtr</strong>. 
-    <p>Search for them by entering your interests below, and then activate them to get started!</p>
+    <p>Challenges are collections of questions and resources for study on <strong>smrtr</strong>.
+    Search for them by entering your interests below, and then activate them to get started!
+    Popular challenges have been grouped into packages (highlighted green) to make activation even easier.</p>
     <form method="get" action="?q={{query}}">
         <table>
             <tr>
@@ -29,13 +30,14 @@
     </div></div>
 
         {% if query %}
-            <form method="post" action="?q={{query}}">
+            <form method="post" action="?q={{query}}&next={{ next }}">
             <input type="hidden" name="q" value="{{ query }}">
             <div style="margin-top:1em;">
             {% for result in page_obj.object_list %}
-                {% with result.object as challenge %}
-                    {% if challenge %}
-
+                {% with result.object as object %}
+                    {% if object %}
+                    {% if result.model_name = 'challenge' %}
+                    {% with object as challenge %}
                 <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme">
                     <div class="object-emblems">  
                     </div>
@@ -44,10 +46,32 @@
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
                     {% if challenge.description %}<div class="object-content">{{ challenge.description|truncatewords:"25" }}</div>{% endif %}
                     <div class="object-meta">
-                        {% if challenge.network %}from <a href="{% url network-detail challenge.network.id %}">{{ challenge.network }}</a>{% endif %}
-                        &#183; {{ challenge.users.count }} member{{ challenge.users.count|pluralize }}
+                        <span class="questions">{{ challenge.total_questions }} questions</span> &#183;
+                        {% if challenge.total_resources > 0 %}<span class="resources">{{ challenge.total_resources }} resources</span> &#183;{% endif %}
+                        {% if challenge.network %}from <a href="{% url network-detail challenge.network.id %}">{{ challenge.network }}</a> &#183; {% endif %}
+                        {{ challenge.users.count }} member{{ challenge.users.count|pluralize }}
                     </div>
                 </div>
+                    {% endwith %}
+                    {% else %}
+                    {% with object as package %}                    
+                <div class="object {% cycle 'odd' 'even' %} {% cycle 'clear' '' %} stackme emblem-trigger-package">
+                    <div class="object-emblems">
+                    </div>
+                    <div class="object-checkbox"><input type="checkbox" name="addpackage" value="{{ package.id }}" {% if package in request.user.packages.all %}checked disabled{% endif %}></div>
+                    <div class="object-image"><img src="{% thumbnail package.image 50x50 crop %}"></div>
+                    <div class="object-title"><a href="{% url package-detail package_id=package.id %}">{{ package }}</a></div>
+                    {% if package.description %}<div class="object-content">{{ package.description|truncatewords:"25" }}</div>{% endif %}
+                    <div class="object-meta">
+                        Contains {{package.challenges.count }} challenge{{package.challenges.count|pluralize }}
+                        &#183; {% if package.network %}from <a href="{% url network-detail package.network.id %}">{{ package.network }}</a>{% endif %}
+                        &#183; {{ package.users.count }} member{{ package.users.count|pluralize }}
+                    </div>
+                </div>         
+                    {% endwith %}                           
+                    {% endif %}
+
+
 
                     {% endif %}
                 {% endwith %}
@@ -55,17 +79,17 @@
             {% endfor %}
             </div>
         <br class="clear" />
-        <p class="buttonbar"><input type="submit" value="Activate selected challenges &raquo;"></p>
+        <p class="buttonbar"><input type="submit" value="Activate selected packages &raquo;"></p>
         </form>        
 
-        <!-- <p>Don't find your challenge listed? <a href="#">Create it!</a></p> -->
+        <!-- <p>Don't find your package listed? <a href="#">Create it!</a></p> -->
 
         {% else %}
             {# Show some example queries to run, maybe query syntax, something else? #}
         {% endif %}
 
         {% if next %}
-            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any challenges &raquo;</a></span></p>
+            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any packages &raquo;</a></span></p>
         {% endif %}
 
 

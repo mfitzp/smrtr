@@ -27,7 +27,6 @@
 
         {% for userchallenge in userchallengesactive %}
             {% with userchallenge.challenge as challenge %}
-            {% with userchallenge.challengeset as challengeset %}
             {% if forloop.first %}
             <div id="challenges-focus" class="{% if userchallenge.is_new %}emblem-trigger-new{% endif %}">
             <div class="focus-body">
@@ -36,26 +35,20 @@
                 <div class="emblem-new" title="New challenge"></div> 
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
-            <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>
-                <p>{{ challenge.description|truncatewords:"15" }}&nbsp;</p>
+            <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5><br />
+            {{ challenge.description|truncatewords:"25" }}
             </div>
             <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct at {{ userchallenge.percent_complete }}% complete">
-                {% percentbar userchallenge.percent_complete %}
-                {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}
+                    {% percentbar userchallenge.percent_correct 'pc-correct' %}
             </div>
-            
             <div class="minifocus"><h5>Next Goal</h5>
-                {% include "_challengeset_meta.html" %}
-            </div>      
-                     
+            {% include "_challenge_meta.html" %}</div>
             <div class="buttonbox">
 
-                    <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
-                    {% if challengeset.total_resources > 0 %}
-                        <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
+                    {% if challenge.total_resources > 0 %}
+                    <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
                     {% endif %}
-
-                        <span class="button button_hi"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %} Challenge</a></span>
+                    <span class="button button_hi"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start challenge</a></span>
 
             </div>
          
@@ -68,34 +61,26 @@
                     </div>
                     <div class="object-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
-                    <div class="object-content">                    
-                        <small>{{ challenge.description|truncatewords:"10" }}&nbsp;</small>
+                    <div class="object-content">     
+                         <small>{{ challenge.description|truncatewords:"10" }}</small>
                         <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct at {{ userchallenge.percent_complete }}% complete">
-                            {% percentbar userchallenge.percent_complete %}
-                            {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}
+                            {% percentbar userchallenge.percent_correct 'pc-correct' %}
                         </div>
                     </div>
-                    <div class="object-meta">
-                        {% include "_challengeset_meta.html" %}
-                    </div>
+                    <div class="object-meta">{% include "_challenge_meta.html" %}</div>
                     <div class="object-buttons">
                         <div>
-                        <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/sm_refresh.png" title="I don't like the look of this!"></form>
-
-                        {% if challengeset.total_resources > 0 %}
-                            <span class="minibutton"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
+                        {% if challenge.total_resources > 0 %}
+                        <span class="minibutton"><a href="{% url challenge-prepare challenge_id=userchallenge.challenge.id %}">Prepare</a></span>
                         {% endif %}
-
-                            <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %}</a></span>
-
+                        <span class="minibutton"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">Start</a></span>
                         </div>
                     </div>
                 </div>
                 
 
             {% endif %}
-
-            {% endwith %}            
+        
             {% endwith %}                        
         {% empty %}
         
@@ -110,12 +95,10 @@
         </div>
         <div id="challenges-complete">
         <table>
-       {% for userchallenge in userchallengescomplete %}
+       {% for userchallenge in userchallengesinactive %}
         
             <tr class="{% cycle zebra %}">
-                <td class="dbcurriculumconcept challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a>
-                <br /><small>{{ userchallenge.challenge.description }}</small>
-                </td>
+                <td class="dbcurriculumchallenge challengestatus{{ userchallenge.status }}"><a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}">{{ userchallenge }}</a></td>
                     <td><span class="users">{{ userchallenge.challenge.userchallenge_set.count }}</span></td>
                 <td style="text-align:right">{% sqchange userchallenge.previous_sq userchallenge.sq %} </td>
                 <td>{{ userchallenge.last_access|timesince }}</td>
@@ -129,10 +112,8 @@
     </div>
     
     <p class="buttonbar">
-    {% if request.user.is_superuser or request.user.is_staff %}
-         <span class="button"> <a href="{% url challenge-create %}" class="register">Create challenge &raquo;</a></span>       
-    {% endif %}
-        <span class="button"><a href="{% url challenge-search %}" class="register">Add challenges &raquo;</a></span>       
+        <span class="button"> <a href="{% url challenge-create %}" class="register">Create your own challenge &raquo;</a></span>       
+        <span class="button"><a href="{% url challenge-search %}?next=/" class="register">Add challenges &raquo;</a></span>       
     </p>
 
     {% else %}
@@ -143,6 +124,22 @@
     {% endif %}
 
     </div>
+
+
+
+
+        <h5>Packages</h5>
+        {% if userpackages %}
+            <div class="stackcontainer">
+            {% for userpackage in userpackages.all %}
+                <div class="stack package">
+                <a href="{% url package-detail package_id=userpackage.package.id %}">{{ userpackage }}</a>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>Activate packages of challenges to get access to track progress across them as a whole.</p>
+        {% endif %}
 
         <h5>Networks</h5>
         {% if usernetworks %}

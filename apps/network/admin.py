@@ -4,11 +4,11 @@ from network.models import *
 
 
 class NetworkAdmin(admin.ModelAdmin):
-    # filter_horizontal = ('concepts',)
+    # filter_horizontal = ('challenges',)
     raw_id_fields = ('parent',)
     
 class UserNetworkAdmin(admin.ModelAdmin):
-    # filter_horizontal = ('concepts',)
+    # filter_horizontal = ('challenges',)
     raw_id_fields = ('network',)    
 
 admin.site.register(Network, NetworkAdmin)

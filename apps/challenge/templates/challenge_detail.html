@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 {% load sq_tags %}
 {% load core_tags %}
-{% load avatar_tags %}
-{% load countries_tags %}
-
-{% cycle 'odd' 'even' as zebra %}
 
 {% block breadcrumbs %} 
     {{ block.super }}
     {% if challenge.network %}
-    &raquo; <a href="{% url network-detail network_id=challenge.network.id %}">{{ challenge.network }}</a>
+        &raquo; <a href="{% url network-detail network_id=challenge.network.id %}">{{ challenge.network }}</a>
     {% endif %}
     &raquo; {{ challenge }}
 {% endblock %}
@@ -17,57 +13,61 @@
 {% block title %}{{challenge}}{% endblock %}
 
 {% block content_title %}{% include "_challenge_header.html" %}{% endblock %}
-{% block progressbar %}{% include "_challenge_progress.html" %}{% endblock %}
+
+{% block progressbar %}
+{% if userchallenge %}
+{% percentbar userchallenge.percent_correct 'pc-correct' %}
+<div id="progressbar-content" title="{{ userchallenge.percent_correct|default_if_none:'tbc' }}%">
+{% if userchallenge.is_complete %}Latest attempt {{ userchallenge.started|timesince }} ago{% else %}Not started{% endif %}
+</div>
+<div id="progressbar-sq" title="Your challenge SQ is {{ userchallenge.sq }}">{% sqchange userchallenge.previous_sq userchallenge.sq %}</div>
+{% endif %}
+{% endblock %}
 
 {% block content_left %}
 
     {% if challenge %}
-
+    
         <blockquote>{{ challenge.description }}</blockquote>
 
         {% if userchallenge %}
-            {% with userchallenge.challengeset as challengeset %}
-            <div class="minifocus"><h5>Next Goal</h5>
-                {% include "_challengeset_meta.html" %}
-            </div>  
-            <div class="buttonbox">
-                <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}?next={{ challenge.get_absolute_url|urlencode }}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
-                {% if challengeset %}{% if challengeset.total_resources > 0 %}                
-                <span class="button"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
-                {% endif %}{% endif %}
-                <span class="button"><a href="{% url challenge-do challenge_id=userchallenge.challenge.id %}" class="startlink">{% if userchallenge.percent_complete == 0 %}Start{% else %}Continue{% endif %} Challenge</a></span>
+            {% if challenge.total_questions > 0 %}
+
+            <div class="minifocus"><h5>Attempt This Challenge</h5>
+                {% include "_challenge_meta.html" %}
             </div>
-            {% endwith %}
-       
+            <div class="buttonbox">
+                {% if challengeset %}{% if challenge.total_resources > 0 %}                
+                <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
+                {% endif %}{% endif %}
+                <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Start challenge</a></span>
+            </div>
+            
+        {% else %}  
+            <p class="notice">There are no questions currently available, add some first and then you can try them out!</p>
+                  
+          {% endif %}  
+
         {% else %}
+
             <div class="focus"><h4>Activate challenge</h4><div class="focus-body">
             <p>Activate this challenge to start studying!</p>
             <!-- Registration form -->
-            <form action="{% url challenge-register challenge_id=challenge.id %}" method="post">
+            <form action="{% url challenge-register challenge_id=challenge.id challenge_id=challenge.id%}" method="post">
             <input type="hidden" name="submit" value="1" />
-            {% if next %}<input type="hidden" name="next" value="{{next}}" />{% endif %}
             &nbsp;<input type="submit" value="Activate '{{challenge}}' &raquo;" />
             </form>
             </div></div>
+
         {% endif %}
 
 
-        {% include "_leaderboard.html" %}
+        <h5>Questions & Resources</h5>
+        <p>
+            There are <strong>{{ challenge.questions.count }} question{{ challenge.questions.count|pluralize }}</strong> and <strong>{{ challenge.resources.count }} resource{{ challenge.resources.count|pluralize }}</strong> available for {{ challenge }}. You can help yourself and others by <a href="{% url challenge-add-questions challenge_id=challenge.id %}" class="questionlink">Adding Questions</a> or <a href="{% url challenge-add-resources challenge_id=challenge.id %}" class="questionlink">Adding Resources</a> now.
+        </p>
 
-
-        {% if challenge.concepts %}
-        <h5>Concepts</h5>
-
-        <div class="stackcontainer">
-        {% for concept in challenge.concepts_filtered %}
-            <div class="stack concept">{% if concept.userconcept %}{% percentbar concept.userconcept.percent_complete %}{% percentbar concept.userconcept.percent_complete_correct 'pc-correct' %}{% endif %}
-            <a href="{% url concept-detail concept_id=concept.id %}" class="{% if concept.userconcept.is_active %}active{% endif %}" title="{% if concept.userconcept %}{{ concept.userconcept.percent_correct|default_if_none:'tbc' }}% at {{ concept.userconcept.percent_complete }}%{% endif %}">{{ concept }}</a>
-            </div>
-        {% endfor %}
-        </div>                
-            
-        {% endif %}
-
+        {% include "_memberships.html" %}
 
     {% else %}
         <p>No curriculum information available.</p>
@@ -76,15 +76,15 @@
 {% endblock %}
 
 {% block content_right %}
-{% include "_wall.html" %}
+        {% include "_wall.html" %}
+
 {% with challenge as obj %}{% include "_social.html" %}{% endwith %}
 
-{% if userchallenge %}
 <h5>Management</h5>
-<form action="{% url challenge-unregister challenge_id=challenge.id %}" method="post">
-<input type="submit" value="Remove yourself from this challenge" onclick="confirm('Are you sure you want to stop this challenge?')">
-</form>
-{% endif %}
+<div class="buttonbar left">
+<span class="button"><a href="{% url challenge-add-questions challenge_id=challenge.id %}" class="questionlink">Add Questions</a></span>
+<span class="button"><a href="{% url challenge-add-resources challenge_id=challenge.id %}" class="questionlink">Add Resources</a></span>
+<span class="button"><a href="{% url challenge-edit challenge_id=challenge.id %}">Edit</a></span>
+</div>
 
 {% endblock %}
-

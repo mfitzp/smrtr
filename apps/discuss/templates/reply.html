@@ -7,7 +7,7 @@
     {{ block.super }}
     &raquo; <a href="{% url discuss_forum forum_id=thread.forum.id %}">{{ thread.forum }}</a>
     &raquo; <a href="{% url discuss_thread thread_id=thread.id %}">{{ thread }}</a>
-    &raquo; Reply to challenge
+    &raquo; Reply to package
 {% endblock %}
 
 {% block content_title %}<h1>{{thread}}</h1>{% endblock %}

@@ -6,13 +6,12 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; Challenge
-    &raquo;
+    &raquo; 
     {% if challenge.name %}
-        {{ challenge.name }}
-        &raquo; Edit
+        {{ challenge.name }} &raquo; Edit
     {% else %}
         Create new challenge
-    {% endif %}    
+    {% endif %}     
 {% endblock %}
 
 {% block title %}
@@ -32,7 +31,7 @@
 {% endblock %}
 
 {% block content %}
-
+<p>Enter a name and description below, along with an optional image to show in listings. Once you save you can add your questions!</p>
     {% include "_form.html" %}
  
 {% endblock %}

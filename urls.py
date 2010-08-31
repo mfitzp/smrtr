@@ -12,8 +12,8 @@ handler500 = 'core.views.error500' # Override default handler to pass MEDIA_URL
 sitemaps = {
     # Structure
     'networks': NetworkSitemap,
-    'challenges': ChallengeSitemap, 
-    'concepts': ConceptSitemap,
+    'packages': PackageSitemap, 
+    'challenges': ChallengeSitemap,
     # Content
     'questions': QuestionSitemap, 
     # Users
@@ -42,8 +42,8 @@ urlpatterns = patterns('',
     #(r'^logout/$', 'spenglr.core.views.logouthandler'),
 
     (r'^network/', include('network.urls')),
+    (r'^package/', include('package.urls')),
     (r'^challenge/', include('challenge.urls')),
-    (r'^concept/', include('concept.urls')),
     (r'^resources/', include('resources.urls')),    
     (r'^questions/', include('questions.urls')),
 

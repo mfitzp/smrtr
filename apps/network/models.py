@@ -107,8 +107,8 @@ class Network(models.Model):
     wall = models.OneToOneField(Wall, editable = False, null = True)
     # Parent network, courses at universities, or any other hierarchies stuff
     parent = models.ForeignKey('Network', null = True, blank = True)
-    # Challenges offered on this network - reverse from challenge
-    # challenges = models.ManyToManyField('Challenge')
+    # Packages offered on this network - reverse from package
+    # packages = models.ManyToManyField('Package')
     image = ThumbnailerImageField(max_length=255, upload_to=network_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
 
     created = models.DateTimeField(auto_now_add = True)

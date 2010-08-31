@@ -1,0 +1,11 @@
+{{ object.name }}
+{{ object.description }}
+
+{% for challenge in object.challenges.all %}
+    {{ challenge.name }}
+{% endfor %}
+
+{{ object.network }}
+{# id for boosting #}
+network{{ object.network.id }} 
+

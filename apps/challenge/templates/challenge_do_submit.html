@@ -32,20 +32,15 @@
             <a href="{% url challenge-prepare challenge_id=challenge.id %}">do a bit of studying</a>
             or <a href="{% url home %}">try something completely different</a>.</p>
             
-            {% with userchallenge.challengeset as challengeset %}
-            <div class="minifocus"><h5>Next Goal</h5>
-                {% include "_challengeset_meta.html" %}
+            <div class="minifocus"><h5>Next Challenge</h5>
             </div>  
             <div class="buttonbox">
-                <form style="display:inline" method="post" action="{% url challenge-newset challenge_id=challenge.id %}?next={{ challenge.get_absolute_url|urlencode }}" onsubmit="update_userchallengeset({{ challenge.id }}); return false;"><input type="image" src="{{ MEDIA_URL }}img/icons/refresh.png" title="I don't like the look of this!"></form>
                 <span class="button button_hi"><a href="{% url home %}">I'm done!</a></span>
                 {% if challengeset %}{% if challengeset.total_resources > 0 %}                
                 <span class="button button_hi"><a href="{% url challenge-prepare challenge_id=challenge.id %}">Revise</a></span>
                 {% endif %}{% endif %}
-                <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Next goal</a></span>
+                <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Next challenge</a></span>
             </div>
-            {% endwith %}
-               
                     
         </div></div>
         {% if questions %}

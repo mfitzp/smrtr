@@ -1,11 +1,5 @@
 {{ object.name }}
 {{ object.description }}
-
-{% for concept in object.concepts.all %}
-    {{ concept.name }}
-{% endfor %}
-
 {{ object.network }}
-{# id for boosting #}
-network{{ object.network.id }} 
+
 

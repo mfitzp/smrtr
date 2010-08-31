@@ -6,15 +6,15 @@
 {% block wallitem_body %}got 100%!{% endblock %}
 
 {% block wallitem_image %}
-    {% if challenge.image %}<img src="{% thumbnail challenge.image 32x32 crop %}">{% endif %}
+    {% if package.image %}<img src="{% thumbnail package.image 32x32 crop %}">{% endif %}
 {% endblock %}
 
 {% block wallitem_title %}
-    <a href="{{ challenge.get_absolute_url }}">{{ challenge }}</a><br />
-    {{ challenge.description|truncatewords:"20" }}
+    <a href="{{ package.get_absolute_url }}">{{ package }}</a><br />
+    {{ package.description|truncatewords:"20" }}
 {% endblock %}
 
 {% block wallitem_meta %}
-<span class="clock">{% duration userchallenge.time_to_complete %}</span>
-&#183; {% sqchange userchallenge.previous_sq userchallenge.sq %}
+<span class="clock">{% duration userpackage.time_to_complete %}</span>
+&#183; {% sqchange userpackage.previous_sq userpackage.sq %}
 {% endblock %}

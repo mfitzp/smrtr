@@ -1,8 +1,8 @@
 from django.contrib.sitemaps import Sitemap
 # Smrtr
 from network.models import Network
-from concept.models import Concept
 from challenge.models import Challenge
+from package.models import Package
 from profiles.models import UserProfile
 from questions.models import Question
 # External
@@ -20,35 +20,35 @@ class NetworkSitemap(Sitemap):
     def lastmod(self, obj):
         return obj.updated
 
-class ChallengeSitemap(Sitemap):
+class PackageSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
     limit = 1000
    
     def items(self):
-        return Challenge.objects.all()
-
-    def lastmod(self, obj):
-        return obj.updated
-        
-class ConceptSitemap(Sitemap):
-    changefreq = "monthly"
-    priority = 0.5
-    limit = 1000
-
-    def items(self):
-        return Concept.objects.all()
+        return Package.objects.all()
 
     def lastmod(self, obj):
         return obj.updated
         
 class ChallengeSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.5
+    limit = 1000
+
+    def items(self):
+        return Challenge.objects.all()
+
+    def lastmod(self, obj):
+        return obj.updated
+        
+class PackageSitemap(Sitemap):
     changefreq = "weekly"
     priority = 1
     limit = 1000
 
     def items(self):
-        return Challenge.objects.all()
+        return Package.objects.all()
 
     def lastmod(self, obj):
         return obj.created

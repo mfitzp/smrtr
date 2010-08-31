@@ -7,13 +7,8 @@
         {% if challenge.network %}<a href="{% url network-detail network_id=challenge.network.id %}" class="network network{{ challenge.network.type }}">{{ challenge.network }}</a>{% endif %}
 </div>
 <div id="content-title-meta">
-{% if challenge.network %}
-    Available from <a href="{% url network-detail network_id=challenge.network.id %}">{{ challenge.network }}</a>
-    {% ifnotequal challenge.networks.count 1 %}
-        and <a href="{% url challenge-providers challenge_id=challenge.id %}">{{ challenge.networks.count|add:"-1" }} other network{{ challenge.networks.count|pluralize }}</a>
-    {% endifnotequal %}
-{% else %}
-    Available from <a href="{% url challenge-providers challenge_id=challenge.id %}">{{ challenge.networks.count }} network{{ challenge.networks.count|pluralize }}</a>                
+{% if challenge.package_set %}
+    Available on <a href="{% url challenge-providers challenge_id=challenge.id %}">{{ challenge.package_set.count }} package{{ challenge.package_set.count|pluralize }}</a>
 {% endif %}
 </div>                    
 <div id="content-title-sq">
@@ -21,4 +16,3 @@
     {% else %}{% sqdifficulty challenge.sq 100 %}{% endif %}
 </div>
 </div>  
-

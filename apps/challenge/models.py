@@ -1,16 +1,16 @@
 import os.path
 import datetime
 # Django
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Avg, Max, Min, Count, Sum
+from django.db.models import Avg, Max, Min, Count, Q
 from django.core.urlresolvers import reverse
 # Smrtr
-import challenge # Basic settings
 from network.models import Network,UserNetwork
 from resources.models import Resource
-from questions.models import Question
-from concept.models import Concept, UserConcept
+from questions.models import Question,UserQuestionAttempt
+#from package.models import UserPackage
 from sq.utils import * 
 # External
 from countries.models import Country
@@ -18,206 +18,188 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from wall.models import Wall
 
 
-# Challenges
-
 CHALLENGES_MIN_ACTIVE = 5
 
-CHALLENGE_TTC_MINIMUM = 180 # Minimum time in seconds for a challenge time limit
+CHALLENGE_TTC_MINIMUM = 180 # Minimum time in seconds for a package time limit
 CHALLENGE_TTC_FAIRNESS_MULTIPLIER = 3 # Multiple avg by this value to get 'fair' limit
 
 # Network = Course now e.g. 'Network' for AQA Biology
-# Below this challenges are the basis of study on that challenges may have a home network, be tied to a specific network, or freely open
-# Below challenges 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
+# Below this packages are the basis of study on that packages may have a home network, be tied to a specific network, or freely open
+# Below packages 'elements' define the learning stages associated (e.g. lecture, chapter, issue)
 
 def challenge_file_path(instance=None, filename=None):
-    return os.path.join('challenge', str(instance.id), filename)
- 
-# Definitions of courses available and their constituent concepts
-# Subjects are tied to a home network
+    return os.path.join('challenge', str(instance.id), filename)    
+
+# Element is a defining part of a course 
+# Elements are always tied to a specific subject?? Or freely available
+# If an individual challenge is self-contained area of study e.g. 'thermodynamics' (that's possibly a bit big)
+# may be allocated widely, package components?
 class Challenge(models.Model):
     def __unicode__(self):
         return self.name
-        
     def get_absolute_url(self):
         return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})
                 
-    # Auto-add a new wall object when creating new Course
+    # Auto-add a new wall object when creating new Challenge
     def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
             super(Challenge, self).save(force_insert, force_update)
-
             self.wall = Wall.objects.create(name=self.name, slug='challenge-' + str(self.id))
-            self.networks.add(self.network) # Make link to 'offer' this network
-                          
         super(Challenge, self).save(force_insert, force_update)
 
     def update_sq(self):
         # update
-        self.sq = self.concepts.aggregate(Avg('sq'))['sq__avg']
+        self.sq = self.questions.aggregate(Avg('sq'))['sq__avg']
         self.save()
 
-    # Home network for e.g. company-specific subjects
+    def update_statistics(self):        
+        time_to_complete = self.questions.aggregate(Sum('time_to_complete'))['time_to_complete__sum'] * CHALLENGE_TTC_FAIRNESS_MULTIPLIER
+        # Set minimum package time of 1 minute
+        time_to_complete = min( time_to_complete, CHALLENGE_TTC_MINIMUM )
+        # Round up to nearest minute
+        self.time_to_complete = math.ceil( time_to_complete / 60 ) * 60 # Round to nearest minute        
+
+    # Home network for e.g. company-specific challenges
     network = models.ForeignKey(Network, blank = True, null = True) 
-    # Networks offering this challenge
-    networks = models.ManyToManyField(Network, related_name='challenges')
+    name = models.CharField(max_length=75)
+    description = models.TextField(blank = True)
     
     # Users
     users = models.ManyToManyField(User, through='UserChallenge', related_name='challenges')
-    
-    name = models.CharField(max_length=75)
-    description = models.TextField(blank = True)
 
+    total_questions = models.IntegerField(default = 0) # Number of questions
+    total_resources = models.IntegerField(default = 0) # Number of resources
+
+    time_to_complete = models.IntegerField(editable = False, default = CHALLENGE_TTC_MINIMUM )
+    
     sq = models.IntegerField(editable = False, null = True)
 
     wall = models.OneToOneField(Wall, editable = False, null = True)
-
-# Concepts for this challenge
-    concepts = models.ManyToManyField(Concept, blank=True)
     
+    # Resources (through challengeresource for bookmarks)
+    resources = models.ManyToManyField(Resource, through='ChallengeResource', related_name='challenges')
+    questions = models.ManyToManyField(Question, blank=True, related_name='challenges')
+
     image = ThumbnailerImageField(max_length=255, upload_to=challenge_file_path, blank=True, resize_source=dict(size=(50, 50), crop=True))
     
     created = models.DateTimeField(auto_now_add = True)
     updated = models.DateTimeField(auto_now = True)    
-   
-
 
 class UserChallenge(models.Model):
     def __unicode__(self):
         return self.challenge.name
         
-    def save(self, *args, **kwargs):
+    # Auto-add a new wall object when creating new Challenge
+    def save(self, force_insert=False, force_update=False):
         if self.id is None: #is new
-            # Auto-activate all child concepts for this challenge
-            for concept in self.challenge.concepts.all():
-                try:
-                    UserConcept(user=self.user, concept=concept).save()
-                except:
-                    pass
-
-            # Get first challengeset
-            self.generate_challengeset()
-            
-        super(UserChallenge, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
+            #If there are no questions on this challenge, we're 100% complete as soon as we start
+            if self.challenge.total_questions == 0:
+                self.percent_complete=100
+            else:
+                self.update_statistics()
+                self.update_sq()
+        super(UserChallenge, self).save(force_insert, force_update)        
         
-        # Clean up removing concepts that the user is *only* studying on this challenge
-        userconcepts = UserConcept.objects.filter(
-                    user=self.user,
-                    concept__challenge=self.challenge ,
-                    ).exclude (
-                        #FIXME: This is fugly, but using 'not' doest work as excludes current challenge
-                        concept__challenge__id__lt=self.challenge.id ).exclude( concept__challenge__id__gt=self.challenge.id,
-                    ).delete()
-            
-        super(UserChallenge, self).delete(*args, **kwargs)
-
-
+    # Shortcuts through tree
+    def network(self):
+        return self.usercourse.coursei.network
+    def course(self):
+        return self.packagei.course
+    def package(self):
+        return self.packagei.package
+    # Additional information
+    def week_of_study(self):
+        return ( ( datetime.datetime.today() - self.start_date  ).days / 7 ) + 1
     def is_active(self):
         return ( self.end_date == None ) or ( self.end_date > datetime.datetime.today() )
-
+    # Update user's SQ value on this challenge
     def update_sq(self):
+        # Get user's attempts on this challenge's questions 
+        # group by x
+        # x = qSQ (question's SQ)
+        # y = percent_correct
+        # Final Max('usq') is just to rename value, not possible to rename on values bit, which sucks
+        # Old calc:         data = self.challenge.questions.exclude(sq=None).filter(userquestionattempt__user=self.user).values('sq').annotate(n=Count('id'),y=Avg('userquestionattempt__percent_correct'),x=Max('sq'))
+
+        end_date = datetime.datetime.now()
+        start_date = end_date - settings.SQ_CALCULATE_HISTORY
+        data = self.user.userquestionattempt_set.filter(created__range=(start_date,end_date)).filter(question__challenges=self.challenge).exclude(question__sq=None).values('question__sq').annotate(n=Count('id'),y=Avg('percent_correct'),x=Max('question__sq'))
+
         self.previous_sq = self.sq
-        self.sq = UserConcept.objects.filter(user=self.user, concept__challenge = self.challenge).aggregate(Avg('sq'))['sq__avg']
+        self.sq = sq_calculate(data, 'desc') # Descending data set  
 
+    # Update user's focus value for this challenge
+    # this is used to include in auto-packages,etc.
+    def update_focus(self, last_attempted=None):
+        self.focus = 0
+        # Focus is an weighting value, with importance of variables configurable
+        # Variables
+        # - Time since last attempt (OR none if never attempted): long time = increased likelihood, declines with age
+        # - Lowest score (users SQ on this challenge vs. SQ of the challenge itself): lower = increased likelihood
+        # TODO: Should be last_attempt updated whenever this challenge is attempted as part of a package
+
+        if last_attempted == None:
+            last_attempted = self.challenge.packageset_set.filter(userpackageset__user=self.user).aggregate(completed__max=Max('userpackageset__completed'))['completed__max']
+            #last_attempted = self.package_set.UserPackage.objects.filter(package__challenges=self.challenge, user=self.user).aggregate(Max('completed'))['completed__max']
+
+        if last_attempted:
+            # +1 for every hour passed since last attempt
+            self.focus = ( datetime.datetime.now() - last_attempted ).seconds / 3600
+        else:
+            self.focus = 100 # Bump new items to max focus to guarantee first attempt
+             
+        if self.challenge.sq and self.sq:    
+            # +1 for every 1/2 SQ point difference between the uc and the c
+            self.focus +=  ( self.challenge.sq - self.sq )/2
+
+        # If done all the questions correctly, ask them less often        
+        self.focus -= self.percent_correct / 10 # 100% correct = -10 focus
+            
+        # Limit 0-100
+        self.focus = max( min( self.focus, 100 ), 0 )
+
+        
     def update_statistics(self):
-        values = UserConcept.objects.filter(user=self.user, concept__challenge = self.challenge).aggregate(percent_complete=Avg('percent_complete'),percent_correct=Avg('percent_correct'))
-        # Don't save if null (i.e. no value yet on any concepts)
+        # We get a list of all attempts, 1 record per question attempted. The count of these is the total attempted questions (magic)
+        # FIXME: Is there an neater way to do this?
+        questions_attempted = self.challenge.questions.filter(userquestionattempt__user=self.user).values('id').annotate(attempts=Count('id')).count()
 
-        if values:
-            if values['percent_complete'] > 0: # Not None
-                self.percent_complete = values['percent_complete']
-                self.percent_correct = values['percent_correct']
-                
-                # Send notifications
-                if self.percent_complete == 100:
-    
-                    # Have we only just completed?
-                    if self.end_date == None:
-                        self.end_date = datetime.datetime.now()
-                
-                        from wallextend.models import add_extended_wallitem
-                
-                        # Are we first? (i.e. are there no others)
-                        no_of_others = self.challenge.userchallenge_set.filter(percent_complete=100).order_by('end_date').count()
-                        if no_of_others == 0:
-                            add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_1stcomplete.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
+        if questions_attempted > 0:
+            # Get all questions with latest attempt date
+            questions = self.challenge.questions.filter(userquestionattempt__user=self.user).annotate(latest=Max('userquestionattempt__created'))
+            # Build Q object to get all the latest attempts
+            q = Q()
+            for question in questions:
+                #print question.id, question.latest
+                q = q | Q( question=question, created=question.latest)
 
-                        # Did we ace it?
-                        if self.percent_correct == 100:
-                            add_extended_wallitem( self.challenge.wall, self.user, template_name='challenge_100pc.html', extra_context={'challenge': self.challenge, 'userchallenge': self, })
-
-            
-    def generate_challengeset(self, exclude_current_challengeset=None):
-    
-        # Get the list of concepts that we are going to use
-        # Concepts available on the challenge, ordered by the user's focus
-        # get the top 3(?) and put them into a challengeset
-        concepts = Concept.objects.filter(userconcept__user=self.user).filter(challenge=self.challenge).exclude(total_questions=0).order_by('-userconcept__focus','?')
-
-        # Generate something without the current challengeset's concepts in it ('I don't like this' link)
-        if ( exclude_current_challengeset == True ) and ( self.challengeset is not None ): # Don't attempt to exclude if it's None        
-            for concept in self.challengeset.concepts.all():
-                concepts = concepts.exclude(pk=concept.id)              
-
-        if concepts:
-            concepts = concepts[0:3] # Top 3 concepts (by focus)
+            avg = UserQuestionAttempt.objects.filter(q, user=self.user).aggregate(avg=Avg('percent_correct'))
+            if avg:
+                self.percent_correct = avg['avg']
         else:
-            # Cannot generate so assign None (locks out attempts)
-            self.challengeset = None
-            return False
-
-        # Look for already existing matching challengeset's the user has 
-        cs = ChallengeSet.objects.filter(challenge=self.challenge).exclude(userchallengeset__user=self.user)
+            if self.challenge.total_questions == 0:
+                self.percent_complete=100
+                self.percent_correct = None
+            
+    def start(self):
+        self.started = datetime.datetime.now()
         
-        for concept in concepts:
-            cs = cs.filter(concepts=concept)              
-            
-        if cs: # We have something left after all that filtering
-            challengeset=cs[0]
-        else:
-            challengeset = ChallengeSet(challenge=self.challenge)
-            challengeset.save() # Save so can attach objects to it
-            
-            for concept in concepts:
-                challengeset.concepts.add(concept)            
-
-            challengeset.generate_description()
-            challengeset.generate_questions()
-            challengeset.generate_resources()                       
-            challengeset.save()
-
-        # We have the challengeset found/generated. Now add it to the userchallenge object            
-        self.challengeset = challengeset
-            
-    # Used to show %correct as a portion of the percent complete bar
-    def percent_complete_correct(self):
-        if self.percent_correct:
-            return self.percent_complete * ( float(self.percent_correct)/100 )
-        else:
-            return 0
+    def complete(self):
+        self.completed = datetime.datetime.now()
+        self.is_complete = True
     
-    def time_to_complete(self):
-        return self.end_date - self.start_date
-        
-    def is_new(self):
-        return self.percent_complete == 0
-
-    def is_complete(self):
-        return self.percent_complete == 100
-
-
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
-    challengeset = models.ForeignKey('ChallengeSet', null=True)
 
-    start_date = models.DateTimeField(auto_now_add = True)
-    end_date = models.DateTimeField(null = True)
-
+    started = models.DateTimeField(null = True) 
+    completed = models.DateTimeField(null = True) 
+    
     sq = models.IntegerField(editable = False, null = True)
     previous_sq = models.IntegerField(editable = False, null = True)
-
-    percent_complete = models.IntegerField(editable = False, null = False, default=0)
+   
+    focus = models.IntegerField(default = 100, editable = False) # Default to 100 to ensure newly activated are preferentially chosen
+    
+    is_complete = models.IntegerField(editable = False, null = False, default=0)
     percent_correct = models.IntegerField(editable = False, null = True)
 
     class Meta:
@@ -225,87 +207,16 @@ class UserChallenge(models.Model):
 
 
 
-class ChallengeSet(models.Model):
+# Resource attached to specific question
+# Use this model to specify question-specific bookmarks in the resource, for example 
+# page numbers, chapters, timestamp, #anchors etc.??
+class ChallengeResource(models.Model):
     def __unicode__(self):
-        return self.challenge.name
+        return self.title
         
-    def get_absolute_url(self):
-        return reverse('challenge-detail',kwargs={'challenge_id':str(self.id)})        
-
-    def generate_description(self):
-        c = list()
-        self.description = ''
-        for concept in self.concepts.all():
-            c.append( concept.name )
-            self.description = ', '.join( c )
-
-    def generate_questions(self): # Update questions for this challenge, using config settings on the model
-        # Limit:            self.generate_description()
-        # - through relationships back to this model ( question > question_concepts > concept > config_concepts )
-        # - minSQ and maxSQ if these are set
-        # - number of questions specified
-        # - randomise order here
-        self.questions = Question.objects.filter(
-                concepts__challengeset=self,
-#                sq__gte=self.sq + 20,
-#                sq__lte=self.sq - 20
-                ).order_by('?')[0:20] #self.total_questions]
-        self.total_questions = self.questions.count() # Update total questions to the actual value
-
-        if self.total_questions > 0:
-            self.sq = self.questions.aggregate(Avg('sq'))['sq__avg'] # Update SQ to match questions
-            # Generate time to complete *1.5, rounded up to nearest minute ( 60 seconds ). Should be fair and tidy
-            # Get average of questions in this challenge, * 1.5
-            time_to_complete = self.questions.aggregate(Sum('time_to_complete'))['time_to_complete__sum'] * CHALLENGE_TTC_FAIRNESS_MULTIPLIER
-            # Set minimum challenge time of 1 minute
-            time_to_complete = min( time_to_complete, CHALLENGE_TTC_MINIMUM )
-            # Round up to nearest minute
-            self.time_to_complete = math.ceil( time_to_complete / 60 ) * 60 # Round to nearest minute
-       
-    def generate_resources(self):
-        self.total_resources = Resource.objects.filter(concepts__challengeset=self).count()
-       
-    challenge = models.ForeignKey(Challenge)
-    description = models.TextField(blank = True)
-
-    # Challenge definition: used to build the above questions
-    # Only used when editing/updating list, not outputting questions
-    concepts = models.ManyToManyField(Concept) # Concepts to source questions from
-    questions = models.ManyToManyField(Question, editable = False)
-
-    sq = models.IntegerField(editable = False, null = True) # Auto-filled from average of questions on populate
-
-    time_to_complete = models.IntegerField(editable = False, null = True )
-
-    total_questions = models.IntegerField(blank = True, default = 20) # Number of questions
-    total_resources = models.IntegerField(blank = True, default = 0) # Number of resources (show prepare link?)
-
-    #percent_correct = models.IntegerField(editable = False, null = True)
-
-    created = models.DateTimeField(auto_now_add=True)
-
-
-
-class UserChallengeSet(models.Model):
-
-    def time_taken(self):
-        return self.completed - self.started
-        
-    def start(self):
-        self.started = datetime.datetime.now()
-        
-    def complete(self):
-        self.completed = datetime.datetime.now()
-        
-    user = models.ForeignKey(User)
-    challengeset = models.ForeignKey(ChallengeSet)
-
-    percent_correct = models.IntegerField(null = True)
-
-    started = models.DateTimeField(auto_now_add=True)
-    completed = models.DateTimeField()
-
+    resource = models.ForeignKey(Resource)
+    challenge = models.ForeignKey(Challenge)    
+    
     class Meta:
-        # Can only attempt a set of questions once
-        unique_together = ("user", "challengeset")    
-
+        unique_together = ("resource", "challenge")
+    

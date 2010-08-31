@@ -3,13 +3,9 @@ from django.contrib import admin
 from network.models import *
 from challenge.models import *
 
-
 class ChallengeAdmin(admin.ModelAdmin):
-    # filter_horizontal = ('concepts',)
-    raw_id_fields = ('network','networks','concepts',)
+    # filter_horizontal = ('challenges',)
+    raw_id_fields = ('network',)
 
 admin.site.register(Challenge, ChallengeAdmin)
-
-
 admin.site.register(UserChallenge)
-

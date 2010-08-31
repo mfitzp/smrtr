@@ -6,14 +6,14 @@
 {% block breadcrumbs %} 
     {{ block.super }}
     &raquo; <a href="{% url discuss_forum forum_id=forum.id %}">{{ forum }}</a>
-    &raquo; Post new challenge
+    &raquo; Post new package
 {% endblock %}
 
 {% block content_title %}<h1>{{forum}}</h1>{% endblock %}
 
 {% block content_left %}
 
-<h5>Post new challenge</h5>
+<h5>Post new package</h5>
 {% if form.errors %}<ul>{{ form.errors.as_ul }}</ul>{% endif %}
 <form method="post" action="{% url discuss_newthread forum_id=forum.id %}">
 <table>

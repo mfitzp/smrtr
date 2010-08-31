@@ -42,13 +42,13 @@ Member for {{ puser.date_joined|timesince }}
     <blockquote>{{ profile.about }}</blockquote>
 
 
-    <h5>Active Challenges</h5>
+    <h5>Active Packages</h5>
     <div class="stackcontainer">
-    {% for userchallenge in puser.userchallenge_set.all %}
-        <div class="stack challenge stackvertical">
-        {% percentbar userchallenge.percent_complete %}
-        {% percentbar userchallenge.percent_complete_correct 'pc-correct' %}    
-        <a href="{% url challenge-detail challenge_id=userchallenge.challenge.id %}" title="{{ userchallenge.percent_correct|default_if_none:'tbc' }}% at {{ userchallenge.percent_complete }}% complete">{{ userchallenge }} ({% sqchange userchallenge.previous_sq userchallenge.sq %})</a>
+    {% for userpackage in puser.userpackage_set.all %}
+        <div class="stack package stackvertical">
+        {% percentbar userpackage.percent_complete %}
+        {% percentbar userpackage.percent_complete_correct 'pc-correct' %}    
+        <a href="{% url package-detail package_id=userpackage.package.id %}" title="{{ userpackage.percent_correct|default_if_none:'tbc' }}% at {{ userpackage.percent_complete }}% complete">{{ userpackage }} ({% sqchange userpackage.previous_sq userpackage.sq %})</a>
         </div>
        
     {% endfor %}

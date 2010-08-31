@@ -64,27 +64,27 @@ Location
         {% endif %}        
         
         
-        {% if network.challenges_filtered %}
-            <h5>Challenges</h5>
+        {% if network.packages_filtered %}
+            <h5>Packages</h5>
             <table>
-            {% for challenge in network.challenges_filtered %}
+            {% for package in network.packages_filtered %}
                 <tr class="{% cycle zebra %}">
-                    <td colspan="2"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></td>
+                    <td colspan="2"><a href="{% url package-detail package_id=package.id %}">{{ package }}</a></td>
                     <td>
-                    {% ifnotequal challenge.network network %}
-                        <a href="{% url network-detail network_id=challenge.network.id %}" class="network network{{ challenge.network.type }}">{{ challenge.network }}</a>
+                    {% ifnotequal package.network network %}
+                        <a href="{% url network-detail network_id=package.network.id %}" class="network network{{ package.network.type }}">{{ package.network }}</a>
                     {% endifnotequal %}
                     </td>
                     {% if usernetwork %}
-                        {% if challenge.userchallenge %}
-                            {% if challenge.userchallenge.is_active %}
+                        {% if package.userpackage %}
+                            {% if package.userpackage.is_active %}
                                 <td><a href="#" class="active">Active</a></td>
                             {% else %}
                                 <td><span class="complete">Completed</span></td>
                             {% endif %}
                             
                         {% else %}
-                            <td><a href="{% url challenge-register challenge_id=challenge.id %}" class="inactive">Activate</a></td>
+                            <td><a href="{% url package-register package_id=package.id %}" class="inactive">Activate</a></td>
                         {% endif %}
                     {% else %}<td></td>{% endif %}
                 </tr>

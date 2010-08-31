@@ -18,8 +18,8 @@ from wall.models import Wall, WallItem
 from wall.forms import WallItemForm
 # Smrtr
 from network.models import Network
-from challenge.models import Challenge, UserChallenge
-from concept.models import Concept
+from package.models import Package, UserPackage
+from challenge.models import Challenge
 
 from core.forms import LoginForm
 from wallextend.models import add_extended_wallitem
@@ -30,21 +30,22 @@ def home(request):
 
         # User logged in, present the user dashboard
         usernetworks = request.user.usernetwork_set.all()
+        userpackages = request.user.userpackage_set.all()
         userchallenges = request.user.userchallenge_set.all()
         
-        userchallengesactive = userchallenges.filter( Q(percent_complete__lt=100) | Q(percent_correct__lt=100) ).order_by('percent_correct','percent_complete') # Show all
-        userchallengescomplete = userchallenges.filter(percent_complete__exact=100, percent_correct__exact=100).order_by('-end_date')[0:3]
+        userchallengesactive = userchallenges.exclude(challenge__total_questions=0).filter(focus__gt=80).order_by('-focus')[0:10]
+        userchallengesinactive = userchallenges.exclude(challenge__total_questions=0).filter(focus__lt=80).order_by('-focus')[0:5]
 
-        # Flag True/False whether challenges exist at all for this user
-        userchallengesexist = ( userchallengesactive.count() + userchallengescomplete.count() ) > 0
+        # Flag True/False whether packages exist at all for this user
+        userchallengesexist = ( userchallengesactive.count() + userchallengesinactive.count() ) > 0
         
         # TODO: All the following need some mechanism to filter, reduce the number shown
         # Like +1, Comment +1 or +2
         # Personal rating/comment more weight than others (*2) e.g 
         
-        # NOTE: Can  weight each network, challenge, concept by limiting
+        # NOTE: Can  weight each network, package, challenge by limiting
         # the max number of posts got from each at this point,
-        # e.g. pull 5 from each concept, 10 from each network will *2 favour network posts
+        # e.g. pull 5 from each challenge, 10 from each network will *2 favour network posts
         
         # System announce wall
         wallitems = Wall.objects.get(pk=1).wallitem_set.select_related()
@@ -55,9 +56,14 @@ def home(request):
                 wallitems = wallitems | un.network.wall.wallitem_set.select_related()
           
         # These need to be limited in some way?
+        for up in userpackages:
+            if up.package.wall:
+                wallitems = wallitems | up.package.wall.wallitem_set.select_related()       
+                
+        # These need to be limited in some way?
         for uc in userchallenges:
             if uc.challenge.wall:
-                wallitems = wallitems | uc.challenge.wall.wallitem_set.select_related()            
+                wallitems = wallitems | uc.challenge.wall.wallitem_set.select_related()                            
 
         # Default post wall = home network (if set)
         if request.user.get_profile().network:
@@ -67,11 +73,12 @@ def home(request):
                     
         i = RequestContext(request, {
             'usernetworks': usernetworks,
+            'userpackages': userpackages,
 
             # Challenges
             'userchallengesexist': userchallengesexist,
             'userchallengesactive': userchallengesactive,
-            'userchallengescomplete': userchallengescomplete,
+            'userchallengesinactive': userchallengesinactive,
             
             # Combined wallitems available to this user, limited to 10 max
             'wallitems': wallitems[0:10],
@@ -118,7 +125,7 @@ def welcome(request):
 
 
 # Take a wall id and redirect to the 'home' for that forum
-# which will be on a network, course, challenge, or user profile
+# which will be on a network, course, package, or user profile
 # This could probably be better handled with a template tag to generate the url preventing the redirects?
 def wall_home_redirect( request, wall_slug ):
     wall = get_object_or_404( Wall, slug=wall_slug )
@@ -131,25 +138,25 @@ def wall_home_redirect( request, wall_slug ):
         return redirect( wall.network.get_absolute_url() )
         
     try:
-        wall.challenge
+        wall.package
     except:
         pass
     else:
-        return redirect( wall.challenge.get_absolute_url() )
-        
-    try:
-        wall.concept
-    except:
-        pass
-    else:
-        return redirect( wall.concept.get_absolute_url() )     
+        return redirect( wall.package.get_absolute_url() )
         
     try:
         wall.challenge
     except:
         pass
     else:
-        return redirect( wall.challenge.get_absolute_url() )                
+        return redirect( wall.challenge.get_absolute_url() )     
+        
+    try:
+        wall.package
+    except:
+        pass
+    else:
+        return redirect( wall.package.get_absolute_url() )                
 
     # System announce wall (it has no home, sob)
     return redirect('home')
@@ -169,7 +176,7 @@ def error500(request, template_name='500.html'):
     })))
 
 # Display topX by user, network and countries/etc.
-# TODO: Move this out to a seperate statistics challenge in future
+# TODO: Move this out to a seperate statistics package in future
 def statistics(request):
 
     from countries.models import Country

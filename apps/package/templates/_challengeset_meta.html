@@ -1,0 +1,13 @@
+{% load core_tags %}
+{% load sq_tags %}
+
+<div id="package-{{ package.id }}-packageset-meta">
+{% if packageset %}
+    {% if packageset.description %}<span class="challenges">{{ packageset.description|truncatewords:"20"}}</span><br/>{% endif %}
+    <span class="clock">{% duration packageset.time_to_complete %}</span> for {{ packageset.total_questions }} question{{ packageset.total_questions|pluralize }}
+    &#183; {% sqdifficulty userpackage.sq packageset.sq %}
+{% else %}
+<p>None currently available.</p>
+{% endif %}
+</div>
+

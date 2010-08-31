@@ -67,8 +67,8 @@
             </td><td rowspan="2">{% avatar user 50 %}</td></tr>
             <tr><td id="user-tools-panel-stats">
                 <span title="{% sqdescriptive user.get_profile.sq %}">{% sqchange user.get_profile.previous_sq user.get_profile.sq %}</span>
-                <span class="challenges" title="You have completed {{ user.userchallenge_set.count }} challenges">{{ user.userchallenge_set.count }}</span>
-                <span class="concepts" title="You are studying {{ user.userconcept_set.count }} concepts">{{ user.userconcept_set.count }}</span>
+                <span class="packages" title="You have completed {{ user.userpackage_set.count }} packages">{{ user.userpackage_set.count }}</span>
+                <span class="challenges" title="You are studying {{ user.userchallenge_set.count }} challenges">{{ user.userchallenge_set.count }}</span>
                 <span class="networks" title="You are a member of {{ user.usernetwork_set.count }} networks">{{ user.usernetwork_set.count }}</span>
             </td></tr></table>
 
@@ -81,7 +81,6 @@
                 {% if request.user.is_authenticated %}
                     <li><a href="/profile/">profile</a></li>
                 {% endif %}
-                <li><a href="/forum/">forum</a></li>
                 <li><a href="/top10/">top10</a></li>
             </ul>
         </div>

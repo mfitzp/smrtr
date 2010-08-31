@@ -1,0 +1,26 @@
+{% load sq_tags %}
+{% load core_tags %}
+
+{% if userpackage %}
+{% percentbar userpackage.percent_complete %}
+{% percentbar userpackage.percent_complete_correct 'pc-correct' %}
+<div id="progressbar-content" title="{{ userpackage.percent_correct|default_if_none:'tbc' }}% at {{ userpackage.percent_complete }}% complete">
+    {% if userpackage.end_date %}
+        Completed {{ userpackage.end_date|timesince }}
+    {% else %}
+        Active {{ userpackage.start_date|timesince }} 
+    {% endif %}
+
+    {% if userpackage.packageset %}
+        {% with userpackage.packageset as packageset %}
+            &#183; Current goal is {{ packageset.description }}
+            &#183; <span class="clock">{% duration packageset.time_to_complete %}</span> for <a href="{% url package-do package_id=package.id %}">{{ packageset.total_questions }} question{{ packageset.total_questions|pluralize }}</a>
+            &#183; <a href="{% url package-prepare package_id=package.id %}">{{ packageset.total_resources }} resource{{ packageset.total_resources|pluralize }}</a>
+        {% endwith %}
+    {% endif %}
+
+</div>
+<div id="progressbar-sq" title="Your package SQ is {{ userchallenge.sq }}">{% sqchange userpackage.previous_sq userpackage.sq %}</div>
+{% endif %}
+
+

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load sq_tags %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    {% if package.network %}
+    &raquo; <a href="{% url network-detail network_id=package.network.id %}">{{ package.network }}</a>
+    {% endif %}
+    &raquo; {{ package }}
+{% endblock %}
+
+{% block title %}{{package}}{% endblock %}
+
+{% block content_title %}{% include "_package_header.html" %}{% endblock %}
+{% block progressbar %}{% include "_package_progress.html" %}{% endblock %}
+
+{% block content_left %}
+
+    {% if package %}
+
+        <blockquote>{{ package.description }}</blockquote>
+
+        {% if userpackage %}
+
+       
+        {% else %}
+            <div class="focus"><h4>Activate package</h4><div class="focus-body">
+            <p>Activate this package to start studying!</p>
+            <!-- Registration form -->
+            <form action="{% url package-register package_id=package.id %}" method="post">
+            <input type="hidden" name="submit" value="1" />
+            {% if next %}<input type="hidden" name="next" value="{{next}}" />{% endif %}
+            &nbsp;<input type="submit" value="Activate '{{package}}' &raquo;" />
+            </form>
+            </div></div>
+        {% endif %}
+
+
+        {% include "_leaderboard.html" %}
+
+
+        {% if package.challenges %}
+        <h5>Challenges</h5>
+
+        <div class="stackcontainer">
+        {% for challenge in package.challenges_filtered %}
+            <div class="stack challenge">{% if challenge.userchallenge %}{% percentbar challenge.userchallenge.percent_correct 'pc-correct' %}{% endif %}
+            <a href="{% url challenge-detail challenge_id=challenge.id %}" class="{% if challenge.userchallenge %}active{% endif %} {% if challenge.userchallenge.is_complete %}complete{% endif %}" title="{% if challenge.userchallenge %}{{ challenge.userchallenge.percent_correct|default_if_none:'tbc' }}% correct{% endif %}">{{ challenge }}</a>
+            </div>
+        {% endfor %}
+        </div>                
+            
+        {% endif %}
+
+
+    {% else %}
+        <p>No curriculum information available.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block content_right %}
+{% include "_wall.html" %}
+{% with package as obj %}{% include "_social.html" %}{% endwith %}
+
+{% if userpackage %}
+<h5>Management</h5>
+<form action="{% url package-unregister package_id=package.id %}" method="post">
+<input type="submit" value="Remove this package" onclick="confirm('Are you sure you want to stop this package?')">
+</form>
+{% endif %}
+
+{% endblock %}
+

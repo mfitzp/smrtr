@@ -194,7 +194,7 @@ ISBN-13."""
 def url(type,isbn):
     """Returns a URL for a book, corresponding to the "type" and the "isbn"
 provided. This function is likely to go out-of-date quickly, and is
-provided mainly as an example of a potential use-case for the challenge.
+provided mainly as an example of a potential use-case for the package.
 Currently allowed types are "google-books" (the default if the type is
 not recognised), "amazon", "amazon-uk", "blackwells".
 """
