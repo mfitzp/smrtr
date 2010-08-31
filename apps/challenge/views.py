@@ -119,7 +119,7 @@ def edit(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
                     
     if request.POST:
-        form = ChallengeForm(request, request.POST, instance=challenge)       
+        form = ChallengeForm(request, request.POST, request.FILES, instance=challenge)       
 
         if form.is_valid(): # All validation rules pass
             challenge = form.save()
