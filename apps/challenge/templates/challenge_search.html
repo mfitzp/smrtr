@@ -46,7 +46,7 @@
                     <div class="object-checkbox"><input type="checkbox" name="addchallenge" value="{{ challenge.id }}" {% if challenge in request.user.challenges.all %}checked disabled{% endif %}></div>
                     <div class="object-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
-                    {% if challenge.description %}<div class="object-content">{{ challenge.description|truncatewords:"25" }}</div>{% endif %}
+                    {% if challenge.description %}<div class="object-content">{{ challenge.description|truncatewords:"20" }}</div>{% endif %}
                     <div class="object-meta">
                         <span class="questions">{{ challenge.total_questions }} questions</span> &#183;
                         {% if challenge.total_resources > 0 %}<span class="resources">{{ challenge.total_resources }} resources</span> &#183;{% endif %}
@@ -63,7 +63,7 @@
                     <div class="object-checkbox"><input type="checkbox" name="addpackage" value="{{ package.id }}" {% if package in request.user.packages.all %}checked disabled{% endif %}></div>
                     <div class="object-image"><img src="{% thumbnail package.image 50x50 crop %}"></div>
                     <div class="object-title"><a href="{% url package-detail package_id=package.id %}">{{ package }}</a></div>
-                    {% if package.description %}<div class="object-content">{{ package.description|truncatewords:"25" }}</div>{% endif %}
+                    {% if package.description %}<div class="object-content">{{ package.description|truncatewords:"20" }}</div>{% endif %}
                     <div class="object-meta">
                         Contains {{package.challenges.count }} challenge{{package.challenges.count|pluralize }}
                         &#183; {% if package.network %}from <a href="{% url network-detail package.network.id %}">{{ package.network }}</a>{% endif %}
