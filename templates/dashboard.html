@@ -35,8 +35,8 @@
                 <div class="emblem-new" title="New challenge"></div> 
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
-            <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5><br />
-            {{ challenge.description|truncatewords:"40" }}
+            <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5>
+            <small>{{ challenge.description|truncatewords:"40" }}</small>
             </div>
             <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct ">
                     {% percentbar userchallenge.percent_correct 'pc-correct' %}
