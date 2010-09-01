@@ -81,7 +81,9 @@
             {% endfor %}
             </div>
         <br class="clear" />
-        <p class="buttonbar"><input type="submit" value="Activate selected challenges &raquo;"></p>
+
+        <div style="text-align:center"> {% paginate %}</div>
+
         </form>        
 
         <!-- <p>Don't find your package listed? <a href="#">Create it!</a></p> -->
@@ -90,11 +92,20 @@
             {# Show some example queries to run, maybe query syntax, something else? #}
         {% endif %}
 
-        {% if next %}
-            <p class="buttonbar"><span class="button"><a href="{{ next }}" class="deactivate">Do not activate any challenges &raquo;</a></span></p>
-        {% endif %}
-    
-        <p class="buttonbar"><span class="button"> <a href="{% url challenge-create %}" class="register">Create your own challenge &raquo;</a></span>  </p>
+        <p class="buttonbar">
+                <input type="submit" value="Activate selected challenges &raquo;">
+        </p>
 
-        {% paginate %}
+        <p class="buttonbar">
+        <span class="button"> <a href="{% url challenge-create %}" class="register">Create your own challenge &raquo;</a></span>&nbsp;
+
+        {% if next %}
+            <span class="button"><a href="{{ next }}" class="deactivate">Do not activate any challenges &raquo;</a></span>&nbsp;
+        {% endif %}
+
+        {% if query %}
+
+        {% endif %}
+        </p>
+
 {% endblock %}
