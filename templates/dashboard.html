@@ -36,7 +36,7 @@
             </div>
             <div id="challenges-focus-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
             <div id="challenges-focus-title"><h5><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></h5><br />
-            {{ challenge.description|truncatewords:"25" }}
+            {{ challenge.description|truncatewords:"40" }}
             </div>
             <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct ">
                     {% percentbar userchallenge.percent_correct 'pc-correct' %}
@@ -62,7 +62,7 @@
                     <div class="object-image"><img src="{% thumbnail challenge.image 50x50 crop %}"></div>
                     <div class="object-title"><a href="{% url challenge-detail challenge_id=challenge.id %}">{{ challenge }}</a></div>
                     <div class="object-content">     
-                         <small>{{ challenge.description|truncatewords:"10" }}</small>
+                         <small>{{ challenge.description|truncatewords:"20" }}</small>
                         <div class="progressbarcontainer" title="{{ userchallenge.percent_correct }}% correct">
                             {% percentbar userchallenge.percent_correct 'pc-correct' %}
                         </div>
