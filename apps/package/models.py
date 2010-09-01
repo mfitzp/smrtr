@@ -117,7 +117,7 @@ class UserPackage(models.Model):
         self.sq = UserChallenge.objects.filter(user=self.user, challenge__package = self.package).aggregate(Avg('sq'))['sq__avg']
 
     def update_statistics(self):
-        values = UserChallenge.objects.filter(user=self.user, challenge__package = self.package).aggregate(is_complete=Avg('percent_complete'),percent_correct=Avg('percent_correct'))
+        values = UserChallenge.objects.filter(user=self.user, challenge__package = self.package).aggregate(percent_complete=Avg('percent_complete'),percent_correct=Avg('percent_correct'))
         # Don't save if null (i.e. no value yet on any challenges)
 
         if values:

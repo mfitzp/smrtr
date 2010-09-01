@@ -96,7 +96,6 @@ class UserChallenge(models.Model):
             if self.challenge.total_questions == 0:
                 self.percent_complete=100
             else:
-                self.update_statistics()
                 self.update_sq()
         super(UserChallenge, self).save(force_insert, force_update)        
         
