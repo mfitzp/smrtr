@@ -29,4 +29,6 @@ urlpatterns = patterns('',
     url(r'^(?P<challenge_id>\d+)/do/$', 'challenge.views.do', name='challenge-do' ),
     url(r'^(?P<challenge_id>\d+)/do/submit/$', 'challenge.views.do_submit', name='challenge-do-submit'),
 
+    #url(r'^next/$', 'challenge.views.next', name='challenge-next' ),
+
 )

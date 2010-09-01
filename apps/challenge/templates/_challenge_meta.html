@@ -1,11 +1,20 @@
 {% load core_tags %}
 {% load sq_tags %}
 
-<div id="package-{{ package.id }}-packageset-meta">
+<div id="challenge-{{ challenge.id }}-challenge-meta" class="challenge-meta">
+{% if userchallenge %}
+<div>
+    <span class="correct">{{ userchallenge.percent_correct}}% correct</span>
+    &#183; {% streak userchallenge.current_streak %}
+    &#183; {% sqchange userchallenge.previous_sq userchallenge.sq %}
+    &#183; <span class="attempt">{{ userchallenge.total_attempts }} attempt{{ userchallenge.total_attempts|pluralize }}</span>
+</div>
+{% endif %}
 {% if challenge %}
-    {% if challenge.description %}<span class="challenges">{{ challenge.description|truncatewords:"20"}}</span><br/>{% endif %}
+<div>
     <span class="clock">{% duration challenge.time_to_complete %}</span> for {{ challenge.total_questions }} question{{ challenge.total_questions|pluralize }}
     &#183; {% sqdifficulty userchallenge.sq challenge.sq %}
+</div>
 {% else %}
 <p>None currently available.</p>
 {% endif %}

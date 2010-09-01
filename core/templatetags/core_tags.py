@@ -74,5 +74,18 @@ def percentbar( num, addclass=None ):
     else:
         return ''
      
-                
+@register.simple_tag
+def streak( num ):
+    """ 
+    Usage: {% streak num %} 
+            Returns streak symbols
+    """
+    if num <= 10:
+        d = num
+    else:
+        d = 10
+    
+    w = d*16
+
+    return '<span class="streakoff" title="Current streak of %d correct answers"><span class="streak" style="width:%dpx"></span></span>' % (num,w)
 

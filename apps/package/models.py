@@ -117,13 +117,13 @@ class UserPackage(models.Model):
         self.sq = UserChallenge.objects.filter(user=self.user, challenge__package = self.package).aggregate(Avg('sq'))['sq__avg']
 
     def update_statistics(self):
-        values = UserChallenge.objects.filter(user=self.user, challenge__package = self.package).aggregate(is_complete=Avg('is_complete'),percent_correct=Avg('percent_correct'))
+        values = UserChallenge.objects.filter(user=self.user, challenge__package = self.package).aggregate(is_complete=Avg('percent_complete'),percent_correct=Avg('percent_correct'))
         # Don't save if null (i.e. no value yet on any challenges)
 
         if values:
             #assert False, values['is_complete']
-            if values['is_complete'] > 0: # Not None
-                self.percent_complete = values['is_complete'] * 100
+            if values['percent_complete'] > 0: # Not None
+                self.percent_complete = values['percent_complete']
                 self.percent_correct = values['percent_correct']
                 
                 # Send notifications

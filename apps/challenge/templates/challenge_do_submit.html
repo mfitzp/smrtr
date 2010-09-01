@@ -28,11 +28,14 @@
         <div class="focus-body">
             <p>You answered  <span class="percent">{{totals.percent}}%</span> (<strong>{{totals.correct}} out of {{totals.answered}}</strong>) questions correctly.</p>
             <p>{% if totals.percent > 50 %}On a winning streak?{% else %}Want to redeem yourself?{% endif %}
-            You can try <a href="{% url challenge-do challenge_id=challenge.id %}">more of the same</a>,
-            <a href="{% url challenge-prepare challenge_id=challenge.id %}">do a bit of studying</a>
+            You can try more of the same, do a bit of studying
             or <a href="{% url home %}">try something completely different</a>.</p>
             
+            {% if nextchallenge %}
+            {% with nextchallenge as userchallenge %}
+            {% with userchallenge.challenge as challenge %}
             <div class="minifocus"><h5>Next Challenge</h5>
+            {% include "_challenge_meta.html" %}            
             </div>  
             <div class="buttonbox">
                 <span class="button button_hi"><a href="{% url home %}">I'm done!</a></span>
@@ -41,6 +44,9 @@
                 {% endif %}{% endif %}
                 <span class="button button_hi"><a href="{% url challenge-do challenge_id=challenge.id %}">Next challenge</a></span>
             </div>
+            {% endwith %}
+            {% endwith %}
+            {% endif %}
                     
         </div></div>
         {% if questions %}

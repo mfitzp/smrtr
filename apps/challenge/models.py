@@ -100,18 +100,6 @@ class UserChallenge(models.Model):
                 self.update_sq()
         super(UserChallenge, self).save(force_insert, force_update)        
         
-    # Shortcuts through tree
-    def network(self):
-        return self.usercourse.coursei.network
-    def course(self):
-        return self.packagei.course
-    def package(self):
-        return self.packagei.package
-    # Additional information
-    def week_of_study(self):
-        return ( ( datetime.datetime.today() - self.start_date  ).days / 7 ) + 1
-    def is_active(self):
-        return ( self.end_date == None ) or ( self.end_date > datetime.datetime.today() )
     # Update user's SQ value on this challenge
     def update_sq(self):
         # Get user's attempts on this challenge's questions 
@@ -139,7 +127,7 @@ class UserChallenge(models.Model):
         # TODO: Should be last_attempt updated whenever this challenge is attempted as part of a package
 
         if last_attempted == None:
-            last_attempted = self.challenge.packageset_set.filter(userpackageset__user=self.user).aggregate(completed__max=Max('userpackageset__completed'))['completed__max']
+            last_attempted = self.challenge.userchallengeattempt_set.filter(user=self.user).aggregate(completed__max=Max('completed'))['completed__max']
             #last_attempted = self.package_set.UserPackage.objects.filter(package__challenges=self.challenge, user=self.user).aggregate(Max('completed'))['completed__max']
 
         if last_attempted:
@@ -158,53 +146,45 @@ class UserChallenge(models.Model):
         # Limit 0-100
         self.focus = max( min( self.focus, 100 ), 0 )
 
-        
-    def update_statistics(self):
-        # We get a list of all attempts, 1 record per question attempted. The count of these is the total attempted questions (magic)
-        # FIXME: Is there an neater way to do this?
-        questions_attempted = self.challenge.questions.filter(userquestionattempt__user=self.user).values('id').annotate(attempts=Count('id')).count()
-
-        if questions_attempted > 0:
-            # Get all questions with latest attempt date
-            questions = self.challenge.questions.filter(userquestionattempt__user=self.user).annotate(latest=Max('userquestionattempt__created'))
-            # Build Q object to get all the latest attempts
-            q = Q()
-            for question in questions:
-                #print question.id, question.latest
-                q = q | Q( question=question, created=question.latest)
-
-            avg = UserQuestionAttempt.objects.filter(q, user=self.user).aggregate(avg=Avg('percent_correct'))
-            if avg:
-                self.percent_correct = avg['avg']
-        else:
-            if self.challenge.total_questions == 0:
-                self.percent_complete=100
-                self.percent_correct = None
-            
-    def start(self):
-        self.started = datetime.datetime.now()
-        
     def complete(self):
         self.completed = datetime.datetime.now()
-        self.is_complete = True
     
     user = models.ForeignKey(User)
     challenge = models.ForeignKey(Challenge)
 
-    started = models.DateTimeField(null = True) 
     completed = models.DateTimeField(null = True) 
-    
+    percent_complete = models.IntegerField(editable = False, null = False, default=0)
+        
     sq = models.IntegerField(editable = False, null = True)
     previous_sq = models.IntegerField(editable = False, null = True)
    
     focus = models.IntegerField(default = 100, editable = False) # Default to 100 to ensure newly activated are preferentially chosen
     
-    is_complete = models.IntegerField(editable = False, null = False, default=0)
     percent_correct = models.IntegerField(editable = False, null = True)
-
+    current_streak = models.IntegerField(editable = False, null = False, default=0)    
+    total_attempts = models.IntegerField(editable = False, null = False, default=0)    
+    
     class Meta:
         unique_together = ("user", "challenge")
 
+
+class UserChallengeAttempt(models.Model):
+    def __unicode__(self):
+        return self.challenge.name
+                    
+    def start(self):
+        self.started = datetime.datetime.now()
+        
+    def complete(self):
+        self.completed = datetime.datetime.now()
+
+    user = models.ForeignKey(User)
+    challenge = models.ForeignKey(Challenge)
+        
+    started = models.DateTimeField(auto_now_add = True, null = True) 
+    completed = models.DateTimeField(null = True)        
+
+    percent_correct = models.IntegerField(editable = False, null = True)
 
 
 # Resource attached to specific question

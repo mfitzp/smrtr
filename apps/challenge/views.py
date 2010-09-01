@@ -416,8 +416,9 @@ def do(request, challenge_id):
         userchallenge.user = request.user
         userchallenge.challenge = challenge
 
-    userchallenge.start()
-    userchallenge.save()
+    uca = UserChallengeAttempt(user=request.user, challenge=challenge)
+    uca.start()
+    uca.save()
                 
     questions = challenge.questions.all() # Returns all questions (NOT random, randomised in generation) 
     
@@ -437,9 +438,15 @@ def do_submit(request, challenge_id):
 
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     userchallenge = get_object_or_404(UserChallenge, challenge=challenge, user=request.user )
-    userchallenge.complete()
     
-    time_to_complete = userchallenge.started - userchallenge.completed #userchallengeset.completed - userchallengeset.started
+    try:
+        userchallengeattempt = UserChallengeAttempt.objects.filter(challenge=challenge, user=request.user, completed=None )[0]
+    except:
+        raise Http503
+    
+    userchallengeattempt.complete()
+    
+    time_to_complete = userchallengeattempt.started - userchallengeattempt.completed #userchallengeset.completed - userchallengeset.started
     time_to_complete_each = max( 5, time_to_complete.seconds / challenge.total_questions) # Minimum 5 seconds per question
     time_to_complete_each = round( time_to_complete_each , 0 ) # Remove decimals
     
@@ -479,10 +486,12 @@ def do_submit(request, challenge_id):
             try:
                 correct = q.answer_set.get(pk=aid, is_correct=True)
             except:
-                totals['incorrect'] = totals['incorrect'] + 1
+                totals['incorrect'] += 1
+                userchallenge.current_streak += 0
                 uqa.percent_correct = 0
             else:
-                totals['correct'] = totals['correct'] + 1
+                totals['correct'] += 1
+                userchallenge.current_streak += 1
                 uqa.percent_correct = 100
 
             # Add this question to the question list for review on the summary page
@@ -503,11 +512,18 @@ def do_submit(request, challenge_id):
     # Recalculate SQ values for this challenge/userchallenge_set  
     # NOTE: May need to remove this is load too great?
     # userchallengeset.update_sq()
+    userchallengeattempt.percent_correct = totals['percent']
+    userchallengeattempt.save()
+    
     userchallenge.percent_correct = totals['percent']
+    userchallenge.total_attempts += 1
     userchallenge.update_focus(last_attempted = userchallenge.completed )
-    userchallenge.update_statistics()
     userchallenge.save()
 
+    try:
+        nextchallenge = request.user.userchallenge_set.exclude(challenge__total_questions=0).filter(focus__gt=80).order_by('-focus')[0]
+    except:
+        nextchallenge = None
 ##
     challengers = challenge.userchallenge_set.order_by('-percent_correct')
 
@@ -515,8 +531,7 @@ def do_submit(request, challenge_id):
         'challenge': challenge,
         'userchallenge': userchallenge, 
 
-        #'challengeset': challengeset,
-        #'userchallengeset': userchallengeset,
+        'nextchallenge': nextchallenge,
         
         'challengers':challengers,
 

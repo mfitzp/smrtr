@@ -81,7 +81,7 @@
             {% endfor %}
             </div>
         <br class="clear" />
-        <p class="buttonbar"><input type="submit" value="Activate selected packages &raquo;"></p>
+        <p class="buttonbar"><input type="submit" value="Activate selected challenges &raquo;"></p>
         </form>        
 
         <!-- <p>Don't find your package listed? <a href="#">Create it!</a></p> -->
@@ -91,9 +91,10 @@
         {% endif %}
 
         {% if next %}
-            <p class="buttonbar"><span class="button"><a href="{{ next }}">Do not activate any packages &raquo;</a></span></p>
+            <p class="buttonbar"><span class="button"><a href="{{ next }}" class="deactivate">Do not activate any challenges &raquo;</a></span></p>
         {% endif %}
-
+    
+        <p class="buttonbar"><span class="button"> <a href="{% url challenge-create %}" class="register">Create your own challenge &raquo;</a></span>  </p>
 
         {% paginate %}
 {% endblock %}
